@@ -3,6 +3,7 @@ import type { Section, SectionId } from '../types/section';
 import { TabComponent } from '../components/TabComponent';
 import { MacCmd } from '../components/MacCmd';
 import { MacCmdExampleWrapper } from '../components/MacCmdExampleWrapper';
+import { ExampleTab } from '../components/ExampleTab';
 
 const nvmInstallScript = `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 # 터미널 재시작 또는 아래 명령 실행
@@ -993,101 +994,141 @@ export const sections: Record<SectionId, Section> = {
           <li style={{ marginBottom: '0.7em' }}>useState 훅을 통해 상태를 선언하고 관리할 수 있습니다.</li>
         </ul>
         <h3>1. 기본 카운터</h3>
-        <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><CounterDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useState } from 'react';\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  return (\n    <div>\n      <p>Count: {count}</p>\n      <button onClick={() => setCount(count + 1)}>+1</button>\n    </div>\n  );\n}`}</MacCmd>
-            }]}
-          />
-        </div>
+        <ExampleTab example={<CounterDemo />} code={`import { useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>+1</button>
+    </div>
+  );
+}`} showCaret={false} />
         <h3>2. 입력값 상태 관리</h3>
-        <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><InputExampleDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useState } from 'react';\n\nfunction InputExample() {\n  const [text, setText] = useState('');\n  return (\n    <input value={text} onChange={e => setText(e.target.value)} />\n  );\n}`}</MacCmd>
-            }]}
-          />
-        </div>
+        <ExampleTab example={<InputExampleDemo />} code={`import { useState } from 'react';
+
+function InputExample() {
+  const [text, setText] = useState('');
+  return (
+    <input value={text} onChange={e => setText(e.target.value)} />
+  );
+}`} showCaret={false} />
         <h3>3. 배열/리스트 상태</h3>
-        <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><TodoListDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useState } from 'react';\n\nfunction TodoList() {\n  const [todos, setTodos] = useState(['공부하기', '운동하기']);\n  const [input, setInput] = useState('');\n  return (\n    <div>\n      <ul>\n        {todos.map((todo, i) => <li key={i}>{todo}</li>)}\n      </ul>\n      <input value={input} onChange={e => setInput(e.target.value)} placeholder=\"새 할 일\" />\n      <button onClick={() => {\n        if (input.trim()) {\n          setTodos([...todos, input]);\n          setInput('');\n        }\n      }}>추가</button>\n    </div>\n  );\n}`}</MacCmd>
-            }]}
-          />
-        </div>
+        <ExampleTab example={<TodoListDemo />} code={`import { useState } from 'react';
+
+function TodoList() {
+  const [todos, setTodos] = useState(['공부하기', '운동하기']);
+  const [input, setInput] = useState('');
+  return (
+    <div>
+      <ul>
+        {todos.map((todo, i) => <li key={i}>{todo}</li>)}
+      </ul>
+      <input value={input} onChange={e => setInput(e.target.value)} placeholder="새 할 일" />
+      <button onClick={() => {
+        if (input.trim()) {
+          setTodos([...todos, input]);
+          setInput('');
+        }
+      }}>추가</button>
+    </div>
+  );
+}`} showCaret={false} />
         <h3>4. 객체 상태</h3>
-        <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><ProfileDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useState } from 'react';\n\nfunction Profile() {\n  const [user, setUser] = useState({ name: '', age: 0 });\n  return (\n    <div>\n      <input value={user.name} onChange={e => setUser({ ...user, name: e.target.value })} />\n      <input type=\"number\" value={user.age} onChange={e => setUser({ ...user, age: Number(e.target.value) })} />\n    </div>\n  );\n}`}</MacCmd>
-            }]}
-          />
-        </div>
+        <ExampleTab example={<ProfileDemo />} code={`import { useState } from 'react';
+
+function Profile() {
+  const [user, setUser] = useState({ name: '', age: 0 });
+  return (
+    <div>
+      <input value={user.name} onChange={e => setUser({ ...user, name: e.target.value })} />
+      <input type="number" value={user.age} onChange={e => setUser({ ...user, age: Number(e.target.value) })} />
+    </div>
+  );
+}`} showCaret={false} />
         <h3>5. 여러 state 동시 사용</h3>
-        <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><MultiStateDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useState } from 'react';\n\nfunction MultiState() {\n  const [count, setCount] = useState(0);\n  const [text, setText] = useState('');\n  return (\n    <div>\n      <button onClick={() => setCount(count + 1)}>+1</button>\n      <input value={text} onChange={e => setText(e.target.value)} />\n      <p>{count}, {text}</p>\n    </div>\n  );\n}`}</MacCmd>
-            }]}
-          />
-        </div>
+        <ExampleTab example={<MultiStateDemo />} code={`import { useState } from 'react';
+
+function MultiState() {
+  const [count, setCount] = useState(0);
+  const [text, setText] = useState('');
+  return (
+    <div>
+      <button onClick={() => setCount(count + 1)}>+1</button>
+      <input value={text} onChange={e => setText(e.target.value)} />
+      <p>{count}, {text}</p>
+    </div>
+  );
+}`} showCaret={false} />
         <h3>6. 토글 스위치</h3>
-        <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><Toggle label="다크 모드" initial={false} /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useState } from 'react';\n\nfunction Toggle({ label, initial }) {\n  const [on, setOn] = useState(initial);\n  return (\n    <label style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#232323', color: '#eaeaea', borderRadius: 8, padding: '0.7em 1.2em', border: '1px solid #444', maxWidth: 320 }}>\n      <input type=\"checkbox\" checked={on} onChange={() => setOn(!on)} />\n      <span>{label}: {on ? 'ON' : 'OFF'}</span>\n    </label>\n  );\n}\n\n<Toggle label=\"다크 모드\" initial={false} />`}</MacCmd>
-            }]}
-          />
-        </div>
-        <h3>7. 간단한 장바구니</h3>
-        <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><ShoppingCartDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useState } from 'react';\n\nfunction ShoppingCart() {\n  const [cart, setCart] = useState<string[]>([]);\n  const products = ['Apple', 'Banana', 'Orange'];\n  const productIcons: Record<string, string> = { Apple: '🍎', Banana: '🍌', Orange: '🍊' };\n  const maxCount = 17;\n  return (\n    <div>\n      <ul>\n        {products.map(product => (\n          <li key={product}>\n            {product} <button onClick={() => setCart([...cart, product])}>Add</button>\n          </li>\n        ))}\n      </ul>\n    </div>\n  );\n}`}</MacCmd>
-            }]}
-          />
-        </div>
-        <h3>8. 수량 조절이 가능한 장바구니</h3>
-        <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><AdvancedCartDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useState } from 'react';\n\nconst productIcons = { Apple: '🍎', Banana: '🍌', Orange: '🍊' };\nconst products = ['Apple', 'Banana', 'Orange'];\n\nfunction AdvancedCart() {\n  const [cart, setCart] = useState({ Apple: 0, Banana: 0, Orange: 0 });\n  const add = (name) => setCart(c => ({ ...c, [name]: c[name] + 1 }));\n  const remove = (name) => setCart(c => ({ ...c, [name]: Math.max(0, c[name] - 1) }));\n  const reset = () => setCart({ Apple: 0, Banana: 0, Orange: 0 });\n  return (\n    <div>\n      <ul>\n        {products.map(name => (\n          <li key={name}>\n            {productIcons[name]} {name}\n            <div style={{ display: 'flex', alignItems: 'center', minWidth: 160 }}>\n              <button onClick={() => add(name)}>+</button>\n              <button onClick={() => remove(name)} disabled={cart[name] === 0}>-</button>\n              <span> {cart[name]}</span>\n            </div>\n          </li>\n        ))}\n      </ul>\n      <button onClick={reset}>Reset</button>\n      <div style={{ fontSize: '2em', marginTop: '1em' }}>\n        {products.map(name => cart[name] > 0 && (\n          <span key={name} style={{ marginRight: '0.5em' }}>{productIcons[name].repeat(cart[name])}</span>\n        ))}\n      </div>\n    </div>\n  );\n}`}</MacCmd>
-            }]}
-          />
-        </div>
+        <ExampleTab example={<Toggle label="다크 모드" initial={false} />} code={`import { useState } from 'react';
+
+function Toggle({ label, initial }) {
+  const [on, setOn] = useState(initial);
+  return (
+    <label style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#232323', color: '#eaeaea', borderRadius: 8, padding: '0.7em 1.2em', border: '1px solid #444', maxWidth: 320 }}>
+      <input type="checkbox" checked={on} onChange={() => setOn(!on)} />
+      <span>{label}: {on ? 'ON' : 'OFF'}</span>
+    </label>
+  );
+}
+
+<Toggle label="다크 모드" initial={false} />`} showCaret={false} />
+        <h3>7. 실무 예제: 간단한 장바구니</h3>
+        <ExampleTab example={<ShoppingCartDemo />} code={`import { useState } from 'react';
+
+function ShoppingCart() {
+  const [cart, setCart] = useState<string[]>([]);
+  const products = ['Apple', 'Banana', 'Orange'];
+  const productIcons: Record<string, string> = { Apple: '🍎', Banana: '🍌', Orange: '🍊' };
+  const maxCount = 17;
+  return (
+    <div>
+      <ul>
+        {products.map(product => (
+          <li key={product}>
+            {product} <button onClick={() => setCart([...cart, product])}>Add</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}`} showCaret={false} />
+        <h3>8. 실무 예제: 수량 조절이 가능한 장바구니</h3>
+        <ExampleTab example={<AdvancedCartDemo />} code={`import { useState } from 'react';
+
+const productIcons = { Apple: '🍎', Banana: '🍌', Orange: '🍊' };
+const products = ['Apple', 'Banana', 'Orange'];
+
+function AdvancedCart() {
+  const [cart, setCart] = useState({ Apple: 0, Banana: 0, Orange: 0 });
+  const add = (name) => setCart(c => ({ ...c, [name]: c[name] + 1 }));
+  const remove = (name) => setCart(c => ({ ...c, [name]: Math.max(0, c[name] - 1) }));
+  const reset = () => setCart({ Apple: 0, Banana: 0, Orange: 0 });
+  return (
+    <div>
+      <ul>
+        {products.map(name => (
+          <li key={name}>
+            {productIcons[name]} {name}
+            <div style={{ display: 'flex', alignItems: 'center', minWidth: 160 }}>
+              <button onClick={() => add(name)}>+</button>
+              <button onClick={() => remove(name)} disabled={cart[name] === 0}>-</button>
+              <span> {cart[name]}</span>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <button onClick={reset}>Reset</button>
+      <div style={{ fontSize: '2em', marginTop: '1em' }}>
+        {products.map(name => cart[name] > 0 && (
+          <span key={name} style={{ marginRight: '0.5em' }}>{productIcons[name].repeat(cart[name])}</span>
+        ))}
+      </div>
+    </div>
+  );
+}`} showCaret={false} />
       </div>
     ),
   },
@@ -1257,63 +1298,59 @@ export const sections: Record<SectionId, Section> = {
         
         <h4>1. Mount/Unmount Effect</h4>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><MountEffectDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useEffect } from 'react';\n\nfunction MountEffectDemo() {\n  useEffect(() => {\n    console.log('컴포넌트 마운트됨');\n    return () => {\n      console.log('컴포넌트 언마운트됨');\n    };\n  }, []);\n  return <div>마운트/언마운트 시 콘솔에 로그</div>;\n}`}</MacCmd>
-            }]}
-          />
+          <ExampleTab example={<MountEffectDemo />} code={`import { useEffect } from 'react';
+
+function MountEffectDemo() {
+  useEffect(() => {
+    console.log('컴포넌트 마운트됨');
+    return () => {
+      console.log('컴포넌트 언마운트됨');
+    };
+  }, []);
+  return <div>마운트/언마운트 시 콘솔에 로그</div>;
+}`} showCaret={false} />
         </div>
         <h4>2. Dependency Effect</h4>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><DepsEffectDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useState, useEffect } from 'react';\n\nfunction DepsEffectDemo() {\n  const [count, setCount] = useState(0);\n  useEffect(() => {\n    document.title = \`카운트: \${count}\`;\n  }, [count]);\n  return (\n    <div>\n      <button onClick={() => setCount(count + 1)}>+1</button>\n      <span style={{ marginLeft: 8 }}>{count}</span>\n    </div>\n  );\n}`}</MacCmd>
-            }]}
-          />
+          <ExampleTab example={<DepsEffectDemo />} code={`import { useState, useEffect } from 'react';
+
+function DepsEffectDemo() {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    document.title = \`카운트: \${count}\`;
+  }, [count]);
+  return (
+    <div>
+      <button onClick={() => setCount(count + 1)}>+1</button>
+      <span style={{ marginLeft: 8 }}>{count}</span>
+    </div>
+  );
+}`} showCaret={false} />
         </div>
         <h4>3. Fetch Data Effect</h4>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><FetchEffectDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useState, useEffect } from 'react';\n\nfunction FetchEffectDemo() {\n  const [data, setData] = useState(null);\n  useEffect(() => {\n    fetch('https://jsonplaceholder.typicode.com/todos/1')\n      .then(res => res.json())\n      .then(json => setData(json));\n  }, []);\n  return <pre>{JSON.stringify(data, null, 2)}</pre>;\n}`}</MacCmd>
-            }]}
-          />
+          <ExampleTab example={<FetchEffectDemo />} code={`import { useState, useEffect } from 'react';
+
+function FetchEffectDemo() {
+  const [data, setData] = useState(null);
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/todos/1')\n      .then(res => res.json())\n      .then(json => setData(json));\n  }, []);\n  return <pre>{JSON.stringify(data, null, 2)}</pre>;\n}`} showCaret={false} />
         </div>
         <h4>4. Timer Effect</h4>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><TimerEffectDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useState, useEffect } from 'react';\n\nfunction TimerEffectDemo() {\n  const [sec, setSec] = useState(0);\n  useEffect(() => {\n    const id = setInterval(() => setSec(s => s + 1), 1000);\n    return () => clearInterval(id);\n  }, []);\n  return <div>타이머: {sec}초</div>;\n}`}</MacCmd>
-            }]}
-          />
+          <ExampleTab example={<TimerEffectDemo />} code={`import { useState, useEffect } from 'react';
+
+function TimerEffectDemo() {
+  const [sec, setSec] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setSec(s => s + 1), 1000);\n    return () => clearInterval(id);\n  }, []);\n  return <div>타이머: {sec}초</div>;\n}`} showCaret={false} />
         </div>
         <h4>5. Resize Effect</h4>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><ResizeEffectDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useState, useEffect } from 'react';\n\nfunction ResizeEffectDemo() {\n  const [width, setWidth] = useState(window.innerWidth);\n  useEffect(() => {\n    const onResize = () => setWidth(window.innerWidth);\n    window.addEventListener('resize', onResize);\n    return () => window.removeEventListener('resize', onResize);\n  }, []);\n  return <div>윈도우 너비: {width}px</div>;\n}`}</MacCmd>
-            }]}
-          />
+          <ExampleTab example={<ResizeEffectDemo />} code={`import { useState, useEffect } from 'react';
+
+function ResizeEffectDemo() {
+  const [width, setWidth] = useState(window.innerWidth);\n  useEffect(() => {\n    const onResize = () => setWidth(window.innerWidth);\n    window.addEventListener('resize', onResize);\n    return () => window.removeEventListener('resize', onResize);\n  }, []);\n  return <div>윈도우 너비: {width}px</div>;\n}`} showCaret={false} />
         </div>
       </div>
     ),
