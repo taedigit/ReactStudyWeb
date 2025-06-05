@@ -1394,49 +1394,84 @@ function ResizeEffectDemo() {
     content: (
       <div>
         <h2>useRef</h2>
+        <h4>1. DOM 요소 참조</h4>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><RefFocusDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useRef } from 'react';\n\nfunction RefFocusDemo() {\n  const inputRef = useRef(null);\n  return (\n    <div>\n      <input ref={inputRef} />\n      <button onClick={() => inputRef.current && inputRef.current.focus()}>포커스</button>\n    </div>\n  );\n}`}</MacCmd>
-            }]}
-          />
+          <ExampleTab example={<RefFocusDemo />} code={`import { useRef } from 'react';
+
+function RefFocusDemo() {
+  const inputRef = useRef(null);
+  return (
+    <div>
+      <input ref={inputRef} />
+      <button onClick={() => inputRef.current && inputRef.current.focus()}>포커스</button>
+    </div>
+  );
+}`} showCaret={false} desc={"useRef로 input DOM 요소를 참조하고, 버튼 클릭 시 해당 input에 포커스를 주는 예제입니다."} />
         </div>
+        <h4>2. 이전 값 기억</h4>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><RefPrevValueDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useRef, useState, useEffect } from 'react';\n\nfunction RefPrevValueDemo() {\n  const [value, setValue] = useState('');\n  const prevValue = useRef('');\n  useEffect(() => {\n    prevValue.current = value;\n  }, [value]);\n  return (\n    <div>\n      <input value={value} onChange={e => setValue(e.target.value)} />\n      <div>이전 값: {prevValue.current}</div>\n    </div>\n  );\n}`}</MacCmd>
-            }]}
-          />
+          <ExampleTab example={<RefPrevValueDemo />} code={`import { useRef, useState, useEffect } from 'react';
+
+function RefPrevValueDemo() {
+  const [value, setValue] = useState('');
+  const prevValue = useRef('');
+  useEffect(() => {
+    prevValue.current = value;
+  }, [value]);
+  return (
+    <div>
+      <input value={value} onChange={e => setValue(e.target.value)} />
+      <div>이전 값: {prevValue.current}</div>
+    </div>
+  );
+}`} showCaret={false} desc={"useRef로 렌더링과 무관하게 이전 입력값을 기억하는 예제입니다. useEffect로 값이 바뀔 때마다 ref를 갱신합니다."} />
         </div>
+        <h4>3. setInterval 제어</h4>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><RefIntervalDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useRef, useState, useEffect } from 'react';\n\nfunction RefIntervalDemo() {\n  const [count, setCount] = useState(0);\n  const intervalRef = useRef<number | null>(null);\n  const start = () => {\n    if (!intervalRef.current) {\n      intervalRef.current = window.setInterval(() => setCount(c => c + 1), 1000);\n    }\n  };\n  const stop = () => {\n    if (intervalRef.current) {\n      clearInterval(intervalRef.current);\n      intervalRef.current = null;\n    }\n  };\n  useEffect(() => stop, []);\n  return (\n    <div>\n      <div>카운트: {count}</div>\n      <button onClick={start}>시작</button>\n      <button onClick={stop}>정지</button>\n    </div>\n  );\n}`}</MacCmd>
-            }]}
-          />
+          <ExampleTab example={<RefIntervalDemo />} code={`import { useRef, useState, useEffect } from 'react';
+
+function RefIntervalDemo() {
+  const [count, setCount] = useState(0);
+  const intervalRef = useRef<number | null>(null);
+  const start = () => {
+    if (!intervalRef.current) {
+      intervalRef.current = window.setInterval(() => setCount(c => c + 1), 1000);
+    }
+  };
+  const stop = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  };
+  useEffect(() => stop, []);
+  return (
+    <div>
+      <div>카운트: {count}</div>
+      <button onClick={start}>시작</button>
+      <button onClick={stop}>정지</button>
+    </div>
+  );
+}`} showCaret={false} desc={"useRef로 setInterval의 id를 저장하고, 시작/정지 버튼으로 타이머를 제어하는 예제입니다. 언마운트 시 타이머를 정리합니다."} />
         </div>
+        <h4>4. DOM 스타일 직접 변경</h4>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><RefDomStyleDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useRef } from 'react';\n\nfunction RefDomStyleDemo() {\n  const boxRef = useRef(null);\n  const changeColor = () => {\n    if (boxRef.current) {\n      boxRef.current.style.background = '#27c93f';\n    }\n  };\n  return (\n    <div>\n      <div ref={boxRef} style={{ width: 120, height: 60, background: '#232323', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 8, marginBottom: 8 }}>Box</div>\n      <button onClick={changeColor}>배경색 변경</button>\n    </div>\n  );\n}`}</MacCmd>
-            }]}
-          />
+          <ExampleTab example={<RefDomStyleDemo />} code={`import { useRef } from 'react';
+
+function RefDomStyleDemo() {
+  const boxRef = useRef(null);
+  const changeColor = () => {
+    if (boxRef.current) {
+      boxRef.current.style.background = '#27c93f';
+    }
+  };
+  return (
+    <div>
+      <div ref={boxRef} style={{ width: 120, height: 60, background: '#232323', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 8, marginBottom: 8 }}>Box</div>
+      <button onClick={changeColor}>배경색 변경</button>
+    </div>
+  );
+}`} showCaret={false} desc={"useRef로 DOM 요소에 직접 접근해 스타일(background)을 변경하는 예제입니다."} />
         </div>
       </div>
     ),
@@ -1452,49 +1487,84 @@ function ResizeEffectDemo() {
     content: (
       <div>
         <h2>useMemo</h2>
+        <h4>1. 비싼 연산 메모이제이션</h4>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><MemoExpensiveCalcDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useState, useMemo } from 'react';\n\nfunction MemoExpensiveCalcDemo() {\n  const [num, setNum] = useState(1);\n  const [other, setOther] = useState('');\n  const fib = useMemo(() => {\n    function fibo(n: number): number {\n      if (n <= 1) return n;\n      return fibo(n - 1) + fibo(n - 2);\n    }\n    return fibo(num);\n  }, [num]);\n  return (\n    <div>\n      <label>\n        피보나치 n: \n        <input type=\"number\" value={num} min={1} max={35} onChange={e => setNum(Number(e.target.value))} style={{ margin: '0 8px', width: 60 }} />\n      </label>\n      <span>결과: {fib}</span>\n      <div style={{ marginTop: 12 }}>\n        <input value={other} onChange={e => setOther(e.target.value)} placeholder=\"다른 입력 (성능 영향 없음)\" style={{ top: 8, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />\n      </div>\n    </div>\n  );\n}`}</MacCmd>
-            }]}
-          />
+          <ExampleTab example={<MemoExpensiveCalcDemo />} code={`import { useState, useMemo } from 'react';
+
+function MemoExpensiveCalcDemo() {
+  const [num, setNum] = useState(1);
+  const [other, setOther] = useState('');
+  const fib = useMemo(() => {
+    function fibo(n: number): number {
+      if (n <= 1) return n;
+      return fibo(n - 1) + fibo(n - 2);
+    }
+    return fibo(num);
+  }, [num]);
+  return (
+    <div>
+      <label>
+        피보나치 n: 
+        <input type="number" value={num} min={1} max={35} onChange={e => setNum(Number(e.target.value))} style={{ margin: '0 8px', width: 60 }} />
+      </label>
+      <span>결과: {fib}</span>
+      <div style={{ marginTop: 12 }}>
+        <input value={other} onChange={e => setOther(e.target.value)} placeholder="다른 입력 (성능 영향 없음)" style={{ top: 8, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />
+      </div>
+    </div>
+  );
+}`} showCaret={false} desc={"useMemo로 비싼 연산(피보나치 수열 계산) 결과를 메모이제이션하여, num이 바뀔 때만 연산이 다시 실행되도록 최적화한 예제입니다."} />
         </div>
+        <h4>2. 리스트 필터/정렬 메모이제이션</h4>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><MemoFilterSortDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useState, useMemo } from 'react';\n\nfunction MemoFilterSortDemo() {\n  const [query, setQuery] = useState('');\n  const [sort, setSort] = useState(false);\n  const items = useMemo(() => Array.from({ length: 1000 }, (_, i) => \`Item \${i + 1}\`), []);\n  const filtered = useMemo(() => {\n    let result = items.filter(item => item.toLowerCase().includes(query.toLowerCase()));\n    if (sort) result = [...result].sort();\n    return result;\n  }, [items, query, sort]);\n  return (\n    <div>\n      <input value={query} onChange={e => setQuery(e.target.value)} placeholder=\"검색\" style={{ marginRight: 8, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />\n      <label style={{ marginRight: 8 }}>\n        <input type=\"checkbox\" checked={sort} onChange={e => setSort(e.target.checked)} /> 정렬\n      </label>\n      <div style={{ maxHeight: 120, overflowY: 'auto', background: '#232323', borderRadius: 8, marginTop: 8, padding: 8 }}>\n        {filtered.slice(0, 20).map(item => <div key={item}>{item}</div>)}\n        {filtered.length > 20 && <div style={{ color: '#aaa' }}>...and {filtered.length - 20} more</div>}\n      </div>\n    </div>\n  );\n}`}</MacCmd>
-            }]}
-          />
+          <ExampleTab example={<MemoFilterSortDemo />} code={`import { useState, useMemo } from 'react';
+
+function MemoFilterSortDemo() {
+  const [query, setQuery] = useState('');
+  const [sort, setSort] = useState(false);
+  const items = useMemo(() => Array.from({ length: 1000 }, (_, i) => \`Item \${i + 1}\`), []);\n  const filtered = useMemo(() => {\n    let result = items.filter(item => item.toLowerCase().includes(query.toLowerCase()));\n    if (sort) result = [...result].sort();\n    return result;\n  }, [items, query, sort]);\n  return (\n    <div>\n      <input value={query} onChange={e => setQuery(e.target.value)} placeholder=\"검색\" style={{ marginRight: 8, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />\n      <label style={{ marginRight: 8 }}>\n        <input type=\"checkbox\" checked={sort} onChange={e => setSort(e.target.checked)} /> 정렬\n      </label>\n      <div style={{ maxHeight: 120, overflowY: 'auto', background: '#232323', borderRadius: 8, marginTop: 8, padding: 8 }}>\n        {filtered.slice(0, 20).map(item => <div key={item}>{item}</div>)}\n        {filtered.length > 20 && <div style={{ color: '#aaa' }}>...and {filtered.length - 20} more</div>}\n      </div>\n    </div>\n  );\n}`} showCaret={false} desc={"useMemo로 대량 리스트의 필터링/정렬 결과를 메모이제이션하여, 불필요한 연산을 방지하는 예제입니다."} />
         </div>
+        <h4>3. 의존성에 따른 값 메모이제이션</h4>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><MemoDependencyDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useState, useMemo } from 'react';\n\nfunction MemoDependencyDemo() {\n  const [a, setA] = useState(1);\n  const [b, setB] = useState(1);\n  const sum = useMemo(() => a + b, [a, b]);\n  return (\n    <div>\n      <input type=\"number\" value={a} onChange={e => setA(Number(e.target.value))} style={{ marginRight: 8, width: 60 }} />\n      + \n      <input type=\"number\" value={b} onChange={e => setB(Number(e.target.value))} style={{ margin: '0 8px', width: 60 }} />\n      = <span>{sum}</span>\n    </div>\n  );\n}`}</MacCmd>
-            }]}
-          />
+          <ExampleTab example={<MemoDependencyDemo />} code={`import { useState, useMemo } from 'react';
+
+function MemoDependencyDemo() {
+  const [a, setA] = useState(1);
+  const [b, setB] = useState(1);
+  const sum = useMemo(() => a + b, [a, b]);
+  return (
+    <div>
+      <input type="number" value={a} onChange={e => setA(Number(e.target.value))} style={{ marginRight: 8, width: 60 }} />
+      + 
+      <input type="number" value={b} onChange={e => setB(Number(e.target.value))} style={{ margin: '0 8px', width: 60 }} />
+      = <span>{sum}</span>
+    </div>
+  );
+}`} showCaret={false} desc={"useMemo의 의존성 배열([a, b])에 따라 sum 값이 메모이제이션되는 간단한 예제입니다."} />
         </div>
+        <h4>4. 렌더 최적화 예제</h4>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><MemoRenderOptDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useState, useMemo } from 'react';\n\nfunction MemoRenderOptDemo() {\n  const [count, setCount] = useState(0);\n  const [text, setText] = useState('');\n  const expensive = useMemo(() => {\n    let total = 0;\n    for (let i = 0; i < 100000000; i++) total += 1;\n    return total;\n  }, [count]);\n  return (\n    <div>\n      <button onClick={() => setCount(count + 1)} style={{ marginRight: 8, padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>+1</button>\n      <span>Count: {count}</span>\n      <div style={{ marginTop: 8 }}>\n        <input value={text} onChange={e => setText(e.target.value)} placeholder=\"입력 (성능 영향 없음)\" style={{ padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />\n      </div>\n      <div style={{ marginTop: 8, color: '#b5e853' }}>비싼 연산 결과: {expensive}</div>\n    </div>\n  );\n}`}</MacCmd>
-            }]}
-          />
+          <ExampleTab example={<MemoRenderOptDemo />} code={`import { useState, useMemo } from 'react';
+
+function MemoRenderOptDemo() {
+  const [count, setCount] = useState(0);
+  const [text, setText] = useState('');
+  const expensive = useMemo(() => {
+    let total = 0;
+    for (let i = 0; i < 100000000; i++) total += 1;
+    return total;
+  }, [count]);
+  return (
+    <div>
+      <button onClick={() => setCount(count + 1)} style={{ marginRight: 8, padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>+1</button>
+      <span>Count: {count}</span>
+      <div style={{ marginTop: 8 }}>
+        <input value={text} onChange={e => setText(e.target.value)} placeholder="입력 (성능 영향 없음)" style={{ padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />
+      </div>
+      <div style={{ marginTop: 8, color: '#b5e853' }}>비싼 연산 결과: {expensive}</div>
+    </div>
+  );
+}`} showCaret={false} desc={"useMemo로 비싼 연산(expensive)을 count가 바뀔 때만 다시 계산하도록 하여, 불필요한 렌더링/계산을 방지하는 예제입니다."} />
         </div>
       </div>
     ),
