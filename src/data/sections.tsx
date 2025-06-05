@@ -516,6 +516,164 @@ function CounterButtonsDemo() {
   );
 }
 
+// 실무 예제: 장바구니
+function ShoppingCartDemo() {
+  const [cart, setCart] = React.useState<string[]>([]);
+  const products = ['Apple', 'Banana', 'Orange'];
+  const productIcons: Record<string, string> = { Apple: '🍎', Banana: '🍌', Orange: '🍊' };
+  const maxCount = 17;
+  return (
+    <div>
+      <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+        {products.map(product => {
+          const count = cart.filter(item => item === product).length;
+          return (
+            <li key={product} style={{ marginBottom: '0.5em', display: 'flex', alignItems: 'center' }}>
+              <span style={{ marginRight: '1em', minWidth: 70, display: 'inline-block' }}>{product}</span>
+              <button
+                onClick={() => {
+                  if (count >= maxCount) {
+                    alert('더 이상 추가할 수 없습니다.');
+                    return;
+                  }
+                  setCart([...cart, product]);
+                }}
+                style={{
+                  background: '#232323',
+                  color: '#eaeaea',
+                  border: '1px solid #444',
+                  borderRadius: '6px',
+                  padding: '0.3em 1em',
+                  fontSize: '1em',
+                  outline: 'none',
+                  cursor: 'pointer',
+                  marginLeft: '0.5em',
+                  transition: 'background 0.15s',
+                }}
+                onMouseOver={e => (e.currentTarget.style.background = '#333')}
+                onMouseOut={e => (e.currentTarget.style.background = '#232323')}
+              >+{productIcons[product]}</button>
+              <span style={{ marginLeft: '1em', fontSize: '1.5em' }}>{Array(count).fill(productIcons[product]).join('')}</span>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
+// 고급 실무 예제: 수량 조절이 가능한 장바구니
+function AdvancedCartDemo() {
+  const productIcons: Record<string, string> = { Apple: '🍎', Banana: '🍌', Orange: '🍊' };
+  const products = ['Apple', 'Banana', 'Orange'];
+  const [cart, setCart] = React.useState<{ [key: string]: number }>({ Apple: 0, Banana: 0, Orange: 0 });
+  const add = (name: string) => setCart(c => ({ ...c, [name]: c[name] + 1 }));
+  const remove = (name: string) => setCart(c => ({ ...c, [name]: Math.max(0, c[name] - 1) }));
+  const reset = () => setCart({ Apple: 0, Banana: 0, Orange: 0 });
+  return (
+    <div>
+      <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+        {products.map(name => (
+          <li key={name} style={{ marginBottom: '0.5em', display: 'flex', alignItems: 'center' }}>
+            <span style={{ minWidth: 100, display: 'inline-block', marginRight: '1em' }}>{productIcons[name]} {name}</span>
+            <div style={{ display: 'flex', alignItems: 'center', minWidth: 160 }}>
+              <button
+                onClick={() => add(name)}
+                style={{
+                  background: '#232323',
+                  color: '#eaeaea',
+                  border: '1px solid #444',
+                  borderRadius: '6px',
+                  padding: '0.3em 1em',
+                  fontSize: '1em',
+                  outline: 'none',
+                  cursor: 'pointer',
+                  marginLeft: '0.5em',
+                  transition: 'background 0.15s',
+                }}
+                onMouseOver={e => (e.currentTarget.style.background = '#333')}
+                onMouseOut={e => (e.currentTarget.style.background = '#232323')}
+              >+</button>
+              <button
+                onClick={() => remove(name)}
+                disabled={cart[name] === 0}
+                style={{
+                  background: cart[name] === 0 ? '#444' : '#232323',
+                  color: '#eaeaea',
+                  border: '1px solid #444',
+                  borderRadius: '6px',
+                  padding: '0.3em 1em',
+                  fontSize: '1em',
+                  outline: 'none',
+                  cursor: cart[name] === 0 ? 'not-allowed' : 'pointer',
+                  marginLeft: '0.3em',
+                  transition: 'background 0.15s',
+                  opacity: cart[name] === 0 ? 0.5 : 1,
+                }}
+                onMouseOver={e => { if (cart[name] !== 0) e.currentTarget.style.background = '#333'; }}
+                onMouseOut={e => { if (cart[name] !== 0) e.currentTarget.style.background = '#232323'; }}
+              >-</button>
+              <span style={{ marginLeft: '0.7em', minWidth: 32, textAlign: 'center', color: '#eaeaea', display: 'inline-block' }}>{cart[name]}</span>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <button
+        onClick={reset}
+        style={{
+          background: '#232323',
+          color: '#eaeaea',
+          border: '1px solid #444',
+          borderRadius: '6px',
+          padding: '0.4em 1.5em',
+          fontSize: '1em',
+          outline: 'none',
+          cursor: 'pointer',
+          marginTop: '0.7em',
+          marginBottom: '0.7em',
+          transition: 'background 0.15s',
+        }}
+        onMouseOver={e => (e.currentTarget.style.background = '#333')}
+        onMouseOut={e => (e.currentTarget.style.background = '#232323')}
+      >Reset</button>
+      <div style={{ fontSize: '2em', marginTop: '1em' }}>
+        {products.map(name => cart[name] > 0 && (
+          <div key={name} style={{ marginBottom: '0.2em' }}>{productIcons[name].repeat(cart[name])}</div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// 고급 예제: 모달 팝업에 props 전달
+function Modal({ open, onClose, message }: { open: boolean; onClose: () => void; message: string }) {
+  if (!open) return null;
+  return (
+    <div style={{
+      position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
+      background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000
+    }}>
+      <div style={{ background: '#232323', color: '#eaeaea', padding: 32, borderRadius: 12, minWidth: 280, textAlign: 'center' }}>
+        <h3>Modal Popup</h3>
+        <p>{message}</p>
+        <button onClick={onClose} style={{ marginTop: 16, padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>Close</button>
+      </div>
+    </div>
+  );
+}
+
+function ModalDemo() {
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState('Hello from parent!');
+  return (
+    <div>
+      <input value={value} onChange={e => setValue(e.target.value)} style={{ marginRight: 8, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />
+      <button onClick={() => setOpen(true)} style={{ padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>Open Modal</button>
+      <Modal open={open} onClose={() => setOpen(false)} message={value} />
+    </div>
+  );
+}
+
 export const sections: Record<SectionId, Section> = {
   intro: {
     id: 'intro',
@@ -695,6 +853,100 @@ export const sections: Record<SectionId, Section> = {
     icon: '📦',
     prev: 'components',
     next: 'state',
+    content: (
+      <div>
+        <h2>Props란?</h2>
+        <ul
+          style={{
+            marginBottom: '2em',
+            background: '#484f54',
+            padding: '1.5em 2em',
+            borderRadius: '8px',
+            border: '1px solid #eee',
+            marginTop: '1.2em',
+            marginLeft: 0,
+            marginRight: 0,
+            listStylePosition: 'inside',
+          }}
+        >
+          <li style={{ marginBottom: '0.7em' }}><b>Props</b>는 부모 컴포넌트가 자식 컴포넌트에 값을 전달할 때 사용하는 객체입니다.</li>
+          <li style={{ marginBottom: '0.7em' }}>컴포넌트의 재사용성과 유연성을 높여줍니다.</li>
+          <li style={{ marginBottom: '0.7em' }}>props는 읽기 전용이며, 자식 컴포넌트에서 직접 수정할 수 없습니다.</li>
+        </ul>
+        <h3>Props 예제: 인사 컴포넌트</h3>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><Greeting name="React 사용자" /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`function Greeting(props) {\n  return <h2>안녕하세요, {props.name}!<\/h2>;\n}\n\n<Greeting name=\"React 사용자\" />`}</MacCmd>
+            }]}
+          />
+        </div>
+        <h3>실무 예제: 여러 props 전달</h3>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><ProfileCard name="홍길동" age={28} job="Frontend Developer" /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`function ProfileCard(props) {\n  return (\n    <div>\n      <h3>{props.name}</h3>\n      <p>나이: {props.age}</p>\n      <p>직업: {props.job}</p>\n    </div>\n  );\n}\n\n<ProfileCard name=\"홍길동\" age={28} job=\"Frontend Developer\" />`}</MacCmd>
+            }]}
+          />
+        </div>
+        <h3>고급 예제: 모달 팝업에 props 전달</h3>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><ModalDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`import React, { useState } from 'react';\n\nfunction Modal({ open, onClose, message }) {\n  if (!open) return null;\n  return (\n    <div style={{\n      position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',\n      background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000\n    }}>\n      <div style={{ background: '#232323', color: '#eaeaea', padding: 32, borderRadius: 12, minWidth: 280, textAlign: 'center' }}>\n        <h3>Modal Popup</h3>\n        <p>{message}</p>\n        <button onClick={onClose}>Close</button>\n      </div>\n    </div>\n  );\n}\n\nfunction ModalDemo() {\n  const [open, setOpen] = useState(false);\n  const [value, setValue] = useState('Hello from parent!');\n  return (\n    <div>\n      <input value={value} onChange={e => setValue(e.target.value)} style={{ marginRight: 8, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />\n      <button onClick={() => setOpen(true)} style={{ padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>Open Modal</button>\n      <Modal open={open} onClose={() => setOpen(false)} message={value} />\n    </div>\n  );\n}`}</MacCmd>
+            }]}
+          />
+        </div>
+        <h3>실무 예제: 커스텀 버튼 컴포넌트</h3>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><CustomButton color="#27c93f" label="확인" /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`function CustomButton({ color, label }) {\n  return (\n    <button style={{\n      background: color, color: '#fff', border: 'none', borderRadius: 6, padding: '0.6em 1.5em', fontSize: '1em', cursor: 'pointer'\n    }}>{label}</button>\n  );\n}\n\n<CustomButton color=\"#27c93f\" label=\"확인\" />`}</MacCmd>
+            }]}
+          />
+        </div>
+        <h3>실무 예제: 리스트 컴포넌트</h3>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><ItemList items={["React", "Vue", "Angular"]} /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`function ItemList({ items }) {\n  return (\n    <ul>\n      {items.map(item => <li key={item}>{item}</li>)}\n    </ul>\n  );\n}\n\n<ItemList items={[\"React\", \"Vue\", \"Angular\"]} />`}</MacCmd>
+            }]}
+          />
+        </div>
+        <h3>실무 예제: 토글 스위치 컴포넌트</h3>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><Toggle label="다크 모드" initial={false} /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`function Toggle({ label, initial }) {\n  const [on, setOn] = React.useState(initial);\n  return (\n    <label style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#232323', color: '#eaeaea', borderRadius: 8, padding: '0.7em 1.2em', border: '1px solid #444', maxWidth: 320 }}>\n      <input type=\"checkbox\" checked={on} onChange={() => setOn(!on)} />\n      <span>{label}: {on ? 'ON' : 'OFF'}</span>\n    </label>\n  );\n}\n\n<Toggle label=\"다크 모드\" initial={false} />`}</MacCmd>
+            }]}
+          />
+        </div>
+      </div>
+    ),
   },
   state: {
     id: 'state',
@@ -784,6 +1036,30 @@ export const sections: Record<SectionId, Section> = {
             }]}
           />
         </div>
+        <h3>6. 실무 예제: 간단한 장바구니</h3>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><ShoppingCartDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`import { useState } from 'react';\n\nfunction ShoppingCart() {\n  const [cart, setCart] = useState<string[]>([]);\n  const products = ['Apple', 'Banana', 'Orange'];\n  const productIcons: Record<string, string> = { Apple: '🍎', Banana: '🍌', Orange: '🍊' };\n  const maxCount = 17;\n  return (\n    <div>\n      <ul>\n        {products.map(product => (\n          <li key={product}>\n            {product} <button onClick={() => setCart([...cart, product])}>Add</button>\n          </li>\n        ))}\n      </ul>\n    </div>\n  );\n}`}</MacCmd>
+            }]}
+          />
+        </div>
+        <h3>7. 고급 실무 예제: 수량 조절이 가능한 장바구니</h3>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><AdvancedCartDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`import { useState } from 'react';\n\nconst productIcons = { Apple: '🍎', Banana: '🍌', Orange: '🍊' };\nconst products = ['Apple', 'Banana', 'Orange'];\n\nfunction AdvancedCart() {\n  const [cart, setCart] = useState({ Apple: 0, Banana: 0, Orange: 0 });\n  const add = (name) => setCart(c => ({ ...c, [name]: c[name] + 1 }));\n  const remove = (name) => setCart(c => ({ ...c, [name]: Math.max(0, c[name] - 1) }));\n  const reset = () => setCart({ Apple: 0, Banana: 0, Orange: 0 });\n  return (\n    <div>\n      <ul>\n        {products.map(name => (\n          <li key={name}>\n            {productIcons[name]} {name}\n            <div style={{ display: 'flex', alignItems: 'center', minWidth: 160 }}>\n              <button onClick={() => add(name)}>+</button>\n              <button onClick={() => remove(name)} disabled={cart[name] === 0}>-</button>\n              <span> {cart[name]}</span>\n            </div>\n          </li>\n        ))}\n      </ul>\n      <button onClick={reset}>Reset</button>\n      <div style={{ fontSize: '2em', marginTop: '1em' }}>\n        {products.map(name => cart[name] > 0 && (\n          <span key={name} style={{ marginRight: '0.5em' }}>{productIcons[name].repeat(cart[name])}</span>\n        ))}\n      </div>\n    </div>\n  );\n}`}</MacCmd>
+            }]}
+          />
+        </div>
       </div>
     ),
   },
@@ -814,4 +1090,55 @@ export const sections: Record<SectionId, Section> = {
     prev: 'context',
     next: null,
   },
-}; 
+};
+
+// 실무 예제: 여러 props 전달
+function ProfileCard(props: { name: string; age: number; job: string }) {
+  return (
+    <div style={{ background: '#232323', color: '#eaeaea', borderRadius: '8px', padding: '1em 1.5em', border: '1px solid #444', maxWidth: 320 }}>
+      <h3 style={{ margin: '0 0 0.5em 0', fontSize: '1.2em' }}>{props.name}</h3>
+      <p style={{ margin: '0.2em 0' }}>나이: {props.age}</p>
+      <p style={{ margin: '0.2em 0' }}>직업: {props.job}</p>
+    </div>
+  );
+}
+
+// 실무 예제: 커스텀 버튼 컴포넌트
+function CustomButton({ color, label }: { color: string; label: string }) {
+  return (
+    <button style={{
+      background: color, color: '#fff', border: 'none', borderRadius: 6, padding: '0.6em 1.5em', fontSize: '1em', cursor: 'pointer'
+    }}>{label}</button>
+  );
+}
+
+// 실무 예제: 리스트 컴포넌트
+function ItemList({ items }: { items: string[] }) {
+  return (
+    <ul style={{ background: '#232323', color: '#eaeaea', borderRadius: 8, padding: '1em 1.5em', border: '1px solid #444', maxWidth: 320 }}>
+      {items.map(item => <li key={item} style={{ marginBottom: 4 }}>{item}</li>)}
+    </ul>
+  );
+}
+
+// 실무 예제: 토글 스위치 컴포넌트
+function Toggle({ label, initial }: { label: string; initial: boolean }) {
+  const [on, setOn] = React.useState(initial);
+  return (
+    <label style={{
+      display: 'flex',
+      alignItems: 'center',
+      gap: 8,
+      background: on ? '#27c93f' : '#232323',
+      color: '#fff',
+      borderRadius: 8,
+      padding: '0.7em 1.2em',
+      border: '1px solid #444',
+      maxWidth: 320,
+      transition: 'background 0.2s',
+    }}>
+      <input type="checkbox" checked={on} onChange={() => setOn(!on)} style={{ marginRight: 8 }} />
+      <span>{label}: {on ? 'ON' : 'OFF'}</span>
+    </label>
+  );
+} 

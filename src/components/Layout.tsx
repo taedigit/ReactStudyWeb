@@ -41,7 +41,14 @@ export const Layout = ({ children, currentSection, onSectionChange }: LayoutProp
         display="flex"
         alignItems="center"
       >
-        <Heading size="md" color="brand.500">React 튜토리얼</Heading>
+        <Link
+          href="#"
+          onClick={e => { e.preventDefault(); onSectionChange('intro'); }}
+          _hover={{ textDecoration: 'none' }}
+          color="brand.500"
+        >
+          <Heading size="md" color="brand.500">React Tutorial</Heading>
+        </Link>
       </Box>
       
       <Flex pt="60px" h="calc(100vh - 60px)" width="100vw">
