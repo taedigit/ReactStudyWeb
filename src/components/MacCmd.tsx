@@ -42,7 +42,7 @@ export function MacCmd({ children, showCaret = true, style, desc }: { children: 
   const [copied, setCopied] = useState(false);
   const [showDesc, setShowDesc] = useState(false);
   const descBtnRef = useRef<HTMLButtonElement>(null);
-  const [tooltipPos, setTooltipPos] = useState<{top: number, left: number, width: number}>();
+  const [_, setTooltipPos] = useState<{top: number, left: number, width: number}>();
 
   const handleCopy = () => {
     navigator.clipboard.writeText(code);

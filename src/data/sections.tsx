@@ -1580,49 +1580,91 @@ function MemoRenderOptDemo() {
     content: (
       <div>
         <h2>useCallback</h2>
+        <h4>1. 자식 컴포넌트에 함수 전달</h4>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><CallbackChildDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import React, { useState, useCallback } from 'react';\n\nconst MemoChild = React.memo(function MemoChild({ onClick }) {\n  console.log('자식 렌더');\n  return <button onClick={onClick}>자식 버튼</button>;\n});\n\nfunction CallbackChildDemo() {\n  const [count, setCount] = useState(0);\n  const handleClick = useCallback(() => setCount(c => c + 1), []);\n  return (\n    <div>\n      <MemoChild onClick={handleClick} />\n      <div style={{ marginTop: 8 }}>카운트: {count}</div>\n    </div>\n  );\n}`}</MacCmd>
-            }]}
-          />
+          <ExampleTab example={<CallbackChildDemo />} code={`import React, { useState, useCallback } from 'react';
+
+const MemoChild = React.memo(function MemoChild({ onClick }) {
+  console.log('자식 렌더');
+  return <button onClick={onClick}>자식 버튼</button>;
+});
+
+function CallbackChildDemo() {
+  const [count, setCount] = useState(0);
+  const handleClick = useCallback(() => setCount(c => c + 1), []);
+  return (
+    <div>
+      <MemoChild onClick={handleClick} />
+      <div style={{ marginTop: 8 }}>카운트: {count}</div>
+    </div>
+  );
+}`} showCaret={false} desc={"useCallback으로 handleClick 함수를 메모이제이션하여, 자식(MemoChild)에게 전달해도 불필요한 렌더링이 발생하지 않도록 하는 예제입니다."} />
         </div>
+        <h4>2. 의존성 배열 활용</h4>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><CallbackDepsDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import React, { useState, useCallback } from 'react';\n\nfunction CallbackDepsDemo() {\n  const [value, setValue] = useState('');\n  const [log, setLog] = useState([]);\n  const handleAdd = useCallback(() => {\n    setLog(l => [...l, value]);\n    setValue('');\n  }, [value]);\n  return (\n    <div>\n      <input value={value} onChange={e => setValue(e.target.value)} />\n      <button onClick={handleAdd}>추가</button>\n      <ul>\n        {log.map((item, i) => <li key={i}>{item}</li>)}\n      </ul>\n    </div>\n  );\n}`}</MacCmd>
-            }]}
-          />
+          <ExampleTab example={<CallbackDepsDemo />} code={`import React, { useState, useCallback } from 'react';
+
+function CallbackDepsDemo() {
+  const [value, setValue] = useState('');
+  const [log, setLog] = useState([]);
+  const handleAdd = useCallback(() => {
+    setLog(l => [...l, value]);
+    setValue('');
+  }, [value]);
+  return (
+    <div>
+      <input value={value} onChange={e => setValue(e.target.value)} />
+      <button onClick={handleAdd}>추가</button>
+      <ul>
+        {log.map((item, i) => <li key={i}>{item}</li>)}
+      </ul>
+    </div>
+  );
+}`} showCaret={false} desc={"useCallback의 의존성 배열([value])에 따라 handleAdd 함수가 새로 생성되는 예제입니다."} />
         </div>
+        <h4>3. 리스트 항목 추가/삭제</h4>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><CallbackListDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import React, { useState, useCallback } from 'react';\n\nfunction CallbackListDemo() {\n  const [items, setItems] = useState([]);\n  const addItem = useCallback(() => setItems(items => [...items, \`Item \${items.length + 1}\`]), []);\n  const removeItem = useCallback((idx) => setItems(items => items.filter((_, i) => i !== idx)), []);\n  return (\n    <div>\n      <button onClick={addItem}>항목 추가</button>\n      <ul>\n        {items.map((item, i) => (\n          <li key={i}>\n            {item}\n            <button onClick={() => removeItem(i)}>삭제</button>\n          </li>\n        ))}\n      </ul>\n    </div>\n  );\n}`}</MacCmd>
-            }]}
-          />
+          <ExampleTab example={<CallbackListDemo />} code={`import React, { useState, useCallback } from 'react';
+
+function CallbackListDemo() {
+  const [items, setItems] = useState([]);
+  const addItem = useCallback(() => setItems(items => [...items, \`Item\${items.length + 1}\`]), []);
+  const removeItem = useCallback((idx) => setItems(items => items.filter((_, i) => i !== idx)), []);
+  return (
+    <div>
+      <button onClick={addItem}>항목 추가</button>
+      <ul>
+        {items.map((item, i) => (
+          <li key={i}>
+            {item}
+            <button onClick={() => removeItem(i)}>삭제</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}`} showCaret={false} desc={"useCallback으로 리스트 추가/삭제 함수를 메모이제이션하여, 불필요한 렌더링을 방지하는 예제입니다."} />
         </div>
+        <h4>4. useCallback 없이 함수 전달</h4>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><CallbackNoMemoDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import React, { useState } from 'react';\n\nconst MemoChild = React.memo(function MemoChild({ onClick }) {\n  console.log('자식 렌더');\n  return <button onClick={onClick}>자식 버튼</button>;\n});\n\nfunction CallbackNoMemoDemo() {\n  const [count, setCount] = useState(0);\n  const handleClick = () => setCount(c => c + 1);\n  return (\n    <div>\n      <MemoChild onClick={handleClick} />\n      <div style={{ marginTop: 8 }}>카운트: {count}</div>\n      <div style={{ color: '#b5e853', marginTop: 8, fontSize: 13 }}>(useCallback 없이: 자식이 매번 렌더됨)</div>\n    </div>\n  );\n}`}</MacCmd>
-            }]}
-          />
+          <ExampleTab example={<CallbackNoMemoDemo />} code={`import React, { useState } from 'react';
+
+const MemoChild = React.memo(function MemoChild({ onClick }) {
+  console.log('자식 렌더');
+  return <button onClick={onClick}>자식 버튼</button>;
+});
+
+function CallbackNoMemoDemo() {
+  const [count, setCount] = useState(0);
+  const handleClick = () => setCount(c => c + 1);
+  return (
+    <div>
+      <MemoChild onClick={handleClick} />
+      <div style={{ marginTop: 8 }}>카운트: {count}</div>
+      <div style={{ color: '#b5e853', marginTop: 8, fontSize: 13 }}>(useCallback 없이: 자식이 매번 렌더됨)</div>
+    </div>
+  );
+}`} showCaret={false} desc={"useCallback 없이 함수를 자식에 전달하면, 부모가 렌더될 때마다 함수가 새로 생성되어 자식도 매번 렌더링되는 현상을 보여주는 예제입니다."} />
         </div>
       </div>
     ),
