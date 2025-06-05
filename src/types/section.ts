@@ -8,14 +8,21 @@ export type SectionId =
   | 'state'
   | 'hooks'
   | 'context'
-  | 'routing';
+  | 'routing'
+  | 'useState'
+  | 'useEffect'
+  | 'useRef'
+  | 'useMemo'
+  | 'useCallback'
+  | 'useReducer'
+  | 'useContext';
 
 export interface Section {
   id: SectionId;
   title: string;
   description: string;
   content?: ReactNode;
-  category: 'getting_started' | 'basics' | 'advanced';
+  category: 'getting_started' | 'basics' | 'advanced' | 'hooks';
   icon: string;
   prev: SectionId | null;
   next: SectionId | null;

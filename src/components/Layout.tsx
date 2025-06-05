@@ -19,6 +19,10 @@ export const Layout = ({ children, currentSection, onSectionChange }: LayoutProp
       title: '기본 개념',
       sections: Object.values(sections).filter((section: Section) => section.category === 'basics')
     },
+    hooks: {
+      title: 'Hooks',
+      sections: Object.values(sections).filter((section: Section) => section.category === 'hooks')
+    },
     advanced: {
       title: '고급 개념',
       sections: Object.values(sections).filter((section: Section) => section.category === 'advanced')
@@ -57,9 +61,10 @@ export const Layout = ({ children, currentSection, onSectionChange }: LayoutProp
           w="280px"
           bg="white"
           position="fixed"
+          left={0}
           top="60px"
-          bottom={0}
-          overflowY="hidden"
+          h="calc(100vh - 60px)"
+          overflowY="auto"
           borderRightWidth="1px"
           py={6}
         >
@@ -78,7 +83,7 @@ export const Layout = ({ children, currentSection, onSectionChange }: LayoutProp
                   {category.title}
                 </Text>
                 <Stack direction="column" gap={1}>
-                  {category.sections.map(section => (
+                  {category.sections.map((section: Section) => (
                     <Link
                       key={section.id}
                       px={6}

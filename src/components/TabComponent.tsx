@@ -53,7 +53,7 @@ export const TabComponent = ({ tabs }: TabComponentProps) => {
       </Stack>
       <Box minHeight="60px">
         {tabs[selected].content}
-      </Box>
-    </Box>
+              </Box>
+              </Box>
   );
 }; 

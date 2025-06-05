@@ -674,6 +674,62 @@ function ModalDemo() {
   );
 }
 
+// --- Place all helper/demo components here (above sections) ---
+// 실무 예제: 여러 props 전달
+function ProfileCard(props: { name: string; age: number; job: string }) {
+  return (
+    <div style={{ background: '#232323', color: '#eaeaea', borderRadius: '8px', padding: '1em 1.5em', border: '1px solid #444', maxWidth: 320 }}>
+      <h3 style={{ margin: '0 0 0.5em 0', fontSize: '1.2em' }}>{props.name}</h3>
+      <p style={{ margin: '0.2em 0' }}>나이: {props.age}</p>
+      <p style={{ margin: '0.2em 0' }}>직업: {props.job}</p>
+    </div>
+  );
+}
+
+// 실무 예제: 커스텀 버튼 컴포넌트
+function CustomButton({ color, label }: { color: string; label: string }) {
+  return (
+    <button style={{
+      background: color, color: '#fff', border: 'none', borderRadius: 6, padding: '0.6em 1.5em', fontSize: '1em', cursor: 'pointer'
+    }}>{label}</button>
+  );
+}
+
+// 실무 예제: 리스트 컴포넌트
+function ItemList({ items }: { items: string[] }) {
+  return (
+    <ul style={{ background: '#232323', color: '#eaeaea', borderRadius: 8, padding: '1em 1.5em', border: '1px solid #444', maxWidth: 320 }}>
+      {items.map(item => <li key={item} style={{ marginBottom: 4 }}>{item}</li>)}
+    </ul>
+  );
+}
+
+// 실무 예제: 토글 스위치 컴포넌트
+function Toggle({ label, initial }: { label: string; initial: boolean }) {
+  const [on, setOn] = React.useState(initial);
+  return (
+    <label style={{
+      display: 'flex',
+      alignItems: 'center',
+      gap: 8,
+      background: on ? '#27c93f' : '#232323',
+      color: '#fff',
+      borderRadius: 8,
+      padding: '0.7em 1.2em',
+      border: '1px solid #444',
+      maxWidth: 320,
+      transition: 'background 0.2s',
+    }}>
+      <input type="checkbox" checked={on} onChange={() => setOn(!on)} style={{ marginRight: 8 }} />
+      <span>{label}: {on ? 'ON' : 'OFF'}</span>
+    </label>
+  );
+}
+
+// Hooks 기본 예제: useState 카운터
+
+
+// --- sections export must be last ---
 export const sections: Record<SectionId, Section> = {
   intro: {
     id: 'intro',
@@ -1065,21 +1121,454 @@ export const sections: Record<SectionId, Section> = {
   },
   hooks: {
     id: 'hooks',
-    title: 'Hooks',
-    description: 'React의 훅(Hooks) 사용법을 배웁니다.',
-    category: 'basics',
+    title: 'Hooks 개요',
+    description: 'React의 주요 훅(Hooks) 종류와 특징을 소개합니다.',
+    category: 'hooks',
     icon: '🪝',
     prev: 'state',
-    next: 'context',
+    next: 'useState',
+    content: (
+      <div>
+        <h2>React Hooks란?</h2>
+        <ul style={{
+          marginBottom: '2em',
+          background: '#484f54',
+          padding: '1.5em 2em',
+          borderRadius: '8px',
+          border: '1px solid #eee',
+          marginTop: '1.2em',
+          marginLeft: 0,
+          marginRight: 0,
+          listStylePosition: 'inside',
+        }}>
+          <li><b>Hooks</b>는 함수형 컴포넌트에서 React의 다양한 기능(상태, 생명주기, 참조 등)을 사용할 수 있게 해주는 함수입니다.</li>
+        </ul>
+        <h3>1. 등장 배경: 왜 Hooks가 필요했을까?</h3>
+        <ul style={{ background: '#232323', color: '#eaeaea', padding: '1em 1.5em', borderRadius: 8, border: '1px solid #444', marginBottom: '1.5em', listStylePosition: 'inside' }}>
+          <li>과거에는 <b>클래스 컴포넌트</b>에서만 상태(state)와 생명주기(lifecycle) 기능을 사용할 수 있었습니다.</li>
+          <li>클래스 컴포넌트의 문제점:
+            <ul style={{ margin: '0.5em 0 0.5em 1.2em', background: 'none', padding: 0, border: 'none', color: '#b5e853' }}>
+              <li>로직 재사용이 어렵고, HOC/render props 패턴이 복잡함</li>
+              <li>this 바인딩 실수, 긴 boilerplate 코드</li>
+              <li>관련 없는 로직이 하나의 메서드(componentDidMount 등)에 섞임</li>
+              <li>테스트와 유지보수가 어려움</li>
+            </ul>
+          </li>
+          <li>함수형 컴포넌트의 단순함과 재사용성을 살리면서, 상태 관리와 부수효과 처리 등 고급 기능을 제공하기 위해 Hooks가 도입되었습니다. (React 16.8)</li>
+        </ul>
+        <h3>2. Hooks의 원칙(규칙)</h3>
+        <ul style={{ background: '#232323', color: '#eaeaea', padding: '1em 1.5em', borderRadius: 8, border: '1px solid #444', marginBottom: '1.5em', listStylePosition: 'inside' }}>
+          <li>Hook은 <b>반드시 함수형 컴포넌트의 최상위</b>에서만 호출해야 합니다. (조건문/반복문/중첩 함수 안에서 호출 금지)</li>
+          <li>Hook 이름은 <b>use</b>로 시작해야 합니다. (예: useState, useMyCustomHook)</li>
+          <li>React 버전 16.8 이상에서만 사용 가능</li>
+        </ul>
+        <h3>3. 주요 내장 Hooks</h3>
+        <ul style={{
+          background: '#232323', color: '#eaeaea', padding: '1em 1.5em', borderRadius: 8, border: '1px solid #444', marginBottom: '1.5em', listStylePosition: 'inside'
+        }}>
+          <li><b>useState</b>: 컴포넌트의 <b>상태</b>를 선언하고 관리</li>
+          <li><b>useEffect</b>: <b>부수효과(side effect)</b> 처리 (예: 데이터 fetch, 구독, 타이머 등)</li>
+          <li><b>useRef</b>: <b>DOM 참조</b> 또는 값 기억 (렌더링과 무관한 값 저장)</li>
+          <li><b>useMemo</b>: <b>비싼 연산</b>의 결과를 <b>메모이제이션</b> (성능 최적화)</li>
+          <li><b>useCallback</b>: <b>함수</b>를 메모이제이션 (불필요한 렌더링 방지)</li>
+          <li><b>useReducer</b>: <b>복잡한 상태 로직</b>을 reducer 패턴으로 관리</li>
+          <li><b>useContext</b>: <b>전역 데이터</b>를 컴포넌트 트리 전체에 전달</li>
+        </ul>
+        <h3>4. Hooks 사용 시 주의사항</h3>
+        <ul style={{
+          background: '#232323', color: '#eaeaea', padding: '1em 1.5em', borderRadius: 8, border: '1px solid #444', marginBottom: '1.5em', listStylePosition: 'inside'
+        }}>
+          <li>Hook은 <b>반드시 함수형 컴포넌트 최상위</b>에서만 호출해야 합니다. (조건문/반복문 안에서 호출 금지)</li>
+          <li>Hook 이름은 <b>use</b>로 시작해야 합니다. (예: useState, useMyCustomHook)</li>
+          <li>React 버전 16.8 이상에서만 사용 가능</li>
+        </ul>
+        <h3>5. 실습 안내</h3>
+        <ul style={{
+          background: '#484f54', color: '#fff', padding: '1em 1.5em', borderRadius: 8, border: '1px solid #eee', marginBottom: '1.5em', listStylePosition: 'inside'
+        }}>
+          <li>각 주요 Hook은 <b>별도의 페이지</b>에서 실습 예제와 함께 자세히 다룹니다.</li>
+          <li>좌측 메뉴에서 원하는 Hook을 선택해 직접 실습해보세요.</li>
+        </ul>
+      </div>
+    ),
   },
-  context: {
-    id: 'context',
-    title: 'Context',
-    description: 'Context API로 전역 상태를 관리하는 방법을 배웁니다.',
-    category: 'advanced',
-    icon: '🌐',
+  useState: {
+    id: 'useState',
+    title: 'useState',
+    description: '컴포넌트의 상태를 관리하는 가장 기본적인 Hook',
+    category: 'hooks',
+    icon: '🔢',
     prev: 'hooks',
-    next: 'routing',
+    next: 'useEffect',
+    content: (
+      <div>
+        <h2>useState</h2>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><CounterDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`import { useState } from 'react';\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  return (\n    <div>\n      <p>Count: {count}</p>\n      <button onClick={() => setCount(count + 1)}>+1</button>\n    </div>\n  );\n}`}</MacCmd>
+            }]}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><InputExampleDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`import { useState } from 'react';\n\nfunction InputExample() {\n  const [text, setText] = useState('');\n  return (\n    <input value={text} onChange={e => setText(e.target.value)} />\n  );\n}`}</MacCmd>
+            }]}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><TodoListDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`import { useState } from 'react';\n\nfunction TodoList() {\n  const [todos, setTodos] = useState(['공부하기', '운동하기']);\n  const [input, setInput] = useState('');\n  return (\n    <div>\n      <ul>\n        {todos.map((todo, i) => <li key={i}>{todo}</li>)}\n      </ul>\n      <input value={input} onChange={e => setInput(e.target.value)} placeholder=\"새 할 일\" />\n      <button onClick={() => {\n        if (input.trim()) {\n          setTodos([...todos, input]);\n          setInput('');\n        }\n      }}>추가</button>\n    </div>\n  );\n}`}</MacCmd>
+            }]}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><ProfileDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`import { useState } from 'react';\n\nfunction Profile() {\n  const [user, setUser] = useState({ name: '', age: 0 });\n  return (\n    <div>\n      <input value={user.name} onChange={e => setUser({ ...user, name: e.target.value })} />\n      <input type=\"number\" value={user.age} onChange={e => setUser({ ...user, age: Number(e.target.value) })} />\n    </div>\n  );\n}`}</MacCmd>
+            }]}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><MultiStateDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`import { useState } from 'react';\n\nfunction MultiState() {\n  const [count, setCount] = useState(0);\n  const [text, setText] = useState('');\n  return (\n    <div>\n      <button onClick={() => setCount(count + 1)}>+1</button>\n      <input value={text} onChange={e => setText(e.target.value)} />\n      <p>{count}, {text}</p>\n    </div>\n  );\n}`}</MacCmd>
+            }]}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><Toggle label="다크 모드" initial={false} /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`import { useState } from 'react';\n\nfunction Toggle({ label, initial }) {\n  const [on, setOn] = useState(initial);\n  return (\n    <label style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#232323', color: '#eaeaea', borderRadius: 8, padding: '0.7em 1.2em', border: '1px solid #444', maxWidth: 320 }}>\n      <input type=\"checkbox\" checked={on} onChange={() => setOn(!on)} />\n      <span>{label}: {on ? 'ON' : 'OFF'}</span>\n    </label>\n  );\n}\n\n<Toggle label=\"다크 모드\" initial={false} />`}</MacCmd>
+            }]}
+          />
+        </div>
+      </div>
+    ),
+  },
+  useEffect: {
+    id: 'useEffect',
+    title: 'useEffect',
+    description: '컴포넌트의 side effect(부수효과)를 처리하는 Hook',
+    category: 'hooks',
+    icon: '⏰',
+    prev: 'useState',
+    next: 'useRef',
+    content: (
+      <div>
+        <h2>useEffect</h2>
+        <h4>Mount/Unmount Effect</h4>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><MountEffectDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`import { useEffect } from 'react';\n\nfunction MountEffectDemo() {\n  useEffect(() => {\n    console.log('컴포넌트 마운트됨');\n    return () => {\n      console.log('컴포넌트 언마운트됨');\n    };\n  }, []);\n  return <div>마운트/언마운트 시 콘솔에 로그</div>;\n}`}</MacCmd>
+            }]}
+          />
+        </div>
+        <h4>Dependency Effect</h4>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><DepsEffectDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`import { useState, useEffect } from 'react';\n\nfunction DepsEffectDemo() {\n  const [count, setCount] = useState(0);\n  useEffect(() => {\n    document.title = \`카운트: \${count}\`;\n  }, [count]);\n  return (\n    <div>\n      <button onClick={() => setCount(count + 1)}>+1</button>\n      <span style={{ marginLeft: 8 }}>{count}</span>\n    </div>\n  );\n}`}</MacCmd>
+            }]}
+          />
+        </div>
+        <h4>Fetch Data Effect</h4>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><FetchEffectDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`import { useState, useEffect } from 'react';\n\nfunction FetchEffectDemo() {\n  const [data, setData] = useState(null);\n  useEffect(() => {\n    fetch('https://jsonplaceholder.typicode.com/todos/1')\n      .then(res => res.json())\n      .then(json => setData(json));\n  }, []);\n  return <pre>{JSON.stringify(data, null, 2)}</pre>;\n}`}</MacCmd>
+            }]}
+          />
+        </div>
+        <h4>Timer Effect</h4>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><TimerEffectDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`import { useState, useEffect } from 'react';\n\nfunction TimerEffectDemo() {\n  const [sec, setSec] = useState(0);\n  useEffect(() => {\n    const id = setInterval(() => setSec(s => s + 1), 1000);\n    return () => clearInterval(id);\n  }, []);\n  return <div>타이머: {sec}초</div>;\n}`}</MacCmd>
+            }]}
+          />
+        </div>
+        <h4>Resize Effect</h4>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><ResizeEffectDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`import { useState, useEffect } from 'react';\n\nfunction ResizeEffectDemo() {\n  const [width, setWidth] = useState(window.innerWidth);\n  useEffect(() => {\n    const onResize = () => setWidth(window.innerWidth);\n    window.addEventListener('resize', onResize);\n    return () => window.removeEventListener('resize', onResize);\n  }, []);\n  return <div>윈도우 너비: {width}px</div>;\n}`}</MacCmd>
+            }]}
+          />
+        </div>
+      </div>
+    ),
+  },
+  useRef: {
+    id: 'useRef',
+    title: 'useRef',
+    description: 'DOM 요소나 값을 참조할 때 사용하는 Hook',
+    category: 'hooks',
+    icon: '📌',
+    prev: 'useEffect',
+    next: 'useMemo',
+    content: (
+      <div>
+        <h2>useRef</h2>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><RefFocusDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`import { useRef } from 'react';\n\nfunction RefFocusDemo() {\n  const inputRef = useRef(null);\n  return (\n    <div>\n      <input ref={inputRef} />\n      <button onClick={() => inputRef.current && inputRef.current.focus()}>포커스</button>\n    </div>\n  );\n}`}</MacCmd>
+            }]}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><RefPrevValueDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`import { useRef, useState, useEffect } from 'react';\n\nfunction RefPrevValueDemo() {\n  const [value, setValue] = useState('');\n  const prevValue = useRef('');\n  useEffect(() => {\n    prevValue.current = value;\n  }, [value]);\n  return (\n    <div>\n      <input value={value} onChange={e => setValue(e.target.value)} />\n      <div>이전 값: {prevValue.current}</div>\n    </div>\n  );\n}`}</MacCmd>
+            }]}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><RefIntervalDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`import { useRef, useState, useEffect } from 'react';\n\nfunction RefIntervalDemo() {\n  const [count, setCount] = useState(0);\n  const intervalRef = useRef<number | null>(null);\n  const start = () => {\n    if (!intervalRef.current) {\n      intervalRef.current = window.setInterval(() => setCount(c => c + 1), 1000);\n    }\n  };\n  const stop = () => {\n    if (intervalRef.current) {\n      clearInterval(intervalRef.current);\n      intervalRef.current = null;\n    }\n  };\n  useEffect(() => stop, []);\n  return (\n    <div>\n      <div>카운트: {count}</div>\n      <button onClick={start}>시작</button>\n      <button onClick={stop}>정지</button>\n    </div>\n  );\n}`}</MacCmd>
+            }]}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><RefDomStyleDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`import { useRef } from 'react';\n\nfunction RefDomStyleDemo() {\n  const boxRef = useRef(null);\n  const changeColor = () => {\n    if (boxRef.current) {\n      boxRef.current.style.background = '#27c93f';\n    }\n  };\n  return (\n    <div>\n      <div ref={boxRef} style={{ width: 120, height: 60, background: '#232323', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 8, marginBottom: 8 }}>Box</div>\n      <button onClick={changeColor}>배경색 변경</button>\n    </div>\n  );\n}`}</MacCmd>
+            }]}
+          />
+        </div>
+      </div>
+    ),
+  },
+  useMemo: {
+    id: 'useMemo',
+    title: 'useMemo',
+    description: '비싼 연산 결과를 메모이제이션할 때 사용하는 Hook',
+    category: 'hooks',
+    icon: '🧠',
+    prev: 'useRef',
+    next: 'useCallback',
+    content: (
+      <div>
+        <h2>useMemo</h2>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><MemoExpensiveCalcDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`import { useState, useMemo } from 'react';\n\nfunction MemoExpensiveCalcDemo() {\n  const [num, setNum] = useState(1);\n  const [other, setOther] = useState('');\n  const fib = useMemo(() => {\n    function fibo(n: number): number {\n      if (n <= 1) return n;\n      return fibo(n - 1) + fibo(n - 2);\n    }\n    return fibo(num);\n  }, [num]);\n  return (\n    <div>\n      <label>\n        피보나치 n: \n        <input type=\"number\" value={num} min={1} max={35} onChange={e => setNum(Number(e.target.value))} style={{ margin: '0 8px', width: 60 }} />\n      </label>\n      <span>결과: {fib}</span>\n      <div style={{ marginTop: 12 }}>\n        <input value={other} onChange={e => setOther(e.target.value)} placeholder=\"다른 입력 (성능 영향 없음)\" style={{ top: 8, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />\n      </div>\n    </div>\n  );\n}`}</MacCmd>
+            }]}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><MemoFilterSortDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`import { useState, useMemo } from 'react';\n\nfunction MemoFilterSortDemo() {\n  const [query, setQuery] = useState('');\n  const [sort, setSort] = useState(false);\n  const items = useMemo(() => Array.from({ length: 1000 }, (_, i) => \`Item \${i + 1}\`), []);\n  const filtered = useMemo(() => {\n    let result = items.filter(item => item.toLowerCase().includes(query.toLowerCase()));\n    if (sort) result = [...result].sort();\n    return result;\n  }, [items, query, sort]);\n  return (\n    <div>\n      <input value={query} onChange={e => setQuery(e.target.value)} placeholder=\"검색\" style={{ marginRight: 8, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />\n      <label style={{ marginRight: 8 }}>\n        <input type=\"checkbox\" checked={sort} onChange={e => setSort(e.target.checked)} /> 정렬\n      </label>\n      <div style={{ maxHeight: 120, overflowY: 'auto', background: '#232323', borderRadius: 8, marginTop: 8, padding: 8 }}>\n        {filtered.slice(0, 20).map(item => <div key={item}>{item}</div>)}\n        {filtered.length > 20 && <div style={{ color: '#aaa' }}>...and {filtered.length - 20} more</div>}\n      </div>\n    </div>\n  );\n}`}</MacCmd>
+            }]}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><MemoDependencyDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`import { useState, useMemo } from 'react';\n\nfunction MemoDependencyDemo() {\n  const [a, setA] = useState(1);\n  const [b, setB] = useState(1);\n  const sum = useMemo(() => a + b, [a, b]);\n  return (\n    <div>\n      <input type=\"number\" value={a} onChange={e => setA(Number(e.target.value))} style={{ marginRight: 8, width: 60 }} />\n      + \n      <input type=\"number\" value={b} onChange={e => setB(Number(e.target.value))} style={{ margin: '0 8px', width: 60 }} />\n      = <span>{sum}</span>\n    </div>\n  );\n}`}</MacCmd>
+            }]}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><MemoRenderOptDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`import { useState, useMemo } from 'react';\n\nfunction MemoRenderOptDemo() {\n  const [count, setCount] = useState(0);\n  const [text, setText] = useState('');\n  const expensive = useMemo(() => {\n    let total = 0;\n    for (let i = 0; i < 100000000; i++) total += 1;\n    return total;\n  }, [count]);\n  return (\n    <div>\n      <button onClick={() => setCount(count + 1)} style={{ marginRight: 8, padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>+1</button>\n      <span>Count: {count}</span>\n      <div style={{ marginTop: 8 }}>\n        <input value={text} onChange={e => setText(e.target.value)} placeholder=\"입력 (성능 영향 없음)\" style={{ padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />\n      </div>\n      <div style={{ marginTop: 8, color: '#b5e853' }}>비싼 연산 결과: {expensive}</div>\n    </div>\n  );\n}`}</MacCmd>
+            }]}
+          />
+        </div>
+      </div>
+    ),
+  },
+  useCallback: {
+    id: 'useCallback',
+    title: 'useCallback',
+    description: '함수를 메모이제이션할 때 사용하는 Hook',
+    category: 'hooks',
+    icon: '🔁',
+    prev: 'useMemo',
+    next: 'useReducer',
+    content: (
+      <div>
+        <h2>useCallback</h2>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><CallbackChildDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`import React, { useState, useCallback } from 'react';\n\nconst MemoChild = React.memo(function MemoChild({ onClick }) {\n  console.log('자식 렌더');\n  return <button onClick={onClick}>자식 버튼</button>;\n});\n\nfunction CallbackChildDemo() {\n  const [count, setCount] = useState(0);\n  const handleClick = useCallback(() => setCount(c => c + 1), []);\n  return (\n    <div>\n      <MemoChild onClick={handleClick} />\n      <div style={{ marginTop: 8 }}>카운트: {count}</div>\n    </div>\n  );\n}`}</MacCmd>
+            }]}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><CallbackDepsDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`import React, { useState, useCallback } from 'react';\n\nfunction CallbackDepsDemo() {\n  const [value, setValue] = useState('');\n  const [log, setLog] = useState([]);\n  const handleAdd = useCallback(() => {\n    setLog(l => [...l, value]);\n    setValue('');\n  }, [value]);\n  return (\n    <div>\n      <input value={value} onChange={e => setValue(e.target.value)} />\n      <button onClick={handleAdd}>추가</button>\n      <ul>\n        {log.map((item, i) => <li key={i}>{item}</li>)}\n      </ul>\n    </div>\n  );\n}`}</MacCmd>
+            }]}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><CallbackListDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`import React, { useState, useCallback } from 'react';\n\nfunction CallbackListDemo() {\n  const [items, setItems] = useState([]);\n  const addItem = useCallback(() => setItems(items => [...items, \`Item \${items.length + 1}\`]), []);\n  const removeItem = useCallback((idx) => setItems(items => items.filter((_, i) => i !== idx)), []);\n  return (\n    <div>\n      <button onClick={addItem}>항목 추가</button>\n      <ul>\n        {items.map((item, i) => (\n          <li key={i}>\n            {item}\n            <button onClick={() => removeItem(i)}>삭제</button>\n          </li>\n        ))}\n      </ul>\n    </div>\n  );\n}`}</MacCmd>
+            }]}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><CallbackNoMemoDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`import React, { useState } from 'react';\n\nconst MemoChild = React.memo(function MemoChild({ onClick }) {\n  console.log('자식 렌더');\n  return <button onClick={onClick}>자식 버튼</button>;\n});\n\nfunction CallbackNoMemoDemo() {\n  const [count, setCount] = useState(0);\n  const handleClick = () => setCount(c => c + 1);\n  return (\n    <div>\n      <MemoChild onClick={handleClick} />\n      <div style={{ marginTop: 8 }}>카운트: {count}</div>\n      <div style={{ color: '#b5e853', marginTop: 8, fontSize: 13 }}>(useCallback 없이: 자식이 매번 렌더됨)</div>\n    </div>\n  );\n}`}</MacCmd>
+            }]}
+          />
+        </div>
+      </div>
+    ),
+  },
+  useReducer: {
+    id: 'useReducer',
+    title: 'useReducer',
+    description: '복잡한 상태 로직을 관리할 때 사용하는 Hook',
+    category: 'hooks',
+    icon: '🗂️',
+    prev: 'useCallback',
+    next: 'useContext',
+    content: (
+      <div>
+        <h2>useReducer</h2>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><UseReducerDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`import { useReducer } from 'react';\n\nfunction reducer(state, action) {\n  switch (action.type) {\n    case 'inc': return { count: state.count + 1 };\n    case 'dec': return { count: state.count - 1 };\n    default: return state;\n  }\n}\n\nfunction UseReducerDemo() {\n  const [state, dispatch] = useReducer(reducer, { count: 0 });\n  return (\n    <div>\n      <button onClick={() => dispatch({ type: 'dec' })}>-</button>\n      <span style={{ margin: '0 1em' }}>{state.count}</span>\n      <button onClick={() => dispatch({ type: 'inc' })}>+</button>\n    </div>\n  );\n}`}</MacCmd>
+            }]}
+          />
+        </div>
+      </div>
+    ),
+  },
+  useContext: {
+    id: 'useContext',
+    title: 'useContext',
+    description: '컴포넌트 트리 전체에 데이터를 전달할 때 사용하는 Hook',
+    category: 'hooks',
+    icon: '🌐',
+    prev: 'useReducer',
+    next: null,
+    content: (
+      <div>
+        <h2>useContext</h2>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><UseContextDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`import { createContext, useContext } from 'react';\n\nconst MyContext = createContext('기본값');\n\nfunction Child() {\n  const value = useContext(MyContext);\n  return <div>Context 값: {value}</div>;\n}\n\nfunction UseContextDemo() {\n  return (\n    <MyContext.Provider value=\"공유된 값\">\n      <Child />\n    </MyContext.Provider>\n  );\n}`}</MacCmd>
+            }]}
+          />
+        </div>
+      </div>
+    ),
   },
   routing: {
     id: 'routing',
@@ -1090,55 +1579,320 @@ export const sections: Record<SectionId, Section> = {
     prev: 'context',
     next: null,
   },
+  context: {
+    id: 'context',
+    title: 'Context',
+    description: 'Context API로 전역 상태를 관리하는 방법을 배웁니다.',
+    category: 'advanced',
+    icon: '🌐',
+    prev: 'hooks',
+    next: 'routing',
+    content: (
+      <div>
+        <h2>Context API</h2>
+        <p>Context를 사용하면 컴포넌트 트리 전체에 데이터를 전달할 수 있습니다.</p>
+      </div>
+    ),
+  },
 };
+  
 
-// 실무 예제: 여러 props 전달
-function ProfileCard(props: { name: string; age: number; job: string }) {
+
+function UseReducerDemo() {
+  const reducer = (state: { count: number }, action: { type: string }) => {
+    switch (action.type) {
+      case 'inc': return { count: state.count + 1 };
+      case 'dec': return { count: state.count - 1 };
+      default: return state;
+    }
+  };
+  const [state, dispatch] = React.useReducer(reducer, { count: 0 });
   return (
-    <div style={{ background: '#232323', color: '#eaeaea', borderRadius: '8px', padding: '1em 1.5em', border: '1px solid #444', maxWidth: 320 }}>
-      <h3 style={{ margin: '0 0 0.5em 0', fontSize: '1.2em' }}>{props.name}</h3>
-      <p style={{ margin: '0.2em 0' }}>나이: {props.age}</p>
-      <p style={{ margin: '0.2em 0' }}>직업: {props.job}</p>
+    <div>
+      <button onClick={() => dispatch({ type: 'dec' })} style={{ padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>-</button>
+      <span style={{ margin: '0 1em', color: '#eaeaea' }}>{state.count}</span>
+      <button onClick={() => dispatch({ type: 'inc' })} style={{ padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>+</button>
     </div>
   );
 }
 
-// 실무 예제: 커스텀 버튼 컴포넌트
-function CustomButton({ color, label }: { color: string; label: string }) {
+function UseContextDemo() {
+  const MyContext = React.createContext('기본값');
+  function Child() {
+    const value = React.useContext(MyContext);
+    return <div style={{ color: '#eaeaea' }}>Context 값: {value}</div>;
+  }
   return (
-    <button style={{
-      background: color, color: '#fff', border: 'none', borderRadius: 6, padding: '0.6em 1.5em', fontSize: '1em', cursor: 'pointer'
-    }}>{label}</button>
+    <MyContext.Provider value="공유된 값">
+      <Child />
+    </MyContext.Provider>
+  );
+}
+// ... existing code ...
+  
+// --- useEffect Demo Components ---
+function MountEffectDemo() {
+  React.useEffect(() => {
+    console.log('컴포넌트 마운트됨');
+    return () => {
+      console.log('컴포넌트 언마운트됨');
+    };
+  }, []);
+  return <div style={{ color: '#eaeaea' }}>마운트/언마운트 시 콘솔에 로그</div>;
+}
+
+function DepsEffectDemo() {
+  const [count, setCount] = React.useState(0);
+  React.useEffect(() => {
+    document.title = `카운트: ${count}`;
+  }, [count]);
+  return (
+    <div>
+      <button onClick={() => setCount(count + 1)} style={{ padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer', marginRight: 8 }}>+1</button>
+      <span style={{ color: '#eaeaea' }}>{count}</span>
+    </div>
   );
 }
 
-// 실무 예제: 리스트 컴포넌트
-function ItemList({ items }: { items: string[] }) {
+function FetchEffectDemo() {
+  const [data, setData] = React.useState<any>(null);
+  React.useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/todos/1')
+      .then(res => res.json())
+      .then(json => setData(json));
+  }, []);
+  return <pre style={{ color: '#eaeaea', background: '#232323', padding: 12, borderRadius: 8 }}>{JSON.stringify(data, null, 2)}</pre>;
+}
+
+function TimerEffectDemo() {
+  const [sec, setSec] = React.useState(0);
+  React.useEffect(() => {
+    const id = setInterval(() => setSec(s => s + 1), 1000);
+    return () => clearInterval(id);
+  }, []);
+  return <div style={{ color: '#eaeaea' }}>타이머: {sec}초</div>;
+}
+
+function ResizeEffectDemo() {
+  const [width, setWidth] = React.useState(window.innerWidth);
+  React.useEffect(() => {
+    const onResize = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+  return <div style={{ color: '#eaeaea' }}>윈도우 너비: {width}px</div>;
+}
+  
+// --- useRef Demo Components ---
+function RefFocusDemo() {
+  const inputRef = React.useRef<HTMLInputElement>(null);
   return (
-    <ul style={{ background: '#232323', color: '#eaeaea', borderRadius: 8, padding: '1em 1.5em', border: '1px solid #444', maxWidth: 320 }}>
-      {items.map(item => <li key={item} style={{ marginBottom: 4 }}>{item}</li>)}
-    </ul>
+    <div>
+      <input ref={inputRef} style={{ marginRight: 8, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />
+      <button onClick={() => inputRef.current && inputRef.current.focus()} style={{ padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>포커스</button>
+    </div>
   );
 }
 
-// 실무 예제: 토글 스위치 컴포넌트
-function Toggle({ label, initial }: { label: string; initial: boolean }) {
-  const [on, setOn] = React.useState(initial);
+function RefPrevValueDemo() {
+  const [value, setValue] = React.useState('');
+  const prevValue = React.useRef('');
+  React.useEffect(() => {
+    prevValue.current = value;
+  }, [value]);
   return (
-    <label style={{
-      display: 'flex',
-      alignItems: 'center',
-      gap: 8,
-      background: on ? '#27c93f' : '#232323',
-      color: '#fff',
-      borderRadius: 8,
-      padding: '0.7em 1.2em',
-      border: '1px solid #444',
-      maxWidth: 320,
-      transition: 'background 0.2s',
-    }}>
-      <input type="checkbox" checked={on} onChange={() => setOn(!on)} style={{ marginRight: 8 }} />
-      <span>{label}: {on ? 'ON' : 'OFF'}</span>
-    </label>
+    <div style={{ color: '#eaeaea' }}>
+      <input value={value} onChange={e => setValue(e.target.value)} style={{ marginRight: 8, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />
+      <div>이전 값: {prevValue.current}</div>
+    </div>
   );
-} 
+}
+
+function RefIntervalDemo() {
+  const [count, setCount] = React.useState(0);
+  const intervalRef = React.useRef<number | null>(null);
+  const start = () => {
+    if (!intervalRef.current) {
+      intervalRef.current = window.setInterval(() => setCount(c => c + 1), 1000);
+    }
+  };
+  const stop = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  };
+  React.useEffect(() => stop, []);
+  return (
+    <div style={{ color: '#eaeaea' }}>
+      <div>카운트: {count}</div>
+      <button onClick={start} style={{ marginRight: 8, padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>시작</button>
+      <button onClick={stop} style={{ padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>정지</button>
+    </div>
+  );
+}
+
+function RefDomStyleDemo() {
+  const boxRef = React.useRef<HTMLDivElement>(null);
+  const changeColor = () => {
+    if (boxRef.current) {
+      boxRef.current.style.background = '#27c93f';
+    }
+  };
+  return (
+    <div>
+      <div ref={boxRef} style={{ width: 120, height: 60, background: '#232323', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 8, marginBottom: 8 }}>Box</div>
+      <button onClick={changeColor} style={{ padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>배경색 변경</button>
+    </div>
+  );
+}
+  
+// --- useMemo Demo Components ---
+function MemoExpensiveCalcDemo() {
+  const [num, setNum] = React.useState(1);
+  const [other, setOther] = React.useState('');
+  const fib = React.useMemo(() => {
+    function fibo(n: number): number {
+      if (n <= 1) return n;
+      return fibo(n - 1) + fibo(n - 2);
+    }
+    return fibo(num);
+  }, [num]);
+  return (
+    <div style={{ color: '#eaeaea' }}>
+      <label>
+        피보나치 n: 
+        <input type="number" value={num} min={1} max={35} onChange={e => setNum(Number(e.target.value))} style={{ margin: '0 8px', width: 60 }} />
+      </label>
+      <span>결과: {fib}</span>
+      <div style={{ marginTop: 12 }}>
+        <input value={other} onChange={e => setOther(e.target.value)} placeholder="다른 입력 (성능 영향 없음)" style={{ top: 8, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />
+      </div>
+    </div>
+  );
+}
+
+function MemoFilterSortDemo() {
+  const [query, setQuery] = React.useState('');
+  const [sort, setSort] = React.useState(false);
+  const items = React.useMemo(() => Array.from({ length: 1000 }, (_, i) => `Item ${i + 1}`), []);
+  const filtered = React.useMemo(() => {
+    let result = items.filter(item => item.toLowerCase().includes(query.toLowerCase()));
+    if (sort) result = [...result].sort();
+    return result;
+  }, [items, query, sort]);
+  return (
+    <div style={{ color: '#eaeaea' }}>
+      <input value={query} onChange={e => setQuery(e.target.value)} placeholder="검색" style={{ marginRight: 8, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />
+      <label style={{ marginRight: 8 }}>
+        <input type="checkbox" checked={sort} onChange={e => setSort(e.target.checked)} /> 정렬
+      </label>
+      <div style={{ maxHeight: 120, overflowY: 'auto', background: '#232323', borderRadius: 8, marginTop: 8, padding: 8 }}>
+        {filtered.slice(0, 20).map(item => <div key={item}>{item}</div>)}
+        {filtered.length > 20 && <div style={{ color: '#aaa' }}>...and {filtered.length - 20} more</div>}
+      </div>
+    </div>
+  );
+}
+
+function MemoDependencyDemo() {
+  const [a, setA] = React.useState(1);
+  const [b, setB] = React.useState(1);
+  const sum = React.useMemo(() => a + b, [a, b]);
+  return (
+    <div style={{ color: '#eaeaea' }}>
+      <input type="number" value={a} onChange={e => setA(Number(e.target.value))} style={{ marginRight: 8, width: 60 }} />
+      +
+      <input type="number" value={b} onChange={e => setB(Number(e.target.value))} style={{ margin: '0 8px', width: 60 }} />
+      = <span>{sum}</span>
+    </div>
+  );
+}
+
+function MemoRenderOptDemo() {
+  const [count, setCount] = React.useState(0);
+  const [text, setText] = React.useState('');
+  const expensive = React.useMemo(() => {
+    let total = 0;
+    for (let i = 0; i < 100000000; i++) total += 1;
+    return total;
+  }, [count]);
+  return (
+    <div style={{ color: '#eaeaea' }}>
+      <button onClick={() => setCount(count + 1)} style={{ marginRight: 8, padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>+1</button>
+      <span>Count: {count}</span>
+      <div style={{ marginTop: 8 }}>
+        <input value={text} onChange={e => setText(e.target.value)} placeholder="입력 (성능 영향 없음)" style={{ padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />
+      </div>
+      <div style={{ marginTop: 8, color: '#b5e853' }}>비싼 연산 결과: {expensive}</div>
+    </div>
+  );
+}
+  
+// --- useCallback Demo Components ---
+const MemoChild = React.memo(function MemoChild({ onClick }: { onClick: () => void }) {
+  console.log('자식 렌더');
+  return <button onClick={onClick} style={{ padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>자식 버튼</button>;
+});
+
+function CallbackChildDemo() {
+  const [count, setCount] = React.useState(0);
+  const handleClick = React.useCallback(() => setCount(c => c + 1), []);
+  return (
+    <div style={{ color: '#eaeaea' }}>
+      <MemoChild onClick={handleClick} />
+      <div style={{ marginTop: 8 }}>카운트: {count}</div>
+    </div>
+  );
+}
+
+function CallbackDepsDemo() {
+  const [value, setValue] = React.useState('');
+  const [log, setLog] = React.useState<string[]>([]);
+  const handleAdd = React.useCallback(() => {
+    setLog(l => [...l, value]);
+    setValue('');
+  }, [value]);
+  return (
+    <div style={{ color: '#eaeaea' }}>
+      <input value={value} onChange={e => setValue(e.target.value)} style={{ marginRight: 8, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />
+      <button onClick={handleAdd} style={{ padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>추가</button>
+      <ul style={{ marginTop: 8 }}>
+        {log.map((item, i) => <li key={i}>{item}</li>)}
+      </ul>
+    </div>
+  );
+}
+
+function CallbackListDemo() {
+  const [items, setItems] = React.useState<string[]>([]);
+  const addItem = React.useCallback(() => setItems(items => [...items, `Item ${items.length + 1}`]), []);
+  const removeItem = React.useCallback((idx: number) => setItems(items => items.filter((_, i) => i !== idx)), []);
+  return (
+    <div style={{ color: '#eaeaea' }}>
+      <button onClick={addItem} style={{ marginRight: 8, padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>항목 추가</button>
+      <ul style={{ marginTop: 8 }}>
+        {items.map((item, i) => (
+          <li key={i} style={{ display: 'flex', alignItems: 'center', marginBottom: 4 }}>
+            {item}
+            <button onClick={() => removeItem(i)} style={{ marginLeft: 8, padding: '0.2em 0.8em', borderRadius: 6, background: '#444', color: '#fff', border: 'none', cursor: 'pointer' }}>삭제</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function CallbackNoMemoDemo() {
+  const [count, setCount] = React.useState(0);
+  const handleClick = () => setCount(c => c + 1);
+  return (
+    <div style={{ color: '#eaeaea' }}>
+      <MemoChild onClick={handleClick} />
+      <div style={{ marginTop: 8 }}>카운트: {count}</div>
+      <div style={{ color: '#b5e853', marginTop: 8, fontSize: 13 }}>(useCallback 없이: 자식이 매번 렌더됨)</div>
+    </div>
+  );
+}
+  
+// ... existing code ...
