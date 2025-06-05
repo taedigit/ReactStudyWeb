@@ -911,7 +911,6 @@ export const sections: Record<SectionId, Section> = {
     next: 'state',
     content: (
       <div>
-        <h2>Props란?</h2>
         <ul
           style={{
             marginBottom: '2em',
@@ -929,7 +928,7 @@ export const sections: Record<SectionId, Section> = {
           <li style={{ marginBottom: '0.7em' }}>컴포넌트의 재사용성과 유연성을 높여줍니다.</li>
           <li style={{ marginBottom: '0.7em' }}>props는 읽기 전용이며, 자식 컴포넌트에서 직접 수정할 수 없습니다.</li>
         </ul>
-        <h3>Props 예제: 인사 컴포넌트</h3>
+        <h3>1. 인사 컴포넌트</h3>
         <div style={stateExampleBlockStyle}>
           <TabComponent
             tabs={[{
@@ -941,7 +940,7 @@ export const sections: Record<SectionId, Section> = {
             }]}
           />
         </div>
-        <h3>실무 예제: 여러 props 전달</h3>
+        <h3>2. 여러 props 전달</h3>
         <div style={stateExampleBlockStyle}>
           <TabComponent
             tabs={[{
@@ -953,7 +952,7 @@ export const sections: Record<SectionId, Section> = {
             }]}
           />
         </div>
-        <h3>고급 예제: 모달 팝업에 props 전달</h3>
+        <h3>3. 모달 팝업에 props 전달</h3>
         <div style={stateExampleBlockStyle}>
           <TabComponent
             tabs={[{
@@ -965,7 +964,7 @@ export const sections: Record<SectionId, Section> = {
             }]}
           />
         </div>
-        <h3>실무 예제: 커스텀 버튼 컴포넌트</h3>
+        <h3>4. 커스텀 버튼 컴포넌트</h3>
         <div style={stateExampleBlockStyle}>
           <TabComponent
             tabs={[{
@@ -977,7 +976,7 @@ export const sections: Record<SectionId, Section> = {
             }]}
           />
         </div>
-        <h3>실무 예제: 리스트 컴포넌트</h3>
+        <h3>5. 리스트 컴포넌트</h3>
         <div style={stateExampleBlockStyle}>
           <TabComponent
             tabs={[{
@@ -989,7 +988,7 @@ export const sections: Record<SectionId, Section> = {
             }]}
           />
         </div>
-        <h3>실무 예제: 토글 스위치 컴포넌트</h3>
+        <h3>6. 토글 스위치 컴포넌트</h3>
         <div style={stateExampleBlockStyle}>
           <TabComponent
             tabs={[{
@@ -997,7 +996,7 @@ export const sections: Record<SectionId, Section> = {
               content: <MacCmdExampleWrapper><Toggle label="다크 모드" initial={false} /></MacCmdExampleWrapper>
             }, {
               label: 'Source',
-              content: <MacCmd showCaret={false}>{`function Toggle({ label, initial }) {\n  const [on, setOn] = React.useState(initial);\n  return (\n    <label style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#232323', color: '#eaeaea', borderRadius: 8, padding: '0.7em 1.2em', border: '1px solid #444', maxWidth: 320 }}>\n      <input type=\"checkbox\" checked={on} onChange={() => setOn(!on)} />\n      <span>{label}: {on ? 'ON' : 'OFF'}</span>\n    </label>\n  );\n}\n\n<Toggle label=\"다크 모드\" initial={false} />`}</MacCmd>
+              content: <MacCmd showCaret={false}>{`import { useState } from 'react';\n\nfunction Toggle({ label, initial }) {\n  const [on, setOn] = useState(initial);\n  return (\n    <label style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#232323', color: '#eaeaea', borderRadius: 8, padding: '0.7em 1.2em', border: '1px solid #444', maxWidth: 320 }}>\n      <input type=\"checkbox\" checked={on} onChange={() => setOn(!on)} />\n      <span>{label}: {on ? 'ON' : 'OFF'}</span>\n    </label>\n  );\n}\n\n<Toggle label=\"다크 모드\" initial={false} />`}</MacCmd>
             }]}
           />
         </div>
@@ -1014,7 +1013,7 @@ export const sections: Record<SectionId, Section> = {
     next: 'hooks',
     content: (
       <div>
-        <h2>State란?</h2>
+        
         <ul
           style={{
             marginBottom: '2em',
@@ -1032,7 +1031,7 @@ export const sections: Record<SectionId, Section> = {
           <li style={{ marginBottom: '0.7em' }}>상태가 변경되면 컴포넌트가 다시 렌더링됩니다.</li>
           <li style={{ marginBottom: '0.7em' }}>useState 훅을 통해 상태를 선언하고 관리할 수 있습니다.</li>
         </ul>
-        <h3>1. 기본 카운터 예제</h3>
+        <h3>1. 기본 카운터</h3>
         <div style={stateExampleBlockStyle}>
           <TabComponent
             tabs={[{
@@ -1040,7 +1039,7 @@ export const sections: Record<SectionId, Section> = {
               content: <MacCmdExampleWrapper><CounterDemo /></MacCmdExampleWrapper>
             }, {
               label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useState } from 'react';\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  return (\n    <div>\n      <p>Count: {count}</p>\n      <button onClick={() => setCount(count + 1)}>증가</button>\n    </div>\n  );\n}`}</MacCmd>
+              content: <MacCmd showCaret={false}>{`import { useState } from 'react';\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  return (\n    <div>\n      <p>Count: {count}</p>\n      <button onClick={() => setCount(count + 1)}>+1</button>\n    </div>\n  );\n}`}</MacCmd>
             }]}
           />
         </div>
@@ -1092,7 +1091,19 @@ export const sections: Record<SectionId, Section> = {
             }]}
           />
         </div>
-        <h3>6. 실무 예제: 간단한 장바구니</h3>
+        <h3>6. 토글 스위치</h3>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><Toggle label="다크 모드" initial={false} /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false}>{`import { useState } from 'react';\n\nfunction Toggle({ label, initial }) {\n  const [on, setOn] = useState(initial);\n  return (\n    <label style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#232323', color: '#eaeaea', borderRadius: 8, padding: '0.7em 1.2em', border: '1px solid #444', maxWidth: 320 }}>\n      <input type=\"checkbox\" checked={on} onChange={() => setOn(!on)} />\n      <span>{label}: {on ? 'ON' : 'OFF'}</span>\n    </label>\n  );\n}\n\n<Toggle label=\"다크 모드\" initial={false} />`}</MacCmd>
+            }]}
+          />
+        </div>
+        <h3>7. 간단한 장바구니</h3>
         <div style={stateExampleBlockStyle}>
           <TabComponent
             tabs={[{
@@ -1104,7 +1115,7 @@ export const sections: Record<SectionId, Section> = {
             }]}
           />
         </div>
-        <h3>7. 고급 실무 예제: 수량 조절이 가능한 장바구니</h3>
+        <h3>8. 수량 조절이 가능한 장바구니</h3>
         <div style={stateExampleBlockStyle}>
           <TabComponent
             tabs={[{
@@ -1620,7 +1631,7 @@ function UseContextDemo() {
   const MyContext = React.createContext('기본값');
   function Child() {
     const value = React.useContext(MyContext);
-    return <div style={{ color: '#eaeaea' }}>Context 값: {value}</div>;
+    return <div>Context 값: {value}</div>;
   }
   return (
     <MyContext.Provider value="공유된 값">
@@ -1661,7 +1672,7 @@ function FetchEffectDemo() {
       .then(res => res.json())
       .then(json => setData(json));
   }, []);
-  return <pre style={{ color: '#eaeaea', background: '#232323', padding: 12, borderRadius: 8 }}>{JSON.stringify(data, null, 2)}</pre>;
+  return <pre>{JSON.stringify(data, null, 2)}</pre>;
 }
 
 function TimerEffectDemo() {
@@ -1670,7 +1681,7 @@ function TimerEffectDemo() {
     const id = setInterval(() => setSec(s => s + 1), 1000);
     return () => clearInterval(id);
   }, []);
-  return <div style={{ color: '#eaeaea' }}>타이머: {sec}초</div>;
+  return <div>타이머: {sec}초</div>;
 }
 
 function ResizeEffectDemo() {
@@ -1680,7 +1691,7 @@ function ResizeEffectDemo() {
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
   }, []);
-  return <div style={{ color: '#eaeaea' }}>윈도우 너비: {width}px</div>;
+  return <div>윈도우 너비: {width}px</div>;
 }
   
 // --- useRef Demo Components ---
