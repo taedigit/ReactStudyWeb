@@ -1293,8 +1293,8 @@ export const sections: Record<SectionId, Section> = {
     next: 'useRef',
     content: (
       <div>
-        <h2>useEffect</h2>
-        <h4>Mount/Unmount Effect</h4>
+        
+        <h4>1. Mount/Unmount Effect</h4>
         <div style={stateExampleBlockStyle}>
           <TabComponent
             tabs={[{
@@ -1306,7 +1306,7 @@ export const sections: Record<SectionId, Section> = {
             }]}
           />
         </div>
-        <h4>Dependency Effect</h4>
+        <h4>2. Dependency Effect</h4>
         <div style={stateExampleBlockStyle}>
           <TabComponent
             tabs={[{
@@ -1318,7 +1318,7 @@ export const sections: Record<SectionId, Section> = {
             }]}
           />
         </div>
-        <h4>Fetch Data Effect</h4>
+        <h4>3. Fetch Data Effect</h4>
         <div style={stateExampleBlockStyle}>
           <TabComponent
             tabs={[{
@@ -1330,7 +1330,7 @@ export const sections: Record<SectionId, Section> = {
             }]}
           />
         </div>
-        <h4>Timer Effect</h4>
+        <h4>4. Timer Effect</h4>
         <div style={stateExampleBlockStyle}>
           <TabComponent
             tabs={[{
@@ -1342,7 +1342,7 @@ export const sections: Record<SectionId, Section> = {
             }]}
           />
         </div>
-        <h4>Resize Effect</h4>
+        <h4>5. Resize Effect</h4>
         <div style={stateExampleBlockStyle}>
           <TabComponent
             tabs={[{
