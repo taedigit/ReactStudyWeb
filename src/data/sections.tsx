@@ -1216,71 +1216,99 @@ function AdvancedCart() {
     content: (
       <div>
         <h2>useState</h2>
+        <h4>1. 기본 카운터</h4>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><CounterDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useState } from 'react';\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  return (\n    <div>\n      <p>Count: {count}</p>\n      <button onClick={() => setCount(count + 1)}>+1</button>\n    </div>\n  );\n}`}</MacCmd>
-            }]}
-          />
+          <ExampleTab example={<CounterDemo />} code={`import { useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>+1</button>
+    </div>
+  );
+}`} showCaret={false} desc={"useState로 count 상태를 선언하고, 버튼 클릭 시 값을 1씩 증가시키는 가장 기본적인 카운터 예제입니다."} />
         </div>
+        <h4>2. 입력값 상태 관리</h4>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><InputExampleDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useState } from 'react';\n\nfunction InputExample() {\n  const [text, setText] = useState('');\n  return (\n    <input value={text} onChange={e => setText(e.target.value)} />\n  );\n}`}</MacCmd>
-            }]}
-          />
+          <ExampleTab example={<InputExampleDemo />} code={`import { useState } from 'react';
+
+function InputExample() {
+  const [text, setText] = useState('');
+  return (
+    <input value={text} onChange={e => setText(e.target.value)} />
+  );
+}`} showCaret={false} desc={"useState로 입력값(text)을 관리하고, input의 onChange로 상태를 실시간 반영하는 예제입니다."} />
         </div>
+        <h4>3. 배열/리스트 상태</h4>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><TodoListDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useState } from 'react';\n\nfunction TodoList() {\n  const [todos, setTodos] = useState(['공부하기', '운동하기']);\n  const [input, setInput] = useState('');\n  return (\n    <div>\n      <ul>\n        {todos.map((todo, i) => <li key={i}>{todo}</li>)}\n      </ul>\n      <input value={input} onChange={e => setInput(e.target.value)} placeholder=\"새 할 일\" />\n      <button onClick={() => {\n        if (input.trim()) {\n          setTodos([...todos, input]);\n          setInput('');\n        }\n      }}>추가</button>\n    </div>\n  );\n}`}</MacCmd>
-            }]}
-          />
+          <ExampleTab example={<TodoListDemo />} code={`import { useState } from 'react';
+
+function TodoList() {
+  const [todos, setTodos] = useState(['공부하기', '운동하기']);
+  const [input, setInput] = useState('');
+  return (
+    <div>
+      <ul>
+        {todos.map((todo, i) => <li key={i}>{todo}</li>)}
+      </ul>
+      <input value={input} onChange={e => setInput(e.target.value)} placeholder="새 할 일" />
+      <button onClick={() => {
+        if (input.trim()) {
+          setTodos([...todos, input]);
+          setInput('');
+        }
+      }}>추가</button>
+    </div>
+  );
+}`} showCaret={false} desc={"useState로 배열(리스트) 상태를 관리하고, 새로운 할 일을 추가하는 간단한 투두리스트 예제입니다."} />
         </div>
+        <h4>4. 객체 상태</h4>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><ProfileDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useState } from 'react';\n\nfunction Profile() {\n  const [user, setUser] = useState({ name: '', age: 0 });\n  return (\n    <div>\n      <input value={user.name} onChange={e => setUser({ ...user, name: e.target.value })} />\n      <input type=\"number\" value={user.age} onChange={e => setUser({ ...user, age: Number(e.target.value) })} />\n    </div>\n  );\n}`}</MacCmd>
-            }]}
-          />
+          <ExampleTab example={<ProfileDemo />} code={`import { useState } from 'react';
+
+function Profile() {
+  const [user, setUser] = useState({ name: '', age: 0 });
+  return (
+    <div>
+      <input value={user.name} onChange={e => setUser({ ...user, name: e.target.value })} />
+      <input type="number" value={user.age} onChange={e => setUser({ ...user, age: Number(e.target.value) })} />
+    </div>
+  );
+}`} showCaret={false} desc={"useState로 객체 형태의 상태(user)를 관리하고, 각각의 필드를 개별적으로 업데이트하는 예제입니다."} />
         </div>
+        <h4>5. 여러 state 동시 사용</h4>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><MultiStateDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useState } from 'react';\n\nfunction MultiState() {\n  const [count, setCount] = useState(0);\n  const [text, setText] = useState('');\n  return (\n    <div>\n      <button onClick={() => setCount(count + 1)}>+1</button>\n      <input value={text} onChange={e => setText(e.target.value)} />\n      <p>{count}, {text}</p>\n    </div>\n  );\n}`}</MacCmd>
-            }]}
-          />
+          <ExampleTab example={<MultiStateDemo />} code={`import { useState } from 'react';
+
+function MultiState() {
+  const [count, setCount] = useState(0);
+  const [text, setText] = useState('');
+  return (
+    <div>
+      <button onClick={() => setCount(count + 1)}>+1</button>
+      <input value={text} onChange={e => setText(e.target.value)} />
+      <p>{count}, {text}</p>
+    </div>
+  );
+}`} showCaret={false} desc={"useState를 여러 번 사용해 서로 다른 상태(count, text)를 동시에 관리하는 예제입니다."} />
         </div>
+        <h4>6. 토글 스위치</h4>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><Toggle label="다크 모드" initial={false} /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useState } from 'react';\n\nfunction Toggle({ label, initial }) {\n  const [on, setOn] = useState(initial);\n  return (\n    <label style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#232323', color: '#eaeaea', borderRadius: 8, padding: '0.7em 1.2em', border: '1px solid #444', maxWidth: 320 }}>\n      <input type=\"checkbox\" checked={on} onChange={() => setOn(!on)} />\n      <span>{label}: {on ? 'ON' : 'OFF'}</span>\n    </label>\n  );\n}\n\n<Toggle label=\"다크 모드\" initial={false} />`}</MacCmd>
-            }]}
-          />
+          <ExampleTab example={<Toggle label="다크 모드" initial={false} />} code={`import { useState } from 'react';
+
+function Toggle({ label, initial }) {
+  const [on, setOn] = useState(initial);
+  return (
+    <label style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#232323', color: '#eaeaea', borderRadius: 8, padding: '0.7em 1.2em', border: '1px solid #444', maxWidth: 320 }}>
+      <input type="checkbox" checked={on} onChange={() => setOn(!on)} />
+      <span>{label}: {on ? 'ON' : 'OFF'}</span>
+    </label>
+  );
+}
+
+<Toggle label="다크 모드" initial={false} />`} showCaret={false} desc={"useState로 boolean 상태를 관리하며, 체크박스 토글에 따라 ON/OFF가 바뀌는 스위치 예제입니다."} />
         </div>
       </div>
     ),
