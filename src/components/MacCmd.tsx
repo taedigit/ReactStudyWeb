@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Highlight, { defaultProps } from 'prism-react-renderer';
 import theme from 'prism-react-renderer/themes/vsDark';
 
@@ -37,13 +37,28 @@ const macCmdPre: React.CSSProperties = {
   overflowX: 'auto',
 };
 
-export function MacCmd({ children, showCaret = true, style }: { children: string, showCaret?: boolean, style?: React.CSSProperties }) {
+export function MacCmd({ children, showCaret = true, style, desc }: { children: string, showCaret?: boolean, style?: React.CSSProperties, desc?: string }) {
   const code = typeof children === 'string' ? children : (children ? String(children) : '');
   const [copied, setCopied] = useState(false);
+  const [showDesc, setShowDesc] = useState(false);
+  const descBtnRef = useRef<HTMLButtonElement>(null);
+  const [tooltipPos, setTooltipPos] = useState<{top: number, left: number, width: number}>();
+
   const handleCopy = () => {
     navigator.clipboard.writeText(code);
     setCopied(true);
     setTimeout(() => setCopied(false), 1200);
+  };
+  const handleDescClick = () => {
+    if (descBtnRef.current) {
+      const rect = descBtnRef.current.getBoundingClientRect();
+      setTooltipPos({
+        top: rect.bottom + window.scrollY,
+        left: rect.left + window.scrollX,
+        width: rect.width
+      });
+    }
+    setShowDesc(true);
   };
   return (
     <div style={macCmdWrapper}>
@@ -51,10 +66,34 @@ export function MacCmd({ children, showCaret = true, style }: { children: string
         <span style={macCmdCircle('#ff5f56')}></span>
         <span style={macCmdCircle('#ffbd2e')}></span>
         <span style={macCmdCircle('#27c93f')}></span>
+        {desc && (
+          <button
+            ref={descBtnRef}
+            onClick={handleDescClick}
+            style={{
+              marginLeft: 'auto',
+              background: '#2563eb',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '4px',
+              padding: '2px 10px',
+              fontSize: '0.6em',
+              cursor: 'pointer',
+              opacity: 0.85,
+              height: '70%',
+              marginTop: '2px',
+              marginBottom: '2px',
+              position: 'relative',
+              zIndex: 10,
+            }}
+          >
+            Desc
+          </button>
+        )}
         <button
           onClick={handleCopy}
           style={{
-            marginLeft: 'auto',
+            marginLeft: 8,
             background: '#333',
             color: '#fff',
             border: 'none',
@@ -99,6 +138,52 @@ export function MacCmd({ children, showCaret = true, style }: { children: string
           </pre>
         )}
       </Highlight>
+      {showDesc && desc && descBtnRef.current && (
+        <div
+          style={{
+            position: 'absolute',
+            top: descBtnRef.current.offsetTop + descBtnRef.current.offsetHeight + 6,
+            left: 'calc(100% - 460px)',
+            zIndex: 9999,
+            background: '#232323',
+            color: '#eaeaea',
+            borderRadius: 12,
+            padding: '0.7em 1em',
+            minWidth: 260,
+            maxWidth: 360,
+            boxShadow: '0 4px 32px rgba(0,0,0,0.25)',
+            border: '1px solid #444',
+            marginTop: 0,
+          }}
+          onClick={e => e.stopPropagation()}
+        >
+          <button
+            onClick={() => setShowDesc(false)}
+            style={{
+              position: 'absolute',
+              top: 8,
+              right: 12,
+              background: 'none',
+              border: 'none',
+              color: '#aaa',
+              fontSize: 18,
+              cursor: 'pointer',
+              minWidth: 22,
+              minHeight: 22,
+              width: 22,
+              height: 22,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: 6,
+              transition: 'background 0.15s',
+            }}
+            aria-label="닫기"
+          >×</button>
+          <div style={{ fontWeight: 600, fontSize: 16, marginBottom: 8 }}>코드 설명</div>
+          <div style={{ fontSize: 14, lineHeight: 1.7, whiteSpace: 'pre-line' }}>{desc}</div>
+        </div>
+      )}
       <style>{`
         @keyframes blink-caret {
           0%, 100% { opacity: 1; }

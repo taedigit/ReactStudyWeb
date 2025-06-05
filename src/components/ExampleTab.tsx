@@ -7,9 +7,10 @@ interface ExampleTabProps {
   example: React.ReactNode;
   code: string;
   showCaret?: boolean;
+  desc?: string;
 }
 
-export function ExampleTab({ example, code, showCaret = false }: ExampleTabProps) {
+export function ExampleTab({ example, code, showCaret = false, desc }: ExampleTabProps) {
   return (
     <TabComponent
       tabs={[
@@ -19,7 +20,7 @@ export function ExampleTab({ example, code, showCaret = false }: ExampleTabProps
         },
         {
           label: 'Source',
-          content: <MacCmd showCaret={showCaret}>{code}</MacCmd>
+          content: <MacCmd showCaret={showCaret} desc={desc}>{code}</MacCmd>
         }
       ]}
     />

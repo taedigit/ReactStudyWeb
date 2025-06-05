@@ -1308,7 +1308,7 @@ function MountEffectDemo() {
     };
   }, []);
   return <div>마운트/언마운트 시 콘솔에 로그</div>;
-}`} showCaret={false} />
+}`} showCaret={false} desc={"컴포넌트가 마운트될 때와 언마운트될 때 각각 콘솔에 로그를 출력하는 예제입니다. useEffect의 cleanup(return) 함수가 언마운트 시 동작함을 보여줍니다."} />
         </div>
         <h4>2. Dependency Effect</h4>
         <div style={stateExampleBlockStyle}>
@@ -1325,7 +1325,7 @@ function DepsEffectDemo() {
       <span style={{ marginLeft: 8 }}>{count}</span>
     </div>
   );
-}`} showCaret={false} />
+}`} showCaret={false} desc={"count 값이 변경될 때마다 브라우저 탭의 제목(document.title)을 동적으로 변경하는 예제입니다. useEffect의 의존성 배열([count])에 따라 effect가 재실행됩니다."} />
         </div>
         <h4>3. Fetch Data Effect</h4>
         <div style={stateExampleBlockStyle}>
@@ -1334,7 +1334,7 @@ function DepsEffectDemo() {
 function FetchEffectDemo() {
   const [data, setData] = useState(null);
   useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/todos/1')\n      .then(res => res.json())\n      .then(json => setData(json));\n  }, []);\n  return <pre>{JSON.stringify(data, null, 2)}</pre>;\n}`} showCaret={false} />
+    fetch('https://jsonplaceholder.typicode.com/todos/1')\n      .then(res => res.json())\n      .then(json => setData(json));\n  }, []);\n  return <pre>{JSON.stringify(data, null, 2)}</pre>;\n}`} showCaret={false} desc={"컴포넌트가 마운트될 때 한 번만 fetch로 외부 데이터를 받아와 상태(data)에 저장하는 예제입니다. 의존성 배열이 []이므로 최초 1회만 실행됩니다."} />
         </div>
         <h4>4. Timer Effect</h4>
         <div style={stateExampleBlockStyle}>
@@ -1343,14 +1343,14 @@ function FetchEffectDemo() {
 function TimerEffectDemo() {
   const [sec, setSec] = useState(0);
   useEffect(() => {
-    const id = setInterval(() => setSec(s => s + 1), 1000);\n    return () => clearInterval(id);\n  }, []);\n  return <div>타이머: {sec}초</div>;\n}`} showCaret={false} />
+    const id = setInterval(() => setSec(s => s + 1), 1000);\n    return () => clearInterval(id);\n  }, []);\n  return <div>타이머: {sec}초</div>;\n}`} showCaret={false} desc={"컴포넌트가 마운트될 때 1초마다 sec 상태를 증가시키는 타이머를 시작하고, 언마운트 시 타이머를 정리(clearInterval)하는 예제입니다."} />
         </div>
         <h4>5. Resize Effect</h4>
         <div style={stateExampleBlockStyle}>
           <ExampleTab example={<ResizeEffectDemo />} code={`import { useState, useEffect } from 'react';
 
 function ResizeEffectDemo() {
-  const [width, setWidth] = useState(window.innerWidth);\n  useEffect(() => {\n    const onResize = () => setWidth(window.innerWidth);\n    window.addEventListener('resize', onResize);\n    return () => window.removeEventListener('resize', onResize);\n  }, []);\n  return <div>윈도우 너비: {width}px</div>;\n}`} showCaret={false} />
+  const [width, setWidth] = useState(window.innerWidth);\n  useEffect(() => {\n    const onResize = () => setWidth(window.innerWidth);\n    window.addEventListener('resize', onResize);\n    return () => window.removeEventListener('resize', onResize);\n  }, []);\n  return <div>윈도우 너비: {width}px</div>;\n}`} showCaret={false} desc={"윈도우 크기가 변경될 때마다 현재 창의 너비를 상태로 관리하는 예제입니다. 이벤트 리스너 등록/해제(cleanup) 패턴을 보여줍니다."} />
         </div>
       </div>
     ),
