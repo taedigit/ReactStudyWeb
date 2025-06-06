@@ -4,7 +4,6 @@ import { TabComponent } from '../components/TabComponent';
 import { MacCmd } from '../components/MacCmd';
 import { MacCmdExampleWrapper } from '../components/MacCmdExampleWrapper';
 import { ExampleTab } from '../components/ExampleTab';
-import { Mermaid } from '../components/Mermaid';
 
 const nvmInstallScript = `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 # 터미널 재시작 또는 아래 명령 실행
@@ -784,7 +783,7 @@ export const sections: Record<SectionId, Section> = {
           <li style={{ marginBottom: '0.7em' }}>재사용성과 유지보수성이 뛰어납니다.</li>
         </ul>
         {/* 함수형 컴포넌트 예제 */}
-        <h3>예시: 함수형 컴포넌트</h3>
+        <h3>1. 함수형 컴포넌트</h3>
         <div style={stateExampleBlockStyle}>
           <TabComponent
             tabs={[{
@@ -797,7 +796,7 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* JSX 예제 */}
-        <h3>예시: JSX</h3>
+        <h3>2. JSX</h3>
         <div style={stateExampleBlockStyle}>
           <TabComponent
             tabs={[{
@@ -810,7 +809,7 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* 초급 예제 */}
-        <h3>초급 예제: 간단한 인사 컴포넌트</h3>
+        <h3>3. 간단한 인사 컴포넌트</h3>
         <div style={stateExampleBlockStyle}>
           <TabComponent
             tabs={[{
@@ -823,7 +822,7 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* 중급 예제 */}
-        <h3>중급 예제: props와 조건부 렌더링</h3>
+        <h3>4. props와 조건부 렌더링</h3>
         <div style={stateExampleBlockStyle}>
           <TabComponent
             tabs={[{
@@ -836,7 +835,7 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* 고급 예제 */}
-        <h3>고급 예제: 상태와 이벤트 활용</h3>
+        <h3>5. 상태와 이벤트 활용</h3>
         <div style={stateExampleBlockStyle}>
           <TabComponent
             tabs={[{
@@ -849,7 +848,7 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* 실무 예제 */}
-        <h3>실무 예제: 리스트 필터링 & 동적 렌더링</h3>
+        <h3>6. 리스트 필터링 & 동적 렌더링</h3>
         <div style={stateExampleBlockStyle}>
           <TabComponent
             tabs={[{
@@ -1130,6 +1129,19 @@ function AdvancedCart() {
     </div>
   );
 }`} showCaret={false} />
+        {/* useEffect 스타일 예제 */}
+        <h3>3.5. useEffect 스타일 적용 예제</h3>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><MountEffectDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false} desc={"컴포넌트가 마운트/언마운트될 때 각각 콘솔에 로그를 출력하는 useEffect 예제입니다."}>{`import { useEffect } from 'react';\n\nfunction MountEffectDemo() {\n  useEffect(() => {\n    console.log('컴포넌트 마운트됨');\n    return () => {\n      console.log('컴포넌트 언마운트됨');\n    };\n  }, []);\n  return <div>마운트/언마운트 시 콘솔에 로그</div>;\n}`}</MacCmd>
+            }]}
+          />
+        </div>
       </div>
     ),
   },
