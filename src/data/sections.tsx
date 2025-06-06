@@ -4,6 +4,7 @@ import { TabComponent } from '../components/TabComponent';
 import { MacCmd } from '../components/MacCmd';
 import { MacCmdExampleWrapper } from '../components/MacCmdExampleWrapper';
 import { ExampleTab } from '../components/ExampleTab';
+import { Mermaid } from '../components/Mermaid';
 
 const nvmInstallScript = `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 # 터미널 재시작 또는 아래 명령 실행
@@ -1202,6 +1203,15 @@ function AdvancedCart() {
           <li>각 주요 Hook은 <b>별도의 페이지</b>에서 실습 예제와 함께 자세히 다룹니다.</li>
           <li>좌측 메뉴에서 원하는 Hook을 선택해 직접 실습해보세요.</li>
         </ul>
+        <h3>6. 컴포넌트 생명주기와 Hooks</h3>
+        <ul style={{ background: '#232323', color: '#eaeaea', padding: '1em 1.5em', borderRadius: 8, border: '1px solid #444', marginBottom: '1.5em', listStylePosition: 'inside' }}>
+          <li><b>마운트(Mount):</b> 컴포넌트가 처음 화면에 나타날 때 <code>useEffect(() =&gt; &#123;...&#125;, [])</code> 콜백이 한 번 실행됩니다.</li>
+          <li><b>업데이트(Update):</b> props나 state가 변경될 때 <code>useEffect(() =&gt; &#123;...&#125;, [deps])</code> 콜백이 해당 deps가 바뀔 때마다 실행됩니다.</li>
+          <li><b>언마운트(Unmount):</b> 컴포넌트가 화면에서 사라질 때 <code>useEffect</code>의 return(cleanup) 함수가 실행되어 정리 작업을 할 수 있습니다.</li>
+        </ul>
+        <div style={{ textAlign: 'center', margin: '2em 0' }}>
+          <img src="/lifecycle.svg" alt="React 컴포넌트 생명주기 다이어그램" style={{ width: 1000, margin: '2em auto', display: 'block', background: '#232323', borderRadius: 8, border: '1px solid #444' }} />
+        </div>
       </div>
     ),
   },

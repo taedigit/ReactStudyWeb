@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="700" viewBox="0 0 1200 700" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="700" fill="#f5f5f7"/>
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#bbb" flood-opacity="0.4"/>
+    </filter>
+    <marker id="arrow" markerWidth="5" markerHeight="5" refX="5" refY="2.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L5,2.5 L0,5 z" fill="#1976d2"/>
+    </marker>
+  </defs>
+  <!-- Mount -->
+  <rect x="120" y="100" width="220" height="80" rx="16" fill="#fff" stroke="#1976d2" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="230" y="135" fill="#1976d2" font-size="20" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle" font-weight="bold">
+    컴포넌트 생성
+    <tspan x="230" dy="1.3em" font-size="16" font-weight="normal" fill="#1976d2">Mount</tspan>
+  </text>
+  <!-- Render -->
+  <rect x="490" y="100" width="220" height="80" rx="16" fill="#e3f2fd" stroke="#1976d2" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="600" y="145" fill="#1976d2" font-size="20" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle" font-weight="bold">렌더링</text>
+  <!-- useEffect (mount) -->
+  <rect x="860" y="100" width="220" height="80" rx="16" fill="#fff3e0" stroke="#ffb74d" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="970" y="130" fill="#ff9800" font-size="18" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">
+    useEffect
+    <tspan x="970" dy="1.2em" font-size="16" fill="#ff9800">(() =&gt; ..., []) 실행</tspan>
+  </text>
+  <!-- Update -->
+  <rect x="490" y="320" width="220" height="80" rx="16" fill="#e3f2fd" stroke="#1976d2" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="600" y="355" fill="#1976d2" font-size="20" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle" font-weight="bold">
+    업데이트
+    <tspan x="600" dy="1.3em" font-size="16" font-weight="normal" fill="#1976d2">(Props/State 변경)</tspan>
+  </text>
+  <!-- useEffect (update) -->
+  <rect x="860" y="320" width="220" height="80" rx="16" fill="#fff3e0" stroke="#ffb74d" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="970" y="350" fill="#ff9800" font-size="18" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">
+    useEffect
+    <tspan x="970" dy="1.2em" font-size="16" fill="#ff9800">(() =&gt; ..., [deps]) 실행</tspan>
+  </text>
+  <!-- Unmount -->
+  <rect x="120" y="540" width="220" height="80" rx="16" fill="#fff" stroke="#6d4c41" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="230" y="575" fill="#d32f2f" font-size="20" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle" font-weight="bold">
+    언마운트
+    <tspan x="230" dy="1.2em" font-size="16" font-weight="normal" fill="#d32f2f">Unmount</tspan>
+  </text>
+  <!-- Cleanup (moved to bottom right) -->
+  <rect x="860" y="540" width="220" height="80" rx="16" fill="#fffde7" stroke="#ffb300" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="970" y="570" fill="#ffb300" font-size="18" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">
+    useEffect
+    <tspan x="970" dy="1.2em" font-size="16" fill="#ffb300">cleanup(return) 실행</tspan>
+  </text>
+  <!-- Arrows -->
+  <g stroke="#1976d2" stroke-width="3" marker-end="url(#arrow)">
+    <!-- Mount -> Render -->
+    <line x1="340" y1="140" x2="490" y2="140"/>
+    <!-- Render -> useEffect (mount) -->
+    <line x1="710" y1="140" x2="860" y2="140"/>
+    <!-- useEffect (mount) -> useEffect (update) -->
+    <line x1="970" y1="180" x2="970" y2="320"/>
+    <!-- Render -> Update -->
+    <line x1="600" y1="180" x2="600" y2="320"/>
+    <!-- Update -> useEffect (update) -->
+    <line x1="710" y1="360" x2="860" y2="360"/>
+    <!-- useEffect (update) -> useEffect (update) (loop) -->
+    <path d="M 1020 400
+             A 80 80 0 1 0 1020 320"
+          fill="none" stroke="#1976d2" stroke-width="3" marker-end="url(#arrow)"/>
+    <!-- useEffect (update) -> Unmount -->
+    <line x1="970" y1="400" x2="970" y2="540"/>
+    <!-- Unmount -> Cleanup (new arrow) -->
+    <line x1="340" y1="580" x2="860" y2="580"/>
+  </g>
+  <!-- 반복 label -->
+  <text x="1130" y="365" fill="#1976d2" font-size="17" font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">반복</text>
+</svg> 
