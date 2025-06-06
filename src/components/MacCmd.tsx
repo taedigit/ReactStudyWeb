@@ -37,7 +37,7 @@ const macCmdPre: React.CSSProperties = {
   overflowX: 'auto',
 };
 
-export function MacCmd({ children, showCaret = true, style, desc }: { children: string, showCaret?: boolean, style?: React.CSSProperties, desc?: string }) {
+export function MacCmd({ children, showCaret = true, style, desc }: { children: string, showCaret?: boolean, style?: React.CSSProperties, desc?: string | null }) {
   const code = typeof children === 'string' ? children : (children ? String(children) : '');
   const [copied, setCopied] = useState(false);
   const [showDesc, setShowDesc] = useState(false);
@@ -89,28 +89,30 @@ export function MacCmd({ children, showCaret = true, style, desc }: { children: 
         <span style={macCmdCircle('#ffbd2e')}></span>
         <span style={macCmdCircle('#27c93f')}></span>
         <div style={{ display: 'flex', alignItems: 'center', marginLeft: 'auto', gap: 8, position: 'relative' }}>
-          <button
-            ref={descBtnRef}
-            onClick={handleDescClick}
-            style={{
-              background: '#2563eb',
-              color: '#fff',
-              border: 'none',
-              borderRadius: '4px',
-              padding: '2px 10px',
-              fontSize: '0.6em',
-              cursor: 'pointer',
-              opacity: 0.85,
-              height: '70%',
-              marginTop: '2px',
-              marginBottom: '2px',
-              position: 'relative',
-              zIndex: 10,
-            }}
-            title="코드 설명 보기"
-          >
-            Desc
-          </button>
+          {desc !== null && (
+            <button
+              ref={descBtnRef}
+              onClick={handleDescClick}
+              style={{
+                background: '#2563eb',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '4px',
+                padding: '2px 10px',
+                fontSize: '0.6em',
+                cursor: 'pointer',
+                opacity: 0.85,
+                height: '70%',
+                marginTop: '2px',
+                marginBottom: '2px',
+                position: 'relative',
+                zIndex: 10,
+              }}
+              title="코드 설명 보기"
+            >
+              Desc
+            </button>
+          )}
           <button
             onClick={handleCopy}
             style={{

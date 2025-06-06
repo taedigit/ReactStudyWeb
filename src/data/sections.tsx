@@ -39,34 +39,34 @@ const setupContent = (
       </li>
       <li style={{ marginTop: '1em' }}>
         <strong>프로젝트 폴더 생성</strong><br />
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`mkdir my-react-app\ncd my-react-app`}</MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>{`mkdir my-react-app\ncd my-react-app`}</MacCmd>
       </li>
       <li style={{ marginTop: '1em' }}>
         <strong>React 및 관련 패키지 설치</strong><br />
         <div>npm 사용 시:</div>
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`npm install react react-dom`}</MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>{`npm install react react-dom`}</MacCmd>
         <div>yarn 사용 시:</div>
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`yarn add react react-dom`}</MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>{`yarn add react react-dom`}</MacCmd>
       </li>
       <li style={{ marginTop: '1em' }}>
         <strong>CRA(Create React App)로 프로젝트 생성 (권장)</strong><br />
         <a href="https://create-react-app.dev/docs/getting-started/" target="_blank" rel="noopener noreferrer">CRA 공식 설치 가이드</a>
         <div>npm 사용 시:</div>
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`npx create-react-app my-app`}</MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>{`npx create-react-app my-app`}</MacCmd>
         <div>yarn 사용 시:</div>
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`yarn create react-app my-app`}</MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>{`yarn create react-app my-app`}</MacCmd>
       </li>
       <li style={{ marginTop: '1em' }}>
         <strong>Vite로 React 프로젝트 생성 (추천)</strong><br />
         <a href="https://vitejs.dev/guide/" target="_blank" rel="noopener noreferrer">Vite 공식 설치 가이드</a>
         <div>npm 사용 시:</div>
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`npm create vite@latest my-vite-app -- --template react`}</MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>{`npm create vite@latest my-vite-app -- --template react`}</MacCmd>
         <div>yarn 사용 시:</div>
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`yarn create vite my-vite-app --template react`}</MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>{`yarn create vite my-vite-app --template react`}</MacCmd>
         <div>pnpm 사용 시:</div>
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`pnpm create vite my-vite-app --template react`}</MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>{`pnpm create vite my-vite-app --template react`}</MacCmd>
         <div style={{ marginTop: '0.5em' }}>설치 후:</div>
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`cd my-vite-app\nnpm install\nnpm run dev`}</MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>{`cd my-vite-app\nnpm install\nnpm run dev`}</MacCmd>
       </li>
       <li style={{ marginTop: '1em' }}>
         <strong>Next.js로 React 프로젝트 생성 (SSR/SEO 등 고급 기능)</strong><br />
@@ -81,11 +81,11 @@ const setupContent = (
         </div>
         <a href="https://nextjs.org/docs/getting-started" target="_blank" rel="noopener noreferrer"><span style={{marginRight: '0.4em'}}>🔗</span>Next.js 공식 설치 가이드</a>
         <div>npm 사용 시:</div>
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`npx create-next-app@latest my-next-app`}</MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>{`npx create-next-app@latest my-next-app`}</MacCmd>
         <div>yarn 사용 시:</div>
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`yarn create next-app my-next-app`}</MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>{`yarn create next-app my-next-app`}</MacCmd>
         <div>pnpm 사용 시:</div>
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`pnpm create next-app my-next-app`}</MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>{`pnpm create next-app my-next-app`}</MacCmd>
       </li>
       <li style={{ marginTop: '1em' }}>
         <strong>설치 중 잘못된 경우(실수로 잘못 설치/실행했을 때 대처법)</strong><br />
@@ -93,12 +93,11 @@ const setupContent = (
           <b>잘못 설치했거나, 의도와 다른 템플릿/패키지가 설치된 경우 아래 명령어로 정리 후 재설치하세요.</b>
         </div>
         <div>1. <b>node_modules, lock 파일 삭제</b></div>
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`rm -rf node_modules package-lock.json yarn.lock`}</MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>{`rm -rf node_modules package-lock.json yarn.lock`}</MacCmd>
         <div>2. <b>다시 패키지 설치</b></div>
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`npm install`}</MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>{`npm install`}</MacCmd>
         <div style={{ marginTop: '0.7em' }}>만약 프로젝트 폴더 자체를 잘못 만들었다면, 폴더를 삭제하고 처음부터 다시 생성하세요.</div>
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`cd ..
-rm -rf my-react-app my-vite-app my-next-app`}</MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>{`cd ..\nrm -rf my-react-app my-vite-app my-next-app`}</MacCmd>
       </li>
       <li style={{ marginTop: '1em' }}>
         <strong>여러 포트에서 Node.js가 실행 중일 때(포트 충돌 해결)</strong><br />
@@ -106,13 +105,11 @@ rm -rf my-react-app my-vite-app my-next-app`}</MacCmd>
           <b>여러 포트(예: 3000, 5173 등)에서 Node.js가 실행 중이라면 아래 명령어로 프로세스를 종료한 뒤 원하는 포트로 다시 실행하세요.</b>
         </div>
         <div><b>Windows PowerShell:</b></div>
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`for /f "tokens=5" %a in ('netstat -aon | findstr :3000') do taskkill /F /PID %a
-for /f "tokens=5" %a in ('netstat -aon | findstr :5173') do taskkill /F /PID %a`}</MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>{`for /f "tokens=5" %a in ('netstat -aon | findstr :3000') do taskkill /F /PID %a\nfor /f "tokens=5" %a in ('netstat -aon | findstr :5173') do taskkill /F /PID %a`}</MacCmd>
         <div><b>Mac/Linux (터미널):</b></div>
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`lsof -i :3000 -t | xargs kill -9
-lsof -i :5173 -t | xargs kill -9`}</MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>{`lsof -i :3000 -t | xargs kill -9\nlsof -i :5173 -t | xargs kill -9`}</MacCmd>
         <div style={{ margin: '0.7em 0' }}>이후 원하는 포트로 개발 서버를 다시 실행하세요.</div>
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`npm run dev`}</MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>{`npm run dev`}</MacCmd>
       </li>
       <li style={{ marginTop: '1em' }}>
         <strong>회사/기관 등 보안 환경에서 npm 설치가 안 될 때 (프록시 설정)</strong><br />
@@ -121,11 +118,9 @@ lsof -i :5173 -t | xargs kill -9`}</MacCmd>
         </div>
         <div>프록시 주소는 회사 IT팀에 문의하여 확인하세요.</div>
         <div>프록시 설정 (http/https):</div>
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`npm config set proxy http://[프록시주소]:[포트]
-npm config set https-proxy http://[프록시주소]:[포트]`}</MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`npm config set proxy http://[프록시주소]:[포트]\nnpm config set https-proxy http://[프록시주소]:[포트]`}</MacCmd>
         <div>프록시 해제:</div>
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`npm config delete proxy
-npm config delete https-proxy`}</MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`npm config delete proxy\nnpm config delete https-proxy`}</MacCmd>
         <div style={{ marginTop: '0.7em' }}>설정 후 <b>npm install</b>을 다시 시도하세요.</div>
       </li>
       <li style={{ marginTop: '1em' }}>
@@ -134,8 +129,7 @@ npm config delete https-proxy`}</MacCmd>
           <b>React 개발 환경에서 자주 사용하는 명령어 모음입니다.</b>
         </div>
         <div>Node.js, npm 버전 확인:</div>
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`node -v
-npm -v`}</MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`node -v\nnpm -v`}</MacCmd>
         <div>npm 캐시 정리(문제 발생 시):</div>
         <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`npm cache clean --force`}</MacCmd>
         <div>프로덕션 빌드:</div>
@@ -152,30 +146,26 @@ npm -v`}</MacCmd>
           프로젝트별로 다른 Node.js 버전이 필요할 때 매우 유용합니다.
         </div>
         <div><b>Mac/Linux 설치 및 사용법:</b></div>
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{nvmInstallScript}</MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>{nvmInstallScript}</MacCmd>
         <div>Node.js 설치/전환:</div>
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`nvm install 18
-nvm use 18
-nvm install 20
-nvm use 20`}</MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>{`nvm install 18\nnvm use 18\nnvm install 20\nnvm use 20`}</MacCmd>
         <div><b>Windows 설치 및 사용법(nvm-windows):</b></div>
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`choco install nvm`}</MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>{`choco install nvm`}</MacCmd>
         <div>설치 후 PowerShell 재시작, Node.js 설치/전환:</div>
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`nvm install 18.20.2
-nvm use 18.20.2`}</MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>{`nvm install 18.20.2\nnvm use 18.20.2`}</MacCmd>
         <div style={{ margin: '0.7em 0' }}>
           <b>자주 쓰는 nvm 명령어</b>
         </div>
         <div>설치된 Node.js 버전 목록 보기:</div>
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`nvm ls`}</MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>{`nvm ls`}</MacCmd>
         <div>원하는 버전 설치:</div>
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`nvm install 16`}</MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>{`nvm install 16`}</MacCmd>
         <div>특정 버전 사용:</div>
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`nvm use 16`}</MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>{`nvm use 16`}</MacCmd>
         <div>버전 삭제:</div>
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`nvm uninstall 16`}</MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>{`nvm uninstall 16`}</MacCmd>
         <div>별칭(alias) 지정:</div>
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}}>{`nvm alias default 18`}</MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>{`nvm alias default 18`}</MacCmd>
         <div style={{ marginTop: '0.7em' }}>nvm 공식 문서: <a href="https://github.com/nvm-sh/nvm" target="_blank" rel="noopener noreferrer"><span style={{marginRight: '0.4em'}}>🔗</span>nvm-sh/nvm</a>, <a href="https://github.com/coreybutler/nvm-windows" target="_blank" rel="noopener noreferrer"><span style={{marginRight: '0.4em'}}>🔗</span>nvm-windows</a></div>
       </li>
     </ol>
@@ -791,7 +781,7 @@ export const sections: Record<SectionId, Section> = {
               content: <MacCmdExampleWrapper><Welcome name="React" /></MacCmdExampleWrapper>
             }, {
               label: 'Source',
-              content: <MacCmd showCaret={false}>{`function Welcome(props) {\n  return <h1>Hello, {props.name}!<\/h1>;\n}`}</MacCmd>
+              content: <MacCmd showCaret={false} desc={"가장 기본적인 함수형 컴포넌트 예제입니다. props로 name을 받아 Hello, name!을 출력합니다."}>{`function Welcome(props) {\n  return <h1>Hello, {props.name}!<\/h1>;\n}`}</MacCmd>
             }]}
           />
         </div>
@@ -804,7 +794,7 @@ export const sections: Record<SectionId, Section> = {
               content: <MacCmdExampleWrapper><div>{'<Welcome name="React" />'}</div></MacCmdExampleWrapper>
             }, {
               label: 'Source',
-              content: <MacCmd showCaret={false}>{`<Welcome name=\"React\" />`}</MacCmd>
+              content: <MacCmd showCaret={false} desc={"JSX 문법으로 컴포넌트를 사용하는 예제입니다. HTML 태그처럼 컴포넌트를 사용할 수 있습니다."}>{`<Welcome name=\"React\" />`}</MacCmd>
             }]}
           />
         </div>
@@ -817,7 +807,7 @@ export const sections: Record<SectionId, Section> = {
               content: <MacCmdExampleWrapper><div>안녕하세요!</div></MacCmdExampleWrapper>
             }, {
               label: 'Source',
-              content: <MacCmd showCaret={false}>{`function Hello() {\n  return <div>안녕하세요!<\/div>;\n}`}</MacCmd>
+              content: <MacCmd showCaret={false} desc={"간단한 인사 컴포넌트 예제입니다. Hello 컴포넌트가 '안녕하세요!'를 반환합니다."}>{`function Hello() {\n  return <div>안녕하세요!<\/div>;\n}`}</MacCmd>
             }]}
           />
         </div>
@@ -830,7 +820,7 @@ export const sections: Record<SectionId, Section> = {
               content: <MacCmdExampleWrapper><Greeting name="홍길동" /></MacCmdExampleWrapper>
             }, {
               label: 'Source',
-              content: <MacCmd showCaret={false}>{`function Greeting({ name }) {\n  return <h2>{name ? \`안녕하세요, \${name}님!\` : '이름을 입력하세요.'}<\/h2>;\n}`}</MacCmd>
+              content: <MacCmd showCaret={false} desc={"props로 받은 name 값에 따라 다른 인사말을 보여주는 조건부 렌더링 예제입니다."}>{`function Greeting({ name }) {\n  return <h2>{name ? \`안녕하세요, \${name}님!\` : '이름을 입력하세요.'}<\/h2>;\n}`}</MacCmd>
             }]}
           />
         </div>
@@ -843,7 +833,7 @@ export const sections: Record<SectionId, Section> = {
               content: <MacCmdExampleWrapper><CounterButtonsDemo /></MacCmdExampleWrapper>
             }, {
               label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useState } from 'react';\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  return (\n    <div>\n      <button onClick={() => setCount(count - 1)}>-</button>\n      <span style={{margin: '0 1em'}}>{count}</span>\n      <button onClick={() => setCount(count + 1)}>+</button>\n    </div>\n  );\n}`}</MacCmd>
+              content: <MacCmd showCaret={false} desc={"useState로 count 상태를 관리하고, 버튼 클릭으로 값을 증감시키는 카운터 예제입니다."}>{`import { useState } from 'react';\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  return (\n    <div>\n      <button onClick={() => setCount(count - 1)}>-</button>\n      <span style={{margin: '0 1em'}}>{count}</span>\n      <button onClick={() => setCount(count + 1)}>+</button>\n    </div>\n  );\n}`}</MacCmd>
             }]}
           />
         </div>
@@ -856,7 +846,7 @@ export const sections: Record<SectionId, Section> = {
               content: <MacCmdExampleWrapper><UserListDemo /></MacCmdExampleWrapper>
             }, {
               label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useState } from 'react';\n\nfunction UserList() {\n  const [filter, setFilter] = useState('');\n  const users = ['Alice', 'Bob', 'Charlie', 'David'];\n  const filtered = users.filter(u => u.toLowerCase().includes(filter.toLowerCase()));\n  return (\n    <div>\n      <input value={filter} onChange={e => setFilter(e.target.value)} placeholder=\"이름 검색\" />\n      <ul>\n        {filtered.map(u => <li key={u}>{u}</li>)}\n      </ul>\n    </div>\n  );\n}`}</MacCmd>
+              content: <MacCmd showCaret={false} desc={"입력값에 따라 리스트를 실시간으로 필터링하는 예제입니다. useState로 filter 상태를 관리합니다."}>{`import { useState } from 'react';\n\nfunction UserList() {\n  const [filter, setFilter] = useState('');\n  const users = ['Alice', 'Bob', 'Charlie', 'David'];\n  const filtered = users.filter(u => u.toLowerCase().includes(filter.toLowerCase()));\n  return (\n    <div>\n      <input value={filter} onChange={e => setFilter(e.target.value)} placeholder=\"이름 검색\" />\n      <ul>\n        {filtered.map(u => <li key={u}>{u}</li>)}\n      </ul>\n    </div>\n  );\n}`}</MacCmd>
             }]}
           />
         </div>
@@ -898,7 +888,7 @@ export const sections: Record<SectionId, Section> = {
               content: <MacCmdExampleWrapper><Greeting name="React 사용자" /></MacCmdExampleWrapper>
             }, {
               label: 'Source',
-              content: <MacCmd showCaret={false}>{`function Greeting(props) {\n  return <h2>안녕하세요, {props.name}!<\/h2>;\n}\n\n<Greeting name=\"React 사용자\" />`}</MacCmd>
+              content: <MacCmd showCaret={false} desc={"props를 통해 부모 컴포넌트가 자식 컴포넌트에 값을 전달하는 기본 예제입니다."}>{`function Greeting(props) {\n  return <h2>안녕하세요, {props.name}!<\/h2>;\n}\n\n<Greeting name=\"React 사용자\" />`}</MacCmd>
             }]}
           />
         </div>
@@ -910,7 +900,7 @@ export const sections: Record<SectionId, Section> = {
               content: <MacCmdExampleWrapper><ProfileCard name="홍길동" age={28} job="Frontend Developer" /></MacCmdExampleWrapper>
             }, {
               label: 'Source',
-              content: <MacCmd showCaret={false}>{`function ProfileCard(props) {\n  return (\n    <div>\n      <h3>{props.name}</h3>\n      <p>나이: {props.age}</p>\n      <p>직업: {props.job}</p>\n    </div>\n  );\n}\n\n<ProfileCard name=\"홍길동\" age={28} job=\"Frontend Developer\" />`}</MacCmd>
+              content: <MacCmd showCaret={false} desc={"여러 개의 props를 한 번에 전달하여 다양한 정보를 표시하는 예제입니다."}>{`function ProfileCard(props) {\n  return (\n    <div>\n      <h3>{props.name}</h3>\n      <p>나이: {props.age}</p>\n      <p>직업: {props.job}</p>\n    </div>\n  );\n}\n\n<ProfileCard name=\"홍길동\" age={28} job=\"Frontend Developer\" />`}</MacCmd>
             }]}
           />
         </div>
@@ -922,7 +912,7 @@ export const sections: Record<SectionId, Section> = {
               content: <MacCmdExampleWrapper><ModalDemo /></MacCmdExampleWrapper>
             }, {
               label: 'Source',
-              content: <MacCmd showCaret={false}>{`import React, { useState } from 'react';\n\nfunction Modal({ open, onClose, message }) {\n  if (!open) return null;\n  return (\n    <div style={{\n      position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',\n      background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000\n    }}>\n      <div style={{ background: '#232323', color: '#eaeaea', padding: 32, borderRadius: 12, minWidth: 280, textAlign: 'center' }}>\n        <h3>Modal Popup</h3>\n        <p>{message}</p>\n        <button onClick={onClose}>Close</button>\n      </div>\n    </div>\n  );\n}\n\nfunction ModalDemo() {\n  const [open, setOpen] = useState(false);\n  const [value, setValue] = useState('Hello from parent!');\n  return (\n    <div>\n      <input value={value} onChange={e => setValue(e.target.value)} style={{ marginRight: 8, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />\n      <button onClick={() => setOpen(true)} style={{ padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>Open Modal</button>\n      <Modal open={open} onClose={() => setOpen(false)} message={value} />\n    </div>\n  );\n}`}</MacCmd>
+              content: <MacCmd showCaret={false} desc={"props로 함수(onClose)와 메시지(message)를 전달하여 모달의 동작과 내용을 제어하는 예제입니다."}>{`import React, { useState } from 'react';\n\nfunction Modal({ open, onClose, message }) {\n  if (!open) return null;\n  return (\n    <div style={{\n      position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',\n      background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000\n    }}>\n      <div style={{ background: '#232323', color: '#eaeaea', padding: 32, borderRadius: 12, minWidth: 280, textAlign: 'center' }}>\n        <h3>Modal Popup</h3>\n        <p>{message}</p>\n        <button onClick={onClose}>Close</button>\n      </div>\n    </div>\n  );\n}\n\nfunction ModalDemo() {\n  const [open, setOpen] = useState(false);\n  const [value, setValue] = useState('Hello from parent!');\n  return (\n    <div>\n      <input value={value} onChange={e => setValue(e.target.value)} style={{ marginRight: 8, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />\n      <button onClick={() => setOpen(true)} style={{ padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>Open Modal</button>\n      <Modal open={open} onClose={() => setOpen(false)} message={value} />\n    </div>\n  );\n}`}</MacCmd>
             }]}
           />
         </div>
@@ -934,7 +924,7 @@ export const sections: Record<SectionId, Section> = {
               content: <MacCmdExampleWrapper><CustomButton color="#27c93f" label="확인" /></MacCmdExampleWrapper>
             }, {
               label: 'Source',
-              content: <MacCmd showCaret={false}>{`function CustomButton({ color, label }) {\n  return (\n    <button style={{\n      background: color, color: '#fff', border: 'none', borderRadius: 6, padding: '0.6em 1.5em', fontSize: '1em', cursor: 'pointer'\n    }}>{label}</button>\n  );\n}\n\n<CustomButton color=\"#27c93f\" label=\"확인\" />`}</MacCmd>
+              content: <MacCmd showCaret={false} desc={"props로 색상(color)과 라벨(label)을 받아 버튼 스타일과 텍스트를 동적으로 지정하는 예제입니다."}>{`function CustomButton({ color, label }) {\n  return (\n    <button style={{\n      background: color, color: '#fff', border: 'none', borderRadius: 6, padding: '0.6em 1.5em', fontSize: '1em', cursor: 'pointer'\n    }}>{label}</button>\n  );\n}\n\n<CustomButton color=\"#27c93f\" label=\"확인\" />`}</MacCmd>
             }]}
           />
         </div>
@@ -946,7 +936,7 @@ export const sections: Record<SectionId, Section> = {
               content: <MacCmdExampleWrapper><ItemList items={["React", "Vue", "Angular"]} /></MacCmdExampleWrapper>
             }, {
               label: 'Source',
-              content: <MacCmd showCaret={false}>{`function ItemList({ items }) {\n  return (\n    <ul>\n      {items.map(item => <li key={item}>{item}</li>)}\n    </ul>\n  );\n}\n\n<ItemList items={[\"React\", \"Vue\", \"Angular\"]} />`}</MacCmd>
+              content: <MacCmd showCaret={false} desc={"props로 배열(items)을 받아 리스트 항목을 동적으로 렌더링하는 예제입니다."}>{`function ItemList({ items }) {\n  return (\n    <ul>\n      {items.map(item => <li key={item}>{item}</li>)}\n    </ul>\n  );\n}\n\n<ItemList items={[\"React\", \"Vue\", \"Angular\"]} />`}</MacCmd>
             }]}
           />
         </div>
@@ -958,7 +948,7 @@ export const sections: Record<SectionId, Section> = {
               content: <MacCmdExampleWrapper><Toggle label="다크 모드" initial={false} /></MacCmdExampleWrapper>
             }, {
               label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useState } from 'react';\n\nfunction Toggle({ label, initial }) {\n  const [on, setOn] = useState(initial);\n  return (\n    <label style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#232323', color: '#eaeaea', borderRadius: 8, padding: '0.7em 1.2em', border: '1px solid #444', maxWidth: 320 }}>\n      <input type=\"checkbox\" checked={on} onChange={() => setOn(!on)} />\n      <span>{label}: {on ? 'ON' : 'OFF'}</span>\n    </label>\n  );\n}\n\n<Toggle label=\"다크 모드\" initial={false} />`}</MacCmd>
+              content: <MacCmd showCaret={false} desc={"props로 boolean 값(initial)과 라벨(label)을 받아 토글 스위치의 상태와 텍스트를 제어하는 예제입니다."}>{`import { useState } from 'react';\n\nfunction Toggle({ label, initial }) {\n  const [on, setOn] = useState(initial);\n  return (\n    <label style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#232323', color: '#eaeaea', borderRadius: 8, padding: '0.7em 1.2em', border: '1px solid #444', maxWidth: 320 }}>\n      <input type=\"checkbox\" checked={on} onChange={() => setOn(!on)} />\n      <span>{label}: {on ? 'ON' : 'OFF'}</span>\n    </label>\n  );\n}\n\n<Toggle label=\"다크 모드\" initial={false} />`}</MacCmd>
             }]}
           />
         </div>
@@ -994,7 +984,14 @@ export const sections: Record<SectionId, Section> = {
           <li style={{ marginBottom: '0.7em' }}>useState 훅을 통해 상태를 선언하고 관리할 수 있습니다.</li>
         </ul>
         <h3>1. 기본 카운터</h3>
-        <ExampleTab example={<CounterDemo />} code={`import { useState } from 'react';
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><CounterDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false} desc={"useState로 count 상태를 선언하고, 버튼 클릭 시 값을 1씩 증가시키는 가장 기본적인 카운터 예제입니다."}>{`import { useState } from 'react';
 
 function Counter() {
   const [count, setCount] = useState(0);
@@ -1004,18 +1001,38 @@ function Counter() {
       <button onClick={() => setCount(count + 1)}>+1</button>
     </div>
   );
-}`} showCaret={false} />
+}`}</MacCmd>
+            }]}
+          />
+        </div>
         <h3>2. 입력값 상태 관리</h3>
-        <ExampleTab example={<InputExampleDemo />} code={`import { useState } from 'react';
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><InputExampleDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false} desc={"useState로 입력값(text)을 관리하고, input의 onChange로 상태를 실시간 반영하는 예제입니다."}>{`import { useState } from 'react';
 
 function InputExample() {
   const [text, setText] = useState('');
   return (
     <input value={text} onChange={e => setText(e.target.value)} />
   );
-}`} showCaret={false} />
+}`}</MacCmd>
+            }]}
+          />
+        </div>
         <h3>3. 배열/리스트 상태</h3>
-        <ExampleTab example={<TodoListDemo />} code={`import { useState } from 'react';
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><TodoListDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false} desc={"useState로 배열(리스트) 상태를 관리하고, 새로운 할 일을 추가하는 간단한 투두리스트 예제입니다."}>{`import { useState } from 'react';
 
 function TodoList() {
   const [todos, setTodos] = useState(['공부하기', '운동하기']);
@@ -1034,9 +1051,19 @@ function TodoList() {
       }}>추가</button>
     </div>
   );
-}`} showCaret={false} />
+}`}</MacCmd>
+            }]}
+          />
+        </div>
         <h3>4. 객체 상태</h3>
-        <ExampleTab example={<ProfileDemo />} code={`import { useState } from 'react';
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><ProfileDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false} desc={"useState로 객체 형태의 상태(user)를 관리하고, 각각의 필드를 개별적으로 업데이트하는 예제입니다."}>{`import { useState } from 'react';
 
 function Profile() {
   const [user, setUser] = useState({ name: '', age: 0 });
@@ -1046,9 +1073,19 @@ function Profile() {
       <input type="number" value={user.age} onChange={e => setUser({ ...user, age: Number(e.target.value) })} />
     </div>
   );
-}`} showCaret={false} />
+}`}</MacCmd>
+            }]}
+          />
+        </div>
         <h3>5. 여러 state 동시 사용</h3>
-        <ExampleTab example={<MultiStateDemo />} code={`import { useState } from 'react';
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><MultiStateDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false} desc={"useState를 여러 번 사용해 서로 다른 상태(count, text)를 동시에 관리하는 예제입니다."}>{`import { useState } from 'react';
 
 function MultiState() {
   const [count, setCount] = useState(0);
@@ -1060,9 +1097,19 @@ function MultiState() {
       <p>{count}, {text}</p>
     </div>
   );
-}`} showCaret={false} />
+}`}</MacCmd>
+            }]}
+          />
+        </div>
         <h3>6. 토글 스위치</h3>
-        <ExampleTab example={<Toggle label="다크 모드" initial={false} />} code={`import { useState } from 'react';
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><Toggle label="다크 모드" initial={false} /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false} desc={"useState로 boolean 상태를 관리하며, 체크박스 토글에 따라 ON/OFF가 바뀌는 스위치 예제입니다."}>{`import { useState } from 'react';
 
 function Toggle({ label, initial }) {
   const [on, setOn] = useState(initial);
@@ -1074,7 +1121,10 @@ function Toggle({ label, initial }) {
   );
 }
 
-<Toggle label="다크 모드" initial={false} />`} showCaret={false} />
+<Toggle label="다크 모드" initial={false} />`}</MacCmd>
+            }]}
+          />
+        </div>
         <h3>7. 실무 예제: 간단한 장바구니</h3>
         <ExampleTab example={<ShoppingCartDemo />} code={`import { useState } from 'react';
 
@@ -1139,6 +1189,19 @@ function AdvancedCart() {
             }, {
               label: 'Source',
               content: <MacCmd showCaret={false} desc={"컴포넌트가 마운트/언마운트될 때 각각 콘솔에 로그를 출력하는 useEffect 예제입니다."}>{`import { useEffect } from 'react';\n\nfunction MountEffectDemo() {\n  useEffect(() => {\n    console.log('컴포넌트 마운트됨');\n    return () => {\n      console.log('컴포넌트 언마운트됨');\n    };\n  }, []);\n  return <div>마운트/언마운트 시 콘솔에 로그</div>;\n}`}</MacCmd>
+            }]}
+          />
+        </div>
+        {/* useEffect 스타일 예제 추가 */}
+        <h3>7. useEffect로 상태 변화 감지</h3>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: <MacCmdExampleWrapper><StateEffectDemo /></MacCmdExampleWrapper>
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false} desc={"count 상태가 바뀔 때마다 useEffect로 콘솔에 로그를 출력하는 예제입니다. useEffect의 의존성 배열([count])에 따라 effect가 재실행됩니다."}>{`import { useState, useEffect } from 'react';\n\nfunction StateEffectDemo() {\n  const [count, setCount] = useState(0);\n  useEffect(() => {\n    console.log('count 변경:', count);\n  }, [count]);\n  return (\n    <div>\n      <button onClick={() => setCount(count + 1)} style={{ padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer', marginRight: 8 }}>+1</button>\n      <span style={{ color: '#eaeaea' }}>{count}</span>\n    </div>\n  );\n}`}</MacCmd>
             }]}
           />
         </div>
@@ -1357,8 +1420,7 @@ function MountEffectDemo() {
       console.log('컴포넌트 언마운트됨');
     };
   }, []);
-  return <div>마운트/언마운트 시 콘솔에 로그</div>;
-}`} showCaret={false} desc={"컴포넌트가 마운트될 때와 언마운트될 때 각각 콘솔에 로그를 출력하는 예제입니다. useEffect의 cleanup(return) 함수가 언마운트 시 동작함을 보여줍니다."} />
+  return <div>마운트/언마운트 시 콘솔에 로그</div>;\n}`} showCaret={false} desc={"컴포넌트가 마운트될 때와 언마운트될 때 각각 콘솔에 로그를 출력하는 예제입니다. useEffect의 cleanup(return) 함수가 언마운트 시 동작함을 보여줍니다."} />
         </div>
         <h4>2. Dependency Effect</h4>
         <div style={stateExampleBlockStyle}>
@@ -2095,3 +2157,17 @@ function CallbackNoMemoDemo() {
 }
   
 // ... existing code ...
+
+// StateEffectDemo 컴포넌트 추가
+function StateEffectDemo() {
+  const [count, setCount] = React.useState(0);
+  React.useEffect(() => {
+    console.log('count 변경:', count);
+  }, [count]);
+  return (
+    <div>
+      <button onClick={() => setCount(count + 1)} style={{ padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer', marginRight: 8 }}>+1</button>
+      <span style={{ color: '#eaeaea' }}>{count}</span>
+    </div>
+  );
+}
