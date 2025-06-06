@@ -1215,7 +1215,7 @@ function AdvancedCart() {
     next: 'useEffect',
     content: (
       <div>
-        <h2>useState</h2>
+        
         <h4>1. 기본 카운터</h4>
         <div style={stateExampleBlockStyle}>
           <ExampleTab example={<CounterDemo />} code={`import { useState } from 'react';
@@ -1393,7 +1393,7 @@ function ResizeEffectDemo() {
     next: 'useMemo',
     content: (
       <div>
-        <h2>useRef</h2>
+        
         <h4>1. DOM 요소 참조</h4>
         <div style={stateExampleBlockStyle}>
           <ExampleTab example={<RefFocusDemo />} code={`import { useRef } from 'react';
@@ -1486,7 +1486,7 @@ function RefDomStyleDemo() {
     next: 'useCallback',
     content: (
       <div>
-        <h2>useMemo</h2>
+        
         <h4>1. 비싼 연산 메모이제이션</h4>
         <div style={stateExampleBlockStyle}>
           <ExampleTab example={<MemoExpensiveCalcDemo />} code={`import { useState, useMemo } from 'react';
@@ -1579,7 +1579,7 @@ function MemoRenderOptDemo() {
     next: 'useReducer',
     content: (
       <div>
-        <h2>useCallback</h2>
+        
         <h4>1. 자식 컴포넌트에 함수 전달</h4>
         <div style={stateExampleBlockStyle}>
           <ExampleTab example={<CallbackChildDemo />} code={`import React, { useState, useCallback } from 'react';
@@ -1679,16 +1679,32 @@ function CallbackNoMemoDemo() {
     next: 'useContext',
     content: (
       <div>
-        <h2>useReducer</h2>
+        <h4>1. 카운터 리듀서</h4>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><UseReducerDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { useReducer } from 'react';\n\nfunction reducer(state, action) {\n  switch (action.type) {\n    case 'inc': return { count: state.count + 1 };\n    case 'dec': return { count: state.count - 1 };\n    default: return state;\n  }\n}\n\nfunction UseReducerDemo() {\n  const [state, dispatch] = useReducer(reducer, { count: 0 });\n  return (\n    <div>\n      <button onClick={() => dispatch({ type: 'dec' })}>-</button>\n      <span style={{ margin: '0 1em' }}>{state.count}</span>\n      <button onClick={() => dispatch({ type: 'inc' })}>+</button>\n    </div>\n  );\n}`}</MacCmd>
-            }]}
+          <ExampleTab
+            example={<UseReducerDemo />}
+            code={`import { useReducer } from 'react';
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'inc': return { count: state.count + 1 };
+    case 'dec': return { count: state.count - 1 };
+    default: return state;
+  }
+}
+
+function UseReducerDemo() {
+  const [state, dispatch] = useReducer(reducer, { count: 0 });
+  return (
+    <div>
+      <button onClick={() => dispatch({ type: 'dec' })}>-</button>
+      <span style={{ margin: '0 1em' }}>{state.count}</span>
+      <button onClick={() => dispatch({ type: 'inc' })}>+</button>
+    </div>
+  );
+}`}
+            showCaret={false}
+            desc={"useReducer로 카운트 상태를 관리하는 예제입니다. dispatch로 'inc'/'dec' 액션을 보내 상태를 변경합니다."}
           />
         </div>
       </div>
@@ -1704,16 +1720,28 @@ function CallbackNoMemoDemo() {
     next: null,
     content: (
       <div>
-        <h2>useContext</h2>
+        <h4>1. Context 값 전달</h4>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><UseContextDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false}>{`import { createContext, useContext } from 'react';\n\nconst MyContext = createContext('기본값');\n\nfunction Child() {\n  const value = useContext(MyContext);\n  return <div>Context 값: {value}</div>;\n}\n\nfunction UseContextDemo() {\n  return (\n    <MyContext.Provider value=\"공유된 값\">\n      <Child />\n    </MyContext.Provider>\n  );\n}`}</MacCmd>
-            }]}
+          <ExampleTab
+            example={<UseContextDemo />}
+            code={`import { createContext, useContext } from 'react';
+
+const MyContext = createContext('기본값');
+
+function Child() {
+  const value = useContext(MyContext);
+  return <div>Context 값: {value}</div>;
+}
+
+function UseContextDemo() {
+  return (
+    <MyContext.Provider value="공유된 값">
+      <Child />
+    </MyContext.Provider>
+  );
+}`}
+            showCaret={false}
+            desc={"useContext로 Context 값을 하위 컴포넌트에 전달하고, useContext 훅으로 값을 읽는 예제입니다."}
           />
         </div>
       </div>
