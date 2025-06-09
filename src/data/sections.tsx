@@ -4,6 +4,13 @@ import { TabComponent } from '../components/TabComponent';
 import { MacCmd } from '../components/MacCmd';
 import { MacCmdExampleWrapper } from '../components/MacCmdExampleWrapper';
 import { ExampleTab } from '../components/ExampleTab';
+import { Select } from '../components/Select';
+import { WithLoading } from '../components/WithLoading';
+import { MouseTracker } from '../components/MouseTracker';
+import { WindowSize } from '../components/WindowSize';
+import { ErrorBoundary } from '../components/ErrorBoundary';
+import { BuggyCounter } from '../components/BuggyCounter';
+import { PortalModal } from '../components/PortalModal';
 
 const nvmInstallScript = `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 # 터미널 재시작 또는 아래 명령 실행
@@ -847,6 +854,477 @@ export const sections: Record<SectionId, Section> = {
             }, {
               label: 'Source',
               content: <MacCmd showCaret={false} desc={"입력값에 따라 리스트를 실시간으로 필터링하는 예제입니다. useState로 filter 상태를 관리합니다."}>{`import { useState } from 'react';\n\nfunction UserList() {\n  const [filter, setFilter] = useState('');\n  const users = ['Alice', 'Bob', 'Charlie', 'David'];\n  const filtered = users.filter(u => u.toLowerCase().includes(filter.toLowerCase()));\n  return (\n    <div>\n      <input value={filter} onChange={e => setFilter(e.target.value)} placeholder=\"이름 검색\" />\n      <ul>\n        {filtered.map(u => <li key={u}>{u}</li>)}\n      </ul>\n    </div>\n  );\n}`}</MacCmd>
+            }]}
+          />
+        </div>
+        
+        {/* 고급 예제 섹션 추가 */}
+        <h2 style={{ marginTop: '2em' }}>고급 컴포넌트 패턴</h2>
+        
+        <h3>7. 합성 컴포넌트 (Compound Components)</h3>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: (
+                <MacCmdExampleWrapper>
+                  <Select>
+                    <Select.Trigger>선택하세요</Select.Trigger>
+                    <Select.Options>
+                      <Select.Option value="1">옵션 1</Select.Option>
+                      <Select.Option value="2">옵션 2</Select.Option>
+                      <Select.Option value="3">옵션 3</Select.Option>
+                    </Select.Options>
+                  </Select>
+                </MacCmdExampleWrapper>
+              )
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false} desc="합성 컴포넌트 패턴을 사용한 커스텀 Select 컴포넌트 예제입니다.">{`import React, { createContext, useContext, useState } from 'react';
+
+const SelectContext = createContext<{
+  value: string;
+  onChange: (value: string) => void;
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
+} | null>(null);
+
+function Select({ children }: { children: React.ReactNode }) {
+  const [value, setValue] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+  
+  return (
+    <SelectContext.Provider value={{ value, onChange: setValue, isOpen, setIsOpen }}>
+      <div style={{ position: 'relative' }}>{children}</div>
+    </SelectContext.Provider>
+  );
+}
+
+Select.Trigger = function Trigger({ children }: { children: React.ReactNode }) {
+  const ctx = useContext(SelectContext);
+  if (!ctx) throw new Error('Must be used within Select');
+  
+  return (
+    <button 
+      onClick={() => ctx.setIsOpen(!ctx.isOpen)}
+      style={{
+        padding: '8px 16px',
+        border: '1px solid #444',
+        borderRadius: '4px',
+        background: '#232323',
+        color: '#eaeaea',
+        cursor: 'pointer',
+        width: '200px',
+        textAlign: 'left'
+      }}
+    >
+      {ctx.value || children}
+    </button>
+  );
+};
+
+Select.Options = function Options({ children }: { children: React.ReactNode }) {
+  const ctx = useContext(SelectContext);
+  if (!ctx) throw new Error('Must be used within Select');
+  
+  if (!ctx.isOpen) return null;
+  
+  return (
+    <div style={{
+      position: 'absolute',
+      top: '100%',
+      left: 0,
+      width: '200px',
+      background: '#232323',
+      border: '1px solid #444',
+      borderRadius: '4px',
+      marginTop: '4px'
+    }}>
+      {children}
+    </div>
+  );
+};
+
+Select.Option = function Option({ children, value }: { children: React.ReactNode; value: string }) {
+  const ctx = useContext(SelectContext);
+  if (!ctx) throw new Error('Must be used within Select');
+  
+  return (
+    <div
+      onClick={() => {
+        ctx.onChange(value);
+        ctx.setIsOpen(false);
+      }}
+      style={{
+        padding: '8px 16px',
+        cursor: 'pointer',
+        color: '#eaeaea',
+        background: ctx.value === value ? '#444' : 'transparent'
+      }}
+    >
+      {children}
+    </div>
+  );
+};`}</MacCmd>
+            }]}
+          />
+        </div>
+
+        <h3>8. 고차 컴포넌트 (Higher-Order Components)</h3>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: (
+                <MacCmdExampleWrapper>
+                  <WithLoading loading={false}>
+                    <div>데이터가 로드되었습니다!</div>
+                  </WithLoading>
+                </MacCmdExampleWrapper>
+              )
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false} desc="고차 컴포넌트 패턴을 사용한 로딩 처리 예제입니다.">{`import React from 'react';
+
+function withLoading<P extends object>(
+  WrappedComponent: React.ComponentType<P>
+): React.FC<P & { loading?: boolean }> {
+  return function WithLoadingComponent({ loading = false, ...props }: P & { loading?: boolean }) {
+    if (loading) {
+      return (
+        <div style={{
+          padding: '20px',
+          textAlign: 'center',
+          background: '#232323',
+          borderRadius: '8px',
+          color: '#eaeaea'
+        }}>
+          <div className="loading-spinner" />
+          <p>Loading...</p>
+        </div>
+      );
+    }
+    return <WrappedComponent {...props as P} />;
+  };
+}
+
+// 사용 예시
+const MyComponent = ({ data }: { data: string }) => <div>{data}</div>;
+const MyComponentWithLoading = withLoading(MyComponent);
+
+// JSX에서 사용
+<MyComponentWithLoading loading={true} data="Hello" />`}</MacCmd>
+            }]}
+          />
+        </div>
+
+        <h3>9. 렌더 프롭 패턴 (Render Props)</h3>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: (
+                <MacCmdExampleWrapper>
+                  <MouseTracker>
+                    {(position) => (
+                      <div>
+                        마우스 위치 - X: {position.x}, Y: {position.y}
+                      </div>
+                    )}
+                  </MouseTracker>
+                </MacCmdExampleWrapper>
+              )
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false} desc="렌더 프롭 패턴을 사용한 마우스 트래커 예제입니다.">{`import React, { useState, useEffect } from 'react';
+
+interface Position {
+  x: number;
+  y: number;
+}
+
+interface MouseTrackerProps {
+  children: (position: Position) => React.ReactNode;
+}
+
+function MouseTracker({ children }: MouseTrackerProps) {
+  const [position, setPosition] = useState<Position>({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setPosition({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  return (
+    <div style={{
+      padding: '20px',
+      background: '#232323',
+      borderRadius: '8px',
+      color: '#eaeaea'
+    }}>
+      {children(position)}
+    </div>
+  );
+}
+
+// 사용 예시
+<MouseTracker>
+  {(position) => (
+    <div>
+      마우스 위치 - X: {position.x}, Y: {position.y}
+    </div>
+  )}
+</MouseTracker>`}</MacCmd>
+            }]}
+          />
+        </div>
+
+        <h3>10. 커스텀 훅을 활용한 컴포넌트</h3>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: (
+                <MacCmdExampleWrapper>
+                  <WindowSize />
+                </MacCmdExampleWrapper>
+              )
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false} desc="커스텀 훅을 사용한 윈도우 크기 감지 컴포넌트 예제입니다.">{`import { useState, useEffect } from 'react';
+
+// 커스텀 훅
+function useWindowSize() {
+  const [size, setSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setSize({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return size;
+}
+
+// 컴포넌트
+function WindowSize() {
+  const size = useWindowSize();
+
+  return (
+    <div style={{
+      padding: '20px',
+      background: '#232323',
+      borderRadius: '8px',
+      color: '#eaeaea'
+    }}>
+      <p>Window Width: {size.width}px</p>
+      <p>Window Height: {size.height}px</p>
+    </div>
+  );
+}`}</MacCmd>
+            }]}
+          />
+        </div>
+
+        <h3>11. 에러 바운더리 (Error Boundary)</h3>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: (
+                <MacCmdExampleWrapper>
+                  <ErrorBoundary>
+                    <BuggyCounter />
+                  </ErrorBoundary>
+                </MacCmdExampleWrapper>
+              )
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false} desc="에러 바운더리를 사용한 에러 처리 컴포넌트 예제입니다.">{`import React from 'react';
+
+class ErrorBoundary extends React.Component {
+  state = { hasError: false, error: null };
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.log('Error caught:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{
+          padding: '20px',
+          background: '#232323',
+          borderRadius: '8px',
+          color: '#eaeaea',
+          border: '1px solid #ff4444'
+        }}>
+          <h3>Something went wrong 😢</h3>
+          <p>{this.state.error?.message}</p>
+          <button
+            onClick={() => this.setState({ hasError: false })}
+            style={{
+              padding: '8px 16px',
+              background: '#444',
+              border: 'none',
+              borderRadius: '4px',
+              color: '#eaeaea',
+              marginTop: '10px',
+              cursor: 'pointer'
+            }}
+          >
+            Try again
+          </button>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+// 에러를 발생시키는 테스트용 컴포넌트
+function BuggyCounter() {
+  const [count, setCount] = React.useState(0);
+
+  if (count === 5) {
+    throw new Error('I crashed!');
+  }
+
+  return (
+    <div style={{
+      padding: '20px',
+      background: '#232323',
+      borderRadius: '8px',
+      color: '#eaeaea'
+    }}>
+      <p>Count: {count}</p>
+      <button
+        onClick={() => setCount(c => c + 1)}
+        style={{
+          padding: '8px 16px',
+          background: '#444',
+          border: 'none',
+          borderRadius: '4px',
+          color: '#eaeaea',
+          cursor: 'pointer'
+        }}
+      >
+        Increment
+      </button>
+    </div>
+  );
+}`}</MacCmd>
+            }]}
+          />
+        </div>
+
+        <h3>12. 포털을 사용한 모달 컴포넌트</h3>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: (
+                <MacCmdExampleWrapper>
+                  <PortalModal />
+                </MacCmdExampleWrapper>
+              )
+            }, {
+              label: 'Source',
+              content: <MacCmd showCaret={false} desc="React Portal을 사용한 모달 컴포넌트 예제입니다.">{`import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
+
+function Modal({ isOpen, onClose, children }) {
+  if (!isOpen) return null;
+
+  return ReactDOM.createPortal(
+    <div style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      background: 'rgba(0, 0, 0, 0.5)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 1000
+    }}>
+      <div style={{
+        background: '#232323',
+        padding: '20px',
+        borderRadius: '8px',
+        maxWidth: '500px',
+        width: '90%',
+        position: 'relative'
+      }}>
+        <button
+          onClick={onClose}
+          style={{
+            position: 'absolute',
+            top: '10px',
+            right: '10px',
+            background: 'none',
+            border: 'none',
+            color: '#eaeaea',
+            fontSize: '20px',
+            cursor: 'pointer'
+          }}
+        >
+          ×
+        </button>
+        {children}
+      </div>
+    </div>,
+    document.body
+  );
+}
+
+function PortalModal() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div>
+      <button
+        onClick={() => setIsOpen(true)}
+        style={{
+          padding: '8px 16px',
+          background: '#444',
+          border: 'none',
+          borderRadius: '4px',
+          color: '#eaeaea',
+          cursor: 'pointer'
+        }}
+      >
+        Open Modal
+      </button>
+
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <h2 style={{ color: '#eaeaea', marginBottom: '15px' }}>Portal Modal</h2>
+        <p style={{ color: '#eaeaea' }}>
+          This modal is rendered outside the normal DOM hierarchy using React Portal.
+        </p>
+      </Modal>
+    </div>
+  );
+}`}</MacCmd>
             }]}
           />
         </div>
