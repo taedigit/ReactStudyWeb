@@ -20,7 +20,13 @@ export type SectionId =
   | 'lifecycle'
   | 'practicalExamples'
   | 'restapi'
-  | 'opensource';
+  | 'opensource'
+  | 'antdesign'
+  | 'mui'
+  | 'reactrouter'
+  | 'styledcomponents'
+  | 'recoil'
+  | 'reactquery';
 
 export interface Section {
   id: SectionId;

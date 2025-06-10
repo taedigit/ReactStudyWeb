@@ -2518,8 +2518,187 @@ function UseContextDemo() {
     category: 'opensource',
     icon: '📦',
     prev: 'practicalExamples',
+    next: 'antdesign',
+    content: (
+      <div>
+        React에서 많이 쓰는 오픈소스 라이브러리(예: Ant Design, Material-UI, react-router, styled-components, recoil, react-query 등)를 소개하는 섹션입니다.
+        <ul style={{ marginTop: 16 }}>
+          <li>Ant Design</li>
+          <li>Material-UI (MUI)</li>
+          <li>react-router</li>
+          <li>styled-components</li>
+          <li>recoil</li>
+          <li>react-query</li>
+        </ul>
+      </div>
+    ),
+  },
+  antdesign: {
+    id: 'antdesign',
+    title: 'Ant Design',
+    description: 'Ant Design(antd) 컴포넌트 라이브러리 예제',
+    category: 'opensource',
+    icon: '🟦',
+    prev: 'opensource',
+    next: 'mui',
+    content: (
+      <>
+        <h3>Ant Design (antd)</h3>
+        <ExampleTab
+          example={
+            <div>
+              {/* 실제 프로젝트에 antd가 설치되어 있다면 아래 import와 Button 사용 */}
+              {/* import { Button } from 'antd'; */}
+              <button style={{ background: '#1890ff', color: '#fff', border: 'none', borderRadius: 4, padding: '0.5em 1.2em', fontWeight: 500 }}>AntD 스타일 버튼</button>
+            </div>
+          }
+          code={`// antd 설치: npm install antd
+import { Button } from 'antd';
+
+function AntdButtonExample() {
+  return <Button type="primary">AntD 버튼</Button>;
+}`}
+          showCaret={false}
+          desc={"Ant Design(antd) 라이브러리의 기본 버튼 사용 예제입니다."}
+        />
+      </>
+    ),
+  },
+  mui: {
+    id: 'mui',
+    title: 'Material-UI (MUI)',
+    description: 'Material-UI(MUI) 컴포넌트 라이브러리 예제',
+    category: 'opensource',
+    icon: '🟦',
+    prev: 'antdesign',
+    next: 'reactrouter',
+    content: (
+      <>
+        <h3>Material-UI (MUI)</h3>
+        <ExampleTab
+          example={
+            <div>
+              {/* 실제 프로젝트에 @mui/material이 설치되어 있다면 아래 import와 Button 사용 */}
+              {/* import Button from '@mui/material/Button'; */}
+              <button style={{ background: '#1976d2', color: '#fff', border: 'none', borderRadius: 4, padding: '0.5em 1.2em', fontWeight: 500 }}>MUI 스타일 버튼</button>
+            </div>
+          }
+          code={`// MUI 설치: npm install @mui/material @emotion/react @emotion/styled
+import Button from '@mui/material/Button';
+
+function MuiButtonExample() {
+  return <Button variant="contained" color="primary">MUI 버튼</Button>;
+}`}
+          showCaret={false}
+          desc={"Material-UI(MUI) 라이브러리의 기본 버튼 사용 예제입니다."}
+        />
+      </>
+    ),
+  },
+  reactrouter: {
+    id: 'reactrouter',
+    title: 'React Router',
+    description: 'react-router로 라우팅 구현 예제',
+    category: 'opensource',
+    icon: '🛣️',
+    prev: 'mui',
+    next: 'styledcomponents',
+    content: (
+      <>
+        <h3>React Router</h3>
+        <ExampleTab
+          example={<div>예: <code>{`<Link to="/about">About</Link>`}</code></div>}
+          code={`// 설치: npm install react-router-dom
+import { Link } from 'react-router-dom';
+
+function RouterLinkExample() {
+  return <Link to="/about">About</Link>;}
+}`}
+          showCaret={false}
+          desc={"react-router로 페이지 이동을 구현하는 기본 예제입니다."}
+        />
+      </>
+    ),
+  },
+  styledcomponents: {
+    id: 'styledcomponents',
+    title: 'styled-components',
+    description: 'styled-components로 스타일링 예제',
+    category: 'opensource',
+    icon: '💅',
+    prev: 'reactrouter',
+    next: 'recoil',
+    content: (
+      <>
+        <h3>styled-components</h3>
+        <ExampleTab
+          example={<div>예: <code>{`<Box>스타일 적용</Box>`}</code></div>}
+          code={`// 설치: npm install styled-components
+import styled from 'styled-components';
+
+const Box = styled.div\`
+  background: #232323;
+  color: #fff;
+  padding: 1em;
+  border-radius: 8px;
+\`;
+
+function StyledBoxExample() {
+  return <Box>스타일 적용</Box>;}
+}`}
+          showCaret={false}
+          desc={"styled-components로 컴포넌트 스타일을 적용하는 기본 예제입니다."}
+        />
+      </>
+    ),
+  },
+  recoil: {
+    id: 'recoil',
+    title: 'Recoil',
+    description: 'Recoil로 전역 상태 관리 예제',
+    category: 'opensource',
+    icon: '🧬',
+    prev: 'styledcomponents',
+    next: 'reactquery',
+    content: (
+      <>
+        <h3>Recoil</h3>
+        <ExampleTab
+          example={<div>예: <code>{`const value = useRecoilValue(myAtom);`}</code></div>}
+          code={`// 설치: npm install recoil
+import { atom, useRecoilValue } from 'recoil';
+
+const myAtom = atom({\n  key: 'myAtom',\n  default: 0,\n});
+
+function RecoilValueExample() {\n  const value = useRecoilValue(myAtom);\n  return <div>값: {value}</div>;\n}`}
+          showCaret={false}
+          desc={"Recoil로 전역 상태를 읽는 기본 예제입니다."}
+        />
+      </>
+    ),
+  },
+  reactquery: {
+    id: 'reactquery',
+    title: 'React Query',
+    description: 'React Query로 서버 상태 관리 예제',
+    category: 'opensource',
+    icon: '🔗',
+    prev: 'recoil',
     next: 'restapi',
-    content: <div>React에서 많이 쓰는 오픈소스 라이브러리(예: react-router, styled-components, recoil, react-query 등)를 소개하는 섹션입니다.</div>,
+    content: (
+      <>
+        <h3>React Query</h3>
+        <ExampleTab
+          example={<div>예: <code>{`const { data } = useQuery(['todos'], fetchTodos);`}</code></div>}
+          code={`// 설치: npm install @tanstack/react-query
+import { useQuery } from '@tanstack/react-query';
+
+function Todos() {\n  const { data, isLoading } = useQuery(['todos'], fetchTodos);\n  if (isLoading) return <div>로딩중...</div>;\n  return <pre>{JSON.stringify(data, null, 2)}</pre>;\n}`}
+          showCaret={false}
+          desc={"React Query로 서버 데이터를 불러오는 기본 예제입니다."}
+        />
+      </>
+    ),
   },
 };
   
@@ -2797,12 +2976,12 @@ function CallbackListDemo() {
   const removeItem = React.useCallback((idx: number) => setItems(items => items.filter((_, i) => i !== idx)), []);
   return (
     <div style={{ color: '#eaeaea' }}>
-      <button onClick={addItem} style={{ marginRight: 8, padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>항목 추가</button>
-      <ul style={{ marginTop: 8 }}>
+      <button onClick={addItem}>항목 추가</button>
+      <ul>
         {items.map((item, i) => (
-          <li key={i} style={{ display: 'flex', alignItems: 'center', marginBottom: 4 }}>
+          <li key={i}>
             {item}
-            <button onClick={() => removeItem(i)} style={{ marginLeft: 8, padding: '0.2em 0.8em', borderRadius: 6, background: '#444', color: '#fff', border: 'none', cursor: 'pointer' }}>삭제</button>
+            <button onClick={() => removeItem(i)}>삭제</button>
           </li>
         ))}
       </ul>
