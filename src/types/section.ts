@@ -19,13 +19,14 @@ export type SectionId =
   | 'events'
   | 'lifecycle'
   | 'practicalExamples'
-  | 'restapi';
+  | 'restapi'
+  | 'opensource';
 
 export interface Section {
   id: SectionId;
   title: string;
   description: string;
-  category: 'getting_started' | 'basics' | 'advanced' | 'hooks' | 'Api' | 'example';
+  category: 'getting_started' | 'basics' | 'advanced' | 'hooks' | 'Api' | 'example' | 'opensource';
   icon: string;
   prev: SectionId | null;
   next: SectionId | null;

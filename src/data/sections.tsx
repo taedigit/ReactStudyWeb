@@ -2511,6 +2511,16 @@ function UseContextDemo() {
     next: null,
     content: <div>REST API 연동 예제 준비 중...</div>,
   },
+  opensource: {
+    id: 'opensource',
+    title: '오픈소스 라이브러리',
+    description: 'React에서 자주 사용하는 오픈소스 라이브러리 소개',
+    category: 'opensource',
+    icon: '📦',
+    prev: 'practicalExamples',
+    next: 'restapi',
+    content: <div>React에서 많이 쓰는 오픈소스 라이브러리(예: react-router, styled-components, recoil, react-query 등)를 소개하는 섹션입니다.</div>,
+  },
 };
   
 

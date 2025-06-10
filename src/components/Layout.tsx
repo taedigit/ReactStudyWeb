@@ -26,8 +26,19 @@ export const Layout = ({ children, currentSection, onSectionChange }: LayoutProp
     advanced: {
       title: '고급 개념',
       sections: Object.values(sections).filter((section: Section) => section.category === 'advanced')
+    },
+    example: {
+      title: '실전 예제',
+      sections: Object.values(sections).filter((section: Section) => section.category === 'example')
+    },
+    Api: {
+      title: 'API 연동',
+      sections: Object.values(sections).filter((section: Section) => section.category === 'Api')
+    },
+    opensource: {
+      title: '오픈소스 라이브러리',
+      sections: Object.values(sections).filter((section: Section) => section.category === 'opensource')
     }
-    
   };
 
   return (
