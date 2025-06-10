@@ -11,6 +11,7 @@ import { WindowSize } from '../components/WindowSize';
 import { ErrorBoundary } from '../components/ErrorBoundary';
 import { BuggyCounter } from '../components/BuggyCounter';
 import { PortalModal } from '../components/PortalModal';
+import { PaginatedBoard } from '../components/PaginatedBoard';
 
 const nvmInstallScript = `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 # 터미널 재시작 또는 아래 명령 실행
@@ -690,7 +691,7 @@ function Toggle({ label, initial }: { label: string; initial: boolean }) {
 
 // --- sections export must be last ---
 export const sections: Record<SectionId, Section> = {
-  intro: {
+    intro: {
     id: 'intro',
     title: 'Introduction',
     description: 'React 튜토리얼에 오신 것을 환영합니다!',
@@ -1683,6 +1684,48 @@ function AdvancedCart() {
             }]}
           />
         </div>
+        {/* 페이징 게시판 예제 */}
+        <h3>6. 페이징 게시판 예제</h3>
+        <div style={stateExampleBlockStyle}>
+          <TabComponent
+            tabs={[{
+              label: 'Example',
+              content: (
+                <>
+                  <MacCmdExampleWrapper>
+                    <PaginatedBoard
+                      posts={[
+                        { id: 1, title: '첫 번째 글', content: 'React 게시판 예제입니다.' },
+                        { id: 2, title: '두 번째 글', content: '페이지네이션이 적용되어 있습니다.' },
+                        { id: 3, title: '세 번째 글', content: '다음/이전 버튼으로 페이지를 이동할 수 있습니다.' },
+                        { id: 4, title: '네 번째 글', content: '컴포넌트 재사용이 쉽습니다.' },
+                        { id: 5, title: '다섯 번째 글', content: 'props로 pageSize를 조절할 수 있습니다.' },
+                        { id: 6, title: '여섯 번째 글', content: '6번째 게시글입니다.' },
+                        { id: 7, title: '일곱 번째 글', content: '7번째 게시글입니다.' },
+                        { id: 8, title: '여덟 번째 글', content: '8번째 게시글입니다.' },
+                        { id: 9, title: '아홉 번째 글', content: '9번째 게시글입니다.' },
+                        { id: 10, title: '열 번째 글', content: '10번째 게시글입니다.' },
+                      ]}
+                      pageSize={3}
+                    />
+                  </MacCmdExampleWrapper>
+                </>
+              )
+            }, {
+              label: 'Source',
+              content: (
+                <MacCmd showCaret={false} desc="페이징 기능이 있는 게시판 컴포넌트 예제입니다.">{`import { PaginatedBoard } from '../components/PaginatedBoard';
+
+const posts = [
+  { id: 1, title: '첫 번째 글', content: 'React 게시판 예제입니다.' },
+  // ... (생략) ...
+];
+
+<PaginatedBoard posts={posts} pageSize={3} />`}</MacCmd>
+              )
+            }]}
+          />
+        </div>
       </div>
     ),
   },
@@ -1873,6 +1916,115 @@ function Toggle({ label, initial }) {
 
 <Toggle label="다크 모드" initial={false} />`} showCaret={false} desc={"useState로 boolean 상태를 관리하며, 체크박스 토글에 따라 ON/OFF가 바뀌는 스위치 예제입니다."} />
         </div>
+        <h4>7. 동적 입력 폼</h4>
+        <div style={stateExampleBlockStyle}>
+          <ExampleTab
+            example={<DynamicFormDemo />}
+            code={`import { useState } from 'react';
+
+function DynamicFormDemo() {
+  const [fields, setFields] = useState([{ value: '' }]);
+
+  const handleChange = (i, v) => {
+    setFields(fields => fields.map((f, idx) => idx === i ? { value: v } : f));
+  };
+
+  const handleAdd = () => setFields(fields => [...fields, { value: '' }]);
+  const handleRemove = (i) => setFields(fields => fields.length > 1 ? fields.filter((_, idx) => idx !== i) : fields);
+
+  return (
+    <div>
+      {fields.map((field, i) => (
+        <div key={i} style={{ display: 'flex', alignItems: 'center', marginBottom: 8 }}>
+          <input
+            value={field.value}
+            onChange={e => handleChange(i, e.target.value)}
+            style={{ marginRight: 8, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }}
+            placeholder={'입력 ' + (i + 1)}
+          />
+          <button onClick={() => handleRemove(i)} style={{ marginRight: 4, borderRadius: 4, border: 'none', background: '#e74c3c', color: '#fff', padding: '0.3em 0.7em', cursor: 'pointer' }}>-</button>
+        </div>
+      ))}
+      <button onClick={handleAdd} style={{ borderRadius: 4, border: 'none', background: '#27c93f', color: '#fff', padding: '0.4em 1em', cursor: 'pointer' }}>필드 추가</button>
+      <pre style={{ background: '#232323', color: '#b5e853', borderRadius: 6, padding: 8, marginTop: 12 }}>{JSON.stringify(fields, null, 2)}</pre>
+    </div>
+  );
+}
+`}
+            showCaret={false}
+            desc={"useState로 배열 상태를 관리하며, 입력 필드를 동적으로 추가/삭제하는 실무 스타일의 폼 예제입니다."}
+          />
+        </div>
+        <h4>8. 숫자 입력값 합계 자동 계산</h4>
+        <div style={stateExampleBlockStyle}>
+          <ExampleTab
+            example={<SumInputsDemo />}
+            code={`import { useState } from 'react';
+
+function SumInputsDemo() {
+  const [values, setValues] = useState([0, 0, 0]);
+  const handleChange = (i, v) => {
+    const n = Number(v) || 0;
+    setValues(values => values.map((val, idx) => idx === i ? n : val));
+  };
+  const sum = values.reduce((a, b) => a + b, 0);
+  return (
+    <div>
+      {values.map((v, i) => (
+        <input
+          key={i}
+          type="number"
+          value={v}
+          onChange={e => handleChange(i, e.target.value)}
+          style={{ marginRight: 8, width: 60, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }}
+        />
+      ))}
+      <div style={{ marginTop: 8, color: '#b5e853' }}>합계: {sum}</div>
+    </div>
+  );
+}
+`}
+            showCaret={false}
+            desc={"여러 숫자 입력값을 useState 배열로 관리하고, 합계를 자동으로 계산하는 예제입니다."}
+          />
+        </div>
+        <h4>9. 다중 체크박스 선택 관리</h4>
+        <div style={stateExampleBlockStyle}>
+          <ExampleTab
+            example={<MultiCheckboxDemo />}
+            code={`import { useState } from 'react';
+
+function MultiCheckboxDemo() {
+  const items = ['React', 'Vue', 'Angular', 'Svelte'];
+  const [checked, setChecked] = useState([]);
+  const handleToggle = (item) => {
+    setChecked(checked => checked.includes(item)
+      ? checked.filter(i => i !== item)
+      : [...checked, item]
+    );
+  };
+  return (
+    <div>
+      {items.map(item => (
+        <label key={item} style={{ display: 'block', marginBottom: 4 }}>
+          <input
+            type="checkbox"
+            checked={checked.includes(item)}
+            onChange={() => handleToggle(item)}
+            style={{ marginRight: 6 }}
+          />
+          {item}
+        </label>
+      ))}
+      <div style={{ marginTop: 8, color: '#b5e853' }}>선택: {checked.join(', ') || '없음'}</div>
+    </div>
+  );
+}
+`}
+            showCaret={false}
+            desc={"여러 체크박스의 선택 상태를 useState 배열로 관리하는 예제입니다."}
+          />
+        </div>
       </div>
     ),
   },
@@ -1889,16 +2041,7 @@ function Toggle({ label, initial }) {
         
         <h4>1. Mount/Unmount Effect</h4>
         <div style={stateExampleBlockStyle}>
-          <ExampleTab example={<MountEffectDemo />} code={`import { useEffect } from 'react';
-
-function MountEffectDemo() {
-  useEffect(() => {
-    console.log('컴포넌트 마운트됨');
-    return () => {
-      console.log('컴포넌트 언마운트됨');
-    };
-  }, []);
-  return <div>마운트/언마운트 시 콘솔에 로그</div>;\n}`} showCaret={false} desc={"컴포넌트가 마운트될 때와 언마운트될 때 각각 콘솔에 로그를 출력하는 예제입니다. useEffect의 cleanup(return) 함수가 언마운트 시 동작함을 보여줍니다."} />
+          <ExampleTab example={<MountEffectDemo />} code={`import { useEffect } from 'react';\n\nfunction MountEffectDemo() {\n  useEffect(() => {\n    console.log('컴포넌트 마운트됨');\n    return () => {\n      console.log('컴포넌트 언마운트됨');\n    };\n  }, []);\n  return <div>마운트/언마운트 시 콘솔에 로그</div>;\n}`} showCaret={false} desc={"컴포넌트가 마운트될 때와 언마운트될 때 각각 콘솔에 로그를 출력하는 예제입니다. useEffect의 cleanup(return) 함수가 언마운트 시 동작함을 보여줍니다."} />
         </div>
         <h4>2. Dependency Effect</h4>
         <div style={stateExampleBlockStyle}>
@@ -2326,12 +2469,47 @@ function UseContextDemo() {
     icon: '🌐',
     prev: 'hooks',
     next: 'routing',
-    content: (
-      <div>
-        <h2>Context API</h2>
-        <p>Context를 사용하면 컴포넌트 트리 전체에 데이터를 전달할 수 있습니다.</p>
-      </div>
-    ),
+    content: <div>Context API 설명</div>,
+  },
+  events: {
+    id: 'events',
+    title: 'Events',
+    description: '이벤트 처리 방법을 배웁니다.',
+    category: 'basics',
+    icon: '🖱️',
+    prev: 'useContext',
+    next: 'lifecycle',
+    content: <div>이벤트 처리 예제 준비 중...</div>,
+  },
+  lifecycle: {
+    id: 'lifecycle',
+    title: 'Lifecycle',
+    description: '컴포넌트 생명주기 설명',
+    category: 'advanced',
+    icon: '🔄',
+    prev: 'events',
+    next: 'practicalExamples',
+    content: <div>생명주기 설명 준비 중...</div>,
+  },
+  practicalExamples: {
+    id: 'practicalExamples',
+    title: '실전 예제',
+    description: '실전에서 자주 쓰는 예제 모음',
+    category: 'example',
+    icon: '💡',
+    prev: 'lifecycle',
+    next: 'restapi',
+    content: <div>실전 예제 준비 중...</div>,
+  },
+  restapi: {
+    id: 'restapi',
+    title: 'REST API',
+    description: 'REST API와 연동하는 방법',
+    category: 'Api',
+    icon: '🌐',
+    prev: 'practicalExamples',
+    next: null,
+    content: <div>REST API 연동 예제 준비 중...</div>,
   },
 };
   
@@ -2646,6 +2824,85 @@ function StateEffectDemo() {
     <div>
       <button onClick={() => setCount(count + 1)} style={{ padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer', marginRight: 8 }}>+1</button>
       <span style={{ color: '#eaeaea' }}>{count}</span>
+    </div>
+  );
+}
+
+function DynamicFormDemo() {
+  const [fields, setFields] = React.useState([{ value: '' }]);
+
+  const handleChange = (i: number, v: string) => {
+    setFields(fields => fields.map((f, idx) => idx === i ? { value: v } : f));
+  };
+
+  const handleAdd = () => setFields(fields => [...fields, { value: '' }]);
+  const handleRemove = (i: number) => setFields(fields => fields.length > 1 ? fields.filter((_, idx) => idx !== i) : fields);
+
+  return (
+    <div>
+      {fields.map((field, i) => (
+        <div key={i} style={{ display: 'flex', alignItems: 'center', marginBottom: 8 }}>
+          <input
+            value={field.value}
+            onChange={e => handleChange(i, e.target.value)}
+            style={{ marginRight: 8, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }}
+            placeholder={`입력 ${i + 1}`}
+          />
+          <button onClick={() => handleRemove(i)} style={{ marginRight: 4, borderRadius: 4, border: 'none', background: '#e74c3c', color: '#fff', padding: '0.3em 0.7em', cursor: 'pointer' }}>-</button>
+        </div>
+      ))}
+      <button onClick={handleAdd} style={{ borderRadius: 4, border: 'none', background: '#27c93f', color: '#fff', padding: '0.4em 1em', cursor: 'pointer' }}>필드 추가</button>
+      <pre style={{ background: '#232323', color: '#b5e853', borderRadius: 6, padding: 8, marginTop: 12 }}>{JSON.stringify(fields, null, 2)}</pre>
+    </div>
+  );
+}
+
+function SumInputsDemo() {
+  const [values, setValues] = React.useState([0, 0, 0]);
+  const handleChange = (i: number, v: string) => {
+    const n = Number(v) || 0;
+    setValues(values => values.map((val, idx) => idx === i ? n : val));
+  };
+  const sum = values.reduce((a, b) => a + b, 0);
+  return (
+    <div>
+      {values.map((v, i) => (
+        <input
+          key={i}
+          type="number"
+          value={v}
+          onChange={e => handleChange(i, e.target.value)}
+          style={{ marginRight: 8, width: 60, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }}
+        />
+      ))}
+      <div style={{ marginTop: 8, color: '#b5e853' }}>합계: {sum}</div>
+    </div>
+  );
+}
+
+function MultiCheckboxDemo() {
+  const items = ['React', 'Vue', 'Angular', 'Svelte'];
+  const [checked, setChecked] = React.useState<string[]>([]);
+  const handleToggle = (item: string) => {
+    setChecked(checked => checked.includes(item)
+      ? checked.filter(i => i !== item)
+      : [...checked, item]
+    );
+  };
+  return (
+    <div>
+      {items.map(item => (
+        <label key={item} style={{ display: 'block', marginBottom: 4 }}>
+          <input
+            type="checkbox"
+            checked={checked.includes(item)}
+            onChange={() => handleToggle(item)}
+            style={{ marginRight: 6 }}
+          />
+          {item}
+        </label>
+      ))}
+      <div style={{ marginTop: 8, color: '#b5e853' }}>선택: {checked.join(', ') || '없음'}</div>
     </div>
   );
 }

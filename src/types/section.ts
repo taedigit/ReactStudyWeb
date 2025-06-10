@@ -15,15 +15,40 @@ export type SectionId =
   | 'useMemo'
   | 'useCallback'
   | 'useReducer'
-  | 'useContext';
+  | 'useContext'
+  | 'events'
+  | 'lifecycle'
+  | 'practicalExamples'
+  | 'restapi';
 
 export interface Section {
   id: SectionId;
   title: string;
   description: string;
-  content?: ReactNode;
-  category: 'getting_started' | 'basics' | 'advanced' | 'hooks';
+  category: 'getting_started' | 'basics' | 'advanced' | 'hooks' | 'Api' | 'example';
   icon: string;
   prev: SectionId | null;
   next: SectionId | null;
+  content?: ReactNode;
+  examples?: Array<{
+    id: string;
+    title: string;
+    description: string;
+    code: ReactNode;
+    source?: string;
+  }>;
+  props?: ReactNode;
+  state?: ReactNode;
+  context?: ReactNode;
+  routing?: ReactNode;
+  events?: ReactNode;
+  lifecycle?: ReactNode;
+  hooks?: ReactNode;
+  useState?: ReactNode;
+  useEffect?: ReactNode;
+  useRef?: ReactNode;
+  useMemo?: ReactNode;
+  useCallback?: ReactNode;
+  useReducer?: ReactNode;
+  useContext?: ReactNode;
 } 
