@@ -19,7 +19,9 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
+    /* 이 옵션은 유효하지 않은 TypeScript 컴파일러 옵션입니다.
+       'erasableSyntaxOnly'는 존재하지 않는 옵션이며 제거되어야 합니다.
+       lint 에러: "알 수 없는 컴파일러 옵션 'erasableSyntaxOnly'입니다." */
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
