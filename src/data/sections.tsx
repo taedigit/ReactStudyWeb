@@ -14,6 +14,41 @@ import { PortalModal } from '../components/PortalModal';
 import { PaginatedBoard } from '../components/PaginatedBoard';
 import { Button, Input, Select as AntdSelect, Checkbox, Switch, DatePicker, Modal as AntdModal, Table, notification, message, Tabs, Dropdown, Menu, Pagination, Progress, Avatar, Badge, Tag, Collapse, Tooltip, Popconfirm } from 'antd';
 import { CheckCircleOutlined } from '@ant-design/icons';
+import MuiButton from '@mui/material/Button';
+import MuiButtonGroup from '@mui/material/ButtonGroup';
+import MuiTextField from '@mui/material/TextField';
+import MuiFormControl from '@mui/material/FormControl';
+import MuiInputLabel from '@mui/material/InputLabel';
+import MuiSelect from '@mui/material/Select';
+import MuiMenuItem from '@mui/material/MenuItem';
+import MuiCheckbox from '@mui/material/Checkbox';
+import MuiSwitch from '@mui/material/Switch';
+import MuiDialog from '@mui/material/Dialog';
+import MuiDialogTitle from '@mui/material/DialogTitle';
+import MuiDialogActions from '@mui/material/DialogActions';
+import MuiTable from '@mui/material/Table';
+import MuiTableBody from '@mui/material/TableBody';
+import MuiTableCell from '@mui/material/TableCell';
+import MuiTableContainer from '@mui/material/TableContainer';
+import MuiTableHead from '@mui/material/TableHead';
+import MuiTableRow from '@mui/material/TableRow';
+import MuiPaper from '@mui/material/Paper';
+import MuiSnackbar from '@mui/material/Snackbar';
+import MuiTabs from '@mui/material/Tabs';
+import MuiTab from '@mui/material/Tab';
+import MuiMenu from '@mui/material/Menu';
+import MuiLinearProgress from '@mui/material/LinearProgress';
+import MuiAvatar from '@mui/material/Avatar';
+import MuiBadge from '@mui/material/Badge';
+import MuiChip from '@mui/material/Chip';
+import MuiAccordion from '@mui/material/Accordion';
+import MuiAccordionSummary from '@mui/material/AccordionSummary';
+import MuiAccordionDetails from '@mui/material/AccordionDetails';
+import MuiTooltip from '@mui/material/Tooltip';
+import MuiPagination from '@mui/material/Pagination';
+import MuiIcon from '@mui/material/Icon';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Typography from '@mui/material/Typography';
 
 const nvmInstallScript = `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 # 터미널 재시작 또는 아래 명령 실행
@@ -2759,7 +2794,216 @@ function UseContextDemo() {
     icon: '🟦',
     prev: 'antdesign',
     next: 'reactrouter',
-    content: <div>Material-UI(MUI) 예제 준비 중...</div>,
+    content: (
+      <div>
+        <h3>Material-UI (MUI) 주요 컨트롤별 예제</h3>
+        {/* 버튼 */}
+        <h4 style={{ marginTop: 32 }}>Button (버튼)</h4>
+        <div style={stateExampleBlockStyle}>
+          <ExampleTab
+            example={<MuiButton variant="contained" color="primary">Primary</MuiButton>}
+            code={`import Button from '@mui/material/Button';\n\nfunction Demo() {\n  return <Button variant=\"contained\" color=\"primary\">Primary</Button>;\n}`}
+            desc="기본 Primary 버튼"
+          />
+          <ExampleTab
+            example={<MuiButton variant="outlined">Outlined</MuiButton>}
+            code={`import Button from '@mui/material/Button';\n\nfunction Demo() {\n  return <Button variant=\"outlined\">Outlined</Button>;\n}`}
+            desc="Outlined 버튼"
+          />
+          <ExampleTab
+            example={<MuiButton variant="contained" startIcon={<MuiIcon>check</MuiIcon>}>Success</MuiButton>}
+            code={`import Button from '@mui/material/Button';\nimport Icon from '@mui/material/Icon';\n\nfunction Demo() {\n  return <Button variant=\"contained\" startIcon={<Icon>check</Icon>}>Success</Button>;\n}`}
+            desc="아이콘 버튼"
+          />
+          <ExampleTab
+            example={<MuiButton variant="contained" disabled>Disabled</MuiButton>}
+            code={`import Button from '@mui/material/Button';\n\nfunction Demo() {\n  return <Button variant=\"contained\" disabled>Disabled</Button>;\n}`}
+            desc="Disabled 버튼"
+          />
+          <ExampleTab
+            example={<MuiButtonGroup variant="contained"><MuiButton>Left</MuiButton><MuiButton>Right</MuiButton></MuiButtonGroup>}
+            code={`import Button from '@mui/material/Button';\nimport ButtonGroup from '@mui/material/ButtonGroup';\n\nfunction Demo() {\n  return (<ButtonGroup variant=\"contained\"><Button>Left</Button><Button>Right</Button></ButtonGroup>);\n}`}
+            desc="버튼 그룹"
+          />
+        </div>
+        {/* 입력폼 */}
+        <h4 style={{ marginTop: 32 }}>TextField (입력)</h4>
+        <div style={stateExampleBlockStyle}>
+          <ExampleTab
+            example={<MuiTextField label="기본 입력" variant="outlined" size="small" />}
+            code={`import TextField from '@mui/material/TextField';\n\nfunction Demo() {\n  return <TextField label=\"기본 입력\" variant=\"outlined\" size=\"small\" />;\n}`}
+            desc="기본 TextField"
+          />
+          <ExampleTab
+            example={<MuiTextField label="비밀번호" type="password" variant="outlined" size="small" />}
+            code={`import TextField from '@mui/material/TextField';\n\nfunction Demo() {\n  return <TextField label=\"비밀번호\" type=\"password\" variant=\"outlined\" size=\"small\" />;\n}`}
+            desc="Password TextField"
+          />
+          <ExampleTab
+            example={<MuiTextField label="검색" variant="outlined" size="small" InputProps={{ endAdornment: <MuiIcon>search</MuiIcon> }} />}
+            code={`import TextField from '@mui/material/TextField';\nimport Icon from '@mui/material/Icon';\n\nfunction Demo() {\n  return <TextField label=\"검색\" variant=\"outlined\" size=\"small\" InputProps={{ endAdornment: <Icon>search</Icon> }} />;\n}`}
+            desc="Search TextField"
+          />
+        </div>
+        {/* 셀렉트 */}
+        <h4 style={{ marginTop: 32 }}>Select (셀렉트)</h4>
+        <div style={stateExampleBlockStyle}>
+          <ExampleTab
+            example={
+              <MuiFormControl size="small" variant="outlined">
+                <MuiInputLabel>과일</MuiInputLabel>
+                <MuiSelect label="과일" defaultValue="apple">
+                  <MuiMenuItem value="apple">Apple</MuiMenuItem>
+                  <MuiMenuItem value="banana">Banana</MuiMenuItem>
+                </MuiSelect>
+              </MuiFormControl>
+            }
+            code={`import FormControl from '@mui/material/FormControl';\nimport InputLabel from '@mui/material/InputLabel';\nimport Select from '@mui/material/Select';\nimport MenuItem from '@mui/material/MenuItem';\n\nfunction Demo() {\n  return (<FormControl size=\"small\" variant=\"outlined\">\n    <InputLabel>과일</InputLabel>\n    <Select label=\"과일\" defaultValue=\"apple\">\n      <MenuItem value=\"apple\">Apple</MenuItem>\n      <MenuItem value=\"banana\">Banana</MenuItem>\n    </Select>\n  </FormControl>);\n}`}
+            desc="기본 Select"
+          />
+        </div>
+        {/* 체크박스/스위치 */}
+        <h4 style={{ marginTop: 32 }}>Checkbox & Switch</h4>
+        <div style={stateExampleBlockStyle}>
+          <ExampleTab
+            example={<MuiCheckbox defaultChecked color="primary" />}
+            code={`import Checkbox from '@mui/material/Checkbox';\n\nfunction Demo() {\n  return <Checkbox defaultChecked color=\"primary\" />;\n}`}
+            desc="Checkbox"
+          />
+          <ExampleTab
+            example={<MuiSwitch defaultChecked color="primary" />}
+            code={`import Switch from '@mui/material/Switch';\n\nfunction Demo() {\n  return <Switch defaultChecked color=\"primary\" />;\n}`}
+            desc="Switch"
+          />
+        </div>
+        {/* 날짜 선택 */}
+        <h4 style={{ marginTop: 32 }}>DatePicker (날짜 선택)</h4>
+        <div style={stateExampleBlockStyle}>
+          <ExampleTab
+            example={<MuiTextField type="date" label="날짜" InputLabelProps={{ shrink: true }} size="small" />}
+            code={`import TextField from '@mui/material/TextField';\n\nfunction Demo() {\n  return <TextField type=\"date\" label=\"날짜\" InputLabelProps={{ shrink: true }} size=\"small\" />;\n}`}
+            desc="DatePicker (MUI 기본)"
+          />
+        </div>
+        {/* 다이얼로그 */}
+        <h4 style={{ marginTop: 32 }}>Dialog (다이얼로그)</h4>
+        <div style={stateExampleBlockStyle}>
+          <ExampleTab
+            example={<MuiDialogDemo />}
+            code={`import Dialog from '@mui/material/Dialog';\nimport Button from '@mui/material/Button';\nimport DialogTitle from '@mui/material/DialogTitle';\nimport DialogActions from '@mui/material/DialogActions';\nimport React, { useState } from 'react';\n\nfunction Demo() {\n  const [open, setOpen] = useState(false);\n  return (<><Button onClick={() => setOpen(true)}>다이얼로그 열기</Button><Dialog open={open} onClose={() => setOpen(false)}><DialogTitle>다이얼로그 내용</DialogTitle><DialogActions><Button onClick={() => setOpen(false)}>닫기</Button></DialogActions></Dialog></>);\n}`}
+            desc="Dialog"
+          />
+        </div>
+        {/* 테이블 */}
+        <h4 style={{ marginTop: 32 }}>Table (테이블)</h4>
+        <div style={stateExampleBlockStyle}>
+          <ExampleTab
+            example={<MuiTableDemo />}
+            code={`import Table from '@mui/material/Table';\nimport TableBody from '@mui/material/TableBody';\nimport TableCell from '@mui/material/TableCell';\nimport TableContainer from '@mui/material/TableContainer';\nimport TableHead from '@mui/material/TableHead';\nimport TableRow from '@mui/material/TableRow';\nimport Paper from '@mui/material/Paper';\n\nconst rows = [\n  { name: '홍길동', age: 28 },\n  { name: '김철수', age: 34 },\n];\n\nfunction Demo() {\n  return (<TableContainer component={Paper}><Table><TableHead><TableRow><TableCell>이름</TableCell><TableCell>나이</TableCell></TableRow></TableHead><TableBody>{rows.map((row, i) => (<TableRow key={i}><TableCell>{row.name}</TableCell><TableCell>{row.age}</TableCell></TableRow>))}</TableBody></Table></TableContainer>);\n}`}
+            desc="기본 Table"
+          />
+        </div>
+        {/* 스낵바 */}
+        <h4 style={{ marginTop: 32 }}>Snackbar (스낵바)</h4>
+        <div style={stateExampleBlockStyle}>
+          <ExampleTab
+            example={<MuiSnackbarDemo />}
+            code={`import Snackbar from '@mui/material/Snackbar';\nimport Button from '@mui/material/Button';\nimport React, { useState } from 'react';\n\nfunction Demo() {\n  const [open, setOpen] = useState(false);\n  return (<><Button onClick={() => setOpen(true)}>스낵바 열기</Button><Snackbar open={open} autoHideDuration={2000} onClose={() => setOpen(false)} message=\"저장되었습니다!\" /></>);\n}`}
+            desc="Snackbar"
+          />
+        </div>
+        {/* Tabs */}
+        <h4 style={{ marginTop: 32 }}>Tabs</h4>
+        <div style={stateExampleBlockStyle}>
+          <ExampleTab
+            example={<MuiTabsDemo />}
+            code={`import Tabs from '@mui/material/Tabs';\nimport Tab from '@mui/material/Tab';\nimport React from 'react';\n\nfunction Demo() {\n  const [value, setValue] = React.useState(0);\n  return (<Tabs value={value} onChange={(_, v) => setValue(v)}><Tab label=\"Tab1\" /><Tab label=\"Tab2\" /></Tabs>);\n}`}
+            desc="Tabs"
+          />
+        </div>
+        {/* Menu (Dropdown) */}
+        <h4 style={{ marginTop: 32 }}>Menu (Dropdown)</h4>
+        <div style={stateExampleBlockStyle}>
+          <ExampleTab
+            example={<MuiMenuDemo />}
+            code={`import Menu from '@mui/material/Menu';\nimport MenuItem from '@mui/material/MenuItem';\nimport Button from '@mui/material/Button';\nimport React, { useState } from 'react';\n\nfunction Demo() {\n  const [anchorEl, setAnchorEl] = useState(null);\n  const open = Boolean(anchorEl);\n  return (<><Button onClick={e => setAnchorEl(e.currentTarget)}>메뉴 열기</Button><Menu anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)}><MenuItem onClick={() => setAnchorEl(null)}>메뉴1</MenuItem><MenuItem onClick={() => setAnchorEl(null)}>메뉴2</MenuItem></Menu></>);\n}`}
+            desc="Dropdown"
+          />
+        </div>
+        {/* Pagination */}
+        <h4 style={{ marginTop: 32 }}>Pagination</h4>
+        <div style={stateExampleBlockStyle}>
+          <ExampleTab
+            example={<MuiPagination count={10} page={1} />}
+            code={`import Pagination from '@mui/material/Pagination';\n\nfunction Demo() {\n  return <Pagination count={10} page={1} />;\n}`}
+            desc="Pagination"
+          />
+        </div>
+        {/* Progress */}
+        <h4 style={{ marginTop: 32 }}>Progress</h4>
+        <div style={stateExampleBlockStyle}>
+          <ExampleTab
+            example={<MuiLinearProgress variant="determinate" value={60} />}
+            code={`import LinearProgress from '@mui/material/LinearProgress';\n\nfunction Demo() {\n  return <LinearProgress variant=\"determinate\" value={60} />;\n}`}
+            desc="LinearProgress"
+          />
+        </div>
+        {/* Avatar */}
+        <h4 style={{ marginTop: 32 }}>Avatar</h4>
+        <div style={stateExampleBlockStyle}>
+          <ExampleTab
+            example={<MuiAvatar>A</MuiAvatar>}
+            code={`import Avatar from '@mui/material/Avatar';\n\nfunction Demo() {\n  return <Avatar>A</Avatar>;\n}`}
+            desc="Avatar"
+          />
+        </div>
+        {/* Badge */}
+        <h4 style={{ marginTop: 32 }}>Badge</h4>
+        <div style={stateExampleBlockStyle}>
+          <ExampleTab
+            example={<MuiBadge badgeContent={5} color="primary"><MuiAvatar>B</MuiAvatar></MuiBadge>}
+            code={`import Badge from '@mui/material/Badge';\nimport Avatar from '@mui/material/Avatar';\n\nfunction Demo() {\n  return <Badge badgeContent={5} color=\"primary\"><Avatar>B</Avatar></Badge>;\n}`}
+            desc="Badge"
+          />
+        </div>
+        {/* Chip (Tag) */}
+        <h4 style={{ marginTop: 32 }}>Chip (Tag)</h4>
+        <div style={stateExampleBlockStyle}>
+          <ExampleTab
+            example={<MuiChip label="Tag" color="primary" />}
+            code={`import Chip from '@mui/material/Chip';\n\nfunction Demo() {\n  return <Chip label=\"Tag\" color=\"primary\" />;\n}`}
+            desc="Chip"
+          />
+        </div>
+        {/* Accordion */}
+        <h4 style={{ marginTop: 32 }}>Accordion</h4>
+        <div style={stateExampleBlockStyle}>
+          <ExampleTab
+            example={<MuiAccordionDemo />}
+            code={`import Accordion from '@mui/material/Accordion';\nimport AccordionSummary from '@mui/material/AccordionSummary';\nimport AccordionDetails from '@mui/material/AccordionDetails';\nimport Typography from '@mui/material/Typography';\nimport ExpandMoreIcon from '@mui/icons-material/ExpandMore';\n\nfunction Demo() {\n  return (<Accordion><AccordionSummary expandIcon={<ExpandMoreIcon />}><Typography>패널 제목</Typography></AccordionSummary><AccordionDetails><Typography>패널 내용</Typography></AccordionDetails></Accordion>);\n}`}
+            desc="Accordion"
+          />
+        </div>
+        {/* Tooltip */}
+        <h4 style={{ marginTop: 32 }}>Tooltip</h4>
+        <div style={stateExampleBlockStyle}>
+          <ExampleTab
+            example={<MuiTooltip title="툴팁 내용"><span>툴팁</span></MuiTooltip>}
+            code={`import Tooltip from '@mui/material/Tooltip';\n\nfunction Demo() {\n  return <Tooltip title=\"툴팁 내용\"><span>툴팁</span></Tooltip>;\n}`}
+            desc="Tooltip"
+          />
+        </div>
+        {/* Dialog (확인 다이얼로그) */}
+        <h4 style={{ marginTop: 32 }}>Dialog (확인 다이얼로그)</h4>
+        <div style={stateExampleBlockStyle}>
+          <ExampleTab
+            example={<MuiConfirmDialogDemo />}
+            code={`import Dialog from '@mui/material/Dialog';\nimport DialogTitle from '@mui/material/DialogTitle';\nimport DialogActions from '@mui/material/DialogActions';\nimport Button from '@mui/material/Button';\nimport React, { useState } from 'react';\n\nfunction Demo() {\n  const [open, setOpen] = useState(false);\n  return (<><Button onClick={() => setOpen(true)}>확인</Button><Dialog open={open} onClose={() => setOpen(false)}><DialogTitle>정말 삭제할까요?</DialogTitle><DialogActions><Button onClick={() => setOpen(false)}>아니오</Button><Button onClick={() => setOpen(false)} color=\"primary\">네</Button></DialogActions></Dialog></>);\n}`}
+            desc="확인 다이얼로그"
+          />
+        </div>
+      </div>
+    ),
   },
   reactrouter: {
     id: 'reactrouter',
@@ -3241,5 +3485,110 @@ function AntdPopconfirmDemo() {
     >
       <Button onClick={() => setVisible(true)}>삭제</Button>
     </Popconfirm>
+  );
+}
+
+function MuiDialogDemo() {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <>
+      <MuiButton variant="contained" onClick={() => setOpen(true)}>다이얼로그 열기</MuiButton>
+      <MuiDialog open={open} onClose={() => setOpen(false)}>
+        <MuiDialogTitle>다이얼로그 내용</MuiDialogTitle>
+        <MuiDialogActions>
+          <MuiButton onClick={() => setOpen(false)}>닫기</MuiButton>
+        </MuiDialogActions>
+      </MuiDialog>
+    </>
+  );
+}
+
+function MuiTableDemo() {
+  const rows = [
+    { name: '홍길동', age: 28 },
+    { name: '김철수', age: 34 },
+  ];
+  return (
+    <MuiTableContainer component={MuiPaper}>
+      <MuiTable>
+        <MuiTableHead>
+          <MuiTableRow>
+            <MuiTableCell>이름</MuiTableCell>
+            <MuiTableCell>나이</MuiTableCell>
+          </MuiTableRow>
+        </MuiTableHead>
+        <MuiTableBody>
+          {rows.map((row, i) => (
+            <MuiTableRow key={i}>
+              <MuiTableCell>{row.name}</MuiTableCell>
+              <MuiTableCell>{row.age}</MuiTableCell>
+            </MuiTableRow>
+          ))}
+        </MuiTableBody>
+      </MuiTable>
+    </MuiTableContainer>
+  );
+}
+
+function MuiSnackbarDemo() {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <>
+      <MuiButton variant="contained" onClick={() => setOpen(true)}>스낵바 열기</MuiButton>
+      <MuiSnackbar open={open} autoHideDuration={2000} onClose={() => setOpen(false)} message="저장되었습니다!" />
+    </>
+  );
+}
+
+function MuiTabsDemo() {
+  const [value, setValue] = React.useState(0);
+  return (
+    <MuiTabs value={value} onChange={(_, v) => setValue(v)}>
+      <MuiTab label="Tab1" />
+      <MuiTab label="Tab2" />
+    </MuiTabs>
+  );
+}
+
+function MuiMenuDemo() {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  return (
+    <>
+      <MuiButton onClick={e => setAnchorEl(e.currentTarget)}>메뉴 열기</MuiButton>
+      <MuiMenu anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)}>
+        <MuiMenuItem onClick={() => setAnchorEl(null)}>메뉴1</MuiMenuItem>
+        <MuiMenuItem onClick={() => setAnchorEl(null)}>메뉴2</MuiMenuItem>
+      </MuiMenu>
+    </>
+  );
+}
+
+function MuiAccordionDemo() {
+  return (
+    <MuiAccordion>
+      <MuiAccordionSummary expandIcon={<ExpandMoreIcon />}>
+        <Typography>패널 제목</Typography>
+      </MuiAccordionSummary>
+      <MuiAccordionDetails>
+        <Typography>패널 내용</Typography>
+      </MuiAccordionDetails>
+    </MuiAccordion>
+  );
+}
+
+function MuiConfirmDialogDemo() {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <>
+      <MuiButton onClick={() => setOpen(true)}>확인</MuiButton>
+      <MuiDialog open={open} onClose={() => setOpen(false)}>
+        <MuiDialogTitle>정말 삭제할까요?</MuiDialogTitle>
+        <MuiDialogActions>
+          <MuiButton onClick={() => setOpen(false)}>아니오</MuiButton>
+          <MuiButton onClick={() => setOpen(false)} color="primary">네</MuiButton>
+        </MuiDialogActions>
+      </MuiDialog>
+    </>
   );
 }
