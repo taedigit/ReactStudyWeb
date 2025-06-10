@@ -26,12 +26,8 @@ export const Layout = ({ children, currentSection, onSectionChange }: LayoutProp
     advanced: {
       title: '고급 개념',
       sections: Object.values(sections).filter((section: Section) => section.category === 'advanced')
-
-    },
-    example: {
-      title: 'Example',
-      sections: Object.values(sections).filter((section: Section) => section.category === 'example')
-    },
+    }
+    
   };
 
   return (
