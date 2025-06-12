@@ -271,8 +271,8 @@ const exampleBlockStyle = {
   border: '1px solid #eee',
   marginTop: '1.2em',
   marginBottom: '2em',
-  marginLeft: 0,
-  marginRight: 0,
+  marginLeft: '-2em',
+  marginRight: '-2em',
 };
 
 const buttonStyle = {
@@ -310,7 +310,7 @@ const cardStyle = {
 
 const FetchAPI: React.FC = () => {
   return (
-    <Box sx={{ maxWidth: 800, mx: 'auto', p: 3, color: '#eaeaea' }}>
+    <Box sx={{ maxWidth: '100%', mx: 'auto', p: 3, color: '#eaeaea' }}>
       <Typography variant="h4" gutterBottom sx={{ color: '#eaeaea' }}>
         Fetch API 예제
       </Typography>
