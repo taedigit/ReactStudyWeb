@@ -50,6 +50,7 @@ import MuiIcon from '@mui/material/Icon';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Typography from '@mui/material/Typography';
 import FetchAPI from '../sections/api/FetchAPI';
+import AxiosExample from '../sections/api/AxiosExample';
 
 const nvmInstallScript = `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 # 터미널 재시작 또는 아래 명령 실행
@@ -3064,8 +3065,18 @@ function UseContextDemo() {
     icon: '🔄',
     prev: 'fetchapi',
     next: 'reactquery',
-    content: <div>Axios 예제 준비 중...</div>
+    content: <AxiosExample />
   },
+  restapi: {
+    id: 'restapi',
+    title: 'REST API',
+    description: 'REST API의 기본 개념과 사용법',
+    category: 'Api',
+    icon: '🌐',
+    prev: 'axios',
+    next: null,
+    content: <div>REST API 예제 준비 중...</div>
+  }
 };
   
 

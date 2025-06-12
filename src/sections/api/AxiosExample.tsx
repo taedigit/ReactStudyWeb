@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Button, Typography, CircularProgress, Card, CardContent, Stack, TextField } from '@mui/material';
 import { ExampleTab } from '../../components/ExampleTab';
+import axios from 'axios';
 
 interface Post {
   id: number;
@@ -25,10 +26,8 @@ function GetExample() {
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=3');
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      const data = await response.json();
-      setPosts(data);
+      const response = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=3');
+      setPosts(response.data);
     } catch (err) {
       setError(err instanceof Error ? err.message : '데이터를 불러오는데 실패했습니다.');
     } finally {
@@ -96,20 +95,12 @@ function PostExample() {
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
-        method: 'POST',
-        body: JSON.stringify({
-          title: '새 게시물',
-          body: '게시물 내용',
-          userId: 1,
-        }),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        },
+      const response = await axios.post('https://jsonplaceholder.typicode.com/posts', {
+        title: '새 게시물',
+        body: '게시물 내용',
+        userId: 1,
       });
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      const data = await response.json();
-      setResult(data);
+      setResult(response.data);
     } catch (err) {
       setError(err instanceof Error ? err.message : '게시물 생성에 실패했습니다.');
     } finally {
@@ -121,16 +112,8 @@ function PostExample() {
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch('https://jsonplaceholder.typicode.com/users', {
-        method: 'POST',
-        body: JSON.stringify(formData),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        },
-      });
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      const data = await response.json();
-      alert('사용자 생성 성공!\n' + JSON.stringify(data, null, 2));
+      const response = await axios.post('https://jsonplaceholder.typicode.com/users', formData);
+      alert('사용자 생성 성공!\n' + JSON.stringify(response.data, null, 2));
     } catch (err) {
       setError(err instanceof Error ? err.message : '사용자 생성에 실패했습니다.');
     } finally {
@@ -238,20 +221,12 @@ function PutExample() {
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch('https://jsonplaceholder.typicode.com/posts/1', {
-        method: 'PUT',
-        body: JSON.stringify({
-          title: '수정된 게시물',
-          body: '수정된 내용',
-          userId: 1,
-        }),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        },
+      const response = await axios.put('https://jsonplaceholder.typicode.com/posts/1', {
+        title: '수정된 게시물',
+        body: '수정된 내용',
+        userId: 1,
       });
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      const data = await response.json();
-      setResult(data);
+      setResult(response.data);
     } catch (err) {
       setError(err instanceof Error ? err.message : '게시물 수정에 실패했습니다.');
     } finally {
@@ -263,16 +238,8 @@ function PutExample() {
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch('https://jsonplaceholder.typicode.com/posts/1', {
-        method: 'PUT',
-        body: JSON.stringify(postData),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        },
-      });
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      const data = await response.json();
-      alert('게시물 수정 성공!\n' + JSON.stringify(data, null, 2));
+      const response = await axios.put('https://jsonplaceholder.typicode.com/posts/1', postData);
+      alert('게시물 수정 성공!\n' + JSON.stringify(response.data, null, 2));
     } catch (err) {
       setError(err instanceof Error ? err.message : '게시물 수정에 실패했습니다.');
     } finally {
@@ -363,10 +330,7 @@ function DeleteExample() {
       setLoading(true);
       setError(null);
       setSuccess(false);
-      const response = await fetch('https://jsonplaceholder.typicode.com/posts/1', {
-        method: 'DELETE',
-      });
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      const response = await axios.delete('https://jsonplaceholder.typicode.com/posts/1');
       setSuccess(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : '게시물 삭제에 실패했습니다.');
@@ -479,96 +443,82 @@ const textFieldStyle = {
   },
 };
 
-const FetchAPI: React.FC = () => {
+const AxiosExample: React.FC = () => {
   return (
     <Box sx={{ maxWidth: '100%', mx: 'auto', p: 3, color: '#eaeaea' }}>
-
-     <h4>1. GET</h4>
+      <h4>1. GET</h4>
       <div style={exampleBlockStyle}>
-   
         <ExampleTab
           example={<GetExample />}
           code={`const fetchPosts = async () => {
-  const response = await fetch('https://api.example.com/posts');
-  if (!response.ok) {
-    throw new Error(\`HTTP error! status: \${response.status}\`);
+  try {
+    const response = await axios.get('https://api.example.com/posts');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    throw error;
   }
-  const data = await response.json();
-  return data;
 };`}
           showCaret={false}
-          desc="Fetch API를 사용하여 서버에서 데이터를 가져오는 GET 요청 예제입니다."
+          desc="Axios를 사용하여 서버에서 데이터를 가져오는 GET 요청 예제입니다."
         />
       </div>
 
       <h4>2. POST</h4>
       <div style={exampleBlockStyle}>
-        
         <ExampleTab
           example={<PostExample />}
           code={`const createPost = async (post) => {
-  const response = await fetch('https://api.example.com/posts', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(post),
-  });
-  if (!response.ok) {
-    throw new Error(\`HTTP error! status: \${response.status}\`);
+  try {
+    const response = await axios.post('https://api.example.com/posts', post);
+    return response.data;
+  } catch (error) {
+    console.error('Error creating post:', error);
+    throw error;
   }
-  const data = await response.json();
-  return data;
 };`}
           showCaret={false}
-          desc="Fetch API를 사용하여 서버에 새로운 데이터를 생성하는 POST 요청 예제입니다."
+          desc="Axios를 사용하여 서버에 새로운 데이터를 생성하는 POST 요청 예제입니다."
         />
       </div>
 
       <h4>3. PUT</h4>
       <div style={exampleBlockStyle}>
-        
         <ExampleTab
           example={<PutExample />}
           code={`const updatePost = async (id, post) => {
-  const response = await fetch(\`https://api.example.com/posts/\${id}\`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(post),
-  });
-  if (!response.ok) {
-    throw new Error(\`HTTP error! status: \${response.status}\`);
+  try {
+    const response = await axios.put(\`https://api.example.com/posts/\${id}\`, post);
+    return response.data;
+  } catch (error) {
+    console.error('Error updating post:', error);
+    throw error;
   }
-  const data = await response.json();
-  return data;
 };`}
           showCaret={false}
-          desc="Fetch API를 사용하여 서버의 기존 데이터를 수정하는 PUT 요청 예제입니다."
+          desc="Axios를 사용하여 서버의 기존 데이터를 수정하는 PUT 요청 예제입니다."
         />
       </div>
 
       <h4>4. DELETE</h4>
       <div style={exampleBlockStyle}>
-        
         <ExampleTab
           example={<DeleteExample />}
           code={`const deletePost = async (id) => {
-  const response = await fetch(\`https://api.example.com/posts/\${id}\`, {
-    method: 'DELETE',
-  });
-  if (!response.ok) {
-    throw new Error(\`HTTP error! status: \${response.status}\`);
+  try {
+    await axios.delete(\`https://api.example.com/posts/\${id}\`);
+    return true;
+  } catch (error) {
+    console.error('Error deleting post:', error);
+    throw error;
   }
-  return true;
 };`}
           showCaret={false}
-          desc="Fetch API를 사용하여 서버의 데이터를 삭제하는 DELETE 요청 예제입니다."
+          desc="Axios를 사용하여 서버의 데이터를 삭제하는 DELETE 요청 예제입니다."
         />
       </div>
     </Box>
   );
 };
 
-export default FetchAPI; 
+export default AxiosExample; 
