@@ -49,6 +49,7 @@ import MuiPagination from '@mui/material/Pagination';
 import MuiIcon from '@mui/material/Icon';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Typography from '@mui/material/Typography';
+import FetchAPI from '../sections/api/FetchAPI';
 
 const nvmInstallScript = `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 # 터미널 재시작 또는 아래 명령 실행
@@ -2369,17 +2370,17 @@ function CallbackDepsDemo() {
           <ExampleTab example={<CallbackListDemo />} code={`import React, { useState, useCallback } from 'react';
 
 function CallbackListDemo() {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState<string[]>([]);
   const addItem = useCallback(() => setItems(items => [...items, \`Item\${items.length + 1}\`]), []);
-  const removeItem = useCallback((idx) => setItems(items => items.filter((_, i) => i !== idx)), []);
+  const removeItem = useCallback((idx: number) => setItems(items => items.filter((_, i) => i !== idx)), []);
   return (
-    <div>
+    <div style={{ color: '#eaeaea' }}>
       <button onClick={addItem}>항목 추가</button>
       <ul>
-        {items.map((item, i) => (
-          <li key={i}>
+        {items.map((item, idx) => (
+          <li key={idx}>
             {item}
-            <button onClick={() => removeItem(i)}>삭제</button>
+            <button onClick={() => removeItem(idx)}>삭제</button>
           </li>
         ))}
       </ul>
@@ -2436,12 +2437,19 @@ function reducer(state, action) {
 }
 
 function UseReducerDemo() {
-  const [state, dispatch] = useReducer(reducer, { count: 0 });
+  const reducer = (state: { count: number }, action: { type: string }) => {
+    switch (action.type) {
+      case 'inc': return { count: state.count + 1 };
+      case 'dec': return { count: state.count - 1 };
+      default: return state;
+    }
+  };
+  const [state, dispatch] = React.useReducer(reducer, { count: 0 });
   return (
     <div>
-      <button onClick={() => dispatch({ type: 'dec' })}>-</button>
-      <span style={{ margin: '0 1em' }}>{state.count}</span>
-      <button onClick={() => dispatch({ type: 'inc' })}>+</button>
+      <button onClick={() => dispatch({ type: 'dec' })} style={{ padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>-</button>
+      <span style={{ margin: '0 1em', color: '#eaeaea' }}>{state.count}</span>
+      <button onClick={() => dispatch({ type: 'inc' })} style={{ padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>+</button>
     </div>
   );
 }`}
@@ -2538,16 +2546,8 @@ function UseContextDemo() {
     next: 'restapi',
     content: <div>실전 예제 준비 중...</div>,
   },
-  restapi: {
-    id: 'restapi',
-    title: 'REST API',
-    description: 'REST API와 연동하는 방법',
-    category: 'Api',
-    icon: '🌐',
-    prev: 'practicalExamples',
-    next: null,
-    content: <div>REST API 연동 예제 준비 중...</div>,
-  },
+
+  
   opensource: {
     id: 'opensource',
     title: '오픈소스 라이브러리',
@@ -3045,6 +3045,36 @@ function UseContextDemo() {
     next: 'restapi',
     content: <div>React Query 예제 준비 중...</div>,
   },
+  fetchapi: {
+    id: 'fetchapi',
+    title: 'Fetch API',
+    description: '브라우저 내장 Fetch API를 사용한 데이터 요청',
+    category: 'Api',
+    icon: '📡',
+    prev: 'api',
+    next: 'axios',
+    content: <FetchAPI />
+  },
+  api: {
+    id: 'api',
+    title: 'API 연동',
+    description: 'React에서 API를 연동하는 다양한 방법들을 알아봅니다.',
+    category: 'Api',
+    icon: '🔌',
+    prev: 'lifecycle',
+    next: 'fetchapi',
+    content: <div>API 연동 예제 준비 중...</div>
+  },
+  axios: {
+    id: 'axios',
+    title: 'Axios',
+    description: 'Axios 라이브러리를 사용한 HTTP 요청',
+    category: 'Api',
+    icon: '🔄',
+    prev: 'fetchapi',
+    next: 'reactquery',
+    content: <div>Axios 예제 준비 중...</div>
+  },
 };
   
 
@@ -3323,10 +3353,10 @@ function CallbackListDemo() {
     <div style={{ color: '#eaeaea' }}>
       <button onClick={addItem}>항목 추가</button>
       <ul>
-        {items.map((item, i) => (
-          <li key={i}>
+        {items.map((item, idx) => (
+          <li key={idx}>
             {item}
-            <button onClick={() => removeItem(i)}>삭제</button>
+            <button onClick={() => removeItem(idx)}>삭제</button>
           </li>
         ))}
       </ul>

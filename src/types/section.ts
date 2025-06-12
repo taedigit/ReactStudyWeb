@@ -26,7 +26,10 @@ export type SectionId =
   | 'reactrouter'
   | 'styledcomponents'
   | 'recoil'
-  | 'reactquery';
+  | 'reactquery'
+  | 'fetchapi'
+  | 'api'
+  | 'axios';
 
 export interface Section {
   id: SectionId;
