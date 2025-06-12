@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Box, Typography, Paper, Tab, Tabs } from '@mui/material';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import { MacCmd } from './MacCmd';
 
 interface ExampleSectionProps {
   title: string;
@@ -76,9 +75,60 @@ export const ExampleSection: React.FC<ExampleSectionProps> = ({
             </SyntaxHighlighter>
           )}
           {tabValue === 2 && (
-            <MacCmd showCaret={false}>
-              {tooltip || '설명이 없습니다.'}
-            </MacCmd>
+            <Box sx={{
+              background: '#1e1e1e',
+              borderRadius: '10px',
+              margin: '0.5em 0',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+              overflow: 'hidden',
+              border: '1px solid #222',
+              position: 'relative'
+            }}>
+              <Box sx={{
+                display: 'flex',
+                alignItems: 'center',
+                height: '28px',
+                background: '#232323',
+                padding: '0 12px',
+                borderBottom: '1px solid #222',
+                gap: '8px',
+              }}>
+                <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ff5f56', display: 'inline-block' }}></span>
+                <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ffbd2e', display: 'inline-block' }}></span>
+                <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#27c93f', display: 'inline-block' }}></span>
+              </Box>
+              <Box sx={{
+                background: 'transparent',
+                color: '#eaeaea',
+                padding: '1em',
+                fontFamily: 'Menlo, Monaco, Consolas, monospace',
+                fontSize: '1em',
+                margin: 0,
+                lineHeight: '1.6',
+                overflowX: 'auto',
+                whiteSpace: 'pre-wrap',
+                position: 'relative'
+              }}>
+                {tooltip || '설명이 없습니다.'}
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    display: 'inline-block',
+                    width: '8px',
+                    height: '15px',
+                    backgroundColor: '#b5e853',
+                    animation: 'blink 1s step-end infinite',
+                    '@keyframes blink': {
+                      '0%': { opacity: 1 },
+                      '50%': { opacity: 0 },
+                      '100%': { opacity: 1 }
+                    },
+                    ml: 1,
+                    verticalAlign: 'middle'
+                  }}
+                />
+              </Box>
+            </Box>
           )}
         </Box>
       </Paper>
