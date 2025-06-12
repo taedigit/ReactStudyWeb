@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Box, Button, Typography, CircularProgress, Card, CardContent, Stack, TextField } from '@mui/material';
+import { Box, Button, Typography, CircularProgress, Card, CardContent, Stack, TextField, IconButton, Tooltip } from '@mui/material';
+import InfoIcon from '@mui/icons-material/Info';
 import { ExampleTab } from '../../components/ExampleTab';
 import { useQuery, useQueryClient, useMutation, useInfiniteQuery, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import axios from 'axios';
@@ -424,11 +425,214 @@ const textFieldStyle = {
   },
 };
 
+const tooltipStyle = {
+  tooltip: {
+    backgroundColor: '#2d2d2d',
+    color: '#eaeaea',
+    maxWidth: 'none',
+    padding: '12px 16px',
+    fontSize: '14px',
+    border: '1px solid #444',
+    '& .MuiTooltip-arrow': {
+      color: '#2d2d2d'
+    }
+  }
+};
+
 const TanStackQueryExample: React.FC = () => {
+  const descriptions = {
+    basicQuery: `• useQuery 훅
+  - 서버 데이터를 가져오고 캐싱하는 핵심 기능
+  - 자동 백그라운드 리프레시로 데이터를 최신으로 유지
+  - 중복 요청 자동 제거 (Deduplication)
+
+• queryKey ['posts']
+  - 캐시 키로 사용되어 데이터를 고유하게 식별
+  - 배열 형태로 동적 값 포함 가능 (예: ['posts', postId])
+  - 같은 키를 사용하는 컴포넌트 간 데이터 공유
+
+• queryFn
+  - 실제 데이터를 가져오는 비동기 함수
+  - Promise를 반환해야 함
+  - axios, fetch 등 원하는 방식으로 구현 가능
+
+• 반환값
+  - data: 가져온 데이터
+  - isLoading: 초기 로딩 상태
+  - isFetching: 백그라운드 리프레시 상태
+  - error: 에러 객체
+  - refetch: 수동 재요청 함수
+
+• 자동 기능
+  - 컴포넌트 마운트 시 자동 요청
+  - 윈도우 포커스 시 자동 재검증
+  - 네트워크 재연결 시 자동 재시도
+  - 에러 발생 시 자동 재시도 (기본 3회)`,
+
+    invalidation: `• useMutation 훅
+  - 서버 데이터를 변경하는 작업 처리 (POST, PUT, DELETE 등)
+  - 낙관적 업데이트와 롤백 지원
+  - 여러 변이 요청 자동 직렬화
+
+• mutationFn
+  - 실제 서버에 데이터를 전송하는 함수
+  - 변경할 데이터를 매개변수로 받음
+  - Promise를 반환해야 함
+
+• Mutation 생명주기
+  1. onMutate: 변이 시작 전 실행
+     - 낙관적 업데이트 구현
+     - 이전 상태 저장
+  2. onSuccess: 변이 성공 시 실행
+     - 캐시 무효화
+     - 성공 메시지 표시
+  3. onError: 변이 실패 시 실행
+     - 이전 상태로 롤백
+     - 에러 처리
+  4. onSettled: 성공/실패 상관없이 실행
+     - 클린업 작업
+
+• invalidateQueries
+  - 특정 쿼리의 캐시를 무효화
+  - 관련된 모든 쿼리 자동 재요청
+  - exact, refetchType 등 옵션 지원
+
+• 실시간 동기화
+  - 여러 컴포넌트 간 상태 자동 동기화
+  - 낙관적 업데이트로 즉각적인 UI 반응
+  - 에러 시 자동 롤백으로 안정성 확보`,
+
+    parallelQueries: `• 병렬 쿼리의 장점
+  - 여러 데이터를 동시에 효율적으로 로딩
+  - 각 쿼리의 독립적인 상태 관리
+  - 네트워크 요청 최적화
+
+• 구현 방식
+  1. 개별 useQuery 사용
+     - 각각의 데이터에 대해 별도의 useQuery 호출
+     - 간단하고 직관적인 구현
+  2. useQueries 사용
+     - 동적인 수의 쿼리를 배열로 처리
+     - 모든 쿼리의 상태를 배열로 반환
+
+• 캐시 관리
+  - 각 쿼리별 독립적인 캐시
+  - queryKey 기반의 세분화된 캐시 제어
+  - 선택적 리프레시 가능
+
+• 에러 처리
+  - 각 쿼리별 독립적인 에러 처리
+  - 일부 실패 시에도 다른 쿼리는 정상 동작
+  - 재시도 정책 개별 설정 가능
+
+• 성능 최적화
+  - 자동 요청 중복 제거
+  - 불필요한 리렌더링 방지
+  - 메모리 사용 최적화
+
+• 사용 시나리오
+  - 서로 독립적인 여러 API 호출
+  - 대시보드의 여러 위젯 데이터 로딩
+  - 상세 페이지의 관련 데이터 로딩`,
+
+    infiniteScroll: `• useInfiniteQuery 특징
+  - 페이지네이션된 데이터의 효율적인 관리
+  - 무한 스크롤/더보기 UI 구현에 최적화
+  - 자동 캐시 관리 및 상태 추적
+
+• 주요 매개변수
+  1. queryFn
+     - pageParam을 받아 해당 페이지 데이터 요청
+     - 페이지 메타데이터 포함하여 반환
+  2. getNextPageParam
+     - 다음 페이지 존재 여부 확인
+     - 다음 pageParam 값 결정
+  3. initialPageParam
+     - 첫 페이지 요청 시 사용할 값
+
+• 반환값
+  - data.pages: 모든 페이지 데이터 배열
+  - data.pageParams: 각 페이지의 매개변수
+  - hasNextPage: 추가 페이지 존재 여부
+  - fetchNextPage: 다음 페이지 로드 함수
+  - isFetchingNextPage: 추가 페이지 로딩 상태
+
+• 최적화 기능
+  - 이전 페이지 캐시 유지
+  - 스크롤 위치 보존
+  - 중복 요청 방지
+  - 백그라운드 업데이트
+
+• 고급 기능
+  - 양방향 무한 스크롤 지원
+  - 페이지 데이터 선택적 업데이트
+  - 커스텀 로딩 UI 구현
+  - 에러 바운더리 통합`,
+
+    optimisticUpdate: `• 낙관적 업데이트 개념
+  - 서버 응답 전 UI 즉시 업데이트
+  - 사용자 경험 극대화
+  - 에러 시 자동 롤백
+
+• 구현 단계
+  1. onMutate (변이 시작 전)
+     - 진행 중인 쿼리 취소
+     - 현재 캐시 데이터 백업
+     - 낙관적으로 캐시 업데이트
+     - 컨텍스트 객체 반환
+
+  2. mutationFn (실제 서버 요청)
+     - API 호출 수행
+     - 응답 데이터 반환
+
+  3. onError (에러 발생 시)
+     - 백업된 데이터로 롤백
+     - 에러 메시지 표시
+     - 재시도 로직 구현
+
+  4. onSuccess (성공 시)
+     - 캐시 최종 업데이트
+     - 관련 쿼리 무효화
+     - 성공 메시지 표시
+
+  5. onSettled (완료 시)
+     - 최종 정리 작업
+     - 리소스 해제
+     - 상태 리셋
+
+• 고려사항
+  - 동시성 제어
+  - 네트워크 지연 처리
+  - 에러 복구 전략
+  - 사용자 피드백
+
+• 장점
+  - 즉각적인 UI 응답성
+  - 향상된 사용자 경험
+  - 안정적인 에러 처리
+  - 자동화된 상태 관리`
+  };
+
   return (
     <QueryClientProvider client={queryClient}>
       <Box sx={{ maxWidth: '100%', mx: 'auto', p: 3, color: '#eaeaea' }}>
-        <h4>1. 기본 쿼리</h4>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+          <h4 style={{ margin: 0 }}>1. 기본 쿼리</h4>
+          <Tooltip 
+            title={<pre style={{ whiteSpace: 'pre-wrap', margin: 0, fontFamily: 'inherit' }}>{descriptions.basicQuery}</pre>}
+            placement="right-start"
+            arrow
+            componentsProps={{
+              tooltip: {
+                sx: tooltipStyle.tooltip
+              }
+            }}
+          >
+            <IconButton size="small" sx={{ color: '#eaeaea', '&:hover': { color: '#b5e853' } }}>
+              <InfoIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        </Box>
         <div style={exampleBlockStyle}>
           <ExampleTab
             example={<BasicQueryExample />}
@@ -442,11 +646,27 @@ const { data, isLoading, error } = useQuery({
   },
 });`}
             showCaret={false}
-            desc="TanStack Query를 사용한 기본적인 데이터 페칭 예제입니다. 자동 캐싱과 재검증 기능을 제공합니다."
+            desc="TanStack Query를 사용한 기본적인 데이터 페칭 예제입니다."
           />
         </div>
 
-        <h4>2. 쿼리 무효화</h4>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2, mt: 4 }}>
+          <h4 style={{ margin: 0 }}>2. 쿼리 무효화</h4>
+          <Tooltip 
+            title={<pre style={{ whiteSpace: 'pre-wrap', margin: 0, fontFamily: 'inherit' }}>{descriptions.invalidation}</pre>}
+            placement="right-start"
+            arrow
+            componentsProps={{
+              tooltip: {
+                sx: tooltipStyle.tooltip
+              }
+            }}
+          >
+            <IconButton size="small" sx={{ color: '#eaeaea', '&:hover': { color: '#b5e853' } }}>
+              <InfoIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        </Box>
         <div style={exampleBlockStyle}>
           <ExampleTab
             example={<InvalidationExample />}
@@ -458,16 +678,31 @@ const mutation = useMutation({
     return data;
   },
   onSuccess: () => {
-    // 성공 시 posts 쿼리 무효화
     queryClient.invalidateQueries({ queryKey: ['posts'] });
   },
 });`}
             showCaret={false}
-            desc="데이터가 변경될 때 캐시를 무효화하고 새로운 데이터를 가져오는 예제입니다."
+            desc="데이터 변경 후 캐시를 무효화하고 새로운 데이터를 가져오는 예제입니다."
           />
         </div>
 
-        <h4>3. 병렬 쿼리</h4>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2, mt: 4 }}>
+          <h4 style={{ margin: 0 }}>3. 병렬 쿼리</h4>
+          <Tooltip 
+            title={<pre style={{ whiteSpace: 'pre-wrap', margin: 0, fontFamily: 'inherit' }}>{descriptions.parallelQueries}</pre>}
+            placement="right-start"
+            arrow
+            componentsProps={{
+              tooltip: {
+                sx: tooltipStyle.tooltip
+              }
+            }}
+          >
+            <IconButton size="small" sx={{ color: '#eaeaea', '&:hover': { color: '#b5e853' } }}>
+              <InfoIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        </Box>
         <div style={exampleBlockStyle}>
           <ExampleTab
             example={<ParallelQueriesExample />}
@@ -486,7 +721,23 @@ const comments = useQuery({
           />
         </div>
 
-        <h4>4. 무한 스크롤</h4>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2, mt: 4 }}>
+          <h4 style={{ margin: 0 }}>4. 무한 스크롤</h4>
+          <Tooltip 
+            title={<pre style={{ whiteSpace: 'pre-wrap', margin: 0, fontFamily: 'inherit' }}>{descriptions.infiniteScroll}</pre>}
+            placement="right-start"
+            arrow
+            componentsProps={{
+              tooltip: {
+                sx: tooltipStyle.tooltip
+              }
+            }}
+          >
+            <IconButton size="small" sx={{ color: '#eaeaea', '&:hover': { color: '#b5e853' } }}>
+              <InfoIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        </Box>
         <div style={exampleBlockStyle}>
           <ExampleTab
             example={<InfiniteScrollExample />}
@@ -507,7 +758,23 @@ const comments = useQuery({
           />
         </div>
 
-        <h4>5. 낙관적 업데이트</h4>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2, mt: 4 }}>
+          <h4 style={{ margin: 0 }}>5. 낙관적 업데이트</h4>
+          <Tooltip 
+            title={<pre style={{ whiteSpace: 'pre-wrap', margin: 0, fontFamily: 'inherit' }}>{descriptions.optimisticUpdate}</pre>}
+            placement="right-start"
+            arrow
+            componentsProps={{
+              tooltip: {
+                sx: tooltipStyle.tooltip
+              }
+            }}
+          >
+            <IconButton size="small" sx={{ color: '#eaeaea', '&:hover': { color: '#b5e853' } }}>
+              <InfoIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        </Box>
         <div style={exampleBlockStyle}>
           <ExampleTab
             example={<OptimisticUpdateExample />}
@@ -517,18 +784,16 @@ const comments = useQuery({
     await queryClient.cancelQueries({ queryKey: ['posts'] });
     const previousPosts = queryClient.getQueryData(['posts']);
     
-    // 낙관적으로 UI 업데이트
     queryClient.setQueryData(['posts'], (old) => [...old, newPost]);
     
     return { previousPosts };
   },
   onError: (err, newPost, context) => {
-    // 에러 시 이전 상태로 롤백
     queryClient.setQueryData(['posts'], context.previousPosts);
   },
 });`}
             showCaret={false}
-            desc="서버 응답을 기다리지 않고 UI를 즉시 업데이트하는 낙관적 업데이트 예제입니다."
+            desc="서버 응답을 기다리지 않고 UI를 즉시 업데이트하는 예제입니다."
           />
         </div>
       </Box>
