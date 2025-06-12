@@ -3051,20 +3051,11 @@ function UseContextDemo() {
     description: '브라우저 내장 Fetch API를 사용한 데이터 요청',
     category: 'Api',
     icon: '📡',
-    prev: 'api',
+    prev: 'axios',
     next: 'axios',
     content: <FetchAPI />
   },
-  api: {
-    id: 'api',
-    title: 'API 연동',
-    description: 'React에서 API를 연동하는 다양한 방법들을 알아봅니다.',
-    category: 'Api',
-    icon: '🔌',
-    prev: 'lifecycle',
-    next: 'fetchapi',
-    content: <div>API 연동 예제 준비 중...</div>
-  },
+
   axios: {
     id: 'axios',
     title: 'Axios',

@@ -28,7 +28,7 @@ export type SectionId =
   | 'recoil'
   | 'reactquery'
   | 'fetchapi'
-  | 'api'
+
   | 'axios';
 
 export interface Section {
