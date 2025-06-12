@@ -320,62 +320,59 @@ function PutExample() {
 }
 
 // DELETE 요청 예제 컴포넌트
-function DeleteExample() {
-  const [success, setSuccess] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+const DeleteExample = () => {
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const deletePost = async () => {
+  const handleDelete = async () => {
     try {
-      setLoading(true);
-      setError(null);
-      setSuccess(false);
-      const response = await axios.delete('https://jsonplaceholder.typicode.com/posts/1');
-      setSuccess(true);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : '게시물 삭제에 실패했습니다.');
-    } finally {
-      setLoading(false);
+      setStatus('loading');
+      await axios.delete('https://jsonplaceholder.typicode.com/posts/1');
+      setStatus('success');
+      setErrorMessage(null);
+    } catch (error) {
+      setStatus('error');
+      setErrorMessage(error instanceof Error ? error.message : '알 수 없는 에러가 발생했습니다.');
     }
   };
 
   return (
-    <div style={{ color: '#eaeaea' }}>
+    <div>
       <Button
         variant="contained"
-        onClick={deletePost}
-        disabled={loading}
+        onClick={handleDelete}
+        disabled={status === 'loading'}
         sx={{
           ...buttonStyle,
           backgroundColor: '#dc3545',
           '&:hover': {
-            backgroundColor: '#c82333',
-          },
+            backgroundColor: '#c82333'
+          }
         }}
       >
-        게시물 삭제 (DELETE)
+        게시물 삭제
       </Button>
 
-      {loading && (
+      {status === 'loading' && (
         <Box sx={{ display: 'flex', justifyContent: 'center', my: 2 }}>
           <CircularProgress sx={{ color: '#eaeaea' }} />
         </Box>
       )}
 
-      {error && (
+      {status === 'error' && errorMessage && (
         <Typography sx={{ my: 2, color: '#ff6b6b' }}>
-          에러: {error}
+          에러: {errorMessage}
         </Typography>
       )}
 
-      {success && (
+      {status === 'success' && (
         <Typography sx={{ my: 2, color: '#28a745' }}>
           게시물이 성공적으로 삭제되었습니다.
         </Typography>
       )}
     </div>
   );
-}
+};
 
 // 스타일 정의
 const exampleBlockStyle = {

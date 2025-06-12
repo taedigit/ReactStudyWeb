@@ -51,6 +51,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Typography from '@mui/material/Typography';
 import FetchAPI from '../sections/api/FetchAPI';
 import AxiosExample from '../sections/api/AxiosExample';
+import TanStackQueryExample from '../sections/api/TanStackQueryExample';
 
 const nvmInstallScript = `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 # 터미널 재시작 또는 아래 명령 실행
@@ -3064,8 +3065,18 @@ function UseContextDemo() {
     category: 'Api',
     icon: '🔄',
     prev: 'fetchapi',
-    next: 'reactquery',
+    next: 'tanstackquery',
     content: <AxiosExample />
+  },
+  tanstackquery: {
+    id: 'tanstackquery',
+    title: 'TanStack Query',
+    description: 'TanStack Query를 사용한 데이터 관리',
+    category: 'Api',
+    icon: '🔄',
+    prev: 'axios',
+    next: null,
+    content: <TanStackQueryExample />
   },
   restapi: {
     id: 'restapi',
@@ -3076,7 +3087,29 @@ function UseContextDemo() {
     prev: 'axios',
     next: null,
     content: <div>REST API 예제 준비 중...</div>
-  }
+  },
+
+  jsx: {
+    id: 'jsx',
+    title: 'JSX',
+    description: 'JSX 문법과 사용법에 대해 알아봅니다.',
+    category: 'basics',
+    icon: 'code',
+    prev: 'setup',
+    next: 'components',
+    content: <div>JSX 예제 준비 중...</div>
+  },
+
+  customhooks: {
+    id: 'customhooks',
+    title: 'Custom Hooks',
+    description: '커스텀 훅 작성과 활용 방법을 알아봅니다.',
+    category: 'advanced',
+    icon: 'hook',
+    prev: 'hooks',
+    next: 'fetchapi',
+    content: <div>Custom Hooks 예제 준비 중...</div>
+  },
 };
   
 

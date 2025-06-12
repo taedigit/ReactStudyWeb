@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 export type SectionId = 
   | 'intro' 
   | 'setup'
+  | 'jsx'
   | 'components'
   | 'props'
   | 'state'
@@ -28,8 +29,9 @@ export type SectionId =
   | 'recoil'
   | 'reactquery'
   | 'fetchapi'
-
-  | 'axios';
+  | 'axios'
+  | 'tanstackquery'
+  | 'customhooks';
 
 export interface Section {
   id: SectionId;
