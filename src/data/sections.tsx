@@ -1281,7 +1281,15 @@ function MemoExpensiveCalcDemo() {
       </div>
     </div>
   );
-}`} showCaret={false} desc={"useMemo로 비싼 연산(피보나치 수열 계산) 결과를 메모이제이션하여, num이 바뀔 때만 연산이 다시 실행되도록 최적화한 예제입니다."} />
+}`} showCaret={false} desc={`이 예제는 useMemo로 대량 리스트의 필터링/정렬 결과를 메모이제이션하는 방법을 보여줍니다.
+
+  - items는 1000개의 아이템을 한 번만 생성합니다.
+  - filtered는 query(검색어)나 sort(정렬 여부)가 바뀔 때만 다시 계산됩니다.
+  - 불필요한 연산을 방지해 성능을 최적화할 수 있습니다.
+  
+  실무에서 대량 데이터 처리, 복잡한 계산이 필요한 리스트 UI에 매우 유용합니다.
+  
+  Tip: 의존성 배열을 정확히 지정해야 예상대로 동작합니다.`} />
         </div>
         <h4>2. 리스트 필터/정렬 메모이제이션</h4>
         <div style={stateExampleBlockStyle}>
@@ -1291,7 +1299,15 @@ function MemoFilterSortDemo() {
   const [query, setQuery] = useState('');
   const [sort, setSort] = useState(false);
   const items = useMemo(() => Array.from({ length: 1000 }, (_, i) => \`Item \${i + 1}\`), []);\n  const filtered = useMemo(() => {\n    let result = items.filter(item => item.toLowerCase().includes(query.toLowerCase()));\n    if (sort) result = [...result].sort();
-    return result;\n  }, [items, query, sort]);\n  return (\n    <div>\n      <input value={query} onChange={e => setQuery(e.target.value)} placeholder=\"검색\" style={{ marginRight: 8, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />\n      <label style={{ marginRight: 8 }}>\n        <input type=\"checkbox\" checked={sort} onChange={e => setSort(e.target.checked)} /> 정렬\n      </label>\n      <div style={{ maxHeight: 120, overflowY: 'auto', background: '#232323', borderRadius: 8, marginTop: 8, padding: 8 }}>\n        {filtered.slice(0, 20).map(item => <div key={item}>{item}</div>)}\n        {filtered.length > 20 && <div style={{ color: '#aaa' }}>...and {filtered.length - 20} more</div>}\n      </div>\n    </div>\n  );\n}`} showCaret={false} desc={"useMemo로 대량 리스트의 필터링/정렬 결과를 메모이제이션하여, 불필요한 연산을 방지하는 예제입니다."} />
+    return result;\n  }, [items, query, sort]);\n  return (\n    <div>\n      <input value={query} onChange={e => setQuery(e.target.value)} placeholder=\"검색\" style={{ marginRight: 8, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />\n      <label style={{ marginRight: 8 }}>\n        <input type=\"checkbox\" checked={sort} onChange={e => setSort(e.target.checked)} /> 정렬\n      </label>\n      <div style={{ maxHeight: 120, overflowY: 'auto', background: '#232323', borderRadius: 8, marginTop: 8, padding: 8 }}>\n        {filtered.slice(0, 20).map(item => <div key={item}>{item}</div>)}\n        {filtered.length > 20 && <div style={{ color: '#aaa' }}>...and {filtered.length - 20} more</div>}\n      </div>\n    </div>\n  );\n}`} showCaret={false} desc={`이 예제는 useMemo로 대량 리스트의 필터링/정렬 결과를 메모이제이션하는 방법을 보여줍니다.
+
+      - items는 1000개의 아이템을 한 번만 생성합니다.
+      - filtered는 query(검색어)나 sort(정렬 여부)가 바뀔 때만 다시 계산됩니다.
+      - 불필요한 연산을 방지해 성능을 최적화할 수 있습니다.
+      
+      실무에서 대량 데이터 처리, 복잡한 계산이 필요한 리스트 UI에 매우 유용합니다.
+      
+      Tip: 의존성 배열을 정확히 지정해야 예상대로 동작합니다.`} />
         </div>
         <h4>3. 의존성에 따른 값 메모이제이션</h4>
         <div style={stateExampleBlockStyle}>
@@ -1309,7 +1325,14 @@ function MemoDependencyDemo() {
       = <span>{sum}</span>
     </div>
   );
-}`} showCaret={false} desc={"useMemo의 의존성 배열([a, b])에 따라 sum 값이 메모이제이션되는 간단한 예제입니다."} />
+}`} showCaret={false} desc={`이 예제는 useMemo의 의존성 배열을 활용해 값이 바뀔 때만 연산이 다시 실행되는 원리를 보여줍니다.
+
+  - sum은 a 또는 b가 바뀔 때만 다시 계산됩니다.
+  - 다른 상태가 바뀌어도 sum 계산은 다시 실행되지 않습니다.
+  
+  이런 패턴은 계산 결과가 복잡하거나, 불필요한 재계산을 막고 싶을 때 유용합니다.
+  
+  Tip: 의존성 배열에 필요한 값만 정확히 넣는 것이 중요합니다.`} />
         </div>
         <h4>4. 렌더 최적화 예제</h4>
         <div style={stateExampleBlockStyle}>
@@ -1333,7 +1356,14 @@ function MemoRenderOptDemo() {
       <div style={{ marginTop: 8, color: '#b5e853' }}>비싼 연산 결과: {expensive}</div>
     </div>
   );
-}`} showCaret={false} desc={"useMemo로 비싼 연산(expensive)을 count가 바뀔 때만 다시 계산하도록 하여, 불필요한 렌더링/계산을 방지하는 예제입니다."} />
+}`} showCaret={false} desc={`이 예제는 useMemo로 비싼 연산을 최적화하는 실전 패턴을 보여줍니다.
+
+  - expensive는 count가 바뀔 때만 다시 계산됩니다.
+  - text 입력 등 다른 상태가 바뀌어도 비싼 연산은 다시 실행되지 않습니다.
+  
+  이런 최적화는 대규모 앱, 복잡한 UI에서 성능을 크게 개선할 수 있습니다.
+  
+  실전 팁: useMemo는 꼭 필요한 경우에만 사용하고, 의존성 배열을 정확히 관리하세요.`} />
         </div>
       </div>
     ),
