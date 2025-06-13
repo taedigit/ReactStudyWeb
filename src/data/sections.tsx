@@ -1381,89 +1381,43 @@ function MemoRenderOptDemo() {
         
         <h4>1. 자식 컴포넌트에 함수 전달</h4>
         <div style={stateExampleBlockStyle}>
-          <ExampleTab example={<CallbackChildDemo />} code={`import React, { useState, useCallback } from 'react';
+          <ExampleTab example={<CallbackChildDemo />} code={`import React, { useState, useCallback } from 'react';\n\nconst MemoChild = React.memo(function MemoChild({ onClick }) {\n  console.log('자식 렌더');\n  return <button onClick={onClick}>자식 버튼</button>;\n});\n\nfunction CallbackChildDemo() {\n  const [count, setCount] = useState(0);\n  const handleClick = useCallback(() => setCount(c => c + 1), []);\n  return (\n    <div>\n      <MemoChild onClick={handleClick} />\n      <div style={{ marginTop: 8 }}>카운트: {count}</div>\n    </div>\n  );\n}`} showCaret={false} desc={`이 예제는 useCallback으로 함수를 메모이제이션하여 자식 컴포넌트에 전달할 때 불필요한 렌더링을 방지하는 방법을 보여줍니다.
 
-const MemoChild = React.memo(function MemoChild({ onClick }) {
-  console.log('자식 렌더');
-  return <button onClick={onClick}>자식 버튼</button>;
-});
+- handleClick 함수는 useCallback을 사용해 한 번만 생성됩니다.
+- MemoChild는 React.memo로 감싸져 있어, onClick 함수가 바뀌지 않으면 리렌더링되지 않습니다.
+- 부모가 렌더링되어도 handleClick이 바뀌지 않으므로 자식이 불필요하게 렌더링되지 않습니다.
 
-function CallbackChildDemo() {
-  const [count, setCount] = useState(0);
-  const handleClick = useCallback(() => setCount(c => c + 1), []);
-  return (
-    <div>
-      <MemoChild onClick={handleClick} />
-      <div style={{ marginTop: 8 }}>카운트: {count}</div>
-    </div>
-  );
-}`} showCaret={false} desc={"useCallback으로 handleClick 함수를 메모이제이션하여, 자식(MemoChild)에게 전달해도 불필요한 렌더링이 발생하지 않도록 하는 예제입니다."} />
+실전 팁: 자식 컴포넌트가 React.memo로 최적화되어 있을 때, 콜백 함수를 useCallback으로 감싸주면 성능 최적화에 도움이 됩니다.`} />
         </div>
         <h4>2. 의존성 배열 활용</h4>
         <div style={stateExampleBlockStyle}>
-          <ExampleTab example={<CallbackDepsDemo />} code={`import React, { useState, useCallback } from 'react';
+          <ExampleTab example={<CallbackDepsDemo />} code={`import React, { useState, useCallback } from 'react';\n\nfunction CallbackDepsDemo() {\n  const [value, setValue] = useState('');\n  const [log, setLog] = useState([]);\n  const handleAdd = useCallback(() => {\n    setLog(l => [...l, value]);\n    setValue('');\n  }, [value]);\n  return (\n    <div>\n      <input value={value} onChange={e => setValue(e.target.value)} />\n      <button onClick={handleAdd}>추가</button>\n      <ul>\n        {log.map((item, i) => <li key={i}>{item}</li>)}\n      </ul>\n    </div>\n  );\n}`} showCaret={false} desc={`이 예제는 useCallback의 의존성 배열을 활용해 콜백 함수가 언제 새로 생성되는지 보여줍니다.
 
-function CallbackDepsDemo() {
-  const [value, setValue] = useState('');
-  const [log, setLog] = useState([]);
-  const handleAdd = useCallback(() => {
-    setLog(l => [...l, value]);
-    setValue('');
-  }, [value]);
-  return (
-    <div>
-      <input value={value} onChange={e => setValue(e.target.value)} />
-      <button onClick={handleAdd}>추가</button>
-      <ul>
-        {log.map((item, i) => <li key={i}>{item}</li>)}
-      </ul>
-    </div>
-  );
-}`} showCaret={false} desc={"useCallback의 의존성 배열([value])에 따라 handleAdd 함수가 새로 생성되는 예제입니다."} />
+- handleAdd 함수는 value가 바뀔 때마다 새로 생성됩니다.
+- 의존성 배열([value])에 포함된 값이 바뀌면 콜백 함수도 새로 만들어집니다.
+- 이 패턴은 콜백이 특정 값에 의존할 때 안전하게 최신 값을 사용할 수 있게 해줍니다.
+
+Tip: 의존성 배열을 정확히 지정하지 않으면, 오래된 값이 사용되거나, 불필요하게 함수가 자주 새로 생성될 수 있습니다.`} />
         </div>
         <h4>3. 리스트 항목 추가/삭제</h4>
         <div style={stateExampleBlockStyle}>
-          <ExampleTab example={<CallbackListDemo />} code={`import React, { useState, useCallback } from 'react';
+          <ExampleTab example={<CallbackListDemo />} code={`import React, { useState, useCallback } from 'react';\n\nfunction CallbackListDemo() {\n  const [items, setItems] = useState<string[]>([]);\n  const addItem = useCallback(() => setItems(items => [...items, \`Item\${items.length + 1}\`]), []);\n  const removeItem = useCallback((idx: number) => setItems(items => items.filter((_, i) => i !== idx)), []);\n  return (\n    <div style={{ color: '#eaeaea' }}>\n      <button onClick={addItem}>항목 추가</button>\n      <ul>\n        {items.map((item, idx) => (\n          <li key={idx}>\n            {item}\n            <button onClick={() => removeItem(idx)}>삭제</button>\n          </li>\n        ))}\n      </ul>\n    </div>\n  );\n}`} showCaret={false} desc={`이 예제는 useCallback으로 리스트 추가/삭제 함수를 메모이제이션하여, 불필요한 렌더링을 방지하는 방법을 보여줍니다.
 
-function CallbackListDemo() {
-  const [items, setItems] = useState<string[]>([]);
-  const addItem = useCallback(() => setItems(items => [...items, \`Item\${items.length + 1}\`]), []);
-  const removeItem = useCallback((idx: number) => setItems(items => items.filter((_, i) => i !== idx)), []);
-  return (
-    <div style={{ color: '#eaeaea' }}>
-      <button onClick={addItem}>항목 추가</button>
-      <ul>
-        {items.map((item, idx) => (
-          <li key={idx}>
-            {item}
-            <button onClick={() => removeItem(idx)}>삭제</button>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}`} showCaret={false} desc={"useCallback으로 리스트 추가/삭제 함수를 메모이제이션하여, 불필요한 렌더링을 방지하는 예제입니다."} />
+- addItem, removeItem 함수는 컴포넌트가 리렌더링되어도 동일한 참조를 유지합니다.
+- 이로 인해 자식 컴포넌트에 콜백을 전달할 때 불필요한 렌더링을 막을 수 있습니다.
+- 의존성 배열이 []이므로, 함수는 최초 한 번만 생성됩니다.
+
+실전 팁: 콜백이 상태나 props에 의존하지 않는다면, 의존성 배열을 빈 배열([])로 두어 불필요한 함수 생성을 막으세요.`} />
         </div>
         <h4>4. useCallback 없이 함수 전달</h4>
         <div style={stateExampleBlockStyle}>
-          <ExampleTab example={<CallbackNoMemoDemo />} code={`import React, { useState } from 'react';
+          <ExampleTab example={<CallbackNoMemoDemo />} code={`import React, { useState } from 'react';\n\nconst MemoChild = React.memo(function MemoChild({ onClick }) {\n  console.log('자식 렌더');\n  return <button onClick={onClick}>자식 버튼</button>;\n});\n\nfunction CallbackNoMemoDemo() {\n  const [count, setCount] = useState(0);\n  const handleClick = () => setCount(c => c + 1);\n  return (\n    <div>\n      <MemoChild onClick={handleClick} />\n      <div style={{ marginTop: 8 }}>카운트: {count}</div>\n      <div style={{ color: '#b5e853', marginTop: 8, fontSize: 13 }}>(useCallback 없이: 자식이 매번 렌더됨)</div>\n    </div>\n  );\n}`} showCaret={false} desc={`이 예제는 useCallback 없이 함수를 자식에 전달할 때 발생하는 문제를 보여줍니다.
 
-const MemoChild = React.memo(function MemoChild({ onClick }) {
-  console.log('자식 렌더');
-  return <button onClick={onClick}>자식 버튼</button>;
-});
+- handleClick 함수는 부모가 렌더링될 때마다 새로 생성됩니다.
+- MemoChild는 onClick이 바뀔 때마다 리렌더링됩니다.
+- 이로 인해 자식 컴포넌트가 불필요하게 자주 렌더링될 수 있습니다.
 
-function CallbackNoMemoDemo() {
-  const [count, setCount] = useState(0);
-  const handleClick = () => setCount(c => c + 1);
-  return (
-    <div>
-      <MemoChild onClick={handleClick} />
-      <div style={{ marginTop: 8 }}>카운트: {count}</div>
-      <div style={{ color: '#b5e853', marginTop: 8, fontSize: 13 }}>(useCallback 없이: 자식이 매번 렌더됨)</div>
-    </div>
-  );
-}`} showCaret={false} desc={"useCallback 없이 함수를 자식에 전달하면, 부모가 렌더될 때마다 함수가 새로 생성되어 자식도 매번 렌더링되는 현상을 보여주는 예제입니다."} />
+실전 팁: 자식 컴포넌트가 React.memo로 감싸져 있고, 콜백을 props로 전달한다면 useCallback으로 콜백을 메모이제이션하는 것이 좋습니다.`} />
         </div>
       </div>
     ),
