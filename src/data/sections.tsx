@@ -1193,49 +1193,23 @@ function MultiCheckboxDemo() {
         
         <h4>1. Mount/Unmount Effect</h4>
         <div style={stateExampleBlockStyle}>
-          <ExampleTab example={<MountEffectDemo />} code={`import { useEffect } from 'react';\n\nfunction MountEffectDemo() {\n  useEffect(() => {\n    console.log('컴포넌트 마운트됨');\n    return () => {\n      console.log('컴포넌트 언마운트됨');\n    };\n  }, []);\n  return <div>마운트/언마운트 시 콘솔에 로그</div>;\n}`} showCaret={false} desc={"컴포넌트가 마운트될 때와 언마운트될 때 각각 콘솔에 로그를 출력하는 예제입니다. useEffect의 cleanup(return) 함수가 언마운트 시 동작함을 보여줍니다."} />
+          <ExampleTab example={<MountEffectDemo />} code={`import { useEffect } from 'react';\n\nfunction MountEffectDemo() {\n  useEffect(() => {\n    console.log('컴포넌트 마운트됨');\n    return () => {\n      console.log('컴포넌트 언마운트됨');\n    };\n  }, []);\n  return <div>마운트/언마운트 시 콘솔에 로그</div>;\n}`} showCaret={false} desc={"이 예제는 useEffect의 가장 기본적인 사용법을 보여줍니다. 컴포넌트가 처음 화면에 나타날 때(마운트)와 사라질 때(언마운트) 각각 콘솔에 로그를 남깁니다.\n\n- useEffect의 첫 번째 인자는 함수입니다. 이 함수는 컴포넌트가 마운트될 때 실행됩니다.\n- 함수 내부에서 return한 함수는 cleanup 함수라고 하며, 컴포넌트가 언마운트될 때(또는 effect가 다시 실행되기 전) 호출됩니다.\n- 의존성 배열([])이 비어 있으면, 이 effect는 오직 마운트/언마운트 시에만 실행됩니다.\n\n이 패턴은 구독 해제, 타이머 정리 등 리소스 정리가 필요한 상황에서 매우 중요합니다."} />
         </div>
         <h4>2. Dependency Effect</h4>
         <div style={stateExampleBlockStyle}>
-          <ExampleTab example={<DepsEffectDemo />} code={`import { useState, useEffect } from 'react';
-
-function DepsEffectDemo() {
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    document.title = \`카운트: \${count}\`;
-  }, [count]);
-  return (
-    <div>
-      <button onClick={() => setCount(count + 1)}>+1</button>
-      <span style={{ marginLeft: 8 }}>{count}</span>
-    </div>
-  );
-}`} showCaret={false} desc={"count 값이 변경될 때마다 브라우저 탭의 제목(document.title)을 동적으로 변경하는 예제입니다. useEffect의 의존성 배열([count])에 따라 effect가 재실행됩니다."} />
+          <ExampleTab example={<DepsEffectDemo />} code={`import { useState, useEffect } from 'react';\n\nfunction DepsEffectDemo() {\n  const [count, setCount] = useState(0);\n  useEffect(() => {\n    document.title = \`카운트: \${count}\`;\n  }, [count]);\n  return (\n    <div>\n      <button onClick={() => setCount(count + 1)}>+1</button>\n      <span style={{ marginLeft: 8 }}>{count}</span>\n    </div>\n  );\n}`} showCaret={false} desc={"이 예제는 useEffect의 의존성 배열(dependency array) 사용법을 설명합니다.\n\n- useEffect의 두 번째 인자인 [count]는 의존성 배열입니다.\n- count 값이 변경될 때마다 effect가 다시 실행됩니다.\n- 여기서는 count가 바뀔 때마다 document.title(브라우저 탭 제목)이 업데이트됩니다.\n\n의존성 배열을 올바르게 지정하는 것이 중요합니다. 누락하거나 잘못 지정하면, 원하는 시점에 effect가 실행되지 않거나, 불필요하게 여러 번 실행될 수 있습니다.\n\nTip: 의존성 배열이 비어 있으면([]), effect는 마운트/언마운트 시에만 실행됩니다."} />
         </div>
         <h4>3. Fetch Data Effect</h4>
         <div style={stateExampleBlockStyle}>
-          <ExampleTab example={<FetchEffectDemo />} code={`import { useState, useEffect } from 'react';
-
-function FetchEffectDemo() {
-  const [data, setData] = useState(null);
-  useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/todos/1')\n      .then(res => res.json())\n      .then(json => setData(json));\n  }, []);\n  return <pre>{JSON.stringify(data, null, 2)}</pre>;\n}`} showCaret={false} desc={"컴포넌트가 마운트될 때 한 번만 fetch로 외부 데이터를 받아와 상태(data)에 저장하는 예제입니다. 의존성 배열이 []이므로 최초 1회만 실행됩니다."} />
+          <ExampleTab example={<FetchEffectDemo />} code={`import { useState, useEffect } from 'react';\n\nfunction FetchEffectDemo() {\n  const [data, setData] = useState(null);\n  useEffect(() => {\n    fetch('https://jsonplaceholder.typicode.com/todos/1')\n      .then(res => res.json())\n      .then(json => setData(json));\n  }, []);\n  return <pre>{JSON.stringify(data, null, 2)}</pre>;\n}`} showCaret={false} desc={"이 예제는 useEffect를 사용해 컴포넌트가 마운트될 때 한 번만 데이터를 가져오는 방법을 보여줍니다.\n\n- 의존성 배열이 []이므로, effect는 마운트 시에만 실행됩니다.\n- fetch로 외부 API에서 데이터를 받아오고, setData로 상태를 업데이트합니다.\n- 데이터를 받아오면 화면에 JSON 형태로 출력됩니다.\n\n실무에서는 fetch 과정에서 에러 처리, 로딩 상태 관리, cleanup(요청 취소) 등을 추가하는 것이 좋습니다.\n\n주의: 의존성 배열을 비우지 않으면, 데이터 요청이 여러 번 발생할 수 있습니다."} />
         </div>
         <h4>4. Timer Effect</h4>
         <div style={stateExampleBlockStyle}>
-          <ExampleTab example={<TimerEffectDemo />} code={`import { useState, useEffect } from 'react';
-
-function TimerEffectDemo() {
-  const [sec, setSec] = useState(0);
-  useEffect(() => {
-    const id = setInterval(() => setSec(s => s + 1), 1000);\n    return () => clearInterval(id);\n  }, []);\n  return <div>타이머: {sec}초</div>;\n}`} showCaret={false} desc={"컴포넌트가 마운트될 때 1초마다 sec 상태를 증가시키는 타이머를 시작하고, 언마운트 시 타이머를 정리(clearInterval)하는 예제입니다."} />
+          <ExampleTab example={<TimerEffectDemo />} code={`import { useState, useEffect } from 'react';\n\nfunction TimerEffectDemo() {\n  const [sec, setSec] = useState(0);\n  useEffect(() => {\n    const id = setInterval(() => setSec(s => s + 1), 1000);\n    return () => clearInterval(id);\n  }, []);\n  return <div>타이머: {sec}초</div>;\n}`} showCaret={false} desc={"이 예제는 useEffect에서 타이머를 설정하고 정리하는 방법을 보여줍니다.\n\n- 마운트 시 setInterval로 1초마다 sec 상태를 1씩 증가시킵니다.\n- cleanup 함수(return)는 언마운트 시 clearInterval로 타이머를 반드시 정리합니다.\n- 의존성 배열이 []이므로, 타이머는 한 번만 설정됩니다.\n\n이 패턴은 타이머, 구독, 이벤트 리스너 등 리소스 해제가 필요한 모든 상황에서 필수적입니다. cleanup을 빼먹으면 메모리 누수나 의도치 않은 동작이 발생할 수 있습니다."} />
         </div>
         <h4>5. Resize Effect</h4>
         <div style={stateExampleBlockStyle}>
-          <ExampleTab example={<ResizeEffectDemo />} code={`import { useState, useEffect } from 'react';
-
-function ResizeEffectDemo() {
-  const [width, setWidth] = useState(window.innerWidth);\n  useEffect(() => {\n    const onResize = () => setWidth(window.innerWidth);\n    window.addEventListener('resize', onResize);\n    return () => window.removeEventListener('resize', onResize);\n  }, []);\n  return <div>윈도우 너비: {width}px</div>;\n}`} showCaret={false} desc={"윈도우 크기가 변경될 때마다 현재 창의 너비를 상태로 관리하는 예제입니다. 이벤트 리스너 등록/해제(cleanup) 패턴을 보여줍니다."} />
+          <ExampleTab example={<ResizeEffectDemo />} code={`import { useState, useEffect } from 'react';\n\nfunction ResizeEffectDemo() {\n  const [width, setWidth] = useState(window.innerWidth);\n  useEffect(() => {\n    const onResize = () => setWidth(window.innerWidth);\n    window.addEventListener('resize', onResize);\n    return () => window.removeEventListener('resize', onResize);\n  }, []);\n  return <div>윈도우 너비: {width}px</div>;\n}`} showCaret={false} desc={"이 예제는 useEffect로 이벤트 리스너를 등록/해제하는 대표적인 패턴을 보여줍니다.\n\n- 마운트 시 window에 resize 이벤트 리스너를 등록합니다.\n- 창 크기가 바뀔 때마다 현재 너비를 상태로 저장합니다.\n- cleanup 함수에서 이벤트 리스너를 반드시 해제합니다.\n\n이런 패턴은 메모리 누수, 중복 등록 등 버그를 예방하는 데 매우 중요합니다. 항상 cleanup에서 리스너를 해제하세요."} />
         </div>
       </div>
     ),
