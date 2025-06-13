@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import Highlight, { defaultProps } from 'prism-react-renderer';
 import theme from 'prism-react-renderer/themes/vsDark';
+import { TabComponent } from './TabComponent';
 
 const macCmdWrapper = {
   background: '#1e1e1e',
@@ -13,7 +14,7 @@ const macCmdWrapper = {
 const macCmdTopBar = {
   display: 'flex',
   alignItems: 'center',
-  height: '28px',
+  height: '40px',
   background: '#232323',
   padding: '0 12px',
   borderBottom: '1px solid #222',
@@ -37,7 +38,7 @@ const macCmdPre: React.CSSProperties = {
   overflowX: 'auto',
 };
 
-export function MacCmd({ children, showCaret = true, style, desc }: { children: string, showCaret?: boolean, style?: React.CSSProperties, desc?: string | null }) {
+export function MacCmd({ children, showCaret = true, style, desc, tabs }: { children: string, showCaret?: boolean, style?: React.CSSProperties, desc?: string | null, tabs?: { label: string, content: React.ReactNode }[] }) {
   const code = typeof children === 'string' ? children : (children ? String(children) : '');
   const [copied, setCopied] = useState(false);
   const [showDesc, setShowDesc] = useState(false);
@@ -45,6 +46,7 @@ export function MacCmd({ children, showCaret = true, style, desc }: { children: 
   const preRef = useRef<HTMLPreElement>(null);
   const [tooltipPos, setTooltipPos] = useState<{x: number, y: number}>({ x: 16, y: 16 });
   const dragData = useRef<{ startX: number, startY: number, offsetX: number, offsetY: number, dragging: boolean }>({ startX: 0, startY: 0, offsetX: 0, offsetY: 0, dragging: false });
+  const [selectedTab, setSelectedTab] = useState(0);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(code);
@@ -89,6 +91,11 @@ export function MacCmd({ children, showCaret = true, style, desc }: { children: 
         <span style={macCmdCircle('#ffbd2e')}></span>
         <span style={macCmdCircle('#27c93f')}></span>
         <div style={{ display: 'flex', alignItems: 'center', marginLeft: 'auto', gap: 8, position: 'relative' }}>
+          {tabs && tabs.length > 0 && (
+            <div style={{ marginRight: 12, display: 'flex', alignItems: 'center' }}>
+              <TabComponent tabs={tabs} headerMode selectedIdx={selectedTab} onTabChange={setSelectedTab} />
+            </div>
+          )}
           {desc !== null && (
             <button
               ref={descBtnRef}
@@ -135,83 +142,89 @@ export function MacCmd({ children, showCaret = true, style, desc }: { children: 
           </button>
         </div>
       </div>
-      <Highlight {...defaultProps} code={code} language="tsx" theme={theme}>
-        {({ className, style: prismStyle, tokens, getLineProps, getTokenProps }) => (
-          <pre ref={preRef} style={{ ...macCmdPre, ...prismStyle, ...style, position: 'relative' }} className={className}>
-            {showDesc && (
-              <div
-                style={{
-                  position: 'absolute',
-                  top: tooltipPos.y,
-                  left: tooltipPos.x,
-                  zIndex: 9999,
-                  background: '#232323',
-                  color: '#eaeaea',
-                  borderRadius: 12,
-                  padding: '0.7em 1em',
-                  minWidth: 220,
-                  maxWidth: 340,
-                  boxShadow: '0 4px 32px rgba(0,0,0,0.25)',
-                  border: '1px solid #444',
-                  marginTop: 0,
-                  cursor: 'move',
-                  userSelect: 'none',
-                }}
-                onMouseDown={handleDragStart}
-                onClick={e => e.stopPropagation()}
-              >
-                <button
-                  onClick={e => { e.stopPropagation(); setShowDesc(false); }}
+      {tabs && tabs.length > 0 ? (
+        <div style={{ width: '100%' }}>
+          {tabs[selectedTab].content}
+        </div>
+      ) : (
+        <Highlight {...defaultProps} code={code} language="tsx" theme={theme}>
+          {({ className, style: prismStyle, tokens, getLineProps, getTokenProps }) => (
+            <pre ref={preRef} style={{ ...macCmdPre, ...prismStyle, ...style, position: 'relative' }} className={className}>
+              {showDesc && (
+                <div
                   style={{
                     position: 'absolute',
-                    top: 8,
-                    right: 12,
-                    background: 'none',
-                    border: 'none',
-                    color: '#aaa',
-                    fontSize: 18,
-                    cursor: 'pointer',
-                    minWidth: 22,
-                    minHeight: 22,
-                    width: 22,
-                    height: 22,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    borderRadius: 6,
-                    transition: 'background 0.15s',
+                    top: tooltipPos.y,
+                    left: tooltipPos.x,
+                    zIndex: 9999,
+                    background: '#232323',
+                    color: '#eaeaea',
+                    borderRadius: 12,
+                    padding: '0.7em 1em',
+                    minWidth: 220,
+                    maxWidth: 340,
+                    boxShadow: '0 4px 32px rgba(0,0,0,0.25)',
+                    border: '1px solid #444',
+                    marginTop: 0,
+                    cursor: 'move',
+                    userSelect: 'none',
                   }}
-                  aria-label="닫기"
-                >×</button>
-                <div style={{ fontWeight: 600, fontSize: 16, marginBottom: 8 }}>코드 설명</div>
-                <div style={{ fontSize: 14, lineHeight: 1.7, whiteSpace: 'pre-line' }}>{desc || '설명 없음'}</div>
-              </div>
-            )}
-            <code style={{ cursor: 'text', position: 'relative' }}>
-              {tokens.map((line, i) => (
-                <div key={i} {...getLineProps({ line })}>
-                  {line.map((token, key) => (
-                    <span key={key} {...getTokenProps({ token })} />
-                  ))}
+                  onMouseDown={handleDragStart}
+                  onClick={e => e.stopPropagation()}
+                >
+                  <button
+                    onClick={e => { e.stopPropagation(); setShowDesc(false); }}
+                    style={{
+                      position: 'absolute',
+                      top: 8,
+                      right: 12,
+                      background: 'none',
+                      border: 'none',
+                      color: '#aaa',
+                      fontSize: 18,
+                      cursor: 'pointer',
+                      minWidth: 22,
+                      minHeight: 22,
+                      width: 22,
+                      height: 22,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      borderRadius: 6,
+                      transition: 'background 0.15s',
+                    }}
+                    aria-label="닫기"
+                  >×</button>
+                  <div style={{ fontWeight: 600, fontSize: 16, marginBottom: 8 }}>코드 설명</div>
+                  <div style={{ fontSize: 14, lineHeight: 1.7, whiteSpace: 'pre-line' }}>{desc || '설명 없음'}</div>
                 </div>
-              ))}
-              {showCaret && (
-                <span style={{
-                  display: 'inline-block',
-                  width: '1px',
-                  height: '1em',
-                  background: '#eaeaea',
-                  marginLeft: '2px',
-                  verticalAlign: 'middle',
-                  animation: 'blink-caret 1s steps(1) infinite',
-                  position: 'relative',
-                  top: '2px',
-                }}></span>
               )}
-            </code>
-          </pre>
-        )}
-      </Highlight>
+              <code style={{ cursor: 'text', position: 'relative' }}>
+                {tokens.map((line, i) => (
+                  <div key={i} {...getLineProps({ line })}>
+                    {line.map((token, key) => (
+                      <span key={key} {...getTokenProps({ token })} />
+                    ))}
+                  </div>
+                ))}
+                {showCaret && (
+                  <span style={{
+                    display: 'inline-block',
+                    width: 8,
+                    height: 18,
+                    background: '#fff',
+                    marginLeft: 2,
+                    borderRadius: 2,
+                    opacity: 0.7,
+                    animation: 'blink-caret 1.1s steps(1) infinite',
+                    verticalAlign: 'middle',
+                  }} />
+                )}
+              </code>
+            </pre>
+          )}
+        </Highlight>
+      )}
       <style>{`
         @keyframes blink-caret {
           0%, 100% { opacity: 1; }
