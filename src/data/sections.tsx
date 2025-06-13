@@ -1,17 +1,7 @@
 import React from 'react';
 import type { Section, SectionId } from '../types/section';
-import { TabComponent } from '../components/TabComponent';
 import { MacCmd } from '../components/MacCmd';
-import { MacCmdExampleWrapper } from '../components/MacCmdExampleWrapper';
 import { ExampleTab } from '../components/ExampleTab';
-import { Select } from '../components/Select';
-import { WithLoading } from '../components/WithLoading';
-import { MouseTracker } from '../components/MouseTracker';
-import { WindowSize } from '../components/WindowSize';
-import { ErrorBoundary } from '../components/ErrorBoundary';
-import { BuggyCounter } from '../components/BuggyCounter';
-import { PortalModal } from '../components/PortalModal';
-import { PaginatedBoard } from '../components/PaginatedBoard';
 import { Button, Input, Select as AntdSelect, Checkbox, Switch, DatePicker, Modal as AntdModal, Table, notification, message, Tabs, Dropdown, Menu, Pagination, Progress, Avatar, Badge, Tag, Collapse, Tooltip, Popconfirm } from 'antd';
 import { CheckCircleOutlined } from '@ant-design/icons';
 import MuiButton from '@mui/material/Button';
@@ -45,7 +35,6 @@ import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import MuiTooltip from '@mui/material/Tooltip';
-import MuiPagination from '@mui/material/Pagination';
 import MuiIcon from '@mui/material/Icon';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Typography from '@mui/material/Typography';
@@ -55,8 +44,8 @@ import TanStackQueryExample from '../sections/api/TanStackQueryExample';
 
 const nvmInstallScript = `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 # 터미널 재시작 또는 아래 명령 실행
-export NVM_DIR=\"$([ -z \\\${XDG_CONFIG_HOME-} ] && printf %s \\\${HOME}/.nvm || printf %s \\\${XDG_CONFIG_HOME}/nvm)\"
-[ -s \"$NVM_DIR/nvm.sh\" ] && \\. \"$NVM_DIR/nvm.sh\" # This loads nvm`;
+export NVM_DIR="$([ -z \\\${XDG_CONFIG_HOME-} ] && printf %s \\\${HOME}/.nvm || printf %s \\\${XDG_CONFIG_HOME}/nvm)"
+[ -s "$NVM_DIR/nvm.sh" ] && \\. "$NVM_DIR/nvm.sh" # This loads nvm`;
 
 const setupContent = (
   <div>
@@ -517,7 +506,7 @@ function CounterButtonsDemo() {
 }
 
 // 실무 예제: 장바구니
-function ShoppingCartDemo() {
+/* function ShoppingCartDemo() {
   const [cart, setCart] = React.useState<string[]>([]);
   const products = ['Apple', 'Banana', 'Orange'];
   const productIcons: Record<string, string> = { Apple: '🍎', Banana: '🍌', Orange: '🍊' };
@@ -560,10 +549,10 @@ function ShoppingCartDemo() {
       </ul>
     </div>
   );
-}
+} */
 
 // 고급 실무 예제: 수량 조절이 가능한 장바구니
-function AdvancedCartDemo() {
+/*function AdvancedCartDemo() {
   const productIcons: Record<string, string> = { Apple: '🍎', Banana: '🍌', Orange: '🍊' };
   const products = ['Apple', 'Banana', 'Orange'];
   const [cart, setCart] = React.useState<{ [key: string]: number }>({ Apple: 0, Banana: 0, Orange: 0 });
@@ -643,7 +632,7 @@ function AdvancedCartDemo() {
       </div>
     </div>
   );
-}
+} */
 
 // 고급 예제: 모달 팝업에 props 전달
 function Modal({ open, onClose, message }: { open: boolean; onClose: () => void; message: string }) {
@@ -823,550 +812,71 @@ export const sections: Record<SectionId, Section> = {
         {/* 함수형 컴포넌트 예제 */}
         <h3>1. 함수형 컴포넌트</h3>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><Welcome name="React" /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false} desc={"가장 기본적인 함수형 컴포넌트 예제입니다. props로 name을 받아 Hello, name!을 출력합니다."}>{`function Welcome(props) {\n  return <h1>Hello, {props.name}!<\/h1>;\n}`}</MacCmd>
-            }]}
+          <ExampleTab
+            example={<Welcome name="React" />}
+            code={`function Welcome(props) {
+  return <h1>Hello, {props.name}!</h1>;
+}`}
+            desc={`함수형 컴포넌트는 가장 기본적인 React 컴포넌트 작성 방식입니다.\nprops를 받아서 JSX를 반환하며, 재사용성과 테스트가 용이합니다.`}
           />
         </div>
         {/* JSX 예제 */}
         <h3>2. JSX</h3>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><div>{'<Welcome name="React" />'}</div></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false} desc={"JSX 문법으로 컴포넌트를 사용하는 예제입니다. HTML 태그처럼 컴포넌트를 사용할 수 있습니다."}>{`<Welcome name=\"React\" />`}</MacCmd>
-            }]}
+          <ExampleTab
+            example={<div>{'<Welcome name="React" />'}</div>}
+            code={`<Welcome name=\"React\" />`}
+            desc={`JSX는 JavaScript에서 XML처럼 태그를 작성할 수 있게 해주는 문법입니다.\n컴포넌트를 HTML 태그처럼 사용할 수 있어 가독성이 높아집니다.`}
           />
         </div>
         {/* 초급 예제 */}
         <h3>3. 간단한 인사 컴포넌트</h3>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><div>안녕하세요!</div></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false} desc={"간단한 인사 컴포넌트 예제입니다. Hello 컴포넌트가 '안녕하세요!'를 반환합니다."}>{`function Hello() {\n  return <div>안녕하세요!<\/div>;\n}`}</MacCmd>
-            }]}
+          <ExampleTab
+            example={<div>안녕하세요!</div>}
+            code={`function Hello() {\n  return <div>안녕하세요!<\/div>;\n}`}
+            desc={`간단한 함수형 컴포넌트 예제입니다.\nHello 컴포넌트는 항상 동일한 인사말을 반환합니다.`}
           />
         </div>
         {/* 중급 예제 */}
         <h3>4. props와 조건부 렌더링</h3>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><Greeting name="홍길동" /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false} desc={"props로 받은 name 값에 따라 다른 인사말을 보여주는 조건부 렌더링 예제입니다."}>{`function Greeting({ name }) {\n  return <h2>{name ? \`안녕하세요, \${name}님!\` : '이름을 입력하세요.'}<\/h2>;\n}`}</MacCmd>
-            }]}
+          <ExampleTab
+            example={<Greeting name="홍길동" />}
+            code={`function Greeting({ name }) {\n  return <h2>{name ? \`안녕하세요, \${name}님!\` : '이름을 입력하세요.'}<\/h2>;\n}`}
+            desc={`props로 받은 값에 따라 다른 결과를 보여주는 조건부 렌더링 예제입니다.\nname이 있으면 인사말, 없으면 안내 메시지를 출력합니다.`}
           />
         </div>
         {/* 고급 예제 */}
         <h3>5. 상태와 이벤트 활용</h3>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><CounterButtonsDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false} desc={"useState로 count 상태를 관리하고, 버튼 클릭으로 값을 증감시키는 카운터 예제입니다."}>{`import { useState } from 'react';\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  return (\n    <div>\n      <button onClick={() => setCount(count - 1)}>-</button>\n      <span style={{margin: '0 1em'}}>{count}</span>\n      <button onClick={() => setCount(count + 1)}>+</button>\n    </div>\n  );\n}`}</MacCmd>
-            }]}
+          <ExampleTab
+            example={<CounterButtonsDemo />}
+            code={`import { useState } from 'react';\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  return (\n    <div>\n      <button onClick={() => setCount(count - 1)}>-</button>\n      <span style={{margin: '0 1em'}}>{count}</span>\n      <button onClick={() => setCount(count + 1)}>+</button>\n    </div>\n  );\n}`}
+            desc={`useState로 상태를 관리하고, 버튼 클릭 이벤트로 값을 증감시키는 카운터 예제입니다.\nReact의 상태 관리와 이벤트 처리의 기본을 보여줍니다.`}
           />
         </div>
         {/* 실무 예제 */}
         <h3>6. 리스트 필터링 & 동적 렌더링</h3>
         <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><UserListDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false} desc={"입력값에 따라 리스트를 실시간으로 필터링하는 예제입니다. useState로 filter 상태를 관리합니다."}>{`import { useState } from 'react';\n\nfunction UserList() {\n  const [filter, setFilter] = useState('');\n  const users = ['Alice', 'Bob', 'Charlie', 'David'];\n  const filtered = users.filter(u => u.toLowerCase().includes(filter.toLowerCase()));\n  return (\n    <div>\n      <input value={filter} onChange={e => setFilter(e.target.value)} placeholder=\"이름 검색\" />\n      <ul>\n        {filtered.map(u => <li key={u}>{u}</li>)}\n      </ul>\n    </div>\n  );\n}`}</MacCmd>
-            }]}
-          />
-        </div>
-        
-        {/* 고급 예제 섹션 추가 */}
-        <h2 style={{ marginTop: '2em' }}>고급 컴포넌트 패턴</h2>
-        
-        <h3>7. 합성 컴포넌트 (Compound Components)</h3>
-        <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: (
-                <MacCmdExampleWrapper>
-                  <Select>
-                    <Select.Trigger>선택하세요</Select.Trigger>
-                    <Select.Options>
-                      <Select.Option value="1">옵션 1</Select.Option>
-                      <Select.Option value="2">옵션 2</Select.Option>
-                      <Select.Option value="3">옵션 3</Select.Option>
-                    </Select.Options>
-                  </Select>
-                </MacCmdExampleWrapper>
-              )
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false} desc="합성 컴포넌트 패턴을 사용한 커스텀 Select 컴포넌트 예제입니다.">{`import React, { createContext, useContext, useState } from 'react';
+          <ExampleTab
+            example={<UserListDemo />}
+            code={`import { useState } from 'react';
 
-const SelectContext = createContext<{
-  value: string;
-  onChange: (value: string) => void;
-  isOpen: boolean;
-  setIsOpen: (open: boolean) => void;
-} | null>(null);
-
-function Select({ children }: { children: React.ReactNode }) {
-  const [value, setValue] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
-  
-  return (
-    <SelectContext.Provider value={{ value, onChange: setValue, isOpen, setIsOpen }}>
-      <div style={{ position: 'relative' }}>{children}</div>
-    </SelectContext.Provider>
-  );
-}
-
-Select.Trigger = function Trigger({ children }: { children: React.ReactNode }) {
-  const ctx = useContext(SelectContext);
-  if (!ctx) throw new Error('Must be used within Select');
-  
-  return (
-    <button 
-      onClick={() => ctx.setIsOpen(!ctx.isOpen)}
-      style={{
-        padding: '8px 16px',
-        border: '1px solid #444',
-        borderRadius: '4px',
-        background: '#232323',
-        color: '#eaeaea',
-        cursor: 'pointer',
-        width: '200px',
-        textAlign: 'left'
-      }}
-    >
-      {ctx.value || children}
-    </button>
-  );
-};
-
-Select.Options = function Options({ children }: { children: React.ReactNode }) {
-  const ctx = useContext(SelectContext);
-  if (!ctx) throw new Error('Must be used within Select');
-  
-  if (!ctx.isOpen) return null;
-  
-  return (
-    <div style={{
-      position: 'absolute',
-      top: '100%',
-      left: 0,
-      width: '200px',
-      background: '#232323',
-      border: '1px solid #444',
-      borderRadius: '4px',
-      marginTop: '4px'
-    }}>
-      {children}
-    </div>
-  );
-};
-
-Select.Option = function Option({ children, value }: { children: React.ReactNode; value: string }) {
-  const ctx = useContext(SelectContext);
-  if (!ctx) throw new Error('Must be used within Select');
-  
-  return (
-    <div
-      onClick={() => {
-        ctx.onChange(value);
-        ctx.setIsOpen(false);
-      }}
-      style={{
-        padding: '8px 16px',
-        cursor: 'pointer',
-        color: '#eaeaea',
-        background: ctx.value === value ? '#444' : 'transparent'
-      }}
-    >
-      {children}
-    </div>
-  );
-};`}</MacCmd>
-            }]}
-          />
-        </div>
-
-        <h3>8. 고차 컴포넌트 (Higher-Order Components)</h3>
-        <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: (
-                <MacCmdExampleWrapper>
-                  <WithLoading loading={false}>
-                    <div>데이터가 로드되었습니다!</div>
-                  </WithLoading>
-                </MacCmdExampleWrapper>
-              )
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false} desc="고차 컴포넌트 패턴을 사용한 로딩 처리 예제입니다.">{`import React from 'react';
-
-function withLoading<P extends object>(
-  WrappedComponent: React.ComponentType<P>
-): React.FC<P & { loading?: boolean }> {
-  return function WithLoadingComponent({ loading = false, ...props }: P & { loading?: boolean }) {
-    if (loading) {
-      return (
-        <div style={{
-          padding: '20px',
-          textAlign: 'center',
-          background: '#232323',
-          borderRadius: '8px',
-          color: '#eaeaea'
-        }}>
-          <div className="loading-spinner" />
-          <p>Loading...</p>
-        </div>
-      );
-    }
-    return <WrappedComponent {...props as P} />;
-  };
-}
-
-// 사용 예시
-const MyComponent = ({ data }: { data: string }) => <div>{data}</div>;
-const MyComponentWithLoading = withLoading(MyComponent);
-
-// JSX에서 사용
-<MyComponentWithLoading loading={true} data="Hello" />`}</MacCmd>
-            }]}
-          />
-        </div>
-
-        <h3>9. 렌더 프롭 패턴 (Render Props)</h3>
-        <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: (
-                <MacCmdExampleWrapper>
-                  <MouseTracker>
-                    {(position) => (
-                      <div>
-                        마우스 위치 - X: {position.x}, Y: {position.y}
-                      </div>
-                    )}
-                  </MouseTracker>
-                </MacCmdExampleWrapper>
-              )
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false} desc="렌더 프롭 패턴을 사용한 마우스 트래커 예제입니다.">{`import React, { useState, useEffect } from 'react';
-
-interface Position {
-  x: number;
-  y: number;
-}
-
-interface MouseTrackerProps {
-  children: (position: Position) => React.ReactNode;
-}
-
-function MouseTracker({ children }: MouseTrackerProps) {
-  const [position, setPosition] = useState<Position>({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  return (
-    <div style={{
-      padding: '20px',
-      background: '#232323',
-      borderRadius: '8px',
-      color: '#eaeaea'
-    }}>
-      {children(position)}
-    </div>
-  );
-}
-
-// 사용 예시
-<MouseTracker>
-  {(position) => (
-    <div>
-      마우스 위치 - X: {position.x}, Y: {position.y}
-    </div>
-  )}
-</MouseTracker>`}</MacCmd>
-            }]}
-          />
-        </div>
-
-        <h3>10. 커스텀 훅을 활용한 컴포넌트</h3>
-        <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: (
-                <MacCmdExampleWrapper>
-                  <WindowSize />
-                </MacCmdExampleWrapper>
-              )
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false} desc="커스텀 훅을 사용한 윈도우 크기 감지 컴포넌트 예제입니다.">{`import { useState, useEffect } from 'react';
-
-// 커스텀 훅
-function useWindowSize() {
-  const [size, setSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight
-  });
-
-  useEffect(() => {
-    const handleResize = () => {
-      setSize({
-        width: window.innerWidth,
-        height: window.innerHeight
-      });
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  return size;
-}
-
-// 컴포넌트
-function WindowSize() {
-  const size = useWindowSize();
-
-  return (
-    <div style={{
-      padding: '20px',
-      background: '#232323',
-      borderRadius: '8px',
-      color: '#eaeaea'
-    }}>
-      <p>Window Width: {size.width}px</p>
-      <p>Window Height: {size.height}px</p>
-    </div>
-  );
-}`}</MacCmd>
-            }]}
-          />
-        </div>
-
-        <h3>11. 에러 바운더리 (Error Boundary)</h3>
-        <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: (
-                <MacCmdExampleWrapper>
-                  <ErrorBoundary>
-                    <BuggyCounter />
-                  </ErrorBoundary>
-                </MacCmdExampleWrapper>
-              )
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false} desc="에러 바운더리를 사용한 에러 처리 컴포넌트 예제입니다.">{`import React from 'react';
-
-class ErrorBoundary extends React.Component {
-  state = { hasError: false, error: null };
-
-  static getDerivedStateFromError(error) {
-    return { hasError: true, error };
-  }
-
-  componentDidCatch(error, errorInfo) {
-    console.log('Error caught:', error, errorInfo);
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div style={{
-          padding: '20px',
-          background: '#232323',
-          borderRadius: '8px',
-          color: '#eaeaea',
-          border: '1px solid #ff4444'
-        }}>
-          <h3>Something went wrong 😢</h3>
-          <p>{this.state.error?.message}</p>
-          <button
-            onClick={() => this.setState({ hasError: false })}
-            style={{
-              padding: '8px 16px',
-              background: '#444',
-              border: 'none',
-              borderRadius: '4px',
-              color: '#eaeaea',
-              marginTop: '10px',
-              cursor: 'pointer'
-            }}
-          >
-            Try again
-          </button>
-        </div>
-      );
-    }
-
-    return this.props.children;
-  }
-}
-
-// 에러를 발생시키는 테스트용 컴포넌트
-function BuggyCounter() {
-  const [count, setCount] = React.useState(0);
-
-  if (count === 5) {
-    throw new Error('I crashed!');
-  }
-
-  return (
-    <div style={{
-      padding: '20px',
-      background: '#232323',
-      borderRadius: '8px',
-      color: '#eaeaea'
-    }}>
-      <p>Count: {count}</p>
-      <button
-        onClick={() => setCount(c => c + 1)}
-        style={{
-          padding: '8px 16px',
-          background: '#444',
-          border: 'none',
-          borderRadius: '4px',
-          color: '#eaeaea',
-          cursor: 'pointer'
-        }}
-      >
-        Increment
-      </button>
-    </div>
-  );
-}`}</MacCmd>
-            }]}
-          />
-        </div>
-
-        <h3>12. 포털을 사용한 모달 컴포넌트</h3>
-        <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: (
-                <MacCmdExampleWrapper>
-                  <PortalModal />
-                </MacCmdExampleWrapper>
-              )
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false} desc="React Portal을 사용한 모달 컴포넌트 예제입니다.">{`import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
-
-function Modal({ isOpen, onClose, children }) {
-  if (!isOpen) return null;
-
-  return ReactDOM.createPortal(
-    <div style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      background: 'rgba(0, 0, 0, 0.5)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      zIndex: 1000
-    }}>
-      <div style={{
-        background: '#232323',
-        padding: '20px',
-        borderRadius: '8px',
-        maxWidth: '500px',
-        width: '90%',
-        position: 'relative'
-      }}>
-        <button
-          onClick={onClose}
-          style={{
-            position: 'absolute',
-            top: '10px',
-            right: '10px',
-            background: 'none',
-            border: 'none',
-            color: '#eaeaea',
-            fontSize: '20px',
-            cursor: 'pointer'
-          }}
-        >
-          ×
-        </button>
-        {children}
-      </div>
-    </div>,
-    document.body
-  );
-}
-
-function PortalModal() {
-  const [isOpen, setIsOpen] = useState(false);
-
+function UserList() {
+  const [filter, setFilter] = useState('');
+  const users = ['Alice', 'Bob', 'Charlie', 'David'];
+  const filtered = users.filter(u => u.toLowerCase().includes(filter.toLowerCase()));
   return (
     <div>
-      <button
-        onClick={() => setIsOpen(true)}
-        style={{
-          padding: '8px 16px',
-          background: '#444',
-          border: 'none',
-          borderRadius: '4px',
-          color: '#eaeaea',
-          cursor: 'pointer'
-        }}
-      >
-        Open Modal
-      </button>
-
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-        <h2 style={{ color: '#eaeaea', marginBottom: '15px' }}>Portal Modal</h2>
-        <p style={{ color: '#eaeaea' }}>
-          This modal is rendered outside the normal DOM hierarchy using React Portal.
-        </p>
-      </Modal>
+      <input value={filter} onChange={e => setFilter(e.target.value)} placeholder="이름 검색" />
+      <ul>
+        {filtered.map(u => <li key={u}>{u}</li>)}
+      </ul>
     </div>
   );
-}`}</MacCmd>
-            }]}
+}`}
+            desc={`입력값에 따라 리스트를 실시간으로 필터링하는 예제입니다.\nuseState로 filter 상태를 관리하고, 배열의 filter 메서드를 활용합니다.`}
           />
         </div>
       </div>
@@ -1375,478 +885,87 @@ function PortalModal() {
   props: {
     id: 'props',
     title: 'Props',
-    description: '컴포넌트에 데이터를 전달하는 방법을 배웁니다.',
+    description: '컴포넌트에 데이터를 전달하는 props를 배웁니다.',
     category: 'basics',
-    icon: '📦',
+    icon: '🎁',
     prev: 'components',
-    next: 'state',
-    content: (
-      <div>
-        <ul
-          style={{
-            marginBottom: '2em',
-            background: '#484f54',
-            padding: '1.5em 2em',
-            borderRadius: '8px',
-            border: '1px solid #eee',
-            marginTop: '1.2em',
-            marginLeft: 0,
-            marginRight: 0,
-            listStylePosition: 'inside',
-          }}
-        >
-          <li style={{ marginBottom: '0.7em' }}><b>Props</b>는 부모 컴포넌트가 자식 컴포넌트에 값을 전달할 때 사용하는 객체입니다.</li>
-          <li style={{ marginBottom: '0.7em' }}>컴포넌트의 재사용성과 유연성을 높여줍니다.</li>
-          <li style={{ marginBottom: '0.7em' }}>props는 읽기 전용이며, 자식 컴포넌트에서 직접 수정할 수 없습니다.</li>
-        </ul>
-        <h3>1. 인사 컴포넌트</h3>
-        <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><Greeting name="React 사용자" /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false} desc={"props를 통해 부모 컴포넌트가 자식 컴포넌트에 값을 전달하는 기본 예제입니다."}>{`function Greeting(props) {\n  return <h2>안녕하세요, {props.name}!<\/h2>;\n}\n\n<Greeting name=\"React 사용자\" />`}</MacCmd>
-            }]}
-          />
-        </div>
-        <h3>2. 여러 props 전달</h3>
-        <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><ProfileCard name="홍길동" age={28} job="Frontend Developer" /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false} desc={"여러 개의 props를 한 번에 전달하여 다양한 정보를 표시하는 예제입니다."}>{`function ProfileCard(props) {\n  return (\n    <div>\n      <h3>{props.name}</h3>\n      <p>나이: {props.age}</p>\n      <p>직업: {props.job}</p>\n    </div>\n  );\n}\n\n<ProfileCard name=\"홍길동\" age={28} job=\"Frontend Developer\" />`}</MacCmd>
-            }]}
-          />
-        </div>
-        <h3>3. 모달 팝업에 props 전달</h3>
-        <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><ModalDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false} desc={"props로 함수(onClose)와 메시지(message)를 전달하여 모달의 동작과 내용을 제어하는 예제입니다."}>{`import React, { useState } from 'react';\n\nfunction Modal({ open, onClose, message }) {\n  if (!open) return null;\n  return (\n    <div style={{\n      position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',\n      background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000\n    }}>\n      <div style={{ background: '#232323', color: '#eaeaea', padding: 32, borderRadius: 12, minWidth: 280, textAlign: 'center' }}>\n        <h3>Modal Popup</h3>\n        <p>{message}</p>\n        <button onClick={onClose}>Close</button>\n      </div>\n    </div>\n  );\n}\n\nfunction ModalDemo() {\n  const [open, setOpen] = useState(false);\n  const [value, setValue] = useState('Hello from parent!');\n  return (\n    <div>\n      <input value={value} onChange={e => setValue(e.target.value)} style={{ marginRight: 8, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />\n      <button onClick={() => setOpen(true)} style={{ padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>Open Modal</button>\n      <Modal open={open} onClose={() => setOpen(false)} message={value} />\n    </div>\n  );\n}`}</MacCmd>
-            }]}
-          />
-        </div>
-        <h3>4. 커스텀 버튼 컴포넌트</h3>
-        <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><CustomButton color="#27c93f" label="확인" /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false} desc={"props로 색상(color)과 라벨(label)을 받아 버튼 스타일과 텍스트를 동적으로 지정하는 예제입니다."}>{`function CustomButton({ color, label }) {\n  return (\n    <button style={{\n      background: color, color: '#fff', border: 'none', borderRadius: 6, padding: '0.6em 1.5em', fontSize: '1em', cursor: 'pointer'\n    }}>{label}</button>\n  );\n}\n\n<CustomButton color=\"#27c93f\" label=\"확인\" />`}</MacCmd>
-            }]}
-          />
-        </div>
-        <h3>5. 리스트 컴포넌트</h3>
-        <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><ItemList items={["React", "Vue", "Angular"]} /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false} desc={"props로 배열(items)을 받아 리스트 항목을 동적으로 렌더링하는 예제입니다."}>{`function ItemList({ items }) {\n  return (\n    <ul>\n      {items.map(item => <li key={item}>{item}</li>)}\n    </ul>\n  );\n}\n\n<ItemList items={[\"React\", \"Vue\", \"Angular\"]} />`}</MacCmd>
-            }]}
-          />
-        </div>
-        <h3>6. 토글 스위치 컴포넌트</h3>
-        <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><Toggle label="다크 모드" initial={false} /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false} desc={"props로 boolean 값(initial)과 라벨(label)을 받아 토글 스위치의 상태와 텍스트를 제어하는 예제입니다."}>{`import { useState } from 'react';\n\nfunction Toggle({ label, initial }) {\n  const [on, setOn] = useState(initial);\n  return (\n    <label style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#232323', color: '#eaeaea', borderRadius: 8, padding: '0.7em 1.2em', border: '1px solid #444', maxWidth: 320 }}>\n      <input type=\"checkbox\" checked={on} onChange={() => setOn(!on)} />\n      <span>{label}: {on ? 'ON' : 'OFF'}</span>\n    </label>\n  );\n}\n\n<Toggle label=\"다크 모드\" initial={false} />`}</MacCmd>
-            }]}
-          />
-        </div>
-      </div>
-    ),
-  },
-  state: {
-    id: 'state',
-    title: 'State',
-    description: '컴포넌트의 상태 관리 방법을 배웁니다.',
-    category: 'basics',
-    icon: '🔄',
-    prev: 'props',
-    next: 'hooks',
-    content: (
-      <div>
-        
-        <ul
-          style={{
-            marginBottom: '2em',
-            background: '#484f54',
-            padding: '1.5em 2em',
-            borderRadius: '8px',
-            border: '1px solid #eee',
-            marginTop: '1.2em',
-            marginLeft: 0,
-            marginRight: 0,
-            listStylePosition: 'inside',
-          }}
-        >
-          <li style={{ marginBottom: '0.7em' }}><b>State</b>는 컴포넌트 내부에서 동적으로 변하는 데이터를 의미합니다.</li>
-          <li style={{ marginBottom: '0.7em' }}>상태가 변경되면 컴포넌트가 다시 렌더링됩니다.</li>
-          <li style={{ marginBottom: '0.7em' }}>useState 훅을 통해 상태를 선언하고 관리할 수 있습니다.</li>
-        </ul>
-        <h3>1. 기본 카운터</h3>
-        <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><CounterDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false} desc={"useState로 count 상태를 선언하고, 버튼 클릭 시 값을 1씩 증가시키는 가장 기본적인 카운터 예제입니다."}>{`import { useState } from 'react';
-
-function Counter() {
-  const [count, setCount] = useState(0);
-  return (
-    <div>
-      <p>Count: {count}</p>
-      <button onClick={() => setCount(count + 1)}>+1</button>
-    </div>
-  );
-}`}</MacCmd>
-            }]}
-          />
-        </div>
-        <h3>2. 입력값 상태 관리</h3>
-        <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><InputExampleDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false} desc={"useState로 입력값(text)을 관리하고, input의 onChange로 상태를 실시간 반영하는 예제입니다."}>{`import { useState } from 'react';
-
-function InputExample() {
-  const [text, setText] = useState('');
-  return (
-    <input value={text} onChange={e => setText(e.target.value)} />
-  );
-}`}</MacCmd>
-            }]}
-          />
-        </div>
-        <h3>3. 배열/리스트 상태</h3>
-        <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><TodoListDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false} desc={"useState로 배열(리스트) 상태를 관리하고, 새로운 할 일을 추가하는 간단한 투두리스트 예제입니다."}>{`import { useState } from 'react';
-
-function TodoList() {
-  const [todos, setTodos] = useState(['공부하기', '운동하기']);
-  const [input, setInput] = useState('');
-  return (
-    <div>
-      <ul>
-        {todos.map((todo, i) => <li key={i}>{todo}</li>)}
-      </ul>
-      <input value={input} onChange={e => setInput(e.target.value)} placeholder="새 할 일" />
-      <button onClick={() => {
-        if (input.trim()) {
-          setTodos([...todos, input]);
-          setInput('');
-        }
-      }}>추가</button>
-    </div>
-  );
-}`}</MacCmd>
-            }]}
-          />
-        </div>
-        <h3>4. 객체 상태</h3>
-        <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><ProfileDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false} desc={"useState로 객체 형태의 상태(user)를 관리하고, 각각의 필드를 개별적으로 업데이트하는 예제입니다."}>{`import { useState } from 'react';
-
-function Profile() {
-  const [user, setUser] = useState({ name: '', age: 0 });
-  return (
-    <div>
-      <input value={user.name} onChange={e => setUser({ ...user, name: e.target.value })} />
-      <input type="number" value={user.age} onChange={e => setUser({ ...user, age: Number(e.target.value) })} />
-    </div>
-  );
-}`}</MacCmd>
-            }]}
-          />
-        </div>
-        <h3>5. 여러 state 동시 사용</h3>
-        <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><MultiStateDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false} desc={"useState를 여러 번 사용해 서로 다른 상태(count, text)를 동시에 관리하는 예제입니다."}>{`import { useState } from 'react';
-
-function MultiState() {
-  const [count, setCount] = useState(0);
-  const [text, setText] = useState('');
-  return (
-    <div>
-      <button onClick={() => setCount(count + 1)}>+1</button>
-      <input value={text} onChange={e => setText(e.target.value)} />
-      <p>{count}, {text}</p>
-    </div>
-  );
-}`}</MacCmd>
-            }]}
-          />
-        </div>
-        <h3>6. 토글 스위치</h3>
-        <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><Toggle label="다크 모드" initial={false} /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false} desc={"useState로 boolean 상태를 관리하며, 체크박스 토글에 따라 ON/OFF가 바뀌는 스위치 예제입니다."}>{`import { useState } from 'react';
-
-function Toggle({ label, initial }) {
-  const [on, setOn] = useState(initial);
-  return (
-    <label style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#232323', color: '#eaeaea', borderRadius: 8, padding: '0.7em 1.2em', border: '1px solid #444', maxWidth: 320 }}>
-      <input type="checkbox" checked={on} onChange={() => setOn(!on)} />
-      <span>{label}: {on ? 'ON' : 'OFF'}</span>
-    </label>
-  );
-}
-
-<Toggle label="다크 모드" initial={false} />`}</MacCmd>
-            }]}
-          />
-        </div>
-        <h3>7. 실무 예제: 간단한 장바구니</h3>
-        <ExampleTab example={<ShoppingCartDemo />} code={`import { useState } from 'react';
-
-function ShoppingCart() {
-  const [cart, setCart] = useState<string[]>([]);
-  const products = ['Apple', 'Banana', 'Orange'];
-  const productIcons: Record<string, string> = { Apple: '🍎', Banana: '🍌', Orange: '🍊' };
-  const maxCount = 17;
-  return (
-    <div>
-      <ul>
-        {products.map(product => (
-          <li key={product}>
-            {product} <button onClick={() => setCart([...cart, product])}>Add</button>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}`} showCaret={false} />
-        <h3>8. 실무 예제: 수량 조절이 가능한 장바구니</h3>
-        <ExampleTab example={<AdvancedCartDemo />} code={`import { useState } from 'react';
-
-const productIcons = { Apple: '🍎', Banana: '🍌', Orange: '🍊' };
-const products = ['Apple', 'Banana', 'Orange'];
-
-function AdvancedCart() {
-  const [cart, setCart] = useState({ Apple: 0, Banana: 0, Orange: 0 });
-  const add = (name) => setCart(c => ({ ...c, [name]: c[name] + 1 }));
-  const remove = (name) => setCart(c => ({ ...c, [name]: Math.max(0, c[name] - 1) }));
-  const reset = () => setCart({ Apple: 0, Banana: 0, Orange: 0 });
-  return (
-    <div>
-      <ul>
-        {products.map(name => (
-          <li key={name}>
-            {productIcons[name]} {name}
-            <div style={{ display: 'flex', alignItems: 'center', minWidth: 160 }}>
-              <button onClick={() => add(name)}>+</button>
-              <button onClick={() => remove(name)} disabled={cart[name] === 0}>-</button>
-              <span> {cart[name]}</span>
-            </div>
-          </li>
-        ))}
-      </ul>
-      <button onClick={reset}>Reset</button>
-      <div style={{ fontSize: '2em', marginTop: '1em' }}>
-        {products.map(name => cart[name] > 0 && (
-          <span key={name} style={{ marginRight: '0.5em' }}>{productIcons[name].repeat(cart[name])}</span>
-        ))}
-      </div>
-    </div>
-  );
-}`} showCaret={false} />
-        {/* useEffect 스타일 예제 */}
-        <h3>3.5. useEffect 스타일 적용 예제</h3>
-        <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><MountEffectDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false} desc={"컴포넌트가 마운트/언마운트될 때 각각 콘솔에 로그를 출력하는 useEffect 예제입니다."}>{`import { useEffect } from 'react';\n\nfunction MountEffectDemo() {\n  useEffect(() => {\n    console.log('컴포넌트 마운트됨');\n    return () => {\n      console.log('컴포넌트 언마운트됨');\n    };\n  }, []);\n  return <div>마운트/언마운트 시 콘솔에 로그</div>;\n}`}</MacCmd>
-            }]}
-          />
-        </div>
-        {/* useEffect 스타일 예제 추가 */}
-        <h3>7. useEffect로 상태 변화 감지</h3>
-        <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: <MacCmdExampleWrapper><StateEffectDemo /></MacCmdExampleWrapper>
-            }, {
-              label: 'Source',
-              content: <MacCmd showCaret={false} desc={"count 상태가 바뀔 때마다 useEffect로 콘솔에 로그를 출력하는 예제입니다. useEffect의 의존성 배열([count])에 따라 effect가 재실행됩니다."}>{`import { useState, useEffect } from 'react';\n\nfunction StateEffectDemo() {\n  const [count, setCount] = useState(0);\n  useEffect(() => {\n    console.log('count 변경:', count);\n  }, [count]);\n  return (\n    <div>\n      <button onClick={() => setCount(count + 1)} style={{ padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer', marginRight: 8 }}>+1</button>\n      <span style={{ color: '#eaeaea' }}>{count}</span>\n    </div>\n  );\n}`}</MacCmd>
-            }]}
-          />
-        </div>
-        {/* 페이징 게시판 예제 */}
-        <h3>6. 페이징 게시판 예제</h3>
-        <div style={stateExampleBlockStyle}>
-          <TabComponent
-            tabs={[{
-              label: 'Example',
-              content: (
-                <>
-                  <MacCmdExampleWrapper>
-                    <PaginatedBoard
-                      posts={[
-                        { id: 1, title: '첫 번째 글', content: 'React 게시판 예제입니다.' },
-                        { id: 2, title: '두 번째 글', content: '페이지네이션이 적용되어 있습니다.' },
-                        { id: 3, title: '세 번째 글', content: '다음/이전 버튼으로 페이지를 이동할 수 있습니다.' },
-                        { id: 4, title: '네 번째 글', content: '컴포넌트 재사용이 쉽습니다.' },
-                        { id: 5, title: '다섯 번째 글', content: 'props로 pageSize를 조절할 수 있습니다.' },
-                        { id: 6, title: '여섯 번째 글', content: '6번째 게시글입니다.' },
-                        { id: 7, title: '일곱 번째 글', content: '7번째 게시글입니다.' },
-                        { id: 8, title: '여덟 번째 글', content: '8번째 게시글입니다.' },
-                        { id: 9, title: '아홉 번째 글', content: '9번째 게시글입니다.' },
-                        { id: 10, title: '열 번째 글', content: '10번째 게시글입니다.' },
-                      ]}
-                      pageSize={3}
-                    />
-                  </MacCmdExampleWrapper>
-                </>
-              )
-            }, {
-              label: 'Source',
-              content: (
-                <MacCmd showCaret={false} desc="페이징 기능이 있는 게시판 컴포넌트 예제입니다.">{`import { PaginatedBoard } from '../components/PaginatedBoard';
-
-const posts = [
-  { id: 1, title: '첫 번째 글', content: 'React 게시판 예제입니다.' },
-  // ... (생략) ...
-];
-
-<PaginatedBoard posts={posts} pageSize={3} />`}</MacCmd>
-              )
-            }]}
-          />
-        </div>
-      </div>
-    ),
-  },
-  hooks: {
-    id: 'hooks',
-    title: 'Hooks 개요',
-    description: 'React의 주요 훅(Hooks) 종류와 특징을 소개합니다.',
-    category: 'hooks',
-    icon: '🪝',
-    prev: 'state',
     next: 'useState',
     content: (
       <div>
-        <h2>React Hooks란?</h2>
-        <ul style={{
-          marginBottom: '2em',
-          background: '#484f54',
-          padding: '1.5em 2em',
-          borderRadius: '8px',
-          border: '1px solid #eee',
-          marginTop: '1.2em',
-          marginLeft: 0,
-          marginRight: 0,
-          listStylePosition: 'inside',
-        }}>
-          <li><b>Hooks</b>는 함수형 컴포넌트에서 React의 다양한 기능(상태, 생명주기, 참조 등)을 사용할 수 있게 해주는 함수입니다.</li>
+        <h2>Props란?</h2>
+        <ul style={{ ...stateExampleBlockStyle, listStylePosition: 'inside' }}>
+          <li style={{ marginBottom: '0.7em' }}><b>Props(속성)</b>는 부모 컴포넌트에서 자식 컴포넌트로 데이터를 전달하는 방법입니다.</li>
+          <li style={{ marginBottom: '0.7em' }}>자식 컴포넌트는 props를 읽기 전용으로 사용해야 합니다. (변경 불가)</li>
+          <li style={{ marginBottom: '0.7em' }}>함수의 인자와 비슷한 역할을 합니다.</li>
         </ul>
-        <h3>1. 등장 배경: 왜 Hooks가 필요했을까?</h3>
-        <ul style={{ background: '#232323', color: '#eaeaea', padding: '1em 1.5em', borderRadius: 8, border: '1px solid #444', marginBottom: '1.5em', listStylePosition: 'inside' }}>
-          <li>과거에는 <b>클래스 컴포넌트</b>에서만 상태(state)와 생명주기(lifecycle) 기능을 사용할 수 있었습니다.</li>
-          <li>클래스 컴포넌트의 문제점:
-            <ul style={{ margin: '0.5em 0 0.5em 1.2em', background: 'none', padding: 0, border: 'none', color: '#b5e853' }}>
-              <li>로직 재사용이 어렵고, HOC/render props 패턴이 복잡함</li>
-              <li>this 바인딩 실수, 긴 boilerplate 코드</li>
-              <li>관련 없는 로직이 하나의 메서드(componentDidMount 등)에 섞임</li>
-              <li>테스트와 유지보수가 어려움</li>
-            </ul>
-          </li>
-          <li>함수형 컴포넌트의 단순함과 재사용성을 살리면서, 상태 관리와 부수효과 처리 등 고급 기능을 제공하기 위해 Hooks가 도입되었습니다. (React 16.8)</li>
-        </ul>
-        <h3>2. Hooks의 원칙(규칙)</h3>
-        <ul style={{ background: '#232323', color: '#eaeaea', padding: '1em 1.5em', borderRadius: 8, border: '1px solid #444', marginBottom: '1.5em', listStylePosition: 'inside' }}>
-          <li>Hook은 <b>반드시 함수형 컴포넌트의 최상위</b>에서만 호출해야 합니다. (조건문/반복문/중첩 함수 안에서 호출 금지)</li>
-          <li>Hook 이름은 <b>use</b>로 시작해야 합니다. (예: useState, useMyCustomHook)</li>
-          <li>React 버전 16.8 이상에서만 사용 가능</li>
-        </ul>
-        <h3>3. 주요 내장 Hooks</h3>
-        <ul style={{
-          background: '#232323', color: '#eaeaea', padding: '1em 1.5em', borderRadius: 8, border: '1px solid #444', marginBottom: '1.5em', listStylePosition: 'inside'
-        }}>
-          <li><b>useState</b>: 컴포넌트의 <b>상태</b>를 선언하고 관리</li>
-          <li><b>useEffect</b>: <b>부수효과(side effect)</b> 처리 (예: 데이터 fetch, 구독, 타이머 등)</li>
-          <li><b>useRef</b>: <b>DOM 참조</b> 또는 값 기억 (렌더링과 무관한 값 저장)</li>
-          <li><b>useMemo</b>: <b>비싼 연산</b>의 결과를 <b>메모이제이션</b> (성능 최적화)</li>
-          <li><b>useCallback</b>: <b>함수</b>를 메모이제이션 (불필요한 렌더링 방지)</li>
-          <li><b>useReducer</b>: <b>복잡한 상태 로직</b>을 reducer 패턴으로 관리</li>
-          <li><b>useContext</b>: <b>전역 데이터</b>를 컴포넌트 트리 전체에 전달</li>
-        </ul>
-        <h3>4. Hooks 사용 시 주의사항</h3>
-        <ul style={{
-          background: '#232323', color: '#eaeaea', padding: '1em 1.5em', borderRadius: 8, border: '1px solid #444', marginBottom: '1.5em', listStylePosition: 'inside'
-        }}>
-          <li>Hook은 <b>반드시 함수형 컴포넌트 최상위</b>에서만 호출해야 합니다. (조건문/반복문 안에서 호출 금지)</li>
-          <li>Hook 이름은 <b>use</b>로 시작해야 합니다. (예: useState, useMyCustomHook)</li>
-          <li>React 버전 16.8 이상에서만 사용 가능</li>
-        </ul>
-        <h3>5. 실습 안내</h3>
-        <ul style={{
-          background: '#484f54', color: '#fff', padding: '1em 1.5em', borderRadius: 8, border: '1px solid #eee', marginBottom: '1.5em', listStylePosition: 'inside'
-        }}>
-          <li>각 주요 Hook은 <b>별도의 페이지</b>에서 실습 예제와 함께 자세히 다룹니다.</li>
-          <li>좌측 메뉴에서 원하는 Hook을 선택해 직접 실습해보세요.</li>
-        </ul>
-        <h3>6. 컴포넌트 생명주기와 Hooks</h3>
-        <ul style={{ background: '#232323', color: '#eaeaea', padding: '1em 1.5em', borderRadius: 8, border: '1px solid #444', marginBottom: '1.5em', listStylePosition: 'inside' }}>
-          <li><b>마운트(Mount):</b> 컴포넌트가 처음 화면에 나타날 때 <code>useEffect(() =&gt; &#123;...&#125;, [])</code> 콜백이 한 번 실행됩니다.</li>
-          <li><b>업데이트(Update):</b> props나 state가 변경될 때 <code>useEffect(() =&gt; &#123;...&#125;, [deps])</code> 콜백이 해당 deps가 바뀔 때마다 실행됩니다.</li>
-          <li><b>언마운트(Unmount):</b> 컴포넌트가 화면에서 사라질 때 <code>useEffect</code>의 return(cleanup) 함수가 실행되어 정리 작업을 할 수 있습니다.</li>
-        </ul>
-        <div style={{ textAlign: 'center', margin: '2em 0' }}>
-          <img src="/lifecycle.svg" alt="React 컴포넌트 생명주기 다이어그램" style={{ width: 1000, margin: '2em auto', display: 'block', background: '#232323', borderRadius: 8, border: '1px solid #444' }} />
+        <h3>1. 기본 Props 전달</h3>
+        <div style={stateExampleBlockStyle}>
+          <ExampleTab
+            example={<ProfileCard name="홍길동" age={30} job="개발자" />}
+            code={`function ProfileCard({ name, age, job }) {
+  return (
+    <div>
+      <h3>{name}</h3>
+      <p>나이: {age}</p>
+      <p>직업: {job}</p>
+    </div>
+  );
+}`}
+            desc="부모 컴포넌트에서 이름, 나이, 직업을 props로 전달하는 예제입니다."
+          />
+        </div>
+        <h3>2. 커스텀 버튼 컴포넌트</h3>
+        <div style={stateExampleBlockStyle}>
+          <ExampleTab
+            example={<div style={{ display: 'flex', gap: 16 }}><CustomButton color="#3498db" label="저장" /><CustomButton color="#e74c3c" label="삭제" /></div>}
+            code={`function CustomButton({ color, label }) {
+  return <button style={{ background: color }}>{label}</button>;
+}`}
+            desc="색상과 라벨을 props로 받아 다양한 버튼을 만드는 예제입니다."
+          />
+        </div>
+        <h3>3. 리스트 데이터 전달</h3>
+        <div style={stateExampleBlockStyle}>
+          <ExampleTab
+            example={<ItemList items={['사과', '바나나', '오렌지']} />}
+            code={`function ItemList({ items }) {
+  return (
+    <ul>
+      {items.map(item => <li key={item}>{item}</li>)}
+    </ul>
+  );
+}`}
+            desc="배열 데이터를 props로 전달하여 리스트를 렌더링하는 예제입니다."
+          />
+        </div>
+        <h3>4. 상태와 Props 연동</h3>
+        <div style={stateExampleBlockStyle}>
+          <ExampleTab
+            example={<ModalDemo />}
+            code={`function ModalDemo() {
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState('Hello from parent!');
+  return (
+    <div>
+      <input value={value} onChange={e => setValue(e.target.value)} />
+      <button onClick={() => setOpen(true)}>Open Modal</button>
+      <Modal open={open} onClose={() => setOpen(false)} message={value} />
+    </div>
+  );
+}`}
+            desc="부모의 상태(state)를 자식 컴포넌트의 props로 전달하여 모달을 제어하는 예제입니다."
+          />
+        </div>
+        <h3>5. 토글 스위치 컴포넌트</h3>
+        <div style={stateExampleBlockStyle}>
+          <ExampleTab
+            example={<Toggle label="알림" initial={true} />}
+            code={`function Toggle({ label, initial }) {
+  const [on, setOn] = React.useState(initial);
+  return <label><input type="checkbox" checked={on} onChange={() => setOn(!on)} />{label}</label>;
+}`}
+            desc="초기 상태와 라벨을 props로 받아 재사용 가능한 토글 스위치를 만드는 예제입니다."
+          />
         </div>
       </div>
     ),
@@ -1854,65 +973,69 @@ const posts = [
   useState: {
     id: 'useState',
     title: 'useState',
-    description: '컴포넌트의 상태를 관리하는 가장 기본적인 Hook',
+    description: '컴포넌트의 상태를 관리하는 Hook',
     category: 'hooks',
-    icon: '🔢',
-    prev: 'hooks',
+    icon: '💡',
+    prev: 'props',
     next: 'useEffect',
     content: (
       <div>
-        
-        <h4>1. 기본 카운터</h4>
+        <h3>1. 카운터</h3>
         <div style={stateExampleBlockStyle}>
-          <ExampleTab example={<CounterDemo />} code={`import { useState } from 'react';
+          <ExampleTab
+            example={<CounterDemo />}
+            code={`import { useState } from 'react';
 
 function Counter() {
   const [count, setCount] = useState(0);
   return (
     <div>
       <p>Count: {count}</p>
-      <button onClick={() => setCount(count + 1)}>+1</button>
+      <button onClick={() => setCount(count + 1)}>증가</button>
     </div>
   );
-}`} showCaret={false} desc={"useState로 count 상태를 선언하고, 버튼 클릭 시 값을 1씩 증가시키는 가장 기본적인 카운터 예제입니다."} />
+}`}
+            desc="가장 기본적인 useState 예제입니다. 버튼 클릭 시 count 상태가 1씩 증가합니다."
+          />
         </div>
-        <h4>2. 입력값 상태 관리</h4>
+        <h3>2. 입력 필드</h3>
         <div style={stateExampleBlockStyle}>
-          <ExampleTab example={<InputExampleDemo />} code={`import { useState } from 'react';
+          <ExampleTab
+            example={<InputExampleDemo />}
+            code={`import { useState } from 'react';
 
 function InputExample() {
   const [text, setText] = useState('');
-  return (
-    <input value={text} onChange={e => setText(e.target.value)} />
-  );
-}`} showCaret={false} desc={"useState로 입력값(text)을 관리하고, input의 onChange로 상태를 실시간 반영하는 예제입니다."} />
+  return <input value={text} onChange={e => setText(e.target.value)} />;
+}`}
+            desc="사용자 입력을 실시간으로 text 상태에 반영하는 예제입니다."
+          />
         </div>
-        <h4>3. 배열/리스트 상태</h4>
+        <h3>3. 할 일 목록</h3>
         <div style={stateExampleBlockStyle}>
-          <ExampleTab example={<TodoListDemo />} code={`import { useState } from 'react';
+          <ExampleTab
+            example={<TodoListDemo />}
+            code={`import { useState } from 'react';
 
 function TodoList() {
   const [todos, setTodos] = useState(['공부하기', '운동하기']);
   const [input, setInput] = useState('');
   return (
     <div>
-      <ul>
-        {todos.map((todo, i) => <li key={i}>{todo}</li>)}
-      </ul>
-      <input value={input} onChange={e => setInput(e.target.value)} placeholder="새 할 일" />
-      <button onClick={() => {
-        if (input.trim()) {
-          setTodos([...todos, input]);
-          setInput('');
-        }
-      }}>추가</button>
+      <ul>{todos.map((todo, i) => <li key={i}>{todo}</li>)}</ul>
+      <input value={input} onChange={e => setInput(e.target.value)} />
+      <button onClick={() => setTodos([...todos, input])}>추가</button>
     </div>
   );
-}`} showCaret={false} desc={"useState로 배열(리스트) 상태를 관리하고, 새로운 할 일을 추가하는 간단한 투두리스트 예제입니다."} />
+}`}
+            desc="배열 상태를 관리하여 할 일 목록을 동적으로 추가하는 예제입니다."
+          />
         </div>
-        <h4>4. 객체 상태</h4>
+        <h3>4. 프로필 정보 (객체 상태)</h3>
         <div style={stateExampleBlockStyle}>
-          <ExampleTab example={<ProfileDemo />} code={`import { useState } from 'react';
+          <ExampleTab
+            example={<ProfileDemo />}
+            code={`import { useState } from 'react';
 
 function Profile() {
   const [user, setUser] = useState({ name: '', age: 0 });
@@ -1922,11 +1045,15 @@ function Profile() {
       <input type="number" value={user.age} onChange={e => setUser({ ...user, age: Number(e.target.value) })} />
     </div>
   );
-}`} showCaret={false} desc={"useState로 객체 형태의 상태(user)를 관리하고, 각각의 필드를 개별적으로 업데이트하는 예제입니다."} />
+}`}
+            desc="객체 상태를 관리하여 여러 입력 필드를 한 번에 처리하는 예제입니다."
+          />
         </div>
-        <h4>5. 여러 state 동시 사용</h4>
+        <h3>5. 다중 상태 관리</h3>
         <div style={stateExampleBlockStyle}>
-          <ExampleTab example={<MultiStateDemo />} code={`import { useState } from 'react';
+          <ExampleTab
+            example={<MultiStateDemo />}
+            code={`import { useState } from 'react';
 
 function MultiState() {
   const [count, setCount] = useState(0);
@@ -1938,25 +1065,11 @@ function MultiState() {
       <p>{count}, {text}</p>
     </div>
   );
-}`} showCaret={false} desc={"useState를 여러 번 사용해 서로 다른 상태(count, text)를 동시에 관리하는 예제입니다."} />
+}`}
+            desc="하나의 컴포넌트에서 여러 개의 독립적인 상태를 관리하는 예제입니다."
+          />
         </div>
-        <h4>6. 토글 스위치</h4>
-        <div style={stateExampleBlockStyle}>
-          <ExampleTab example={<Toggle label="다크 모드" initial={false} />} code={`import { useState } from 'react';
-
-function Toggle({ label, initial }) {
-  const [on, setOn] = useState(initial);
-  return (
-    <label style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#232323', color: '#eaeaea', borderRadius: 8, padding: '0.7em 1.2em', border: '1px solid #444', maxWidth: 320 }}>
-      <input type="checkbox" checked={on} onChange={() => setOn(!on)} />
-      <span>{label}: {on ? 'ON' : 'OFF'}</span>
-    </label>
-  );
-}
-
-<Toggle label="다크 모드" initial={false} />`} showCaret={false} desc={"useState로 boolean 상태를 관리하며, 체크박스 토글에 따라 ON/OFF가 바뀌는 스위치 예제입니다."} />
-        </div>
-        <h4>7. 동적 입력 폼</h4>
+        <h3>6. 동적 폼 필드 추가/삭제</h3>
         <div style={stateExampleBlockStyle}>
           <ExampleTab
             example={<DynamicFormDemo />}
@@ -1970,32 +1083,31 @@ function DynamicFormDemo() {
   };
 
   const handleAdd = () => setFields(fields => [...fields, { value: '' }]);
-  const handleRemove = (i) => setFields(fields => fields.length > 1 ? fields.filter((_, idx) => idx !== i) : fields);
+  const handleRemove = (i) => {
+    setFields(fields => fields.length > 1 ? fields.filter((_, idx) => idx !== i) : fields);
+  };
 
   return (
     <div>
       {fields.map((field, i) => (
-        <div key={i} style={{ display: 'flex', alignItems: 'center', marginBottom: 8 }}>
+        <div key={i}>
           <input
             value={field.value}
             onChange={e => handleChange(i, e.target.value)}
-            style={{ marginRight: 8, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }}
-            placeholder={'입력 ' + (i + 1)}
           />
-          <button onClick={() => handleRemove(i)} style={{ marginRight: 4, borderRadius: 4, border: 'none', background: '#e74c3c', color: '#fff', padding: '0.3em 0.7em', cursor: 'pointer' }}>-</button>
+          <button onClick={() => handleRemove(i)}>-</button>
         </div>
       ))}
-      <button onClick={handleAdd} style={{ borderRadius: 4, border: 'none', background: '#27c93f', color: '#fff', padding: '0.4em 1em', cursor: 'pointer' }}>필드 추가</button>
-      <pre style={{ background: '#232323', color: '#b5e853', borderRadius: 6, padding: 8, marginTop: 12 }}>{JSON.stringify(fields, null, 2)}</pre>
+      <button onClick={handleAdd}>필드 추가</button>
+      <pre>{JSON.stringify(fields, null, 2)}</pre>
     </div>
   );
-}
-`}
+}`}
             showCaret={false}
-            desc={"useState로 배열 상태를 관리하며, 입력 필드를 동적으로 추가/삭제하는 실무 스타일의 폼 예제입니다."}
+            desc="useState로 배열 상태를 관리하며, 입력 필드를 동적으로 추가/삭제하는 실무 스타일의 폼 예제입니다."
           />
         </div>
-        <h4>8. 숫자 입력값 합계 자동 계산</h4>
+        <h3>7. 숫자 입력값 합계 자동 계산</h3>
         <div style={stateExampleBlockStyle}>
           <ExampleTab
             example={<SumInputsDemo />}
@@ -2028,7 +1140,7 @@ function SumInputsDemo() {
             desc={"여러 숫자 입력값을 useState 배열로 관리하고, 합계를 자동으로 계산하는 예제입니다."}
           />
         </div>
-        <h4>9. 다중 체크박스 선택 관리</h4>
+        <h3>8. 다중 체크박스 선택 관리</h3>
         <div style={stateExampleBlockStyle}>
           <ExampleTab
             example={<MultiCheckboxDemo />}
@@ -2267,7 +1379,8 @@ function MemoExpensiveCalcDemo() {
 function MemoFilterSortDemo() {
   const [query, setQuery] = useState('');
   const [sort, setSort] = useState(false);
-  const items = useMemo(() => Array.from({ length: 1000 }, (_, i) => \`Item \${i + 1}\`), []);\n  const filtered = useMemo(() => {\n    let result = items.filter(item => item.toLowerCase().includes(query.toLowerCase()));\n    if (sort) result = [...result].sort();\n    return result;\n  }, [items, query, sort]);\n  return (\n    <div>\n      <input value={query} onChange={e => setQuery(e.target.value)} placeholder=\"검색\" style={{ marginRight: 8, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />\n      <label style={{ marginRight: 8 }}>\n        <input type=\"checkbox\" checked={sort} onChange={e => setSort(e.target.checked)} /> 정렬\n      </label>\n      <div style={{ maxHeight: 120, overflowY: 'auto', background: '#232323', borderRadius: 8, marginTop: 8, padding: 8 }}>\n        {filtered.slice(0, 20).map(item => <div key={item}>{item}</div>)}\n        {filtered.length > 20 && <div style={{ color: '#aaa' }}>...and {filtered.length - 20} more</div>}\n      </div>\n    </div>\n  );\n}`} showCaret={false} desc={"useMemo로 대량 리스트의 필터링/정렬 결과를 메모이제이션하여, 불필요한 연산을 방지하는 예제입니다."} />
+  const items = useMemo(() => Array.from({ length: 1000 }, (_, i) => \`Item \${i + 1}\`), []);\n  const filtered = useMemo(() => {\n    let result = items.filter(item => item.toLowerCase().includes(query.toLowerCase()));\n    if (sort) result = [...result].sort();
+    return result;\n  }, [items, query, sort]);\n  return (\n    <div>\n      <input value={query} onChange={e => setQuery(e.target.value)} placeholder=\"검색\" style={{ marginRight: 8, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />\n      <label style={{ marginRight: 8 }}>\n        <input type=\"checkbox\" checked={sort} onChange={e => setSort(e.target.checked)} /> 정렬\n      </label>\n      <div style={{ maxHeight: 120, overflowY: 'auto', background: '#232323', borderRadius: 8, marginTop: 8, padding: 8 }}>\n        {filtered.slice(0, 20).map(item => <div key={item}>{item}</div>)}\n        {filtered.length > 20 && <div style={{ color: '#aaa' }}>...and {filtered.length - 20} more</div>}\n      </div>\n    </div>\n  );\n}`} showCaret={false} desc={"useMemo로 대량 리스트의 필터링/정렬 결과를 메모이제이션하여, 불필요한 연산을 방지하는 예제입니다."} />
         </div>
         <h4>3. 의존성에 따른 값 메모이제이션</h4>
         <div style={stateExampleBlockStyle}>
@@ -2936,7 +2049,7 @@ function UseContextDemo() {
         <h4 style={{ marginTop: 32 }}>Pagination</h4>
         <div style={stateExampleBlockStyle}>
           <ExampleTab
-            example={<MuiPagination count={10} page={1} />}
+            example={<Pagination defaultCurrent={10} total={1} />}
             code={`import Pagination from '@mui/material/Pagination';\n\nfunction Demo() {\n  return <Pagination count={10} page={1} />;\n}`}
             desc="Pagination"
           />
@@ -3109,6 +2222,26 @@ function UseContextDemo() {
     prev: 'hooks',
     next: 'fetchapi',
     content: <div>Custom Hooks 예제 준비 중...</div>
+  },
+  state: {
+    id: 'state',
+    title: 'State',
+    description: 'React의 상태 관리 방법을 배웁니다.',
+    category: 'hooks',
+    icon: '💡',
+    prev: 'useState',
+    next: 'useEffect',
+    content: <div>State에 대한 설명입니다. useState, useEffect 등이 있습니다.</div>
+  },
+  hooks: {
+    id: 'hooks',
+    title: 'Hooks',
+    description: 'React Hooks에 대한 전반적인 소개',
+    category: 'hooks',
+    icon: '🪝',
+    prev: 'state',
+    next: 'customhooks',
+    content: <div>Hooks에 대한 설명입니다. useState, useEffect 등이 있습니다.</div>
   },
 };
   
@@ -3414,7 +2547,7 @@ function CallbackNoMemoDemo() {
 // ... existing code ...
 
 // StateEffectDemo 컴포넌트 추가
-function StateEffectDemo() {
+/* function StateEffectDemo() {
   const [count, setCount] = React.useState(0);
   React.useEffect(() => {
     console.log('count 변경:', count);
@@ -3425,7 +2558,7 @@ function StateEffectDemo() {
       <span style={{ color: '#eaeaea' }}>{count}</span>
     </div>
   );
-}
+} */
 
 function DynamicFormDemo() {
   const [fields, setFields] = React.useState([{ value: '' }]);
