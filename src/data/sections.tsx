@@ -2125,26 +2125,6 @@ function UseContextDemo() {
     next: 'fetchapi',
     content: <div>Custom Hooks 예제 준비 중...</div>
   },
-  state: {
-    id: 'state',
-    title: 'State',
-    description: 'React의 상태 관리 방법을 배웁니다.',
-    category: 'hooks',
-    icon: '💡',
-    prev: 'useState',
-    next: 'useEffect',
-    content: <div>State에 대한 설명입니다. useState, useEffect 등이 있습니다.</div>
-  },
-  hooks: {
-    id: 'hooks',
-    title: 'Hooks',
-    description: 'React Hooks에 대한 전반적인 소개',
-    category: 'hooks',
-    icon: '🪝',
-    prev: 'state',
-    next: 'customhooks',
-    content: <div>Hooks에 대한 설명입니다. useState, useEffect 등이 있습니다.</div>
-  },
 };
   
 
