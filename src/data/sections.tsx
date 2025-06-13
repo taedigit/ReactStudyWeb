@@ -1529,7 +1529,7 @@ function UseContextDemo() {
     description: 'Context API로 전역 상태를 관리하는 방법을 배웁니다.',
     category: 'advanced',
     icon: '🌐',
-    prev: 'hooks',
+    prev: null,
     next: 'routing',
     content: <div>Context API 설명</div>,
   },
@@ -1565,35 +1565,13 @@ function UseContextDemo() {
   },
 
   
-  opensource: {
-    id: 'opensource',
-    title: '오픈소스 라이브러리',
-    description: 'React에서 자주 사용하는 오픈소스 라이브러리 소개',
-    category: 'opensource',
-    icon: '📦',
-    prev: 'practicalExamples',
-    next: 'antdesign',
-    content: (
-      <div>
-        React에서 많이 쓰는 오픈소스 라이브러리(예: Ant Design, Material-UI, react-router, styled-components, recoil, react-query 등)를 소개하는 섹션입니다.
-        <ul style={{ marginTop: 16 }}>
-          <li>Ant Design</li>
-          <li>Material-UI (MUI)</li>
-          <li>react-router</li>
-          <li>styled-components</li>
-          <li>recoil</li>
-          <li>react-query</li>
-        </ul>
-      </div>
-    ),
-  },
   antdesign: {
     id: 'antdesign',
     title: 'Ant Design',
     description: 'Ant Design(antd) 컴포넌트 라이브러리 예제',
     category: 'opensource',
     icon: '🟦',
-    prev: 'opensource',
+    prev: null,
     next: 'mui',
     content: (
       <div>
@@ -2121,7 +2099,7 @@ function UseContextDemo() {
     description: '커스텀 훅 작성과 활용 방법을 알아봅니다.',
     category: 'advanced',
     icon: 'hook',
-    prev: 'hooks',
+    prev: null,
     next: 'fetchapi',
     content: <div>Custom Hooks 예제 준비 중...</div>
   },
