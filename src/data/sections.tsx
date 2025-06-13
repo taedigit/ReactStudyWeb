@@ -995,7 +995,7 @@ function Counter() {
     </div>
   );
 }`}
-            desc="가장 기본적인 useState 예제입니다. 버튼 클릭 시 count 상태가 1씩 증가합니다."
+            desc={`이 예제는 React의 useState 훅을 사용해 컴포넌트 내부에서 상태(state)를 관리하는 가장 기본적인 방법을 보여줍니다.\n\n- useState(0)는 count라는 상태 변수를 0으로 초기화합니다.\n- setCount 함수로 count 값을 변경할 수 있습니다.\n- 버튼을 클릭할 때마다 setCount(count + 1)이 실행되어 count가 1씩 증가합니다.\n- 상태가 변경되면 컴포넌트가 자동으로 다시 렌더링되어 최신 값이 화면에 표시됩니다.\n\n이처럼 useState는 React 함수형 컴포넌트에서 동적인 값을 관리할 때 필수적으로 사용되는 훅입니다.`}
           />
         </div>
         <h3>2. 입력 필드</h3>
@@ -1008,7 +1008,7 @@ function InputExample() {
   const [text, setText] = useState('');
   return <input value={text} onChange={e => setText(e.target.value)} />;
 }`}
-            desc="사용자 입력을 실시간으로 text 상태에 반영하는 예제입니다."
+            desc={`이 예제는 입력 필드의 값을 useState로 관리하는 방법을 보여줍니다.\n\n- text라는 상태 변수를 useState('')로 선언해 빈 문자열로 초기화합니다.\n- input의 value를 text로 바인딩하고, onChange에서 setText로 값을 갱신합니다.\n- 사용자가 입력할 때마다 상태가 즉시 반영되어, 입력값이 실시간으로 관리됩니다.\n\n이처럼 useState를 활용하면 입력값, 폼 등 다양한 UI 상태를 쉽게 관리할 수 있습니다.`}
           />
         </div>
         <h3>3. 할 일 목록</h3>
@@ -1066,7 +1066,7 @@ function MultiState() {
     </div>
   );
 }`}
-            desc="하나의 컴포넌트에서 여러 개의 독립적인 상태를 관리하는 예제입니다."
+            desc={`이 예제는 하나의 컴포넌트에서 여러 개의 독립적인 상태 변수를 useState로 관리하는 방법을 보여줍니다.\n\n- count와 text라는 두 개의 상태를 각각 useState로 선언합니다.\n- 각 상태는 서로 독립적으로 관리되며, 별도의 set 함수로 값을 변경할 수 있습니다.\n- 여러 상태를 조합해 복잡한 UI도 쉽게 구현할 수 있습니다.\n\n이처럼 useState는 원하는 만큼 여러 번 사용할 수 있습니다.`}
           />
         </div>
         <h3>6. 동적 폼 필드 추가/삭제</h3>
@@ -1104,7 +1104,7 @@ function DynamicFormDemo() {
   );
 }`}
             showCaret={false}
-            desc="useState로 배열 상태를 관리하며, 입력 필드를 동적으로 추가/삭제하는 실무 스타일의 폼 예제입니다."
+            desc={`이 예제는 useState로 배열 상태를 관리하며, 입력 필드를 동적으로 추가/삭제하는 실무 스타일의 폼 구현 방법을 보여줍니다.\n\n- fields라는 배열 상태를 useState로 선언합니다.\n- handleAdd, handleRemove, handleChange 등으로 배열을 동적으로 조작합니다.\n- 입력 필드를 추가/삭제할 때마다 상태가 변경되고, 화면이 자동으로 갱신됩니다.\n\n이처럼 useState는 배열, 객체 등 복잡한 데이터 구조도 쉽게 관리할 수 있습니다.`}
           />
         </div>
         <h3>7. 숫자 입력값 합계 자동 계산</h3>
@@ -1137,7 +1137,7 @@ function SumInputsDemo() {
 }
 `}
             showCaret={false}
-            desc={"여러 숫자 입력값을 useState 배열로 관리하고, 합계를 자동으로 계산하는 예제입니다."}
+            desc={`이 예제는 여러 숫자 입력값을 useState 배열로 관리하고, 합계를 자동으로 계산하는 방법을 보여줍니다.\n\n- values라는 배열 상태를 useState로 선언합니다.\n- 각 입력 필드의 값이 바뀔 때마다 배열의 해당 인덱스만 업데이트합니다.\n- 배열의 reduce 메서드로 합계를 계산해 실시간으로 표시합니다.\n\n이처럼 useState는 숫자, 배열 등 다양한 형태의 상태를 효율적으로 관리할 수 있습니다.`}
           />
         </div>
         <h3>8. 다중 체크박스 선택 관리</h3>
@@ -1174,7 +1174,7 @@ function MultiCheckboxDemo() {
 }
 `}
             showCaret={false}
-            desc={"여러 체크박스의 선택 상태를 useState 배열로 관리하는 예제입니다."}
+            desc={`이 예제는 여러 체크박스의 선택 상태를 useState 배열로 관리하는 방법을 보여줍니다.\n\n- checked라는 배열 상태를 useState로 선언합니다.\n- handleToggle 함수로 체크박스의 선택/해제를 배열에 반영합니다.\n- 여러 개의 값을 배열로 관리할 때도 useState를 활용할 수 있습니다.\n\n이처럼 useState는 다양한 UI 요소의 상태를 유연하게 관리할 수 있게 해줍니다.`}
           />
         </div>
       </div>
