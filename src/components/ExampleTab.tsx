@@ -34,7 +34,7 @@ export function ExampleTab({ example, code, showCaret = false, desc }: ExampleTa
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            height: '28px',
+            height: '35px',
             background: '#232323',
             padding: '0 12px',
             borderBottom: '1px solid #222',

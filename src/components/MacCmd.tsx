@@ -14,7 +14,7 @@ const macCmdWrapper = {
 const macCmdTopBar = {
   display: 'flex',
   alignItems: 'center',
-  height: '40px',
+  height: '35px',
   background: '#232323',
   padding: '0 12px',
   borderBottom: '1px solid #222',
