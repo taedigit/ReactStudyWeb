@@ -1432,7 +1432,7 @@ Tip: 의존성 배열을 정확히 지정하지 않으면, 오래된 값이 사�
     next: 'useContext',
     content: (
       <div>
-        <h4>1. 카운터 리듀서</h4>
+        <h4>1. 카운터 Reducer</h4>
         <div style={stateExampleBlockStyle}>
           <ExampleTab
             example={<UseReducerDemo />}
@@ -1464,7 +1464,14 @@ function UseReducerDemo() {
   );
 }`}
             showCaret={false}
-            desc={"useReducer로 카운트 상태를 관리하는 예제입니다. dispatch로 'inc'/'dec' 액션을 보내 상태를 변경합니다."}
+            desc={`이 예제는 useReducer를 사용해 상태(state)를 체계적으로 관리하는 방법을 보여줍니다.
+
+              - useReducer는 상태와 상태를 변경하는 로직(reducer 함수)을 분리해 관리할 수 있게 해줍니다.
+              - reducer 함수는 현재 상태(state)와 액션(action)을 받아, 새로운 상태를 반환합니다.
+              - dispatch 함수로 액션 객체({ type: 'inc' } 또는 { type: 'dec' })를 전달하면, reducer가 실행되어 상태가 변경됩니다.
+              - 복잡한 상태 로직(여러 값, 다양한 액션, 조건 분기 등)이 필요한 경우 useState보다 더 명확하고 유지보수하기 쉽습니다.
+              
+              실전 팁: 상태 변경이 복잡하거나, 여러 컴포넌트에서 동일한 로직을 써야 할 때 useReducer를 사용하면 코드가 더 깔끔해집니다. 액션 타입을 상수로 관리하면 오타로 인한 버그도 줄일 수 있습니다.`}
           />
         </div>
       </div>
