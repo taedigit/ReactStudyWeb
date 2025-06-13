@@ -1227,82 +1227,19 @@ function MultiCheckboxDemo() {
         
         <h4>1. DOM 요소 참조</h4>
         <div style={stateExampleBlockStyle}>
-          <ExampleTab example={<RefFocusDemo />} code={`import { useRef } from 'react';
-
-function RefFocusDemo() {
-  const inputRef = useRef(null);
-  return (
-    <div>
-      <input ref={inputRef} />
-      <button onClick={() => inputRef.current && inputRef.current.focus()}>포커스</button>
-    </div>
-  );
-}`} showCaret={false} desc={"useRef로 input DOM 요소를 참조하고, 버튼 클릭 시 해당 input에 포커스를 주는 예제입니다."} />
+          <ExampleTab example={<RefFocusDemo />} code={`import { useRef } from 'react';\n\nfunction RefFocusDemo() {\n  const inputRef = useRef(null);\n  return (\n    <div>\n      <input ref={inputRef} />\n      <button onClick={() => inputRef.current && inputRef.current.focus()}>포커스</button>\n    </div>\n  );\n}`} showCaret={false} desc={"이 예제는 useRef로 DOM 요소를 직접 참조하는 가장 기본적인 패턴을 보여줍니다.\n\n- useRef는 .current 프로퍼티를 통해 실제 DOM 요소에 접근할 수 있습니다.\n- input 태그의 ref 속성에 inputRef를 연결하면, inputRef.current가 해당 input DOM을 가리키게 됩니다.\n- 버튼 클릭 시 inputRef.current.focus()로 input에 포커스를 줄 수 있습니다.\n\n이 방식은 직접 DOM 조작이 필요할 때(포커스, 스크롤 등) 매우 유용합니다. 단, React의 상태(state)와는 다르게 ref 변경은 렌더링을 일으키지 않습니다."} />
         </div>
         <h4>2. 이전 값 기억</h4>
         <div style={stateExampleBlockStyle}>
-          <ExampleTab example={<RefPrevValueDemo />} code={`import { useRef, useState, useEffect } from 'react';
-
-function RefPrevValueDemo() {
-  const [value, setValue] = useState('');
-  const prevValue = useRef('');
-  useEffect(() => {
-    prevValue.current = value;
-  }, [value]);
-  return (
-    <div>
-      <input value={value} onChange={e => setValue(e.target.value)} />
-      <div>이전 값: {prevValue.current}</div>
-    </div>
-  );
-}`} showCaret={false} desc={"useRef로 렌더링과 무관하게 이전 입력값을 기억하는 예제입니다. useEffect로 값이 바뀔 때마다 ref를 갱신합니다."} />
+          <ExampleTab example={<RefPrevValueDemo />} code={`import { useRef, useState, useEffect } from 'react';\n\nfunction RefPrevValueDemo() {\n  const [value, setValue] = useState('');\n  const prevValue = useRef('');\n  useEffect(() => {\n    prevValue.current = value;\n  }, [value]);\n  return (\n    <div>\n      <input value={value} onChange={e => setValue(e.target.value)} />\n      <div>이전 값: {prevValue.current}</div>\n    </div>\n  );\n}`} showCaret={false} desc={"이 예제는 useRef를 사용해 렌더링과 무관하게 이전 값을 저장하는 방법을 보여줍니다.\n\n- useRef는 값이 바뀌어도 컴포넌트를 다시 렌더링하지 않습니다.\n- useEffect에서 value가 바뀔 때마다 prevValue.current에 현재 값을 저장합니다.\n- 화면에는 항상 이전 입력값이 표시됩니다.\n\n이 패턴은 이전 값, 이전 props 등 렌더링과 무관하게 값을 기억해야 할 때 유용합니다. 단, ref 값이 바뀌어도 화면이 자동으로 갱신되지 않으니 주의하세요."} />
         </div>
         <h4>3. setInterval 제어</h4>
         <div style={stateExampleBlockStyle}>
-          <ExampleTab example={<RefIntervalDemo />} code={`import { useRef, useState, useEffect } from 'react';
-
-function RefIntervalDemo() {
-  const [count, setCount] = useState(0);
-  const intervalRef = useRef<number | null>(null);
-  const start = () => {
-    if (!intervalRef.current) {
-      intervalRef.current = window.setInterval(() => setCount(c => c + 1), 1000);
-    }
-  };
-  const stop = () => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
-  };
-  useEffect(() => stop, []);
-  return (
-    <div>
-      <div>카운트: {count}</div>
-      <button onClick={start}>시작</button>
-      <button onClick={stop}>정지</button>
-    </div>
-  );
-}`} showCaret={false} desc={"useRef로 setInterval의 id를 저장하고, 시작/정지 버튼으로 타이머를 제어하는 예제입니다. 언마운트 시 타이머를 정리합니다."} />
+          <ExampleTab example={<RefIntervalDemo />} code={`import { useRef, useState, useEffect } from 'react';\n\nfunction RefIntervalDemo() {\n  const [count, setCount] = useState(0);\n  const intervalRef = useRef<number | null>(null);\n  const start = () => {\n    if (!intervalRef.current) {\n      intervalRef.current = window.setInterval(() => setCount(c => c + 1), 1000);\n    }\n  };\n  const stop = () => {\n    if (intervalRef.current) {\n      clearInterval(intervalRef.current);\n      intervalRef.current = null;\n    }\n  };\n  useEffect(() => stop, []);\n  return (\n    <div>\n      <div>카운트: {count}</div>\n      <button onClick={start}>시작</button>\n      <button onClick={stop}>정지</button>\n    </div>\n  );\n}`} showCaret={false} desc={"이 예제는 useRef로 setInterval의 id를 저장하고, 타이머를 안전하게 제어하는 방법을 보여줍니다.\n\n- intervalRef는 setInterval의 반환값(id)을 저장합니다.\n- start 함수는 타이머가 없을 때만 새로 시작합니다.\n- stop 함수는 타이머가 있을 때만 정지하고, cleanup도 담당합니다.\n- useEffect의 cleanup에서 stop을 호출해 언마운트 시 타이머가 남지 않도록 합니다.\n\n이 패턴은 setInterval, setTimeout 등 외부 리소스의 id를 안전하게 관리할 때 매우 유용합니다. ref를 쓰면 id가 컴포넌트가 리렌더링되어도 유지됩니다."} />
         </div>
         <h4>4. DOM 스타일 직접 변경</h4>
         <div style={stateExampleBlockStyle}>
-          <ExampleTab example={<RefDomStyleDemo />} code={`import { useRef } from 'react';
-
-function RefDomStyleDemo() {
-  const boxRef = useRef(null);
-  const changeColor = () => {
-    if (boxRef.current) {
-      boxRef.current.style.background = '#27c93f';
-    }
-  };
-  return (
-    <div>
-      <div ref={boxRef} style={{ width: 120, height: 60, background: '#232323', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 8, marginBottom: 8 }}>Box</div>
-      <button onClick={changeColor}>배경색 변경</button>
-    </div>
-  );
-}`} showCaret={false} desc={"useRef로 DOM 요소에 직접 접근해 스타일(background)을 변경하는 예제입니다."} />
+          <ExampleTab example={<RefDomStyleDemo />} code={`import { useRef } from 'react';\n\nfunction RefDomStyleDemo() {\n  const boxRef = useRef(null);\n  const changeColor = () => {\n    if (boxRef.current) {\n      boxRef.current.style.background = '#27c93f';\n    }\n  };\n  return (\n    <div>\n      <div ref={boxRef} style={{ width: 120, height: 60, background: '#232323', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 8, marginBottom: 8 }}>Box</div>\n      <button onClick={changeColor}>배경색 변경</button>\n    </div>\n  );\n}`} showCaret={false} desc={"이 예제는 useRef로 DOM 요소에 직접 접근해 스타일을 변경하는 방법을 보여줍니다.\n\n- boxRef를 div의 ref에 연결하면, boxRef.current로 해당 DOM에 접근할 수 있습니다.\n- 버튼 클릭 시 boxRef.current.style.background로 배경색을 바꿉니다.\n\n이런 직접 DOM 조작은 React의 선언적 방식과 다르므로 꼭 필요한 경우에만 사용하세요. 대부분의 UI 변경은 상태(state)로 처리하는 것이 더 안전하고 예측 가능합니다."} />
         </div>
       </div>
     ),
