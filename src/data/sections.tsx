@@ -911,7 +911,7 @@ function UserList() {
     </div>
   );
 }`}
-            desc="부모 컴포넌트에서 이름, 나이, 직업을 props로 전달하는 예제입니다."
+            desc={`이 예제는 React에서 "props"(속성)를 사용해 부모 컴포넌트가 자식 컴포넌트에 데이터를 전달하는 방법을 보여줍니다.\n\n- ProfileCard 컴포넌트는 name, age, job이라는 props를 받아 화면에 표시합니다.\n- props는 함수의 인자처럼, 컴포넌트에 원하는 값을 외부에서 주입할 수 있게 해줍니다.\n- 자식 컴포넌트는 props를 읽기만 할 수 있고, 직접 변경할 수 없습니다.\n- props를 활용하면 컴포넌트를 재사용하고, 다양한 데이터를 유연하게 전달할 수 있습니다.\n\n이처럼 props는 React 컴포넌트 간 데이터 흐름의 핵심 도구입니다.`}
           />
         </div>
         <h3>2. 커스텀 버튼 컴포넌트</h3>
@@ -921,7 +921,7 @@ function UserList() {
             code={`function CustomButton({ color, label }) {
   return <button style={{ background: color }}>{label}</button>;
 }`}
-            desc="색상과 라벨을 props로 받아 다양한 버튼을 만드는 예제입니다."
+            desc={`이 예제는 props를 활용해 다양한 스타일의 버튼을 만드는 방법을 보여줍니다.\n\n- CustomButton 컴포넌트는 color와 label이라는 props를 받아, 각각 버튼의 배경색과 표시 텍스트를 결정합니다.\n- 부모 컴포넌트가 각 버튼에 원하는 색상과 라벨을 전달할 수 있습니다.\n- props를 사용하면 하나의 컴포넌트로 여러 종류의 버튼을 쉽게 만들 수 있습니다.\n\n이처럼 props는 컴포넌트의 재사용성과 확장성을 높여줍니다.`}
           />
         </div>
         <h3>3. 리스트 데이터 전달</h3>
@@ -935,7 +935,7 @@ function UserList() {
     </ul>
   );
 }`}
-            desc="배열 데이터를 props로 전달하여 리스트를 렌더링하는 예제입니다."
+            desc={`이 예제는 배열 형태의 데이터를 props로 전달하여 리스트를 렌더링하는 방법을 보여줍니다.\n\n- ItemList 컴포넌트는 items라는 배열 props를 받아, 각 항목을 <li>로 출력합니다.\n- 부모 컴포넌트가 원하는 데이터(과일 목록 등)를 자유롭게 전달할 수 있습니다.\n- props로 배열을 전달하면, 자식 컴포넌트가 반복적으로 데이터를 처리할 수 있습니다.\n\n이처럼 props는 다양한 형태의 데이터를 컴포넌트에 전달할 수 있게 해줍니다.`}
           />
         </div>
         <h3>4. 상태와 Props 연동</h3>
@@ -953,7 +953,7 @@ function UserList() {
     </div>
   );
 }`}
-            desc="부모의 상태(state)를 자식 컴포넌트의 props로 전달하여 모달을 제어하는 예제입니다."
+            desc={`이 예제는 부모 컴포넌트의 상태(state)를 자식 컴포넌트의 props로 전달하는 방법을 보여줍니다.\n\n- ModalDemo 컴포넌트는 open, onClose, message 등의 값을 자식 Modal 컴포넌트에 props로 전달합니다.\n- 부모의 상태가 바뀌면, 자식 컴포넌트도 그에 맞게 동작(모달 열림/닫힘, 메시지 변경 등)합니다.\n- props를 통해 부모-자식 간 데이터 흐름과 제어가 가능합니다.\n\n이처럼 props는 상태 관리와 컴포넌트 간 상호작용의 핵심 역할을 합니다.`}
           />
         </div>
         <h3>5. 토글 스위치 컴포넌트</h3>
@@ -964,7 +964,7 @@ function UserList() {
   const [on, setOn] = React.useState(initial);
   return <label><input type="checkbox" checked={on} onChange={() => setOn(!on)} />{label}</label>;
 }`}
-            desc="초기 상태와 라벨을 props로 받아 재사용 가능한 토글 스위치를 만드는 예제입니다."
+            desc={`이 예제는 props로 초기값과 라벨을 받아 재사용 가능한 토글 스위치를 만드는 방법을 보여줍니다.\n\n- Toggle 컴포넌트는 label(라벨)과 initial(초기 상태) props를 받아, 체크박스와 텍스트를 렌더링합니다.\n- 부모 컴포넌트가 원하는 초기값과 라벨을 자유롭게 전달할 수 있습니다.\n- props를 활용하면 다양한 상황에 맞는 토글 스위치를 쉽게 만들 수 있습니다.\n\n이처럼 props는 컴포넌트의 동작과 표시를 유연하게 제어할 수 있게 해줍니다.`}
           />
         </div>
       </div>
