@@ -2,7 +2,7 @@ import React from 'react';
 import type { Section, SectionId } from '../types/section';
 import { MacCmd } from '../components/MacCmd';
 import { ExampleTab } from '../components/ExampleTab';
-import { Button, Input, Select as AntdSelect, Checkbox, Switch, DatePicker, Modal as AntdModal, Table, notification, message, Tabs, Dropdown, Menu, Pagination, Progress, Avatar, Badge, Tag, Collapse, Tooltip, Popconfirm } from 'antd';
+import { Button, Input, Select as AntdSelect, Checkbox, Switch, DatePicker, Modal as AntdModal, Table, notification, message, Tabs, Dropdown, Menu, Pagination, Progress, Avatar, Badge, Tag, Popconfirm } from 'antd';
 import { CheckCircleOutlined } from '@ant-design/icons';
 import MuiButton from '@mui/material/Button';
 import MuiButtonGroup from '@mui/material/ButtonGroup';
@@ -1477,7 +1477,7 @@ function UseReducerDemo() {
         <h4>2. Undo/Redo가 가능한 카운터</h4>
         <div style={stateExampleBlockStyle}>
           <ExampleTab
-            example={<UseReducerUndoRedoDemo />}
+            example={''}
             code={`import React, { useReducer } from 'react';
 
 function counterReducer(state, action) {
@@ -1537,7 +1537,7 @@ function UseReducerUndoRedoDemo() {
         <h4>3. 수량/합계가 있는 장바구니</h4>
         <div style={stateExampleBlockStyle}>
           <ExampleTab
-            example={<UseReducerCartDemo />}
+            example={''}
             code={`import React, { useReducer } from 'react';
 
 const products = [
@@ -2765,95 +2765,3 @@ function MuiConfirmDialogDemo() {
   );
 }
 
-function UseReducerUndoRedoDemo() {
-  function counterReducer(state, action) {
-    const { past, present, future } = state;
-    switch (action.type) {
-      case 'inc':
-        return {
-          past: [...past, present],
-          present: present + 1,
-          future: [],
-        };
-      case 'dec':
-        return {
-          past: [...past, present],
-          present: present - 1,
-          future: [],
-        };
-      case 'undo':
-        if (past.length === 0) return state;
-        return {
-          past: past.slice(0, -1),
-          present: past[past.length - 1],
-          future: [present, ...future],
-        };
-      case 'redo':
-        if (future.length === 0) return state;
-        return {
-          past: [...past, present],
-          present: future[0],
-          future: future.slice(1),
-        };
-      default:
-        return state;
-    }
-  }
-  const [state, dispatch] = React.useReducer(counterReducer, {
-    past: [],
-    present: 0,
-    future: [],
-  });
-  return (
-    <div>
-      <button onClick={() => dispatch({ type: 'undo' })} disabled={state.past.length === 0} style={{ marginRight: 8 }}>Undo</button>
-      <button onClick={() => dispatch({ type: 'redo' })} disabled={state.future.length === 0} style={{ marginRight: 8 }}>Redo</button>
-      <button onClick={() => dispatch({ type: 'dec' })} style={{ marginRight: 8 }}>-</button>
-      <span style={{ margin: '0 1em', color: '#eaeaea', fontWeight: 600 }}>{state.present}</span>
-      <button onClick={() => dispatch({ type: 'inc' })}>+</button>
-    </div>
-  );
-}
-
-function UseReducerCartDemo() {
-  const products = [
-    { id: 1, name: 'Apple', price: 1000 },
-    { id: 2, name: 'Banana', price: 500 },
-    { id: 3, name: 'Orange', price: 800 },
-  ];
-  function cartReducer(state, action) {
-    switch (action.type) {
-      case 'add':
-        return state.map(item =>
-          item.id === action.id ? { ...item, qty: item.qty + 1 } : item
-        );
-      case 'remove':
-        return state.map(item =>
-          item.id === action.id ? { ...item, qty: Math.max(0, item.qty - 1) } : item
-        );
-      case 'reset':
-        return state.map(item => ({ ...item, qty: 0 }));
-      default:
-        return state;
-    }
-  }
-  const [cart, dispatch] = React.useReducer(cartReducer, products.map(p => ({ ...p, qty: 0 })));
-  const total = cart.reduce((sum, item) => sum + item.qty * item.price, 0);
-  return (
-    <div>
-      <ul style={{ listStyle: 'none', padding: 0 }}>
-        {cart.map(item => (
-          <li key={item.id} style={{ marginBottom: 8, display: 'flex', alignItems: 'center' }}>
-            <span style={{ minWidth: 80 }}>{item.name}</span>
-            <button onClick={() => dispatch({ type: 'remove', id: item.id })} disabled={item.qty === 0} style={{ marginRight: 4 }}>-</button>
-            <span style={{ minWidth: 32, textAlign: 'center' }}>{item.qty}</span>
-            <button onClick={() => dispatch({ type: 'add', id: item.id })} style={{ marginLeft: 4 }}>+</button>
-            <span style={{ marginLeft: 16, color: '#b5e853' }}>{item.qty * item.price}원</span>
-          </li>
-        ))}
-      </ul>
-      <div style={{ marginTop: 12, fontWeight: 600, color: '#eaeaea' }}>총 합계: {total}원</div>
-      <button onClick={() => dispatch({ type: 'reset' })} style={{ marginTop: 8 }}>장바구니 비우기</button>
-    </div>
-  );
-}
