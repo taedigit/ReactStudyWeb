@@ -45,6 +45,8 @@ import UseReducerExample from '../sections/hooks/UseReducerExample';
 import { UseContextExample } from '../sections/hooks/UseContextExample';
 import { UseStateExample } from '../sections/hooks/UseStateExample';
 import { UseEffectExample } from '../sections/hooks/UseEffectExample';
+import { UseRefExample } from '../sections/hooks/UseRefExample';
+import { UseMemoExample } from '../sections/hooks/UseMemoExample';
 
 const nvmInstallScript = `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 # 터미널 재시작 또는 아래 명령 실행
@@ -812,156 +814,22 @@ function UserList() {
   useRef: {
     id: 'useRef',
     title: 'useRef',
-    description: 'DOM 요소나 값을 참조할 때 사용하는 Hook',
+    description: 'DOM 참조와 값 저장',
     category: 'hooks',
     icon: '📌',
     prev: 'useEffect',
     next: 'useMemo',
-    content: (
-      <div>
-        
-        <h4>1. DOM 요소 참조</h4>
-        <div style={stateExampleBlockStyle}>
-          <ExampleTab example={<RefFocusDemo />} code={`import { useRef } from 'react';\n\nfunction RefFocusDemo() {\n  const inputRef = useRef(null);\n  return (\n    <div>\n      <input ref={inputRef} />\n      <button onClick={() => inputRef.current && inputRef.current.focus()}>포커스</button>\n    </div>\n  );\n}`} showCaret={false} desc={"이 예제는 useRef로 DOM 요소를 직접 참조하는 가장 기본적인 패턴을 보여줍니다.\n\n- useRef는 .current 프로퍼티를 통해 실제 DOM 요소에 접근할 수 있습니다.\n- input 태그의 ref 속성에 inputRef를 연결하면, inputRef.current가 해당 input DOM을 가리키게 됩니다.\n- 버튼 클릭 시 inputRef.current.focus()로 input에 포커스를 줄 수 있습니다.\n\n이 방식은 직접 DOM 조작이 필요할 때(포커스, 스크롤 등) 매우 유용합니다. 단, React의 상태(state)와는 다르게 ref 변경은 렌더링을 일으키지 않습니다."} />
-        </div>
-        <h4>2. 이전 값 기억</h4>
-        <div style={stateExampleBlockStyle}>
-          <ExampleTab example={<RefPrevValueDemo />} code={`import { useRef, useState, useEffect } from 'react';\n\nfunction RefPrevValueDemo() {\n  const [value, setValue] = useState('');\n  const prevValue = useRef('');\n  useEffect(() => {\n    prevValue.current = value;\n  }, [value]);\n  return (\n    <div>\n      <input value={value} onChange={e => setValue(e.target.value)} />\n      <div>이전 값: {prevValue.current}</div>\n    </div>\n  );\n}`} showCaret={false} desc={"이 예제는 useRef를 사용해 렌더링과 무관하게 이전 값을 저장하는 방법을 보여줍니다.\n\n- useRef는 값이 바뀌어도 컴포넌트를 다시 렌더링하지 않습니다.\n- useEffect에서 value가 바뀔 때마다 prevValue.current에 현재 값을 저장합니다.\n- 화면에는 항상 이전 입력값이 표시됩니다.\n\n이 패턴은 이전 값, 이전 props 등 렌더링과 무관하게 값을 기억해야 할 때 유용합니다. 단, ref 값이 바뀌어도 화면이 자동으로 갱신되지 않으니 주의하세요."} />
-        </div>
-        <h4>3. setInterval 제어</h4>
-        <div style={stateExampleBlockStyle}>
-          <ExampleTab example={<RefIntervalDemo />} code={`import { useRef, useState, useEffect } from 'react';\n\nfunction RefIntervalDemo() {\n  const [count, setCount] = useState(0);\n  const intervalRef = useRef<number | null>(null);\n  const start = () => {\n    if (!intervalRef.current) {\n      intervalRef.current = window.setInterval(() => setCount(c => c + 1), 1000);\n    }\n  };\n  const stop = () => {\n    if (intervalRef.current) {\n      clearInterval(intervalRef.current);\n      intervalRef.current = null;\n    }\n  };\n  useEffect(() => stop, []);\n  return (\n    <div>\n      <div>카운트: {count}</div>\n      <button onClick={start}>시작</button>\n      <button onClick={stop}>정지</button>\n    </div>\n  );\n}`} showCaret={false} desc={"이 예제는 useRef로 setInterval의 id를 저장하고, 타이머를 안전하게 제어하는 방법을 보여줍니다.\n\n- intervalRef는 setInterval의 반환값(id)을 저장합니다.\n- start 함수는 타이머가 없을 때만 새로 시작합니다.\n- stop 함수는 타이머가 있을 때만 정지하고, cleanup도 담당합니다.\n- useEffect의 cleanup에서 stop을 호출해 언마운트 시 타이머가 남지 않도록 합니다.\n\n이 패턴은 setInterval, setTimeout 등 외부 리소스의 id를 안전하게 관리할 때 매우 유용합니다. ref를 쓰면 id가 컴포넌트가 리렌더링되어도 유지됩니다."} />
-        </div>
-        <h4>4. DOM 스타일 직접 변경</h4>
-        <div style={stateExampleBlockStyle}>
-          <ExampleTab example={<RefDomStyleDemo />} code={`import { useRef } from 'react';\n\nfunction RefDomStyleDemo() {\n  const boxRef = useRef(null);\n  const changeColor = () => {\n    if (boxRef.current) {\n      boxRef.current.style.background = '#27c93f';\n    }\n  };\n  return (\n    <div>\n      <div ref={boxRef} style={{ width: 120, height: 60, background: '#232323', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 8, marginBottom: 8 }}>Box</div>\n      <button onClick={changeColor}>배경색 변경</button>\n    </div>\n  );\n}`} showCaret={false} desc={"이 예제는 useRef로 DOM 요소에 직접 접근해 스타일을 변경하는 방법을 보여줍니다.\n\n- boxRef를 div의 ref에 연결하면, boxRef.current로 해당 DOM에 접근할 수 있습니다.\n- 버튼 클릭 시 boxRef.current.style.background로 배경색을 바꿉니다.\n\n이런 직접 DOM 조작은 React의 선언적 방식과 다르므로 꼭 필요한 경우에만 사용하세요. 대부분의 UI 변경은 상태(state)로 처리하는 것이 더 안전하고 예측 가능합니다."} />
-        </div>
-      </div>
-    ),
+    content: <UseRefExample />,
   },
   useMemo: {
     id: 'useMemo',
     title: 'useMemo',
-    description: '비싼 연산 결과를 메모이제이션할 때 사용하는 Hook',
+    description: '값을 메모이제이션하는 Hook',
     category: 'hooks',
     icon: '🧠',
     prev: 'useRef',
     next: 'useCallback',
-    content: (
-      <div>
-        
-        <h4>1. 비싼 연산 메모이제이션</h4>
-        <div style={stateExampleBlockStyle}>
-          <ExampleTab example={<MemoExpensiveCalcDemo />} code={`import { useState, useMemo } from 'react';
-
-function MemoExpensiveCalcDemo() {
-  const [num, setNum] = useState(1);
-  const [other, setOther] = useState('');
-  const fib = useMemo(() => {
-    function fibo(n: number): number {
-      if (n <= 1) return n;
-      return fibo(n - 1) + fibo(n - 2);
-    }
-    return fibo(num);
-  }, [num]);
-  return (
-    <div>
-      <label>
-        피보나치 n: 
-        <input type="number" value={num} min={1} max={35} onChange={e => setNum(Number(e.target.value))} style={{ margin: '0 8px', width: 60 }} />
-      </label>
-      <span>결과: {fib}</span>
-      <div style={{ marginTop: 12 }}>
-        <input value={other} onChange={e => setOther(e.target.value)} placeholder="다른 입력 (성능 영향 없음)" style={{ top: 8, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />
-      </div>
-    </div>
-  );
-}`} showCaret={false} desc={`이 예제는 useMemo로 대량 리스트의 필터링/정렬 결과를 메모이제이션하는 방법을 보여줍니다.
-
-  - items는 1000개의 아이템을 한 번만 생성합니다.
-  - filtered는 query(검색어)나 sort(정렬 여부)가 바뀔 때만 다시 계산됩니다.
-  - 불필요한 연산을 방지해 성능을 최적화할 수 있습니다.
-  
-  실무에서 대량 데이터 처리, 복잡한 계산이 필요한 리스트 UI에 매우 유용합니다.
-  
-  Tip: 의존성 배열을 정확히 지정해야 예상대로 동작합니다.`} />
-        </div>
-        <h4>2. 리스트 필터/정렬 메모이제이션</h4>
-        <div style={stateExampleBlockStyle}>
-          <ExampleTab example={<MemoFilterSortDemo />} code={`import { useState, useMemo } from 'react';
-
-function MemoFilterSortDemo() {
-  const [query, setQuery] = useState('');
-  const [sort, setSort] = useState(false);
-  const items = useMemo(() => Array.from({ length: 1000 }, (_, i) => \`Item \${i + 1}\`), []);\n  const filtered = useMemo(() => {\n    let result = items.filter(item => item.toLowerCase().includes(query.toLowerCase()));\n    if (sort) result = [...result].sort();
-    return result;\n  }, [items, query, sort]);\n  return (\n    <div>\n      <input value={query} onChange={e => setQuery(e.target.value)} placeholder=\"검색\" style={{ marginRight: 8, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />\n      <label style={{ marginRight: 8 }}>\n        <input type=\"checkbox\" checked={sort} onChange={e => setSort(e.target.checked)} /> 정렬\n      </label>\n      <div style={{ maxHeight: 120, overflowY: 'auto', background: '#232323', borderRadius: 8, marginTop: 8, padding: 8 }}>\n        {filtered.slice(0, 20).map(item => <div key={item}>{item}</div>)}\n        {filtered.length > 20 && <div style={{ color: '#aaa' }}>...and {filtered.length - 20} more</div>}\n      </div>\n    </div>\n  );\n}`} showCaret={false} desc={`이 예제는 useMemo로 대량 리스트의 필터링/정렬 결과를 메모이제이션하는 방법을 보여줍니다.
-
-      - items는 1000개의 아이템을 한 번만 생성합니다.
-      - filtered는 query(검색어)나 sort(정렬 여부)가 바뀔 때만 다시 계산됩니다.
-      - 불필요한 연산을 방지해 성능을 최적화할 수 있습니다.
-      
-      실무에서 대량 데이터 처리, 복잡한 계산이 필요한 리스트 UI에 매우 유용합니다.
-      
-      Tip: 의존성 배열을 정확히 지정해야 예상대로 동작합니다.`} />
-        </div>
-        <h4>3. 의존성에 따른 값 메모이제이션</h4>
-        <div style={stateExampleBlockStyle}>
-          <ExampleTab example={<MemoDependencyDemo />} code={`import { useState, useMemo } from 'react';
-
-function MemoDependencyDemo() {
-  const [a, setA] = useState(1);
-  const [b, setB] = useState(1);
-  const sum = useMemo(() => a + b, [a, b]);
-  return (
-    <div>
-      <input type="number" value={a} onChange={e => setA(Number(e.target.value))} style={{ marginRight: 8, width: 60 }} />
-      + 
-      <input type="number" value={b} onChange={e => setB(Number(e.target.value))} style={{ margin: '0 8px', width: 60 }} />
-      = <span>{sum}</span>
-    </div>
-  );
-}`} showCaret={false} desc={`이 예제는 useMemo의 의존성 배열을 활용해 값이 바뀔 때만 연산이 다시 실행되는 원리를 보여줍니다.
-
-  - sum은 a 또는 b가 바뀔 때만 다시 계산됩니다.
-  - 다른 상태가 바뀌어도 sum 계산은 다시 실행되지 않습니다.
-  
-  이런 패턴은 계산 결과가 복잡하거나, 불필요한 재계산을 막고 싶을 때 유용합니다.
-  
-  Tip: 의존성 배열에 필요한 값만 정확히 넣는 것이 중요합니다.`} />
-        </div>
-        <h4>4. 렌더 최적화 예제</h4>
-        <div style={stateExampleBlockStyle}>
-          <ExampleTab example={<MemoRenderOptDemo />} code={`import { useState, useMemo } from 'react';
-
-function MemoRenderOptDemo() {
-  const [count, setCount] = useState(0);
-  const [text, setText] = useState('');
-  const expensive = useMemo(() => {
-    let total = 0;
-    for (let i = 0; i < 100000000; i++) total += 1;
-    return total;
-  }, [count]);
-  return (
-    <div>
-      <button onClick={() => setCount(count + 1)} style={{ marginRight: 8, padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>+1</button>
-      <span>Count: {count}</span>
-      <div style={{ marginTop: 8 }}>
-        <input value={text} onChange={e => setText(e.target.value)} placeholder="입력 (성능 영향 없음)" style={{ padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />
-      </div>
-      <div style={{ marginTop: 8, color: '#b5e853' }}>비싼 연산 결과: {expensive}</div>
-    </div>
-  );
-}`} showCaret={false} desc={`이 예제는 useMemo로 비싼 연산을 최적화하는 실전 패턴을 보여줍니다.
-
-  - expensive는 count가 바뀔 때만 다시 계산됩니다.
-  - text 입력 등 다른 상태가 바뀌어도 비싼 연산은 다시 실행되지 않습니다.
-  
-  이런 최적화는 대규모 앱, 복잡한 UI에서 성능을 크게 개선할 수 있습니다.
-  
-  실전 팁: useMemo는 꼭 필요한 경우에만 사용하고, 의존성 배열을 정확히 관리하세요.`} />
-        </div>
-      </div>
-    ),
+    content: <UseMemoExample />,
   },
   useCallback: {
     id: 'useCallback',
@@ -1006,7 +874,7 @@ Tip: 의존성 배열을 정확히 지정하지 않으면, 오래된 값이 사�
         </div>
         <h4>4. useCallback 없이 함수 전달</h4>
         <div style={stateExampleBlockStyle}>
-          <ExampleTab example={<CallbackNoMemoDemo />} code={`import React, { useState } from 'react';\n\nconst MemoChild = React.memo(function MemoChild({ onClick }) {\n  console.log('자식 렌더');\n  return <button onClick={onClick}>자식 버튼</button>;\n});\n\nfunction CallbackNoMemoDemo() {\n  const [count, setCount] = useState(0);\n  const handleClick = () => setCount(c => c + 1);\n  return (\n    <div>\n      <MemoChild onClick={handleClick} />\n      <div style={{ marginTop: 8 }}>카운트: {count}</div>\n      <div style={{ color: '#b5e853', marginTop: 8, fontSize: 13 }}>(useCallback 없이: 자식이 매번 렌더됨)</div>\n    </div>\n  );\n}`} showCaret={false} desc={`이 예제는 useCallback 없이 함수를 자식에 전달할 때 발생하는 문제를 보여줍니다.
+          <ExampleTab example={<CallbackNoMemoDemo />} code={`import React, { useState } from 'react';\n\nconst MemoChild = React.memo(function MemoChild({ onClick }: { onClick: () => void }) {\n  console.log('자식 렌더');\n  return <button onClick={onClick}>자식 버튼</button>;\n});\n\nfunction CallbackNoMemoDemo() {\n  const [count, setCount] = useState(0);\n  const handleClick = () => setCount(c => c + 1);\n  return (\n    <div>\n      <MemoChild onClick={handleClick} />\n      <div style={{ marginTop: 8 }}>카운트: {count}</div>\n      <div style={{ color: '#b5e853', marginTop: 8, fontSize: 13 }}>(useCallback 없이: 자식이 매번 렌더됨)</div>\n    </div>\n  );\n}`} showCaret={false} desc={`이 예제는 useCallback 없이 함수를 자식에 전달할 때 발생하는 문제를 보여줍니다.
 
 - handleClick 함수는 부모가 렌더링될 때마다 새로 생성됩니다.
 - MemoChild는 onClick이 바뀔 때마다 리렌더링됩니다.
@@ -1655,151 +1523,7 @@ Tip: 의존성 배열을 정확히 지정하지 않으면, 오래된 값이 사�
 
   
 // --- useRef Demo Components ---
-function RefFocusDemo() {
-  const inputRef = React.useRef<HTMLInputElement>(null);
-  return (
-    <div>
-      <input ref={inputRef} style={{ marginRight: 8, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />
-      <button onClick={() => inputRef.current && inputRef.current.focus()} style={{ padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>포커스</button>
-    </div>
-  );
-}
 
-function RefPrevValueDemo() {
-  const [value, setValue] = React.useState('');
-  const prevValue = React.useRef('');
-  React.useEffect(() => {
-    prevValue.current = value;
-  }, [value]);
-  return (
-    <div style={{ color: '#eaeaea' }}>
-      <input value={value} onChange={e => setValue(e.target.value)} style={{ marginRight: 8, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />
-      <div>이전 값: {prevValue.current}</div>
-    </div>
-  );
-}
-
-function RefIntervalDemo() {
-  const [count, setCount] = React.useState(0);
-  const intervalRef = React.useRef<number | null>(null);
-  const start = () => {
-    if (!intervalRef.current) {
-      intervalRef.current = window.setInterval(() => setCount(c => c + 1), 1000);
-    }
-  };
-  const stop = () => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
-  };
-  React.useEffect(() => stop, []);
-  return (
-    <div style={{ color: '#eaeaea' }}>
-      <div>카운트: {count}</div>
-      <button onClick={start} style={{ marginRight: 8, padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>시작</button>
-      <button onClick={stop} style={{ padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>정지</button>
-    </div>
-  );
-}
-
-function RefDomStyleDemo() {
-  const boxRef = React.useRef<HTMLDivElement>(null);
-  const changeColor = () => {
-    if (boxRef.current) {
-      boxRef.current.style.background = '#27c93f';
-    }
-  };
-  return (
-    <div>
-      <div ref={boxRef} style={{ width: 120, height: 60, background: '#232323', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 8, marginBottom: 8 }}>Box</div>
-      <button onClick={changeColor} style={{ padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>배경색 변경</button>
-    </div>
-  );
-}
-  
-// --- useMemo Demo Components ---
-function MemoExpensiveCalcDemo() {
-  const [num, setNum] = React.useState(1);
-  const [other, setOther] = React.useState('');
-  const fib = React.useMemo(() => {
-    function fibo(n: number): number {
-      if (n <= 1) return n;
-      return fibo(n - 1) + fibo(n - 2);
-    }
-    return fibo(num);
-  }, [num]);
-  return (
-    <div style={{ color: '#eaeaea' }}>
-      <label>
-        피보나치 n: 
-        <input type="number" value={num} min={1} max={35} onChange={e => setNum(Number(e.target.value))} style={{ margin: '0 8px', width: 60 }} />
-      </label>
-      <span>결과: {fib}</span>
-      <div style={{ marginTop: 12 }}>
-        <input value={other} onChange={e => setOther(e.target.value)} placeholder="다른 입력 (성능 영향 없음)" style={{ top: 8, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />
-      </div>
-    </div>
-  );
-}
-
-function MemoFilterSortDemo() {
-  const [query, setQuery] = React.useState('');
-  const [sort, setSort] = React.useState(false);
-  const items = React.useMemo(() => Array.from({ length: 1000 }, (_, i) => `Item ${i + 1}`), []);
-  const filtered = React.useMemo(() => {
-    let result = items.filter(item => item.toLowerCase().includes(query.toLowerCase()));
-    if (sort) result = [...result].sort();
-    return result;
-  }, [items, query, sort]);
-  return (
-    <div style={{ color: '#eaeaea' }}>
-      <input value={query} onChange={e => setQuery(e.target.value)} placeholder="검색" style={{ marginRight: 8, padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />
-      <label style={{ marginRight: 8 }}>
-        <input type="checkbox" checked={sort} onChange={e => setSort(e.target.checked)} /> 정렬
-      </label>
-      <div style={{ maxHeight: 120, overflowY: 'auto', background: '#232323', borderRadius: 8, marginTop: 8, padding: 8 }}>
-        {filtered.slice(0, 20).map(item => <div key={item}>{item}</div>)}
-        {filtered.length > 20 && <div style={{ color: '#aaa' }}>...and {filtered.length - 20} more</div>}
-      </div>
-    </div>
-  );
-}
-
-function MemoDependencyDemo() {
-  const [a, setA] = React.useState(1);
-  const [b, setB] = React.useState(1);
-  const sum = React.useMemo(() => a + b, [a, b]);
-  return (
-    <div style={{ color: '#eaeaea' }}>
-      <input type="number" value={a} onChange={e => setA(Number(e.target.value))} style={{ marginRight: 8, width: 60 }} />
-      +
-      <input type="number" value={b} onChange={e => setB(Number(e.target.value))} style={{ margin: '0 8px', width: 60 }} />
-      = <span>{sum}</span>
-    </div>
-  );
-}
-
-function MemoRenderOptDemo() {
-  const [count, setCount] = React.useState(0);
-  const [text, setText] = React.useState('');
-  const expensive = React.useMemo(() => {
-    let total = 0;
-    for (let i = 0; i < 100000000; i++) total += 1;
-    return total;
-  }, [count]);
-  return (
-    <div style={{ color: '#eaeaea' }}>
-      <button onClick={() => setCount(count + 1)} style={{ marginRight: 8, padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>+1</button>
-      <span>Count: {count}</span>
-      <div style={{ marginTop: 8 }}>
-        <input value={text} onChange={e => setText(e.target.value)} placeholder="입력 (성능 영향 없음)" style={{ padding: 4, borderRadius: 4, border: '1px solid #444', background: '#232323', color: '#eaeaea' }} />
-      </div>
-      <div style={{ marginTop: 8, color: '#b5e853' }}>비싼 연산 결과: {expensive}</div>
-    </div>
-  );
-}
-  
 // --- useCallback Demo Components ---
 const MemoChild = React.memo(function MemoChild({ onClick }: { onClick: () => void }) {
   console.log('자식 렌더');

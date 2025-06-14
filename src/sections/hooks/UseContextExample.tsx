@@ -629,9 +629,7 @@ const stateExampleBlockStyle = {
 export const UseContextExample = () => {
   return (
     <div>
-      <Typography variant="h4" gutterBottom>
-        useContext 단계별 예제
-      </Typography>
+   
       <div style={stateExampleBlockStyle}>
         <Typography variant="h6" sx={{ mb: 2 }}>1. 기본 Context (Basic Context)</Typography>
         <ExampleTab

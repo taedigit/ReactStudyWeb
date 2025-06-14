@@ -145,9 +145,7 @@ const formStateCode = `const FormStateDemo: React.FC = () => {\n  const [formDat
 export const UseStateExample = () => {
   return (
     <div>
-      <Typography variant="h4" gutterBottom>
-        useState 단계별 예제
-      </Typography>
+
       <div style={stateExampleBlockStyle}>
         <Typography variant="h6" sx={{ mb: 2 }}>1. 기본 카운터 (Basic Counter)</Typography>
         <ExampleTab

@@ -1,51 +1,25 @@
 import React, { useRef, useEffect, useState, forwardRef } from 'react';
 import { Button, TextField, Typography } from '@mui/material';
-import { ExampleSection } from '../../components/ExampleSection';
+import { ExampleTab } from '../../components/ExampleTab';
+
+const stateExampleBlockStyle = {
+  background: '#484f54',
+  padding: '1.5em 2em',
+  borderRadius: '8px',
+  border: '1px solid #eee',
+  marginTop: '1.2em',
+  marginBottom: '2em',
+  marginLeft: 0,
+  marginRight: 0,
+};
 
 const descriptions = {
-  domRef: `• DOM 요소 참조
-  - 직접적인 DOM 조작 가능
-  - focus(), scroll(), 크기/위치 측정
-  - 애니메이션 제어
-
-• 사용 방법
-  1. ref 생성
-     - const elementRef = useRef(null);
-  2. 요소에 연결
-     - <div ref={elementRef}>
-  3. 접근
-     - elementRef.current.focus();
-
-• 주요 활용 사례
-  - 입력 필드 포커스
-  - 스크롤 위치 제어
-  - 캔버스 조작
-  - 미디어 요소 제어`,
-
-  mutableRef: `변경 가능한 값 저장:
-- 리렌더링 없이 값을 변경할 수 있음
-- 컴포넌트 생명주기 동안 유지되는 값
-- state와 달리 변경해도 리렌더링되지 않음
-- 주로 이전 값 추적이나 타이머 ID 저장에 사용`,
-
-  prevValue: `이전 값 추적하기:
-- useEffect와 함께 사용하여 이전 상태 값 저장
-- 현재 값과 이전 값 비교 가능
-- 값이 변경될 때마다 이전 값 업데이트
-- 애니메이션이나 값 변화 감지에 유용`,
-
-  timerRef: `타이머 관리:
-- setInterval/setTimeout ID 저장
-- 컴포넌트 언마운트 시 타이머 정리
-- 메모리 누수 방지
-- 안전한 타이머 시작/중지 처리`,
-
-  forwardRef: `DOM 요소 참조 전달:
-- 부모 컴포넌트에서 자식 DOM 요소 접근
-- 커스텀 컴포넌트에서 ref 전달
-- focus(), scroll() 등 DOM 메서드 호출
-- 명령형 프로그래밍이 필요한 경우 활용`
-}; 
+  domRef: `DOM 요소 참조 및 직접 조작 예제입니다.\n- useRef로 input 등의 DOM에 직접 접근할 수 있습니다.\n- focus, scroll, 크기 측정 등 다양한 실무 활용이 가능합니다.`,
+  mutableRef: `리렌더링 없이 값을 저장하는 용도로 useRef를 사용할 수 있습니다.\n- state와 달리 값이 바뀌어도 컴포넌트가 리렌더링되지 않습니다.\n- 이전 값 추적, 타이머 ID 저장 등에 유용합니다.`,
+  prevValue: `이전 값을 추적할 때 useRef와 useEffect를 함께 사용합니다.\n- 값이 바뀔 때마다 useEffect에서 ref를 갱신하면, 이전 값을 언제든 참조할 수 있습니다.`,
+  timerRef: `타이머 ID를 useRef에 저장하면, 컴포넌트가 리렌더링되어도 ID가 유지됩니다.\n- 언마운트 시 cleanup으로 안전하게 타이머를 정리할 수 있습니다.`,
+  forwardRef: `forwardRef를 사용하면 부모가 자식 컴포넌트의 DOM에 직접 접근할 수 있습니다.\n- 커스텀 컴포넌트에서 ref를 전달할 때 필수 패턴입니다.`
+};
 
 // Demo Components
 const DomRefDemo: React.FC = () => {
@@ -285,49 +259,50 @@ const ForwardRefDemo: React.FC = () => {
   );
 };`;
 
-const UseRefExample: React.FC = () => {
+export const UseRefExample = () => {
   return (
     <div>
-      <Typography variant="h4" gutterBottom>
-        useRef Examples
-      </Typography>
-      <ExampleSection
-        title="DOM Reference"
-        description="Demonstrates using useRef to access DOM elements."
-        example={<DomRefDemo />}
-        code={domRefCode}
-        tooltip={descriptions.domRef}
-      />
-      <ExampleSection
-        title="Mutable Reference"
-        description="Shows how to store mutable values with useRef."
-        example={<MutableRefDemo />}
-        code={mutableRefCode}
-        tooltip={descriptions.mutableRef}
-      />
-      <ExampleSection
-        title="Previous Value"
-        description="Demonstrates tracking previous state value."
-        example={<PrevValueDemo />}
-        code={prevValueCode}
-        tooltip={descriptions.prevValue}
-      />
-      <ExampleSection
-        title="Timer Reference"
-        description="Shows timer management with useRef."
-        example={<TimerRefDemo />}
-        code={timerRefCode}
-        tooltip={descriptions.timerRef}
-      />
-      <ExampleSection
-        title="Forward Ref"
-        description="Demonstrates ref forwarding in custom components."
-        example={<ForwardRefDemo />}
-        code={forwardRefCode}
-        tooltip={descriptions.forwardRef}
-      />
+ 
+      <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>1. DOM 참조 (DOM Reference)</Typography>
+        <ExampleTab
+          example={<DomRefDemo />}
+          code={domRefCode}
+          desc={descriptions.domRef}
+        />
+      </div>
+      <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>2. 변경 가능한 값 저장 (Mutable Ref)</Typography>
+        <ExampleTab
+          example={<MutableRefDemo />}
+          code={mutableRefCode}
+          desc={descriptions.mutableRef}
+        />
+      </div>
+      <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>3. 이전 값 추적 (Previous Value)</Typography>
+        <ExampleTab
+          example={<PrevValueDemo />}
+          code={prevValueCode}
+          desc={descriptions.prevValue}
+        />
+      </div>
+      <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>4. 타이머 관리 (Timer Ref)</Typography>
+        <ExampleTab
+          example={<TimerRefDemo />}
+          code={timerRefCode}
+          desc={descriptions.timerRef}
+        />
+      </div>
+      <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>5. ref 전달 (Forward Ref)</Typography>
+        <ExampleTab
+          example={<ForwardRefDemo />}
+          code={forwardRefCode}
+          desc={descriptions.forwardRef}
+        />
+      </div>
     </div>
   );
-};
-
-export default UseRefExample; 
+}; 

@@ -142,9 +142,7 @@ const multipleEffectsCode = `const MultipleEffectsDemo: React.FC = () => {\n  co
 export const UseEffectExample = () => {
   return (
     <div>
-      <Typography variant="h4" gutterBottom>
-        useEffect 단계별 예제
-      </Typography>
+
       <div style={stateExampleBlockStyle}>
         <Typography variant="h6" sx={{ mb: 2 }}>1. 기본 Effect (Basic Effect)</Typography>
         <ExampleTab

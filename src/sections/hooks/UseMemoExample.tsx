@@ -1,71 +1,24 @@
 import React, { useState, useMemo } from 'react';
 import { Button, TextField, Typography } from '@mui/material';
-import { ExampleSection } from '../../components/ExampleSection';
+import { ExampleTab } from '../../components/ExampleTab';
 
-const descriptions = {
-  basicMemo: `• useMemo 기본 개념
-  - 값의 메모이제이션
-  - 고비용 계산 최적화
-  - 불필요한 재계산 방지
-
-• 기본 구조
-  const memoizedValue = useMemo(
-    () => computeExpensiveValue(a, b),
-    [a, b]
-  );
-
-• 주요 사용 사례
-  - 복잡한 계산
-  - 객체 참조 유지
-  - 렌더링 최적화`,
-
-  expensiveCalc: `• 고비용 계산 최적화
-  - 복잡한 수학 연산
-  - 대규모 데이터 처리
-  - 재귀적 계산
-
-• 최적화 전략
-  1. 계산 결과 캐싱
-  2. 의존성 최소화
-  3. 불필요한 재계산 방지
-
-• 성능 개선 효과
-  - CPU 사용량 감소
-  - 렌더링 성능 향상
-  - 반응성 개선`,
-
-  refEquality: `• 참조 동등성 유지
-  - 객체/배열 메모이제이션
-  - 불필요한 재생성 방지
-  - 자식 컴포넌트 최적화
-
-• 주요 패턴
-  1. 객체 메모이제이션
-  2. 배열 메모이제이션
-  3. 함수 메모이제이션
-
-• 최적화 효과
-  - 불필요한 리렌더링 방지
-  - 메모리 사용 최적화
-  - 성능 향상`,
-
-  contextMemo: `• Context 최적화
-  - Context 값 메모이제이션
-  - Provider 최적화
-  - Consumer 리렌더링 방지
-
-• 구현 전략
-  1. 값 안정화
-  2. 불필요한 전파 방지
-  3. 선택적 구독
-
-• 성능 개선
-  - Context 전파 최적화
-  - 리렌더링 범위 제한
-  - 애플리케이션 확장성`
+const stateExampleBlockStyle = {
+  background: '#484f54',
+  padding: '1.5em 2em',
+  borderRadius: '8px',
+  border: '1px solid #eee',
+  marginTop: '1.2em',
+  marginBottom: '2em',
+  marginLeft: 0,
+  marginRight: 0,
 };
 
-
+const descriptions = {
+  basicMemo: `useMemo의 기본 사용법을 보여줍니다.\n- 값의 메모이제이션으로 불필요한 재계산을 방지합니다.\n- 고비용 계산, 객체/배열 참조 유지 등에 활용합니다.`,
+  expensiveCalc: `고비용 계산(예: 피보나치 수열 등)을 useMemo로 최적화할 수 있습니다.\n- 의존성 배열을 최소화해 성능을 극대화합니다.`,
+  refEquality: `객체/배열의 참조 동등성을 유지해 자식 컴포넌트의 불필요한 리렌더링을 막을 수 있습니다.\n- useMemo로 객체/배열을 메모이제이션하면, props로 전달할 때 최적화 효과가 있습니다.`,
+  contextMemo: `Context의 value를 useMemo로 감싸면, 불필요한 전파와 리렌더링을 줄일 수 있습니다.\n- 대규모 앱에서 Context 최적화에 필수적인 패턴입니다.`
+};
 
 // Demo Components
 const BasicMemoDemo: React.FC = () => {
@@ -312,42 +265,42 @@ const contextMemoCode = `const ContextMemoDemo: React.FC = () => {
   );
 };`;
 
-const UseMemoExample: React.FC = () => {
+export const UseMemoExample = () => {
   return (
     <div>
-      <Typography variant="h4" gutterBottom>
-        useMemo Examples
-      </Typography>
-      <ExampleSection
-        title="Basic Memoization"
-        description="Demonstrates basic usage of useMemo with a counter."
-        example={<BasicMemoDemo />}
-        code={basicMemoCode}
-        tooltip={descriptions.basicMemo}
-      />
-      <ExampleSection
-        title="Expensive Calculation"
-        description="Shows memoization of expensive calculations."
-        example={<ExpensiveCalcDemo />}
-        code={expensiveCalcCode}
-        tooltip={descriptions.expensiveCalc}
-      />
-      <ExampleSection
-        title="Reference Equality"
-        description="Demonstrates maintaining object reference equality."
-        example={<RefEqualityDemo />}
-        code={refEqualityCode}
-        tooltip={descriptions.refEquality}
-      />
-      <ExampleSection
-        title="Context Integration"
-        description="Shows useMemo with React Context."
-        example={<ContextMemoDemo />}
-        code={contextMemoCode}
-        tooltip={descriptions.contextMemo}
-      />
+
+      <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>1. 기본 메모이제이션 (Basic Memoization)</Typography>
+        <ExampleTab
+          example={<BasicMemoDemo />}
+          code={basicMemoCode}
+          desc={descriptions.basicMemo}
+        />
+      </div>
+      <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>2. 고비용 계산 최적화 (Expensive Calculation)</Typography>
+        <ExampleTab
+          example={<ExpensiveCalcDemo />}
+          code={expensiveCalcCode}
+          desc={descriptions.expensiveCalc}
+        />
+      </div>
+      <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>3. 참조 동등성 유지 (Reference Equality)</Typography>
+        <ExampleTab
+          example={<RefEqualityDemo />}
+          code={refEqualityCode}
+          desc={descriptions.refEquality}
+        />
+      </div>
+      <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>4. Context 최적화 (Context Integration)</Typography>
+        <ExampleTab
+          example={<ContextMemoDemo />}
+          code={contextMemoCode}
+          desc={descriptions.contextMemo}
+        />
+      </div>
     </div>
   );
-};
-
-export default UseMemoExample; 
+}; 
