@@ -375,15 +375,15 @@ const DeleteExample = () => {
 };
 
 // 스타일 정의
-const exampleBlockStyle = {
+const stateExampleBlockStyle = {
   background: '#484f54',
   padding: '1.5em 2em',
   borderRadius: '8px',
   border: '1px solid #eee',
   marginTop: '1.2em',
   marginBottom: '2em',
-  marginLeft: '-2em',
-  marginRight: '-2em',
+  marginLeft: 0,
+  marginRight: 0,
 };
 
 const buttonStyle = {
@@ -429,127 +429,90 @@ const textFieldStyle = {
       borderColor: '#666',
     },
     '&.Mui-focused fieldset': {
-      borderColor: '#888',
+      borderColor: '#b5e853',
     },
   },
   '& .MuiInputLabel-root': {
-    color: '#888',
-  },
-  '& .MuiInputLabel-root.Mui-focused': {
-    color: '#aaa',
+    color: '#999',
+    '&.Mui-focused': {
+      color: '#b5e853',
+    },
   },
 };
 
 const AxiosExample: React.FC = () => {
   return (
-    <Box sx={{ maxWidth: '100%', mx: 'auto', p: 3, color: '#eaeaea' }}>
-      <h4>1. GET</h4>
-      <div style={exampleBlockStyle}>
+    <div>
+      <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>1. GET 요청</Typography>
         <ExampleTab
           example={<GetExample />}
           code={`const fetchPosts = async () => {
   try {
     const response = await axios.get('https://api.example.com/posts');
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching posts:', error);
-    throw error;
+    setPosts(response.data);
+  } catch (err) {
+    setError(err.message);
   }
 };`}
-          showCaret={false}
-          desc={`[GET 요청]
-- 서버에서 데이터를 조회(가져오기)할 때 사용합니다.
-- Axios는 fetch보다 간편하게 JSON 파싱, 에러 처리, 쿼리 파라미터 등을 지원합니다.
-- 주로 게시글 목록, 상세 정보, 검색 결과 등 읽기 전용 데이터를 불러올 때 활용합니다.
-
-[실무 팁]
-- axios.get(url, { params }) 형태로 쿼리 파라미터를 쉽게 전달할 수 있습니다.
-- 응답 데이터는 response.data에 바로 접근 가능합니다.
-- 로딩/에러 상태를 UI에 반영하는 것이 중요합니다.
-- CORS 정책, 인증 토큰 등 서버 환경에 따라 추가 설정이 필요할 수 있습니다.`}
+          desc="axios를 사용한 기본적인 GET 요청 예제입니다. 응답 데이터는 자동으로 JSON으로 파싱됩니다."
         />
       </div>
 
-      <h4>2. POST</h4>
-      <div style={exampleBlockStyle}>
+      <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>2. POST 요청</Typography>
         <ExampleTab
           example={<PostExample />}
-          code={`const createPost = async (post) => {
+          code={`const createPost = async () => {
   try {
-    const response = await axios.post('https://api.example.com/posts', post);
-    return response.data;
-  } catch (error) {
-    console.error('Error creating post:', error);
-    throw error;
+    const response = await axios.post('https://api.example.com/posts', {
+      title: '새 게시물',
+      body: '게시물 내용',
+    });
+    setResult(response.data);
+  } catch (err) {
+    setError(err.message);
   }
 };`}
-          showCaret={false}
-          desc={`[POST 요청]
-- 서버에 새로운 데이터를 생성(등록)할 때 사용합니다.
-- 회원가입, 글 작성, 주문 생성 등 사용자가 입력한 정보를 서버에 저장할 때 활용합니다.
-- axios.post(url, data) 형태로 간단하게 요청을 보낼 수 있습니다.
-
-[실무 팁]
-- POST 요청 후 서버에서 생성된 리소스의 ID나 전체 객체를 반환하는 경우가 많으니, 응답값을 잘 활용하세요.
-- 입력값 검증(Validation)과 에러 처리를 꼼꼼히 구현해야 합니다.
-- 인증이 필요한 API라면 헤더에 토큰을 추가해야 합니다.
-- 서버와 클라이언트의 데이터 구조가 일치하는지 항상 확인하세요.`}
+          desc="POST 요청으로 새로운 리소스를 생성하는 예제입니다. axios는 자동으로 데이터를 JSON으로 변환합니다."
         />
       </div>
 
-      <h4>3. PUT</h4>
-      <div style={exampleBlockStyle}>
+      <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>3. PUT 요청</Typography>
         <ExampleTab
           example={<PutExample />}
-          code={`const updatePost = async (id, post) => {
+          code={`const updatePost = async () => {
   try {
-    const response = await axios.put(\`https://api.example.com/posts/\${id}\`, post);
-    return response.data;
-  } catch (error) {
-    console.error('Error updating post:', error);
-    throw error;
+    const response = await axios.put('https://api.example.com/posts/1', {
+      title: '수정된 게시물',
+      body: '수정된 내용',
+    });
+    setResult(response.data);
+  } catch (err) {
+    setError(err.message);
   }
 };`}
-          showCaret={false}
-          desc={`[PUT 요청]
-- 서버의 기존 데이터를 전체 수정(덮어쓰기)할 때 사용합니다.
-- 게시글 수정, 회원 정보 변경 등 기존 리소스를 완전히 교체할 때 활용합니다.
-- axios.put(url, data) 형태로 전체 객체를 전달합니다.
-- 부분 수정은 PATCH를 사용하지만, PUT은 전체 필드를 모두 보내야 합니다.
-
-[실무 팁]
-- PUT 요청 시 누락된 필드는 null/undefined로 처리될 수 있으니, 전체 데이터를 항상 포함하세요.
-- 서버에서 수정 성공 시 변경된 객체를 반환하는 경우가 많으니, 응답값을 활용하세요.
-- 실수로 기존 데이터를 덮어쓰지 않도록, 수정 전 데이터를 미리 불러와서 폼에 반영하는 것이 좋습니다.`}
+          desc="PUT 요청으로 기존 리소스를 수정하는 예제입니다. axios는 자동으로 헤더와 에러 처리를 관리합니다."
         />
       </div>
 
-      <h4>4. DELETE</h4>
-      <div style={exampleBlockStyle}>
+      <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>4. DELETE 요청</Typography>
         <ExampleTab
           example={<DeleteExample />}
-          code={`const deletePost = async (id) => {
+          code={`const deletePost = async () => {
   try {
-    await axios.delete(\`https://api.example.com/posts/\${id}\`);
-    return true;
-  } catch (error) {
-    console.error('Error deleting post:', error);
-    throw error;
+    await axios.delete('https://api.example.com/posts/1');
+    setResult('삭제 성공');
+  } catch (err) {
+    setError(err.message);
   }
 };`}
-          showCaret={false}
-          desc={`[DELETE 요청]
-- 서버의 데이터를 삭제할 때 사용합니다.
-- 게시글 삭제, 회원 탈퇴, 상품 제거 등 리소스를 완전히 없앨 때 활용합니다.
-- axios.delete(url) 형태로 간단하게 요청을 보낼 수 있습니다.
-
-[실무 팁]
-- 삭제 전 사용자에게 반드시 확인(Confirm) 모달을 띄워 실수로 삭제되는 것을 방지하세요.
-- 삭제 성공 시 UI에서 즉시 반영(리스트 갱신 등)하는 것이 중요합니다.
-- 삭제 요청은 되돌릴 수 없으므로, 신중하게 처리해야 합니다.`}
+          desc="DELETE 요청으로 리소스를 삭제하는 예제입니다. axios는 HTTP 상태 코드에 따라 자동으로 에러를 처리합니다."
         />
       </div>
-    </Box>
+    </div>
   );
 };
 
