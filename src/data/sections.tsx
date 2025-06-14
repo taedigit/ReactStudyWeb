@@ -1663,6 +1663,36 @@ ReactDOM.render(<h1>Hello</h1>, document.getElementById('root'));
 - Virtual DOM diffing의 실제 효과를 체험`}
           />
         </div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>4. 실용 예제: 불필요한 렌더링 방지 (React.memo)</Typography>
+          <ExampleTab
+            example={<VDomMemoDemo />}
+            code={`const ListItem = React.memo(function ListItem({ value }: { value: number }) {
+  console.log('렌더:', value);
+  return <span style={{ marginRight: 12 }}>{value}</span>;
+});
+function VDomMemoDemo() {
+  const [list, setList] = React.useState([1, 2, 3]);
+  const shuffle = () => setList(l => [l[2], l[0], l[1]]);
+  const increment = (idx: number) => setList(l => l.map((v, i) => i === idx ? v + 1 : v));
+  return (
+    <div>
+      <Button type="primary" onClick={shuffle} style={{ marginRight: 12 }}>순서 바꾸기</Button>
+      {list.map((v, i) => (
+        <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+          <ListItem value={v} />
+          <Button size="small" onClick={() => increment(i)}>+1</Button>
+        </span>
+      ))}
+      <div style={{ color: '#aaa', fontSize: 13, marginTop: 8 }}>
+        값이 바뀐 항목만 콘솔에 '렌더:'가 출력됩니다.
+      </div>
+    </div>
+  );
+}`}
+            desc={`React.memo를 활용하면 리스트에서 값이 바뀌지 않은 항목은 리렌더링되지 않습니다. 콘솔을 열고, +1 버튼과 순서 바꾸기를 눌러보세요.`}
+          />
+        </div>
       </div>
     ),
   },
@@ -1994,6 +2024,30 @@ function JSXKeyWarningDemo() {
           {item}
         </span>
       ))}
+    </div>
+  );
+}
+
+const ListItem = React.memo(function ListItem({ value }: { value: number }) {
+  console.log('렌더:', value);
+  return <span style={{ marginRight: 12 }}>{value}</span>;
+});
+function VDomMemoDemo() {
+  const [list, setList] = React.useState([1, 2, 3]);
+  const shuffle = () => setList(l => [l[2], l[0], l[1]]);
+  const increment = (idx: number) => setList(l => l.map((v, i) => i === idx ? v + 1 : v));
+  return (
+    <div>
+      <Button type="primary" onClick={shuffle} style={{ marginRight: 12 }}>순서 바꾸기</Button>
+      {list.map((v, i) => (
+        <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+          <ListItem value={v} />
+          <Button size="small" onClick={() => increment(i)}>+1</Button>
+        </span>
+      ))}
+      <div style={{ color: '#aaa', fontSize: 13, marginTop: 8 }}>
+        값이 바뀐 항목만 콘솔에 '렌더:'가 출력됩니다.
+      </div>
     </div>
   );
 }
