@@ -637,11 +637,12 @@ export const UseContextExample = () => {
         <ExampleTab
           example={<BasicContextDemo />}
           code={basicContextCode}
-          desc={`Context API의 기본 사용법:
-- createContext로 Context 생성
-- Provider로 값 제공
-- useContext로 값 사용
-- 전역 상태 관리에 유용`}
+          desc={`Context API의 기본 사용법을 보여줍니다.
+- 전역 상태(여기서는 count)를 여러 컴포넌트에서 쉽게 공유할 수 있습니다.
+- createContext로 Context를 만들고, Provider로 값을 하위 트리에 전달합니다.
+- useContext로 Context 값을 읽어옵니다.
+- props drilling(깊은 props 전달) 없이 상태를 공유할 수 있어, 규모가 커질수록 유용합니다.
+- 단, Context 값이 바뀌면 해당 값을 구독하는 모든 컴포넌트가 리렌더링되므로, 너무 자주 바뀌는 값은 Context로 관리하지 않는 것이 좋습니다.`}
         />
       </div>
       <div style={stateExampleBlockStyle}>
@@ -649,20 +650,11 @@ export const UseContextExample = () => {
         <ExampleTab
           example={<ThemeContextDemo />}
           code={themeContextCode}
-          desc={`• 테마 관리
-  - 다크/라이트 모드
-  - 색상 테마
-  - 스타일 시스템
-
-• 구현 전략
-  1. 테마 상태 관리
-  2. 테마 전환 기능
-  3. 스타일 동적 적용
-
-• 최적화
-  - 불필요한 리렌더링 방지
-  - 테마 변경 성능
-  - 스타일 계산 최적화`}
+          desc={`다크/라이트 모드 등 앱의 테마를 전역에서 관리하는 패턴입니다.
+- 테마 상태와 테마 전환 함수를 Context로 제공해, 트리 어디서든 테마를 바꿀 수 있습니다.
+- 스타일 시스템, 디자인 시스템 구현에 필수적입니다.
+- 실제 서비스에서는 localStorage, 시스템 설정 등과 연동해 초기 테마를 결정할 수 있습니다.
+- 테마 변경 시 불필요한 리렌더링을 막으려면, Context 분리 또는 memoization이 필요할 수 있습니다.`}
         />
       </div>
       <div style={stateExampleBlockStyle}>
@@ -670,11 +662,11 @@ export const UseContextExample = () => {
         <ExampleTab
           example={<AuthContextDemo />}
           code={authContextCode}
-          desc={`인증 상태 관리 예제:
-- 로그인/로그아웃 상태 관리
-- 사용자 정보 전역 공유
-- 컴포넌트 트리 전체에서 인증 상태 접근
-- 조건부 렌더링으로 인증 UI 처리`}
+          desc={`로그인/로그아웃 등 인증 상태를 전역에서 관리하는 패턴입니다.
+- 인증 여부, 로그인/로그아웃 함수, 사용자 정보 등을 Context로 제공합니다.
+- 인증이 필요한 페이지, 컴포넌트에서 쉽게 인증 상태를 확인하고, 조건부 렌더링을 할 수 있습니다.
+- 실제 서비스에서는 토큰 저장, 만료 처리, 사용자 정보 fetch 등과 결합해 사용합니다.
+- 인증 Context는 앱의 핵심이므로, 보안과 성능에 신경 써야 합니다.`}
         />
       </div>
       <div style={stateExampleBlockStyle}>
@@ -682,11 +674,10 @@ export const UseContextExample = () => {
         <ExampleTab
           example={<NestedContextDemo />}
           code={nestedContextCode}
-          desc={`중첩된 Context 사용:
-- 여러 Context 중첩 사용
-- 테마와 사용자 정보 분리
-- 관심사 분리로 유지보수성 향상
-- Provider 조합으로 유연한 상태 관리`}
+          desc={`여러 개의 Context를 중첩해서 사용하는 예제입니다.
+- 관심사(예: 사용자 정보, 테마 등)를 분리해 각각의 Context로 관리하면, 코드의 유지보수성이 높아집니다.
+- 필요한 Context만 구독할 수 있어, 불필요한 리렌더링을 줄일 수 있습니다.
+- 실제로는 Provider가 중첩되는 구조가 많으므로, Context 구조를 잘 설계하는 것이 중요합니다.`}
         />
       </div>
       <div style={stateExampleBlockStyle}>
@@ -694,11 +685,11 @@ export const UseContextExample = () => {
         <ExampleTab
           example={<ReducerContextDemo />}
           code={reducerContextCode}
-          desc={`Context와 Reducer 결합:
-- 복잡한 상태 로직 관리
-- 상태 변경 액션 타입 정의
-- dispatch로 상태 업데이트
-- 상태 로직 중앙화`}
+          desc={`복잡한 상태 로직(여기서는 Todo 리스트)을 Context와 useReducer로 함께 관리하는 패턴입니다.
+- Context로 전역 상태와 dispatch 함수를 제공해, 트리 어디서든 액션을 발생시킬 수 있습니다.
+- Redux와 유사한 구조로, 상태 변경 로직을 한 곳에 모아 관리할 수 있습니다.
+- 대규모 앱에서 상태 관리 라이브러리 없이도 충분히 강력한 전역 상태 관리가 가능합니다.
+- 상태가 복잡해질수록 reducer와 Context를 분리해 관리하는 것이 유지보수에 유리합니다.`}
         />
       </div>
     </div>
