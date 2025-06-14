@@ -1741,6 +1741,96 @@ function VDomWindowDemo() {
       </div>
     ),
   },
+  bundlers: {
+    id: 'bundlers',
+    title: '번들러란?',
+    description: '프론트엔드 번들러 개념, 종류, 벤치마크',
+    category: 'getting_started',
+    icon: '📦',
+    prev: 'setup',
+    next: 'jsx',
+    content: (
+      <div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>1. 번들러란?</Typography>
+          <p><b>번들러(Bundler)</b>는 여러 개의 JS/TS/CSS/이미지 등 프론트엔드 리소스를 하나(또는 여러 개)의 파일로 합쳐주는 도구입니다.<br/>
+          - 모듈 시스템(ESM, CommonJS 등)을 지원해 의존성 관리<br/>
+          - 코드 스플리팅, 트리쉐이킹, 압축 등 최적화 기능 제공<br/>
+          - 개발/배포 환경에서 빠른 빌드와 핫리로드 지원</p>
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>2. 주요 번들러 종류</Typography>
+          <ul style={{ lineHeight: 2 }}>
+            <li><b>Webpack</b>: 가장 널리 쓰이는 전통적 번들러, 플러그인/로더 생태계 풍부</li>
+            <li><b>Vite</b>: ESBuild 기반 초고속 번들러, 개발 서버 속도/경량성 강점</li>
+            <li><b>Parcel</b>: 설정 없는 zero-config 번들러, 빠른 빌드와 HMR 지원</li>
+            <li><b>esbuild</b>: Go로 작성된 초고속 번들러, CLI/라이브러리로 활용</li>
+            <li><b>Rollup</b>: 라이브러리 번들에 강점, 트리쉐이킹 최적화</li>
+          </ul>
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>3. 번들러별 벤치마크 (2024)</Typography>
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ borderCollapse: 'collapse', minWidth: 480, background: '#232323', color: '#eaeaea', borderRadius: 8 }}>
+              <thead>
+                <tr style={{ background: '#333' }}>
+                  <th style={{ padding: 8, border: '1px solid #444' }}>번들러</th>
+                  <th style={{ padding: 8, border: '1px solid #444' }}>빌드 속도<br/>(ms)</th>
+                  <th style={{ padding: 8, border: '1px solid #444' }}>번들 크기<br/>(KB)</th>
+                  <th style={{ padding: 8, border: '1px solid #444' }}>개발 서버 시작<br/>(ms)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style={{ padding: 8, border: '1px solid #444' }}>Vite</td>
+                  <td style={{ padding: 8, border: '1px solid #444' }}>~400</td>
+                  <td style={{ padding: 8, border: '1px solid #444' }}>45</td>
+                  <td style={{ padding: 8, border: '1px solid #444' }}>~300</td>
+                </tr>
+                <tr>
+                  <td style={{ padding: 8, border: '1px solid #444' }}>esbuild</td>
+                  <td style={{ padding: 8, border: '1px solid #444' }}>~120</td>
+                  <td style={{ padding: 8, border: '1px solid #444' }}>44</td>
+                  <td style={{ padding: 8, border: '1px solid #444' }}>~100</td>
+                </tr>
+                <tr>
+                  <td style={{ padding: 8, border: '1px solid #444' }}>Parcel</td>
+                  <td style={{ padding: 8, border: '1px solid #444' }}>~900</td>
+                  <td style={{ padding: 8, border: '1px solid #444' }}>47</td>
+                  <td style={{ padding: 8, border: '1px solid #444' }}>~800</td>
+                </tr>
+                <tr>
+                  <td style={{ padding: 8, border: '1px solid #444' }}>Webpack</td>
+                  <td style={{ padding: 8, border: '1px solid #444' }}>~1800</td>
+                  <td style={{ padding: 8, border: '1px solid #444' }}>48</td>
+                  <td style={{ padding: 8, border: '1px solid #444' }}>~1500</td>
+                </tr>
+                <tr>
+                  <td style={{ padding: 8, border: '1px solid #444' }}>Rollup</td>
+                  <td style={{ padding: 8, border: '1px solid #444' }}>~700</td>
+                  <td style={{ padding: 8, border: '1px solid #444' }}>44</td>
+                  <td style={{ padding: 8, border: '1px solid #444' }}>~600</td>
+                </tr>
+              </tbody>
+            </table>
+            <div style={{ fontSize: 12, color: '#aaa', marginTop: 4 }}>
+              * 벤치마크 출처: <a href="https://github.com/evanw/esbuild#benchmarks" target="_blank" rel="noopener noreferrer" style={{ color: '#8fd' }}>esbuild 공식 벤치마크</a>, <a href="https://vitejs.dev/guide/why.html#why-not-bundle-with-esbuild" target="_blank" rel="noopener noreferrer" style={{ color: '#8fd' }}>Vite 공식</a>, <a href="https://parceljs.org/features/benchmarking/" target="_blank" rel="noopener noreferrer" style={{ color: '#8fd' }}>Parcel 공식</a> 등(2024.06 기준, 실제 환경/옵션에 따라 다를 수 있음)
+            </div>
+          </div>
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>4. 실무 선택 가이드</Typography>
+          <ul style={{ lineHeight: 2 }}>
+            <li>빠른 개발 서버, 최신 생태계: <b>Vite</b> 추천</li>
+            <li>대규모/복잡한 설정, 레거시 호환: <b>Webpack</b> 여전히 강력</li>
+            <li>라이브러리 번들, 트리쉐이킹: <b>Rollup</b> 적합</li>
+            <li>초고속 빌드/테스트: <b>esbuild</b> 활용</li>
+            <li>설정 없이 빠른 시작: <b>Parcel</b>도 실무에 적합</li>
+          </ul>
+        </div>
+      </div>
+    ),
+  },
 };
   
 

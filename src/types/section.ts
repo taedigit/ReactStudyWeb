@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 export type SectionId = 
   | 'intro' 
   | 'setup'
+  | 'bundlers'
   | 'jsx'
   | 'vdom'
   | 'components'
