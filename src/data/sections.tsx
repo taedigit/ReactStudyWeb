@@ -1702,25 +1702,40 @@ function VDomMemoDemo() {
 import { FixedSizeList as List } from 'react-window';
 
 function VDomWindowDemo() {
-  const items = Array.from({ length: 1000 }, (_, i) => "Item #" + (i + 1));
+  const items = Array.from({ length: 1000 }, (_, i) => ({
+    no: i + 1,
+    title: "게시글 제목 " + (i + 1),
+    author: "user" + ((i % 10) + 1),
+    date: "2024-06-" + String((i % 30) + 1).padStart(2, '0')
+  }));
   return (
-    <List
-      height={300}
-      itemCount={items.length}
-      itemSize={36}
-      width={320}
-      style={{ background: '#232323', color: '#eaeaea', borderRadius: 8 }}
-    >
-      {({ index, style }) => (
-        <div style={{ ...style, display: 'flex', alignItems: 'center', paddingLeft: 12, borderBottom: '1px solid #333' }}>
-          <span role="img" aria-label="row" style={{ marginRight: 8 }}>📄</span>
-          {items[index]}
-        </div>
-      )}
-    </List>
+    <div style={{ width: 600 }}>
+      <div style={{ display: 'flex', background: '#222', color: '#fff', fontWeight: 600, padding: '8px 0', borderRadius: '8px 8px 0 0' }}>
+        <div style={{ width: 60, textAlign: 'center' }}>번호</div>
+        <div style={{ flex: 1 }}>제목</div>
+        <div style={{ width: 100, textAlign: 'center' }}>작성자</div>
+        <div style={{ width: 120, textAlign: 'center' }}>날짜</div>
+      </div>
+      <List
+        height={300}
+        itemCount={items.length}
+        itemSize={40}
+        width={600}
+        style={{ background: '#232323', color: '#eaeaea', borderRadius: '0 0 8px 8px' }}
+      >
+        {({ index, style }: { index: number; style: React.CSSProperties }) => (
+          <div style={{ ...style, display: 'flex', alignItems: 'center', borderBottom: '1px solid #333', padding: '0 0.5em' }}>
+            <div style={{ width: 60, textAlign: 'center', color: '#aaa' }}>{items[index].no}</div>
+            <div style={{ flex: 1 }}>{items[index].title}</div>
+            <div style={{ width: 100, textAlign: 'center', color: '#8fd' }}>{items[index].author}</div>
+            <div style={{ width: 120, textAlign: 'center', color: '#ccc' }}>{items[index].date}</div>
+          </div>
+        )}
+      </List>
+    </div>
   );
 }`}
-            desc={`react-window를 사용하면 1000개 이상의 대량 리스트도 실제로 보이는 항목만 DOM에 렌더링해 성능을 극대화할 수 있습니다.\n- 스크롤을 내려도 렌더링 속도가 매우 빠릅니다.\n- 실무에서 긴 테이블, 알림 목록 등에 자주 활용됩니다.`}
+            desc={`react-window로 1000개 이상의 게시글 목록도 부드럽게 가상 스크롤 처리할 수 있습니다.\n- 번호, 제목, 작성자, 날짜 컬럼이 있는 게시판 스타일\n- 헤더는 고정, 데이터만 가상화되어 렌더링됩니다.`}
           />
         </div>
       </div>
@@ -2083,22 +2098,37 @@ function VDomMemoDemo() {
 }
 
 function VDomWindowDemo() {
-  const items = Array.from({ length: 1000 }, (_, i) => "Item #" + (i + 1));
+  const items = Array.from({ length: 1000 }, (_, i) => ({
+    no: i + 1,
+    title: "게시글 제목 " + (i + 1),
+    author: "user" + ((i % 10) + 1),
+    date: "2024-06-" + String((i % 30) + 1).padStart(2, '0')
+  }));
   return (
-    <List
-      height={300}
-      itemCount={items.length}
-      itemSize={36}
-      width={320}
-      style={{ background: '#232323', color: '#eaeaea', borderRadius: 8 }}
-    >
-      {({ index, style }) => (
-        <div style={{ ...style, display: 'flex', alignItems: 'center', paddingLeft: 12, borderBottom: '1px solid #333' }}>
-          <span role="img" aria-label="row" style={{ marginRight: 8 }}>📄</span>
-          {items[index]}
-        </div>
-      )}
-    </List>
+    <div style={{ width: 600 }}>
+      <div style={{ display: 'flex', background: '#222', color: '#fff', fontWeight: 600, padding: '8px 0', borderRadius: '8px 8px 0 0' }}>
+        <div style={{ width: 60, textAlign: 'center' }}>번호</div>
+        <div style={{ flex: 1 }}>제목</div>
+        <div style={{ width: 100, textAlign: 'center' }}>작성자</div>
+        <div style={{ width: 120, textAlign: 'center' }}>날짜</div>
+      </div>
+      <List
+        height={300}
+        itemCount={items.length}
+        itemSize={40}
+        width={600}
+        style={{ background: '#232323', color: '#eaeaea', borderRadius: '0 0 8px 8px' }}
+      >
+        {({ index, style }: { index: number; style: React.CSSProperties }) => (
+          <div style={{ ...style, display: 'flex', alignItems: 'center', borderBottom: '1px solid #333', padding: '0 0.5em' }}>
+            <div style={{ width: 60, textAlign: 'center', color: '#aaa' }}>{items[index].no}</div>
+            <div style={{ flex: 1 }}>{items[index].title}</div>
+            <div style={{ width: 100, textAlign: 'center', color: '#8fd' }}>{items[index].author}</div>
+            <div style={{ width: 120, textAlign: 'center', color: '#ccc' }}>{items[index].date}</div>
+          </div>
+        )}
+      </List>
+    </div>
   );
 }
 
