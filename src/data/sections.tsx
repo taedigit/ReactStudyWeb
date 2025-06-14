@@ -41,6 +41,7 @@ import Typography from '@mui/material/Typography';
 import FetchAPI from '../sections/api/FetchAPI';
 import AxiosExample from '../sections/api/AxiosExample';
 import TanStackQueryExample from '../sections/api/TanStackQueryExample';
+import ReactQueryExample from '../sections/api/ReactQueryExample';
 import UseReducerExample from '../sections/hooks/UseReducerExample';
 import { UseContextExample } from '../sections/hooks/UseContextExample';
 import { UseStateExample } from '../sections/hooks/UseStateExample';
@@ -1495,18 +1496,18 @@ export const sections: Record<SectionId, Section> = {
     category: 'opensource',
     icon: '🧬',
     prev: 'styledcomponents',
-    next: 'reactquery',
+    next: 'restapi',
     content: <div>Recoil 예제 준비 중...</div>,
   },
-  reactquery: {
-    id: 'reactquery',
-    title: 'React Query',
-    description: 'React Query로 서버 상태 관리 예제',
-    category: 'opensource',
-    icon: '🔗',
+  restapi: {
+    id: 'restapi',
+    title: 'REST API',
+    description: 'REST API의 기본 개념과 사용법',
+    category: 'Api',
+    icon: '🌐',
     prev: 'recoil',
-    next: 'restapi',
-    content: <div>React Query 예제 준비 중...</div>,
+    next: 'fetchapi',
+    content: <div>REST API 예제 준비 중...</div>,
   },
   fetchapi: {
     id: 'fetchapi',
@@ -1514,7 +1515,7 @@ export const sections: Record<SectionId, Section> = {
     description: '브라우저 내장 Fetch API를 사용한 데이터 요청',
     category: 'Api',
     icon: '📡',
-    prev: 'axios',
+    prev: 'restapi',
     next: 'axios',
     content: <FetchAPI />
   },
@@ -1526,8 +1527,18 @@ export const sections: Record<SectionId, Section> = {
     category: 'Api',
     icon: '🔄',
     prev: 'fetchapi',
-    next: 'tanstackquery',
+    next: 'reactquery',
     content: <AxiosExample />
+  },
+  reactquery: {
+    id: 'reactquery',
+    title: 'React Query',
+    description: 'React Query로 서버 상태 관리 예제',
+    category: 'Api',
+    icon: '🔗',
+    prev: 'axios',
+    next: 'tanstackquery',
+    content: <ReactQueryExample />,
   },
   tanstackquery: {
     id: 'tanstackquery',
@@ -1535,11 +1546,11 @@ export const sections: Record<SectionId, Section> = {
     description: 'TanStack Query를 사용한 데이터 관리',
     category: 'Api',
     icon: '🔄',
-    prev: 'axios',
+    prev: 'reactquery',
     next: null,
     content: <TanStackQueryExample />
   },
-  restapi: {
+  /*restapi: {
     id: 'restapi',
     title: 'REST API',
     description: 'REST API의 기본 개념과 사용법',
@@ -1548,7 +1559,7 @@ export const sections: Record<SectionId, Section> = {
     prev: 'axios',
     next: null,
     content: <div>REST API 예제 준비 중...</div>
-  },
+  },*/
 
   jsx: {
     id: 'jsx',
