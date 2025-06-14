@@ -1408,9 +1408,51 @@ export const sections: Record<SectionId, Section> = {
     icon: 'code',
     prev: 'setup',
     next: 'components',
-    content: <div>JSX 예제 준비 중...</div>
+    content: (
+      <div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>1. JSX 기본 사용 (JSX Basic)</Typography>
+          <ExampleTab
+            example={<div>Hello, <b>JSX!</b></div>}
+            code={`const element = <div>Hello, <b>JSX!</b></div>;`}
+            desc={`JSX는 JavaScript에서 XML/HTML처럼 태그를 작성할 수 있게 해주는 문법입니다.\n- 중괄호({}) 없이 태그를 바로 쓸 수 있습니다.\n- 여러 요소를 중첩해 표현할 수 있습니다.`}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>2. JSX에서 JS 표현식 (JSX Expression)</Typography>
+          <ExampleTab
+            example={<JSXExpressionDemo />}
+            code={`function JSXExpressionDemo() {\n  const name = 'React';\n  return <h2>안녕하세요, {name}!</h2>;\n}`}
+            desc={`JSX 내부에서는 중괄호({})로 JavaScript 표현식을 사용할 수 있습니다.\n- 변수, 연산, 함수 호출 등\n- 단, if/for문 등 문(statement)은 직접 쓸 수 없습니다.`}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>3. 조건부 렌더링 (Conditional Rendering)</Typography>
+          <ExampleTab
+            example={<JSXConditionalDemo />}
+            code={`function JSXConditionalDemo() {\n  const isLoggedIn = true;\n  return (\n    <div>\n      {isLoggedIn ? <span>환영합니다!</span> : <span>로그인 해주세요.</span>}\n    </div>\n  );\n}`}
+            desc={`JSX에서 조건부로 다른 요소를 렌더링할 때 삼항 연산자(조건 ? A : B)를 자주 사용합니다.`}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>4. 리스트 렌더링 (List Rendering)</Typography>
+          <ExampleTab
+            example={<JSXListDemo />}
+            code={`function JSXListDemo() {\n  const fruits = ['사과', '바나나', '오렌지'];\n  return (\n    <ul>\n      {fruits.map(fruit => <li key={fruit}>{fruit}</li>)}\n    </ul>\n  );\n}`}
+            desc={`배열의 map 메서드를 활용해 JSX에서 리스트를 동적으로 렌더링할 수 있습니다.\n- 각 항목에는 고유한 key 속성을 부여해야 합니다.`}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>5. JSX에서 props와 컴포넌트 합성 (Props & Composition)</Typography>
+          <ExampleTab
+            example={<JSXCompositionDemo />}
+            code={`function Welcome(props) {\n  return <h3>안녕하세요, {props.name}님!</h3>;\n}\nfunction JSXCompositionDemo() {\n  return (\n    <div>\n      <Welcome name=\"홍길동\" />\n      <Welcome name=\"React\" />\n    </div>\n  );\n}`}
+            desc={`JSX에서는 컴포넌트를 태그처럼 사용하고, props로 데이터를 전달할 수 있습니다.\n- 컴포넌트 합성, 재사용, 동적 렌더링의 핵심 패턴입니다.`}
+          />
+        </div>
+      </div>
+    ),
   },
-
   customhooks: {
     id: 'customhooks',
     title: 'Custom Hooks',
@@ -1668,6 +1710,39 @@ function EventDelegationDemo() {
       <Button type="primary">버튼1</Button>
       <Button type="primary">버튼2</Button>
       <Button type="primary">버튼3</Button>
+    </div>
+  );
+}
+
+// JSX 예제용 데모 컴포넌트 정의
+function JSXExpressionDemo() {
+  const name = 'React';
+  return <h2>안녕하세요, {name}!</h2>;
+}
+function JSXConditionalDemo() {
+  const isLoggedIn = true;
+  return (
+    <div>
+      {isLoggedIn ? <span>환영합니다!</span> : <span>로그인 해주세요.</span>}
+    </div>
+  );
+}
+function JSXListDemo() {
+  const fruits = ['사과', '바나나', '오렌지'];
+  return (
+    <ul>
+      {fruits.map(fruit => <li key={fruit}>{fruit}</li>)}
+    </ul>
+  );
+}
+function JSXCompositionDemo() {
+  function Welcome(props: { name: string }) {
+    return <h3>안녕하세요, {props.name}님!</h3>;
+  }
+  return (
+    <div>
+      <Welcome name="홍길동" />
+      <Welcome name="React" />
     </div>
   );
 }
