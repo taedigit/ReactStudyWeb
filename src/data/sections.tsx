@@ -816,7 +816,50 @@ export const sections: Record<SectionId, Section> = {
     icon: '🖱️',
     prev: 'useContext',
     next: 'lifecycle',
-    content: <div>이벤트 처리 예제 준비 중...</div>,
+    content: (
+      <div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>1. 버튼 클릭 이벤트 (Button Click)</Typography>
+          <ExampleTab
+            example={<Button type="primary" onClick={() => alert('버튼이 클릭되었습니다!')}>클릭</Button>}
+            code={`function ButtonClick() {\n  return <Button type=\"primary\" onClick={() => alert('버튼이 클릭되었습니다!')}>클릭</Button>;\n}`}
+            desc={`가장 기본적인 이벤트 처리 예제입니다.\n- onClick 속성에 함수를 전달하면 버튼 클릭 시 해당 함수가 실행됩니다.\n- 이벤트 객체를 인자로 받을 수도 있습니다.`}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>2. 입력값 변경 이벤트 (Input Change)</Typography>
+          <ExampleTab
+            example={<InputChangeDemo />}
+            code={`import { Input } from 'antd';\nfunction InputChangeDemo() {\n  const [value, setValue] = React.useState('');\n  return (\n    <div>\n      <Input value={value} onChange={e => setValue(e.target.value)} placeholder=\"입력하세요\" style={{ width: 200, marginRight: 8 }} />\n      <p>입력값: {value}</p>\n    </div>\n  );\n}`}
+            desc={`input의 onChange 이벤트로 입력값을 실시간으로 상태에 반영하는 예제입니다.\n- e.target.value로 입력값을 읽어 setState로 저장합니다.`}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>3. 폼 제출 이벤트 (Form Submit)</Typography>
+          <ExampleTab
+            example={<FormSubmitDemo />}
+            code={`import { Input, Button } from 'antd';\nfunction FormSubmitDemo() {\n  const [msg, setMsg] = React.useState('');\n  const handleSubmit = (e) => {\n    e.preventDefault();\n    setMsg('폼이 제출되었습니다!');\n  };\n  return (\n    <form onSubmit={handleSubmit} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>\n      <Input placeholder=\"아무거나 입력\" style={{ width: 200 }} />\n      <Button type=\"primary\" htmlType=\"submit\">제출</Button>\n      <p style={{ margin: 0 }}>{msg}</p>\n    </form>\n  );\n}`}
+            desc={`form의 onSubmit 이벤트로 폼 제출을 제어하는 예제입니다.\n- e.preventDefault()로 새로고침 방지\n- 입력값 검증, 서버 전송 등 다양한 로직에 활용됩니다.`}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>4. 커스텀 이벤트 & 버블링 (Custom Event & Bubbling)</Typography>
+          <ExampleTab
+            example={<CustomEventDemo />}
+            code={`function CustomEventDemo() {\n  return (\n    <div onClick={() => alert('부모 div 클릭!')} style={{ padding: 16, background: '#333' }}>\n      <button onClick={e => { e.stopPropagation(); alert('버튼만 클릭!'); }}>버튼</button>\n    </div>\n  );\n}`}
+            desc={`이벤트 버블링과 stopPropagation의 활용 예제입니다.\n- 부모 div에 onClick, 자식 버튼에도 onClick\n- 버튼 클릭 시 e.stopPropagation()으로 부모 이벤트 전파 차단`}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>5. 고급: 이벤트 위임 & 컴포넌트 합성 (Delegation & Composition)</Typography>
+          <ExampleTab
+            example={<EventDelegationDemo />}
+            code={`function EventDelegationDemo() {\n  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {\n    const target = e.target as HTMLElement;\n    if (target.tagName === 'BUTTON') {\n      alert(target.textContent + ' 클릭!');\n    }\n  };\n  return (\n    <div onClick={handleClick}>\n      <button>버튼1</button>\n      <button>버튼2</button>\n      <button>버튼3</button>\n    </div>\n  );\n}`}
+            desc={`여러 자식 버튼의 클릭을 부모에서 한 번에 처리하는 이벤트 위임 패턴입니다.\n- 성능 최적화, 동적 컴포넌트 관리에 유용\n- 컴포넌트 합성/동적 렌더링과 함께 자주 사용`}
+          />
+        </div>
+      </div>
+    ),
   },
   lifecycle: {
     id: 'lifecycle',
@@ -1579,6 +1622,53 @@ function MuiConfirmDialogDemo() {
         </MuiDialogActions>
       </MuiDialog>
     </>
+  );
+}
+
+// (events 섹션 예제용 컴포넌트 정의)
+function InputChangeDemo() {
+  const [value, setValue] = React.useState('');
+  return (
+    <div>
+      <Input value={value} onChange={e => setValue(e.target.value)} placeholder="입력하세요" style={{ width: 200, marginRight: 8 }} />
+      <p>입력값: {value}</p>
+    </div>
+  );
+}
+function FormSubmitDemo() {
+  const [msg, setMsg] = React.useState('');
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setMsg('폼이 제출되었습니다!');
+  };
+  return (
+    <form onSubmit={handleSubmit} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      <Input placeholder="아무거나 입력" style={{ width: 200 }} />
+      <Button type="primary" htmlType="submit">제출</Button>
+      <p style={{ margin: 0 }}>{msg}</p>
+    </form>
+  );
+}
+function CustomEventDemo() {
+  return (
+    <div onClick={() => alert('부모 div 클릭!')} style={{ padding: 16, background: '#333' }}>
+      <Button type="primary" onClick={e => { e.stopPropagation(); alert('버튼만 클릭!'); }}>버튼</Button>
+    </div>
+  );
+}
+function EventDelegationDemo() {
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLElement;
+    if (target.tagName === 'BUTTON') {
+      alert(target.textContent + ' 클릭!');
+    }
+  };
+  return (
+    <div onClick={handleClick}>
+      <Button type="primary">버튼1</Button>
+      <Button type="primary">버튼2</Button>
+      <Button type="primary">버튼3</Button>
+    </div>
   );
 }
 
