@@ -1463,6 +1463,74 @@ export const sections: Record<SectionId, Section> = {
     next: 'fetchapi',
     content: <div>Custom Hooks 예제 준비 중...</div>
   },
+  vdom: {
+    id: 'vdom',
+    title: 'Virtual DOM',
+    description: 'React의 Virtual DOM 개념과 동작 원리, 실습 예제',
+    category: 'basics',
+    icon: '🪞',
+    prev: 'jsx',
+    next: 'components',
+    content: (
+      <div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>1. Virtual DOM이란?</Typography>
+          <ExampleTab
+            example={<div><b>Virtual DOM</b>은 실제 DOM을 직접 조작하지 않고, 메모리 상의 가상 트리(객체)로 UI 상태를 관리한 뒤, 변경점만 실제 DOM에 최소 반영하는 React의 핵심 기술입니다.</div>}
+            code={`// 실제 DOM 조작 예시
+const el = document.getElementById('root');
+el.innerHTML = '<h1>Hello</h1>';
+
+// React의 Virtual DOM
+ReactDOM.render(<h1>Hello</h1>, document.getElementById('root'));
+`}
+            desc={`- Virtual DOM은 실제 DOM보다 훨씬 빠른 연산이 가능
+- 변경 전/후 트리를 비교(diff)해 필요한 부분만 실제 DOM에 반영
+- 성능 최적화, 선언적 UI, 컴포넌트 기반 개발의 핵심`}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>2. DOM 직접 조작 vs Virtual DOM</Typography>
+          <ExampleTab
+            example={<VDomDirectDemo />}
+            code={`function VDomDirectDemo() {
+  const [count, setCount] = React.useState(0);
+  React.useEffect(() => {
+    document.getElementById('direct-dom')!.textContent = 'Count: ' + count;
+  }, [count]);
+  return (
+    <div>
+      <button onClick={() => setCount(c => c + 1)}>증가</button>
+      <span id="direct-dom">Count: 0</span>
+    </div>
+  );
+}`}
+            desc={`- 직접 DOM을 조작하면 React의 상태/렌더링 흐름과 어긋날 수 있음
+- Virtual DOM은 상태 변화 → 가상 트리 → diff → 실제 DOM 반영의 흐름을 자동화`}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>3. Virtual DOM diffing 실습</Typography>
+          <ExampleTab
+            example={<VDomDiffDemo />}
+            code={`function VDomDiffDemo() {
+  const [list, setList] = React.useState(['A', 'B', 'C']);
+  return (
+    <div>
+      <button onClick={() => setList(['A', 'C', 'B'])}>순서 바꾸기</button>
+      <ul>
+        {list.map(item => <li key={item}>{item}</li>)}
+      </ul>
+    </div>
+  );
+}`}
+            desc={`- key 속성을 활용해 React가 리스트의 변경(순서, 추가/삭제 등)을 효율적으로 감지
+- Virtual DOM diffing의 실제 효과를 체험`}
+          />
+        </div>
+      </div>
+    ),
+  },
 };
   
 
@@ -1743,6 +1811,31 @@ function JSXCompositionDemo() {
     <div>
       <Welcome name="홍길동" />
       <Welcome name="React" />
+    </div>
+  );
+}
+
+// Virtual DOM 예제용 데모 컴포넌트 정의
+function VDomDirectDemo() {
+  const [count, setCount] = React.useState(0);
+  React.useEffect(() => {
+    document.getElementById('direct-dom')!.textContent = 'Count: ' + count;
+  }, [count]);
+  return (
+    <div>
+      <Button type="primary" onClick={() => setCount(c => c + 1)}>증가</Button>
+      <span id="direct-dom">Count: 0</span>
+    </div>
+  );
+}
+function VDomDiffDemo() {
+  const [list, setList] = React.useState(['A', 'B', 'C']);
+  return (
+    <div>
+      <Button type="primary" onClick={() => setList(['A', 'C', 'B'])}>순서 바꾸기</Button>
+      <ul>
+        {list.map(item => <li key={item}>{item}</li>)}
+      </ul>
     </div>
   );
 }

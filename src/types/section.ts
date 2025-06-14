@@ -4,6 +4,7 @@ export type SectionId =
   | 'intro' 
   | 'setup'
   | 'jsx'
+  | 'vdom'
   | 'components'
   | 'props'
   | 'context'
