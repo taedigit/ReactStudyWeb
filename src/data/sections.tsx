@@ -42,6 +42,7 @@ import FetchAPI from '../sections/api/FetchAPI';
 import AxiosExample from '../sections/api/AxiosExample';
 import TanStackQueryExample from '../sections/api/TanStackQueryExample';
 import UseReducerExample from '../sections/hooks/UseReducerExample';
+import { UseContextExample } from '../sections/hooks/UseContextExample';
 
 const nvmInstallScript = `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 # 터미널 재시작 또는 아래 명령 실행
@@ -1441,34 +1442,7 @@ Tip: 의존성 배열을 정확히 지정하지 않으면, 오래된 값이 사�
     icon: '🌐',
     prev: 'useReducer',
     next: null,
-    content: (
-      <div>
-        <h4>1. Context 값 전달</h4>
-        <div style={stateExampleBlockStyle}>
-          <ExampleTab
-            example={<UseContextDemo />}
-            code={`import { createContext, useContext } from 'react';
-
-const MyContext = createContext('기본값');
-
-function Child() {
-  const value = useContext(MyContext);
-  return <div>Context 값: {value}</div>;
-}
-
-function UseContextDemo() {
-  return (
-    <MyContext.Provider value="공유된 값">
-      <Child />
-    </MyContext.Provider>
-  );
-}`}
-            showCaret={false}
-            desc={"useContext로 Context 값을 하위 컴포넌트에 전달하고, useContext 훅으로 값을 읽는 예제입니다."}
-          />
-        </div>
-      </div>
-    ),
+    content: <UseContextExample />,
   },
   routing: {
     id: 'routing',
@@ -2081,18 +2055,6 @@ function UseContextDemo() {
   );
 }*/
 
-function UseContextDemo() {
-  const MyContext = React.createContext('기본값');
-  function Child() {
-    const value = React.useContext(MyContext);
-    return <div>Context 값: {value}</div>;
-  }
-  return (
-    <MyContext.Provider value="공유된 값">
-      <Child />
-    </MyContext.Provider>
-  );
-}
 // ... existing code ...
   
 // --- useEffect Demo Components ---

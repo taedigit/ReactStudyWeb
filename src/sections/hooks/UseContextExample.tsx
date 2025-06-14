@@ -1,47 +1,6 @@
 import React, { useState, useContext, createContext, useReducer } from 'react';
 import { Button, TextField, Switch, Typography } from '@mui/material';
-import { ExampleSection } from '../../components/ExampleSection';
-
-const descriptions = {
-  basicContext: `Context API의 기본 사용법:
-- createContext로 Context 생성
-- Provider로 값 제공
-- useContext로 값 사용
-- 전역 상태 관리에 유용`,
-
-  themeContext: `• 테마 관리
-  - 다크/라이트 모드
-  - 색상 테마
-  - 스타일 시스템
-
-• 구현 전략
-  1. 테마 상태 관리
-  2. 테마 전환 기능
-  3. 스타일 동적 적용
-
-• 최적화
-  - 불필요한 리렌더링 방지
-  - 테마 변경 성능
-  - 스타일 계산 최적화`,
-
-  authContext: `인증 상태 관리 예제:
-- 로그인/로그아웃 상태 관리
-- 사용자 정보 전역 공유
-- 컴포넌트 트리 전체에서 인증 상태 접근
-- 조건부 렌더링으로 인증 UI 처리`,
-
-  nestedContext: `중첩된 Context 사용:
-- 여러 Context 중첩 사용
-- 테마와 사용자 정보 분리
-- 관심사 분리로 유지보수성 향상
-- Provider 조합으로 유연한 상태 관리`,
-
-  reducerContext: `Context와 Reducer 결합:
-- 복잡한 상태 로직 관리
-- 상태 변경 액션 타입 정의
-- dispatch로 상태 업데이트
-- 상태 로직 중앙화`
-};
+import { ExampleTab } from '../../components/ExampleTab';
 
 // Demo Components
 const CountContext = createContext<number>(0);
@@ -656,47 +615,92 @@ const ReducerContextDemo: React.FC = () => {
   );
 };`;
 
+const stateExampleBlockStyle = {
+  background: '#484f54',
+  padding: '1.5em 2em',
+  borderRadius: '8px',
+  border: '1px solid #eee',
+  marginTop: '1.2em',
+  marginBottom: '2em',
+  marginLeft: 0,
+  marginRight: 0,
+};
+
 export const UseContextExample = () => {
   return (
     <div>
       <Typography variant="h4" gutterBottom>
-        useContext Examples
+        useContext 단계별 예제
       </Typography>
-      <ExampleSection
-        title="Basic Context"
-        description="Shows basic usage of Context API with a counter."
-        example={<BasicContextDemo />}
-        code={basicContextCode}
-        tooltip={descriptions.basicContext}
-      />
-      <ExampleSection
-        title="Theme Context"
-        description="Shows theme management with Context."
-        example={<ThemeContextDemo />}
-        code={themeContextCode}
-        tooltip={descriptions.themeContext}
-      />
-      <ExampleSection
-        title="Auth Context"
-        description="Demonstrates using Context for authentication state."
-        example={<AuthContextDemo />}
-        code={authContextCode}
-        tooltip={descriptions.authContext}
-      />
-      <ExampleSection
-        title="Nested Context"
-        description="Shows how to use multiple nested contexts."
-        example={<NestedContextDemo />}
-        code={nestedContextCode}
-        tooltip={descriptions.nestedContext}
-      />
-      <ExampleSection
-        title="Reducer Context"
-        description="Demonstrates combining useContext with useReducer."
-        example={<ReducerContextDemo />}
-        code={reducerContextCode}
-        tooltip={descriptions.reducerContext}
-      />
+      <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>1. 기본 Context (Basic Context)</Typography>
+        <ExampleTab
+          example={<BasicContextDemo />}
+          code={basicContextCode}
+          desc={`Context API의 기본 사용법:
+- createContext로 Context 생성
+- Provider로 값 제공
+- useContext로 값 사용
+- 전역 상태 관리에 유용`}
+        />
+      </div>
+      <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>2. 테마 Context (Theme Context)</Typography>
+        <ExampleTab
+          example={<ThemeContextDemo />}
+          code={themeContextCode}
+          desc={`• 테마 관리
+  - 다크/라이트 모드
+  - 색상 테마
+  - 스타일 시스템
+
+• 구현 전략
+  1. 테마 상태 관리
+  2. 테마 전환 기능
+  3. 스타일 동적 적용
+
+• 최적화
+  - 불필요한 리렌더링 방지
+  - 테마 변경 성능
+  - 스타일 계산 최적화`}
+        />
+      </div>
+      <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>3. 인증 Context (Auth Context)</Typography>
+        <ExampleTab
+          example={<AuthContextDemo />}
+          code={authContextCode}
+          desc={`인증 상태 관리 예제:
+- 로그인/로그아웃 상태 관리
+- 사용자 정보 전역 공유
+- 컴포넌트 트리 전체에서 인증 상태 접근
+- 조건부 렌더링으로 인증 UI 처리`}
+        />
+      </div>
+      <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>4. 중첩 Context (Nested Context)</Typography>
+        <ExampleTab
+          example={<NestedContextDemo />}
+          code={nestedContextCode}
+          desc={`중첩된 Context 사용:
+- 여러 Context 중첩 사용
+- 테마와 사용자 정보 분리
+- 관심사 분리로 유지보수성 향상
+- Provider 조합으로 유연한 상태 관리`}
+        />
+      </div>
+      <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>5. Reducer와 Context 결합 (Reducer Context)</Typography>
+        <ExampleTab
+          example={<ReducerContextDemo />}
+          code={reducerContextCode}
+          desc={`Context와 Reducer 결합:
+- 복잡한 상태 로직 관리
+- 상태 변경 액션 타입 정의
+- dispatch로 상태 업데이트
+- 상태 로직 중앙화`}
+        />
+      </div>
     </div>
   );
 }; 
