@@ -1647,10 +1647,15 @@ ReactDOM.render(<h1>Hello</h1>, document.getElementById('root'));
   const [list, setList] = React.useState(['A', 'B', 'C']);
   return (
     <div>
-      <button onClick={() => setList(['A', 'C', 'B'])}>순서 바꾸기</button>
-      <ul>
-        {list.map(item => <li key={item}>{item}</li>)}
-      </ul>
+      <Button type="primary" onClick={() => setList(['A', 'C', 'B'])} style={{ marginBottom: 12 }}>순서 바꾸기</Button>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        {list.map(item => (
+          <span key={item} style={{ fontSize: 18, display: 'flex', alignItems: 'center', gap: 8 }}>
+            <span role="img" aria-label={item}>🔄</span>
+            {item}
+          </span>
+        ))}
+      </div>
     </div>
   );
 }`}
@@ -1917,7 +1922,7 @@ function VDomDirectDemo() {
   }, [count]);
   return (
     <div>
-      <Button type="primary" onClick={() => setCount(c => c + 1)}>증가</Button>
+      <Button type="primary" onClick={() => setCount(c => c + 1)} style={{ marginRight: 32 }}>증가</Button>
       <span id="direct-dom">Count: 0</span>
     </div>
   );
@@ -1926,10 +1931,15 @@ function VDomDiffDemo() {
   const [list, setList] = React.useState(['A', 'B', 'C']);
   return (
     <div>
-      <Button type="primary" onClick={() => setList(['A', 'C', 'B'])}>순서 바꾸기</Button>
-      <ul>
-        {list.map(item => <li key={item}>{item}</li>)}
-      </ul>
+      <Button type="primary" onClick={() => setList(['A', 'C', 'B'])} style={{ marginBottom: 12 }}>순서 바꾸기</Button>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        {list.map(item => (
+          <span key={item} style={{ fontSize: 18, display: 'flex', alignItems: 'center', gap: 8 }}>
+            <span role="img" aria-label={item}>🔄</span>
+            {item}
+          </span>
+        ))}
+      </div>
     </div>
   );
 }
