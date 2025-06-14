@@ -41,6 +41,7 @@ import Typography from '@mui/material/Typography';
 import FetchAPI from '../sections/api/FetchAPI';
 import AxiosExample from '../sections/api/AxiosExample';
 import TanStackQueryExample from '../sections/api/TanStackQueryExample';
+import UseReducerExample from '../sections/hooks/UseReducerExample';
 
 const nvmInstallScript = `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 # 터미널 재시작 또는 아래 명령 실행
@@ -1430,166 +1431,7 @@ Tip: 의존성 배열을 정확히 지정하지 않으면, 오래된 값이 사�
     icon: '🗂️',
     prev: 'useCallback',
     next: 'useContext',
-    content: (
-      <div>
-        <h4>1. 카운터 Reducer</h4>
-        <div style={stateExampleBlockStyle}>
-          <ExampleTab
-            example={<UseReducerDemo />}
-            code={`import { useReducer } from 'react';
-
-function reducer(state, action) {
-  switch (action.type) {
-    case 'inc': return { count: state.count + 1 };
-    case 'dec': return { count: state.count - 1 };
-    default: return state;
-  }
-}
-
-function UseReducerDemo() {
-  const reducer = (state: { count: number }, action: { type: string }) => {
-    switch (action.type) {
-      case 'inc': return { count: state.count + 1 };
-      case 'dec': return { count: state.count - 1 };
-      default: return state;
-    }
-  };
-  const [state, dispatch] = React.useReducer(reducer, { count: 0 });
-  return (
-    <div>
-      <button onClick={() => dispatch({ type: 'dec' })} style={{ padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>-</button>
-      <span style={{ margin: '0 1em', color: '#eaeaea' }}>{state.count}</span>
-      <button onClick={() => dispatch({ type: 'inc' })} style={{ padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>+</button>
-    </div>
-  );
-}`}
-            showCaret={false}
-            desc={`이 예제는 useReducer를 사용해 상태(state)를 체계적으로 관리하는 방법을 보여줍니다.
-
-              - useReducer는 상태와 상태를 변경하는 로직(reducer 함수)을 분리해 관리할 수 있게 해줍니다.
-              - reducer 함수는 현재 상태(state)와 액션(action)을 받아, 새로운 상태를 반환합니다.
-              - dispatch 함수로 액션 객체({ type: 'inc' } 또는 { type: 'dec' })를 전달하면, reducer가 실행되어 상태가 변경됩니다.
-              - 복잡한 상태 로직(여러 값, 다양한 액션, 조건 분기 등)이 필요한 경우 useState보다 더 명확하고 유지보수하기 쉽습니다.
-              
-              실전 팁: 상태 변경이 복잡하거나, 여러 컴포넌트에서 동일한 로직을 써야 할 때 useReducer를 사용하면 코드가 더 깔끔해집니다. 액션 타입을 상수로 관리하면 오타로 인한 버그도 줄일 수 있습니다.`}
-          />
-        </div>
-        <h4>2. Undo/Redo가 가능한 카운터</h4>
-        <div style={stateExampleBlockStyle}>
-          <ExampleTab
-            example={''}
-            code={`import React, { useReducer } from 'react';
-
-function counterReducer(state, action) {
-  const { past, present, future } = state;
-  switch (action.type) {
-    case 'inc':
-      return {
-        past: [...past, present],
-        present: present + 1,
-        future: [],
-      };
-    case 'dec':
-      return {
-        past: [...past, present],
-        present: present - 1,
-        future: [],
-      };
-    case 'undo':
-      if (past.length === 0) return state;
-      return {
-        past: past.slice(0, -1),
-        present: past[past.length - 1],
-        future: [present, ...future],
-      };
-    case 'redo':
-      if (future.length === 0) return state;
-      return {
-        past: [...past, present],
-        present: future[0],
-        future: future.slice(1),
-      };
-    default:
-      return state;
-  }
-}
-
-function UseReducerUndoRedoDemo() {
-  const [state, dispatch] = useReducer(counterReducer, {
-    past: [],
-    present: 0,
-    future: [],
-  });
-  return (
-    <div>
-      <button onClick={() => dispatch({ type: 'undo' })} disabled={state.past.length === 0} style={{ marginRight: 8 }}>Undo</button>
-      <button onClick={() => dispatch({ type: 'redo' })} disabled={state.future.length === 0} style={{ marginRight: 8 }}>Redo</button>
-      <button onClick={() => dispatch({ type: 'dec' })} style={{ marginRight: 8 }}>-</button>
-      <span style={{ margin: '0 1em', color: '#eaeaea', fontWeight: 600 }}>{state.present}</span>
-      <button onClick={() => dispatch({ type: 'inc' })}>+</button>
-    </div>
-  );
-}`}
-            showCaret={false}
-            desc={`이 예제는 useReducer로 Undo/Redo(되돌리기/다시하기) 기능이 있는 카운터를 구현합니다.\n\n- 상태를 past(이전), present(현재), future(미래)로 분리해 관리합니다.\n- inc/dec 액션 시 현재 값을 past에 저장, undo/redo 시 past/future 배열을 활용합니다.\n- 실무에서 복잡한 상태 이력 관리, 에디터, 폼 등에서 유용하게 쓸 수 있는 패턴입니다.\n\n실전 팁: 상태 변경 이력을 남기고 싶을 때, 배열로 과거/미래를 관리하면 쉽게 Undo/Redo를 구현할 수 있습니다.`}
-          />
-        </div>
-        <h4>3. 수량/합계가 있는 장바구니</h4>
-        <div style={stateExampleBlockStyle}>
-          <ExampleTab
-            example={''}
-            code={`import React, { useReducer } from 'react';
-
-const products = [
-  { id: 1, name: 'Apple', price: 1000 },
-  { id: 2, name: 'Banana', price: 500 },
-  { id: 3, name: 'Orange', price: 800 },
-];
-
-function cartReducer(state, action) {
-  switch (action.type) {
-    case 'add':
-      return state.map(item =>
-        item.id === action.id ? { ...item, qty: item.qty + 1 } : item
-      );
-    case 'remove':
-      return state.map(item =>
-        item.id === action.id ? { ...item, qty: Math.max(0, item.qty - 1) } : item
-      );
-    case 'reset':
-      return state.map(item => ({ ...item, qty: 0 }));
-    default:
-      return state;
-  }
-}
-
-function UseReducerCartDemo() {
-  const [cart, dispatch] = useReducer(cartReducer, products.map(p => ({ ...p, qty: 0 })));
-  const total = cart.reduce((sum, item) => sum + item.qty * item.price, 0);
-  return (
-    <div>
-      <ul style={{ listStyle: 'none', padding: 0 }}>
-        {cart.map(item => (
-          <li key={item.id} style={{ marginBottom: 8, display: 'flex', alignItems: 'center' }}>
-            <span style={{ minWidth: 80 }}>{item.name}</span>
-            <button onClick={() => dispatch({ type: 'remove', id: item.id })} disabled={item.qty === 0} style={{ marginRight: 4 }}>-</button>
-            <span style={{ minWidth: 32, textAlign: 'center' }}>{item.qty}</span>
-            <button onClick={() => dispatch({ type: 'add', id: item.id })} style={{ marginLeft: 4 }}>+</button>
-            <span style={{ marginLeft: 16, color: '#b5e853' }}>{item.qty * item.price}원</span>
-          </li>
-        ))}
-      </ul>
-      <div style={{ marginTop: 12, fontWeight: 600, color: '#eaeaea' }}>총 합계: {total}원</div>
-      <button onClick={() => dispatch({ type: 'reset' })} style={{ marginTop: 8 }}>장바구니 비우기</button>
-    </div>
-  );
-}`}
-            showCaret={false}
-            desc={`이 예제는 useReducer로 수량과 합계가 있는 장바구니를 구현합니다.\n\n- cartReducer는 상품별 수량(qty)과 가격(price)을 관리합니다.\n- add/remove 액션으로 수량을 조절, reset으로 전체 비우기, 합계는 reduce로 계산합니다.\n- 실무에서 쇼핑몰, 주문폼 등에서 자주 쓰는 패턴입니다.\n\n실전 팁: 여러 상품의 상태를 객체 배열로 관리하면, 복잡한 장바구니/폼도 useReducer로 깔끔하게 구현할 수 있습니다.`}
-          />
-        </div>
-      </div>
-    ),
+    content: <UseReducerExample />,
   },
   useContext: {
     id: 'useContext',
@@ -2221,7 +2063,7 @@ function UseContextDemo() {
   
 
 
-function UseReducerDemo() {
+/*function UseReducerDemo() {
   const reducer = (state: { count: number }, action: { type: string }) => {
     switch (action.type) {
       case 'inc': return { count: state.count + 1 };
@@ -2237,7 +2079,7 @@ function UseReducerDemo() {
       <button onClick={() => dispatch({ type: 'inc' })} style={{ padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>+</button>
     </div>
   );
-}
+}*/
 
 function UseContextDemo() {
   const MyContext = React.createContext('기본값');
