@@ -1831,6 +1831,63 @@ function VDomWindowDemo() {
       </div>
     ),
   },
+  conditionalRendering: {
+    id: 'conditionalRendering',
+    title: '조건부 렌더링 실전',
+    description: '실무에서 자주 쓰는 다양한 조건부 렌더링 패턴 예제',
+    category: 'basics',
+    icon: '🔀',
+    prev: 'jsx',
+    next: 'vdom',
+    content: (
+      <div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>1. 삼항 연산자 패턴</Typography>
+          <ExampleTab
+            example={<div>{true ? '참입니다' : '거짓입니다'}</div>}
+            code={`<div>{isLoggedIn ? '환영합니다!' : '로그인 해주세요.'}</div>`}
+            desc={`삼항 연산자는 가장 많이 쓰는 조건부 렌더링 패턴입니다.`}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>2. AND(&&) 패턴</Typography>
+          <ExampleTab
+            example={<div>{true && <span>조건이 참일 때만 보임</span>}</div>}
+            code={`<div>{hasMessage && <span>새 메시지!</span>}</div>`}
+            desc={`&& 연산자는 true일 때만 요소를 렌더링합니다.`}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>3. null 반환 패턴</Typography>
+          <ExampleTab
+            example={false ? <div>보임</div> : null}
+            code={`if (!visible) return null;`}
+            desc={`컴포넌트에서 null을 반환하면 아무것도 렌더링되지 않습니다.`}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>4. switch-case 패턴</Typography>
+          <ExampleTab
+            example={<div>{(() => {
+              const status: any = 'loading';
+              switch (status) {
+                case 'loading': return '로딩중';
+                case 'error': return '에러';
+                default: return '완료';
+              }
+            })()}</div>}
+            code={`const status = 'loading';
+switch(status) {
+  case 'loading': return '로딩중';
+  case 'error': return '에러';
+  default: return '완료';
+}`}
+            desc={`복잡한 조건에는 switch-case를 활용할 수 있습니다.`}
+          />
+        </div>
+      </div>
+    ),
+  },
 };
   
 

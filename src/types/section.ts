@@ -30,7 +30,8 @@ export type SectionId =
   | 'fetchapi'
   | 'axios'
   | 'tanstackquery'
-  | 'customhooks';
+  | 'customhooks'
+  | 'conditionalRendering';
 
 export interface Section {
   id: SectionId;
