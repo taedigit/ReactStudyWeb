@@ -48,6 +48,7 @@ import { UseEffectExample } from '../sections/hooks/UseEffectExample';
 import { UseRefExample } from '../sections/hooks/UseRefExample';
 import { UseMemoExample } from '../sections/hooks/UseMemoExample';
 import { UseCallbackExample } from '../sections/hooks/UseCallbackExample';
+import { FixedSizeList as List } from 'react-window';
 
 const nvmInstallScript = `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 # 터미널 재시작 또는 아래 명령 실행
@@ -1693,6 +1694,35 @@ function VDomMemoDemo() {
             desc={`React.memo를 활용하면 리스트에서 값이 바뀌지 않은 항목은 리렌더링되지 않습니다. 콘솔을 열고, +1 버튼과 순서 바꾸기를 눌러보세요.`}
           />
         </div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>7. 실무 예제: 대량 데이터 가상 스크롤 (react-window)</Typography>
+          <ExampleTab
+            example={<VDomWindowDemo />}
+            code={`// npm install react-window 필요
+import { FixedSizeList as List } from 'react-window';
+
+function VDomWindowDemo() {
+  const items = Array.from({ length: 1000 }, (_, i) => "Item #" + (i + 1));
+  return (
+    <List
+      height={300}
+      itemCount={items.length}
+      itemSize={36}
+      width={320}
+      style={{ background: '#232323', color: '#eaeaea', borderRadius: 8 }}
+    >
+      {({ index, style }) => (
+        <div style={{ ...style, display: 'flex', alignItems: 'center', paddingLeft: 12, borderBottom: '1px solid #333' }}>
+          <span role="img" aria-label="row" style={{ marginRight: 8 }}>📄</span>
+          {items[index]}
+        </div>
+      )}
+    </List>
+  );
+}`}
+            desc={`react-window를 사용하면 1000개 이상의 대량 리스트도 실제로 보이는 항목만 DOM에 렌더링해 성능을 극대화할 수 있습니다.\n- 스크롤을 내려도 렌더링 속도가 매우 빠릅니다.\n- 실무에서 긴 테이블, 알림 목록 등에 자주 활용됩니다.`}
+          />
+        </div>
       </div>
     ),
   },
@@ -2049,6 +2079,26 @@ function VDomMemoDemo() {
         값이 바뀐 항목만 콘솔에 '렌더:'가 출력됩니다.
       </div>
     </div>
+  );
+}
+
+function VDomWindowDemo() {
+  const items = Array.from({ length: 1000 }, (_, i) => "Item #" + (i + 1));
+  return (
+    <List
+      height={300}
+      itemCount={items.length}
+      itemSize={36}
+      width={320}
+      style={{ background: '#232323', color: '#eaeaea', borderRadius: 8 }}
+    >
+      {({ index, style }) => (
+        <div style={{ ...style, display: 'flex', alignItems: 'center', paddingLeft: 12, borderBottom: '1px solid #333' }}>
+          <span role="img" aria-label="row" style={{ marginRight: 8 }}>📄</span>
+          {items[index]}
+        </div>
+      )}
+    </List>
   );
 }
 
