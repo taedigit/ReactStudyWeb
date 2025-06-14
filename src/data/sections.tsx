@@ -508,10 +508,24 @@ function CustomButton({ color, label }: { color: string; label: string }) {
 
 // 실무 예제: 리스트 컴포넌트
 function ItemList({ items }: { items: string[] }) {
+  // 과일 이름에 따라 아이콘 매핑
+  const icons: Record<string, string> = {
+    '사과': '🍎',
+    '바나나': '🍌',
+    '오렌지': '🍊',
+    '포도': '🍇',
+    '수박': '🍉',
+    '딸기': '🍓',
+  };
   return (
-    <ul style={{ background: '#232323', color: '#eaeaea', borderRadius: 8, padding: '1em 1.5em', border: '1px solid #444', maxWidth: 320 }}>
-      {items.map(item => <li key={item} style={{ marginBottom: 4 }}>{item}</li>)}
-    </ul>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+      {items.map(item => (
+        <span key={item} style={{ fontSize: 20, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span role="img" aria-label={item}>{icons[item] || '🔹'}</span>
+          {item}
+        </span>
+      ))}
+    </div>
   );
 }
 
@@ -696,8 +710,27 @@ export const sections: Record<SectionId, Section> = {
           <Typography variant="h6" sx={{ mb: 2 }}>3. 리스트 데이터 전달 (List Data)</Typography>
           <ExampleTab
             example={<ItemList items={['사과', '바나나', '오렌지']} />}
-            code={`function ItemList({ items }) {\n  return (\n    <ul>\n      {items.map(item => <li key={item}>{item}</li>)}\n    </ul>\n  );\n}`}
-            desc={`이 예제는 배열 형태의 데이터를 props로 전달하여 리스트를 렌더링하는 방법을 보여줍니다.\n- ItemList 컴포넌트는 items라는 배열 props를 받아, 각 항목을 <li>로 출력합니다.\n- 부모 컴포넌트가 원하는 데이터(과일 목록 등)를 자유롭게 전달할 수 있습니다.\n- props로 배열을 전달하면, 자식 컴포넌트가 반복적으로 데이터를 처리할 수 있습니다.\n이처럼 props는 다양한 형태의 데이터를 컴포넌트에 전달할 수 있게 해줍니다.`}
+            code={`function ItemList({ items }) {
+  const icons = {
+    '사과': '🍎',
+    '바나나': '🍌',
+    '오렌지': '🍊',
+    '포도': '🍇',
+    '수박': '🍉',
+    '딸기': '🍓',
+  };
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+      {items.map(item => (
+        <span key={item} style={{ fontSize: 20, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span role="img" aria-label={item}>{icons[item] || '🔹'}</span>
+          {item}
+        </span>
+      ))}
+    </div>
+  );
+}`}
+            desc={`이 예제는 배열 형태의 데이터를 props로 전달하여 리스트를 아이콘과 함께 렌더링하는 방법을 보여줍니다.\n- 각 항목 앞에 과일에 맞는 이모지 아이콘이 표시됩니다.\n- <ul>/<li> 대신 <div>와 <span>을 사용해 커스텀 스타일로 렌더링합니다.`}
           />
         </div>
         <div style={stateExampleBlockStyle}>
@@ -1438,7 +1471,24 @@ export const sections: Record<SectionId, Section> = {
           <Typography variant="h6" sx={{ mb: 2 }}>4. 리스트 렌더링 (List Rendering)</Typography>
           <ExampleTab
             example={<JSXListDemo />}
-            code={`function JSXListDemo() {\n  const fruits = ['사과', '바나나', '오렌지'];\n  return (\n    <ul>\n      {fruits.map(fruit => <li key={fruit}>{fruit}</li>)}\n    </ul>\n  );\n}`}
+            code={`function JSXListDemo() {
+  const fruits = ['사과', '바나나', '오렌지'];
+  const icons: Record<string, string> = {
+    '사과': '🍎',
+    '바나나': '🍌',
+    '오렌지': '🍊',
+  };
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+      {fruits.map(fruit => (
+        <span key={fruit} style={{ fontSize: 20, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span role="img" aria-label={fruit}>{icons[fruit] || '🔹'}</span>
+          {fruit}
+        </span>
+      ))}
+    </div>
+  );
+}`}
             desc={`배열의 map 메서드를 활용해 JSX에서 리스트를 동적으로 렌더링할 수 있습니다.\n- 각 항목에는 고유한 key 속성을 부여해야 합니다.`}
           />
         </div>
@@ -1448,6 +1498,86 @@ export const sections: Record<SectionId, Section> = {
             example={<JSXCompositionDemo />}
             code={`function Welcome(props) {\n  return <h3>안녕하세요, {props.name}님!</h3>;\n}\nfunction JSXCompositionDemo() {\n  return (\n    <div>\n      <Welcome name=\"홍길동\" />\n      <Welcome name=\"React\" />\n    </div>\n  );\n}`}
             desc={`JSX에서는 컴포넌트를 태그처럼 사용하고, props로 데이터를 전달할 수 있습니다.\n- 컴포넌트 합성, 재사용, 동적 렌더링의 핵심 패턴입니다.`}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>6. 논리 AND 조건부 렌더링 (Logical AND)</Typography>
+          <ExampleTab
+            example={<JSXAndDemo />}
+            code={`function JSXAndDemo() {
+  const hasMessage = true;
+  return (
+    <div>
+      {hasMessage && <span>새로운 메시지가 있습니다!</span>}
+    </div>
+  );
+}`}
+            desc={`JSX에서 &&(AND) 연산자를 사용하면 조건이 true일 때만 요소를 렌더링할 수 있습니다.\n- false일 경우 아무것도 렌더링되지 않습니다.`}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>7. 조건부로 null 반환 (Return null)</Typography>
+          <ExampleTab
+            example={<JSXNullDemo />}
+            code={`function JSXNullDemo() {
+  const visible = false;
+  if (!visible) return null;
+  return <div>이 내용은 visible이 true일 때만 보입니다.</div>;
+}`}
+            desc={`컴포넌트에서 null을 반환하면 아무것도 렌더링되지 않습니다.\n- 조건에 따라 UI 자체를 숨길 때 유용합니다.`}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>8. 중첩 리스트 렌더링 (Nested List)</Typography>
+          <ExampleTab
+            example={<JSXNestedListDemo />}
+            code={`function JSXNestedListDemo() {
+  const categories = [
+    { name: '과일', items: ['사과', '바나나'] },
+    { name: '채소', items: ['당근', '오이'] },
+  ];
+  const icons: Record<string, string> = {
+    '사과': '🍎', '바나나': '🍌', '당근': '🥕', '오이': '🥒',
+  };
+  return (
+    <div>
+      {categories.map(cat => (
+        <div key={cat.name} style={{ marginBottom: 8 }}>
+          <b>{cat.name}</b>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginLeft: 12 }}>
+            {cat.items.map(item => (
+              <span key={item} style={{ fontSize: 18, display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span role="img" aria-label={item}>{icons[item] || '🔹'}</span>
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}`}
+            desc={`리스트 안에 또 다른 리스트를 중첩해 렌더링할 수 있습니다.\n- 각 map의 key 속성에 주의하세요.`}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>9. key 속성 주의 (Key Warning)</Typography>
+          <ExampleTab
+            example={<JSXKeyWarningDemo />}
+            code={`function JSXKeyWarningDemo() {
+  const list: string[] = ['A', 'B', 'C'];
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+      {list.map((item: string, idx: number) => (
+        <span key={idx} style={{ fontSize: 20, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span role="img" aria-label={item}>🔹</span>
+          {item}
+        </span>
+      ))}
+    </div>
+  );
+}`}
+            desc={`key는 리스트 항목의 고유성을 보장해야 합니다.\n- index를 key로 쓰면 항목 순서 변경 시 React가 제대로 감지하지 못할 수 있습니다.`}
           />
         </div>
       </div>
@@ -1535,52 +1665,6 @@ ReactDOM.render(<h1>Hello</h1>, document.getElementById('root'));
   
 
 
-/*function UseReducerDemo() {
-  const reducer = (state: { count: number }, action: { type: string }) => {
-    switch (action.type) {
-      case 'inc': return { count: state.count + 1 };
-      case 'dec': return { count: state.count - 1 };
-      default: return state;
-    }
-  };
-  const [state, dispatch] = React.useReducer(reducer, { count: 0 });
-  return (
-    <div>
-      <button onClick={() => dispatch({ type: 'dec' })} style={{ padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>-</button>
-      <span style={{ margin: '0 1em', color: '#eaeaea' }}>{state.count}</span>
-      <button onClick={() => dispatch({ type: 'inc' })} style={{ padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer' }}>+</button>
-    </div>
-  );
-}*/
-
-// ... existing code ...
-  
-// --- useEffect Demo Components ---
-
-
-  
-// --- useRef Demo Components ---
-
-// --- useCallback Demo Components ---
-
-
-
-  
-// ... existing code ...
-
-// StateEffectDemo 컴포넌트 추가
-/* function StateEffectDemo() {
-  const [count, setCount] = React.useState(0);
-  React.useEffect(() => {
-    console.log('count 변경:', count);
-  }, [count]);
-  return (
-    <div>
-      <button onClick={() => setCount(count + 1)} style={{ padding: '0.4em 1.2em', borderRadius: 6, background: '#232323', color: '#eaeaea', border: '1px solid #444', cursor: 'pointer', marginRight: 8 }}>+1</button>
-      <span style={{ color: '#eaeaea' }}>{count}</span>
-    </div>
-  );
-} */
 
 
 // --- Ant Design Demo Components ---
@@ -1797,10 +1881,20 @@ function JSXConditionalDemo() {
 }
 function JSXListDemo() {
   const fruits = ['사과', '바나나', '오렌지'];
+  const icons: Record<string, string> = {
+    '사과': '🍎',
+    '바나나': '🍌',
+    '오렌지': '🍊',
+  };
   return (
-    <ul>
-      {fruits.map(fruit => <li key={fruit}>{fruit}</li>)}
-    </ul>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+      {fruits.map(fruit => (
+        <span key={fruit} style={{ fontSize: 20, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span role="img" aria-label={fruit}>{icons[fruit] || '🔹'}</span>
+          {fruit}
+        </span>
+      ))}
+    </div>
   );
 }
 function JSXCompositionDemo() {
@@ -1836,6 +1930,60 @@ function VDomDiffDemo() {
       <ul>
         {list.map(item => <li key={item}>{item}</li>)}
       </ul>
+    </div>
+  );
+}
+
+// JSX 추가 예제용 데모 컴포넌트 정의
+function JSXAndDemo() {
+  const hasMessage = true;
+  return (
+    <div>
+      {hasMessage && <span>새로운 메시지가 있습니다!</span>}
+    </div>
+  );
+}
+function JSXNullDemo() {
+  const visible = false;
+  if (!visible) return null;
+  return <div>이 내용은 visible이 true일 때만 보입니다.</div>;
+}
+function JSXNestedListDemo() {
+  const categories = [
+    { name: '과일', items: ['사과', '바나나'] },
+    { name: '채소', items: ['당근', '오이'] },
+  ];
+  const icons: Record<string, string> = {
+    '사과': '🍎', '바나나': '🍌', '당근': '🥕', '오이': '🥒',
+  };
+  return (
+    <div>
+      {categories.map(cat => (
+        <div key={cat.name} style={{ marginBottom: 8 }}>
+          <b>{cat.name}</b>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginLeft: 12 }}>
+            {cat.items.map(item => (
+              <span key={item} style={{ fontSize: 18, display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span role="img" aria-label={item}>{icons[item] || '🔹'}</span>
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+function JSXKeyWarningDemo() {
+  const list: string[] = ['A', 'B', 'C'];
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+      {list.map((item: string, idx: number) => (
+        <span key={idx} style={{ fontSize: 20, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span role="img" aria-label={item}>🔹</span>
+          {item}
+        </span>
+      ))}
     </div>
   );
 }
