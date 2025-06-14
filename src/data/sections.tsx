@@ -49,13 +49,27 @@ import { UseRefExample } from '../sections/hooks/UseRefExample';
 import { UseMemoExample } from '../sections/hooks/UseMemoExample';
 import { UseCallbackExample } from '../sections/hooks/UseCallbackExample';
 import { FixedSizeList as List } from 'react-window';
+import styled from 'styled-components';
+
 
 const nvmInstallScript = `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 # 터미널 재시작 또는 아래 명령 실행
 export NVM_DIR="$([ -z \\\${XDG_CONFIG_HOME-} ] && printf %s \\\${HOME}/.nvm || printf %s \\\${XDG_CONFIG_HOME}/nvm)"
 [ -s "$NVM_DIR/nvm.sh" ] && \\. "$NVM_DIR/nvm.sh" # This loads nvm`;
 
+const StyledButton = styled.button`
+background: #ff9800;
+color: white;
+border: none;
+border-radius: 4px;
+padding: 8px 16px;
+font-weight: bold;
+`;
+
+
 const setupContent = (
+
+  
   <div>
     <h2>React 설치 방법</h2>
     <ul
@@ -1844,31 +1858,31 @@ function VDomWindowDemo() {
         <div style={stateExampleBlockStyle}>
           <Typography variant="h6" sx={{ mb: 2 }}>1. 삼항 연산자 패턴</Typography>
           <ExampleTab
-            example={<div>{true ? '참입니다' : '거짓입니다'}</div>}
-            code={`<div>{isLoggedIn ? '환영합니다!' : '로그인 해주세요.'}</div>`}
+            example={<div style={{ border: '1px solid #ddd', borderRadius: 8, padding: 16, background: '#fafbfc', minHeight: 32 }}>{true ? '참입니다' : '거짓입니다'}</div>}
+            code={`<div style={{ border: '1px solid #ddd', borderRadius: 8, padding: 16, background: '#fafbfc', minHeight: 32 }}>{isLoggedIn ? '환영합니다!' : '로그인 해주세요.'}</div>`}
             desc={`삼항 연산자는 가장 많이 쓰는 조건부 렌더링 패턴입니다.`}
           />
         </div>
         <div style={stateExampleBlockStyle}>
           <Typography variant="h6" sx={{ mb: 2 }}>2. AND(&&) 패턴</Typography>
           <ExampleTab
-            example={<div>{true && <span>조건이 참일 때만 보임</span>}</div>}
-            code={`<div>{hasMessage && <span>새 메시지!</span>}</div>`}
+            example={<div style={{ border: '1px solid #ddd', borderRadius: 8, padding: 16, background: '#fafbfc', minHeight: 32 }}>{true && <span>조건이 참일 때만 보임</span>}</div>}
+            code={`<div style={{ border: '1px solid #ddd', borderRadius: 8, padding: 16, background: '#fafbfc', minHeight: 32 }}>{hasMessage && <span>새 메시지!</span>}</div>`}
             desc={`&& 연산자는 true일 때만 요소를 렌더링합니다.`}
           />
         </div>
         <div style={stateExampleBlockStyle}>
           <Typography variant="h6" sx={{ mb: 2 }}>3. null 반환 패턴</Typography>
           <ExampleTab
-            example={false ? <div>보임</div> : null}
-            code={`if (!visible) return null;`}
+            example={<div style={{ border: '1px solid #ddd', borderRadius: 8, padding: 16, background: '#fafbfc', minHeight: 32 }}>{false ? <div>보임</div> : null}</div>}
+            code={`<div style={{ border: '1px solid #ddd', borderRadius: 8, padding: 16, background: '#fafbfc', minHeight: 32 }}>{!visible && <div>이 내용은 visible이 true일 때만 보입니다.</div>}</div>`}
             desc={`컴포넌트에서 null을 반환하면 아무것도 렌더링되지 않습니다.`}
           />
         </div>
         <div style={stateExampleBlockStyle}>
           <Typography variant="h6" sx={{ mb: 2 }}>4. switch-case 패턴</Typography>
           <ExampleTab
-            example={<div>{(() => {
+            example={<div style={{ border: '1px solid #ddd', borderRadius: 8, padding: 16, background: '#fafbfc', minHeight: 32 }}>{(() => {
               const status: any = 'loading';
               switch (status) {
                 case 'loading': return '로딩중';
@@ -1876,13 +1890,88 @@ function VDomWindowDemo() {
                 default: return '완료';
               }
             })()}</div>}
-            code={`const status = 'loading';
-switch(status) {
-  case 'loading': return '로딩중';
-  case 'error': return '에러';
-  default: return '완료';
-}`}
+            code={`<div style={{ border: '1px solid #ddd', borderRadius: 8, padding: 16, background: '#fafbfc', minHeight: 32 }}>{(() => {
+              const status: any = 'loading';
+              switch (status) {
+                case 'loading': return '로딩중';
+                case 'error': return '에러';
+                default: return '완료';
+              }
+            })()}</div>`}
             desc={`복잡한 조건에는 switch-case를 활용할 수 있습니다.`}
+          />
+        </div>
+      </div>
+    ),
+  },
+
+  
+
+
+  stylingBasics: {
+    id: 'stylingBasics',
+    title: '스타일링 기초',
+    description: 'React에서 CSS 적용의 다양한 방법(직접, 모듈, styled-components 등) 실전 예제',
+    category: 'basics',
+    icon: '🎨',
+    prev: 'conditionalRendering',
+    next: 'vdom',
+    content: (
+      <div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>1. 인라인 스타일</Typography>
+          <ExampleTab
+            example={<div style={{ color: 'tomato', fontWeight: 'bold', padding: 8 }}>인라인 스타일 적용</div>}
+            code={`<div style={{ color: 'tomato', fontWeight: 'bold', padding: 8 }}>인라인 스타일 적용</div>`}
+            desc={`JSX의 style 속성에 객체 형태로 직접 스타일을 지정합니다.`}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>2. CSS 파일 import</Typography>
+          <ExampleTab
+            example={<div className="css-file-demo">CSS 파일 import 예시</div>}
+            code={`// App.css 또는 MyComponent.css
+.css-file-demo { color: #1976d2; font-weight: bold; padding: 8px; }
+
+// 컴포넌트 파일에서
+import './App.css';
+
+<div className="css-file-demo">CSS 파일 import 예시</div>`}
+            desc={`일반 CSS 파일을 import해서 className으로 스타일을 적용합니다.`}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>3. CSS 모듈</Typography>
+          <ExampleTab
+            example={<div className={"cssModuleDemo"}>CSS 모듈 예시</div>}
+            code={`// MyComponent.module.css
+.cssModuleDemo { color: #43a047; font-weight: bold; padding: 8px; }
+
+// MyComponent.tsx
+import styles from './MyComponent.module.css';
+
+<div className={styles.cssModuleDemo}>CSS 모듈 예시</div>`}
+            desc={`CSS 모듈을 import하면 클래스명이 충돌하지 않고, 객체 형태로 사용합니다.`}
+          />
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>4. styled-components</Typography>
+          <ExampleTab
+            example={<StyledButton>스타일드 버튼</StyledButton>}
+            code={`// styled-components 설치 필요: npm install styled-components
+import styled from 'styled-components';
+
+const StyledButton = styled.button\`
+  background: #ff9800;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-weight: bold;
+\`;
+
+<StyledButton>스타일드 버튼</StyledButton>`}
+            desc={`styled-components는 JS 파일 내에서 CSS-in-JS 방식으로 스타일을 작성할 수 있습니다.`}
           />
         </div>
       </div>
@@ -1890,7 +1979,6 @@ switch(status) {
   },
 };
   
-
 
 
 
@@ -2278,4 +2366,5 @@ function VDomWindowDemo() {
     </div>
   );
 }
+
 

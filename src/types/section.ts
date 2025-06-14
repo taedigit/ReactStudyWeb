@@ -31,7 +31,8 @@ export type SectionId =
   | 'axios'
   | 'tanstackquery'
   | 'customhooks'
-  | 'conditionalRendering';
+  | 'conditionalRendering'
+  | 'stylingBasics';
 
 export interface Section {
   id: SectionId;
