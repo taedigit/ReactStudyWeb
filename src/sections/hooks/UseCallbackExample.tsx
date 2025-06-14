@@ -1,8 +1,8 @@
 import { Button, TextField, Typography } from '@mui/material';
 import { memo, useState, useCallback, useEffect } from 'react';
-import { ExampleSection } from '../../components/ExampleSection';
+import { ExampleTab } from '../../components/ExampleTab';
 
-const descriptions = {
+/*const descriptions = {
   basicCallback: `useCallback은 메모이제이션된 콜백 함수를 반환합니다.
 - 의존성 배열이 변경될 때만 새로운 함수를 생성
 - 자식 컴포넌트에 전달되는 콜백 함수의 불필요한 재생성 방지
@@ -27,6 +27,17 @@ const descriptions = {
 - 훅이 반환하는 함수들을 메모이제이션
 - 훅을 사용하는 컴포넌트의 성능 최적화
 - 안정적인 함수 참조 제공`
+};*/
+
+const stateExampleBlockStyle = {
+  background: '#484f54',
+  padding: '1.5em 2em',
+  borderRadius: '8px',
+  border: '1px solid #eee',
+  marginTop: '1.2em',
+  marginBottom: '2em',
+  marginLeft: 0,
+  marginRight: 0,
 };
 
 // Demo Components
@@ -357,44 +368,46 @@ const CustomHooksDemo: React.FC = () => {
 export const UseCallbackExample = () => {
   return (
     <div>
-      <Typography variant="h4" gutterBottom>
-        useCallback Examples
-      </Typography>
-      <ExampleSection
-        title="Basic Callback"
-        description="Demonstrates basic usage of useCallback with a counter."
-        example={<BasicCallbackDemo />}
-        code={basicCallbackCode}
-        tooltip={descriptions.basicCallback}
-      />
-      <ExampleSection
-        title="Child Props"
-        description="Shows optimization with React.memo and useCallback."
-        example={<ChildPropsDemo />}
-        code={childPropsCode}
-        tooltip={descriptions.childProps}
-      />
-      <ExampleSection
-        title="Event Handler"
-        description="Demonstrates event handler management with useCallback."
-        example={<EventHandlersDemo />}
-        code={eventHandlersCode}
-        tooltip={descriptions.eventHandler}
-      />
-      <ExampleSection
-        title="Effect Dependencies"
-        description="Shows useCallback with useEffect dependencies."
-        example={<EffectDepsDemo />}
-        code={effectDepsCode}
-        tooltip={descriptions.effectDeps}
-      />
-      <ExampleSection
-        title="Custom Hooks"
-        description="Demonstrates using useCallback in custom hooks."
-        example={<CustomHooksDemo />}
-        code={customHooksCode}
-        tooltip={descriptions.customHooks}
-      />
+      <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>1. 기본 콜백 (Basic Callback)</Typography>
+        <ExampleTab
+          example={<BasicCallbackDemo />}
+          code={basicCallbackCode}
+          desc={`useCallback은 메모이제이션된 콜백 함수를 반환합니다.\n- 의존성 배열이 변경될 때만 새로운 함수를 생성\n- 자식 컴포넌트에 전달되는 콜백 함수의 불필요한 재생성 방지\n- React.memo와 함께 사용하면 더 효과적`}
+        />
+      </div>
+      <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>2. 자식 컴포넌트 props 최적화 (Child Props)</Typography>
+        <ExampleTab
+          example={<ChildPropsDemo />}
+          code={childPropsCode}
+          desc={`자식 컴포넌트의 props로 전달되는 콜백 최적화:\n- React.memo로 감싼 자식 컴포넌트에 콜백 전달\n- useCallback으로 콜백 메모이제이션\n- 부모 컴포넌트의 상태가 변경되어도 자식은 리렌더링되지 않음`}
+        />
+      </div>
+      <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>3. 이벤트 핸들러 (Event Handler)</Typography>
+        <ExampleTab
+          example={<EventHandlersDemo />}
+          code={eventHandlersCode}
+          desc={`이벤트 핸들러에서의 활용:\n- 이벤트 리스너 등록/제거 시 안정적인 참조 유지\n- useEffect의 의존성 배열에서 사용\n- 불필요한 이벤트 리스너 재등록 방지`}
+        />
+      </div>
+      <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>4. useEffect 의존성 (Effect Dependencies)</Typography>
+        <ExampleTab
+          example={<EffectDepsDemo />}
+          code={effectDepsCode}
+          desc={`useEffect 의존성으로 사용:\n- API 호출 함수를 useCallback으로 메모이제이션\n- 무한 루프 방지\n- 불필요한 API 호출 방지`}
+        />
+      </div>
+      <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>5. 커스텀 훅에서의 활용 (Custom Hooks)</Typography>
+        <ExampleTab
+          example={<CustomHooksDemo />}
+          code={customHooksCode}
+          desc={`커스텀 훅에서의 활용:\n- 훅이 반환하는 함수들을 메모이제이션\n- 훅을 사용하는 컴포넌트의 성능 최적화\n- 안정적인 함수 참조 제공`}
+        />
+      </div>
     </div>
   );
 }; 
