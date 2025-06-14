@@ -68,10 +68,44 @@ font-weight: bold;
 
 
 const setupContent = (
-
-  
   <div>
     <h2>React 설치 방법</h2>
+    {/* 리액트 개발 에디터 소개 추가 */}
+    <div style={{
+      marginBottom: '2em',
+      background: '#23272f',
+      padding: '1.2em 2em',
+      borderRadius: '8px',
+      border: '1px solid #444',
+      marginTop: '1.2em',
+      marginLeft: 0,
+      marginRight: 0,
+      color: '#eaeaea',
+    }}>
+      <h3 style={{ marginTop: 0 }}>💻 리액트 개발에 추천하는 에디터</h3>
+      <ul style={{ marginBottom: 0, listStylePosition: 'inside' }}>
+        <li style={{ marginBottom: '0.7em' }}>
+          <b>Visual Studio Code (VS Code)</b> – 무료, 가볍고 빠르며, 리액트/자바스크립트 생태계에서 가장 널리 사용<br />
+          <a href="https://code.visualstudio.com/" target="_blank" rel="noopener noreferrer">VS Code 공식 사이트</a>
+        </li>
+        <li style={{ marginBottom: '0.7em' }}>
+          <b>WebStorm</b> – JetBrains에서 만든 강력한 유료 IDE, 자동완성/리팩토링/디버깅 등 고급 기능 제공<br />
+          <a href="https://www.jetbrains.com/webstorm/" target="_blank" rel="noopener noreferrer">WebStorm 공식 사이트</a>
+        </li>
+        <li style={{ marginBottom: '0.7em' }}>
+          <b>기타</b>: Sublime Text, Atom, Vim 등도 사용 가능
+        </li>
+      </ul>
+      <div style={{ marginTop: '0.7em', fontSize: 15 }}>
+        <b>VS Code 추천 확장:</b> <br />
+        <a href="https://marketplace.visualstudio.com/items?itemName=dsznajder.es7-react-js-snippets" style={{ color: '#8fd' }} target="_blank" rel="noopener noreferrer">ES7+ React/Redux/React-Native snippets</a>,
+        <a href="https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode" style={{ color: '#8fd' }} target="_blank" rel="noopener noreferrer">Prettier</a>,
+        <a href="https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint" style={{ color: '#8fd' }} target="_blank" rel="noopener noreferrer">ESLint</a>,
+        <span style={{ color: '#8fd' }}>Bracket Pair Colorizer</span>,
+        <a href="https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens" style={{ color: '#8fd' }} target="_blank" rel="noopener noreferrer">GitLens</a> 등<br />
+        <span style={{ color: '#aaa' }}>※ 확장 설치로 코드 자동완성, 포맷팅, 문법 검사, Git 연동 등 개발 효율이 크게 향상됩니다.</span>
+      </div>
+    </div>
     <ul
       style={{
         marginBottom: '2em',
@@ -578,7 +612,7 @@ export const sections: Record<SectionId, Section> = {
     category: 'getting_started',
     icon: '📖',
     prev: null,
-    next: 'setup',
+    next: 'editors',
     content: (
       <div>
         <h2>React란?</h2>
@@ -624,13 +658,81 @@ export const sections: Record<SectionId, Section> = {
       </div>
     ),
   },
+  editors: {
+    id: 'editors',
+    title: 'React 개발 에디터 소개',
+    description: 'React 개발에 적합한 에디터(VS Code, WebStorm 등)와 장단점, 추천 확장 안내',
+    category: 'getting_started',
+    icon: '📝',
+    prev: 'intro',
+    next: 'setup',
+    content: (
+      <div>
+        <h2>React 개발에 추천하는 에디터</h2>
+        <div style={{
+          marginBottom: '2em',
+          background: '#23272f',
+          padding: '1.2em 2em',
+          borderRadius: '8px',
+          border: '1px solid #444',
+          marginTop: '1.2em',
+          marginLeft: 0,
+          marginRight: 0,
+          color: '#eaeaea',
+        }}>
+          <h3 style={{ marginTop: 0 }}>1. Visual Studio Code (VS Code)</h3>
+          <ul style={{ marginBottom: 0, listStylePosition: 'inside' }}>
+            <li style={{ marginBottom: '0.7em' }}><b>장점:</b> 무료, 가볍고 빠름, 다양한 확장, 강력한 커뮤니티, 리액트/JS 생태계 표준</li>
+            <li style={{ marginBottom: '0.7em' }}><b>단점:</b> 대형 프로젝트에서 일부 기능(리팩토링 등)은 WebStorm보다 약간 부족할 수 있음</li>
+            <li style={{ marginBottom: '0.7em' }}><b>공식 사이트:</b> <a href="https://code.visualstudio.com/" target="_blank" rel="noopener noreferrer">VS Code 바로가기</a></li>
+          </ul>
+          <div style={{ marginTop: '0.7em', fontSize: 15 }}>
+            <b>추천 확장:</b> <span style={{ color: '#8fd' }}>ES7+ React/Redux/React-Native snippets</span>, <span style={{ color: '#8fd' }}>Prettier</span>, <span style={{ color: '#8fd' }}>ESLint</span>, <span style={{ color: '#8fd' }}>GitLens</span> 등<br />
+            <span style={{ color: '#aaa' }}>※ 확장 설치로 코드 자동완성, 포맷팅, 문법 검사, Git 연동 등 개발 효율이 크게 향상됩니다.</span>
+          </div>
+        </div>
+        <div style={{
+          marginBottom: '2em',
+          background: '#23272f',
+          padding: '1.2em 2em',
+          borderRadius: '8px',
+          border: '1px solid #444',
+          color: '#eaeaea',
+        }}>
+          <h3 style={{ marginTop: 0 }}>2. WebStorm</h3>
+          <ul style={{ marginBottom: 0, listStylePosition: 'inside' }}>
+            <li style={{ marginBottom: '0.7em' }}><b>장점:</b> 강력한 자동완성, 리팩토링, 디버깅, 대형 프로젝트에 최적화</li>
+            <li style={{ marginBottom: '0.7em' }}><b>단점:</b> 유료(학생/오픈소스 무료), 무겁고 느릴 수 있음</li>
+            <li style={{ marginBottom: '0.7em' }}><b>공식 사이트:</b> <a href="https://www.jetbrains.com/webstorm/" target="_blank" rel="noopener noreferrer">WebStorm 바로가기</a></li>
+          </ul>
+        </div>
+        <div style={{
+          marginBottom: '2em',
+          background: '#23272f',
+          padding: '1.2em 2em',
+          borderRadius: '8px',
+          border: '1px solid #444',
+          color: '#eaeaea',
+        }}>
+          <h3 style={{ marginTop: 0 }}>3. 기타 에디터</h3>
+          <ul style={{ marginBottom: 0, listStylePosition: 'inside' }}>
+            <li>Sublime Text, Atom, Vim 등도 사용 가능(가벼움, 커스터마이즈 강점)</li>
+          </ul>
+        </div>
+        <div style={{ color: '#aaa', fontSize: 14 }}>
+          <b>Tip:</b> 대부분의 리액트 개발자는 VS Code를 사용하며, 공식 문서/예제/강의도 VS Code 기준이 많습니다.<br />
+          처음 시작한다면 VS Code를 강력 추천합니다!
+        </div>
+      </div>
+    ),
+  },
   setup: {
     id: 'setup',
     title: 'Setup',
     description: 'React 개발 환경을 설정하는 방법을 알아봅니다.',
     category: 'getting_started',
     icon: '🛠️',
-    prev: 'intro',
+    prev: 'editors',
     next: 'components',
     content: setupContent,
   },

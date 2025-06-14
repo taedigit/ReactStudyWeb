@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 
 export type SectionId = 
   | 'intro' 
+  | 'editors'
   | 'setup'
   | 'bundlers'
   | 'jsx'
