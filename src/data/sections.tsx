@@ -615,89 +615,51 @@ export const sections: Record<SectionId, Section> = {
     next: 'props',
     content: (
       <div>
-        <h2>컴포넌트란?</h2>
-        <ul style={{
-          marginBottom: '2em',
-          background: '#484f54',
-          padding: '1.5em 2em',
-          borderRadius: '8px',
-          border: '1px solid #eee',
-          marginTop: '1.2em',
-          marginLeft: 0,
-          marginRight: 0,
-          listStylePosition: 'inside',
-        }}>
-          <li style={{ marginBottom: '0.7em' }}><b>컴포넌트</b>는 UI를 구성하는 독립적인 블록입니다.</li>
-          <li style={{ marginBottom: '0.7em' }}>각 컴포넌트는 자신만의 상태와 props를 가질 수 있습니다.</li>
-          <li style={{ marginBottom: '0.7em' }}>재사용성과 유지보수성이 뛰어납니다.</li>
-        </ul>
-        {/* 함수형 컴포넌트 예제 */}
-        <h3>1. 함수형 컴포넌트</h3>
         <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>1. 함수형 컴포넌트 (Function Component)</Typography>
           <ExampleTab
             example={<Welcome name="React" />}
-            code={`function Welcome(props) {
-  return <h1>Hello, {props.name}!</h1>;
-}`}
+            code={`function Welcome(props) {\n  return <h1>Hello, {props.name}!</h1>;\n}`}
             desc={`함수형 컴포넌트는 가장 기본적인 React 컴포넌트 작성 방식입니다.\nprops를 받아서 JSX를 반환하며, 재사용성과 테스트가 용이합니다.`}
           />
         </div>
-        {/* JSX 예제 */}
-        <h3>2. JSX</h3>
         <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>2. JSX</Typography>
           <ExampleTab
             example={<div>{'<Welcome name="React" />'}</div>}
             code={`<Welcome name=\"React\" />`}
             desc={`JSX는 JavaScript에서 XML처럼 태그를 작성할 수 있게 해주는 문법입니다.\n컴포넌트를 HTML 태그처럼 사용할 수 있어 가독성이 높아집니다.`}
           />
         </div>
-        {/* 초급 예제 */}
-        <h3>3. 간단한 인사 컴포넌트</h3>
         <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>3. 간단한 인사 컴포넌트 (Simple Greeting)</Typography>
           <ExampleTab
             example={<div>안녕하세요!</div>}
             code={`function Hello() {\n  return <div>안녕하세요!<\/div>;\n}`}
             desc={`간단한 함수형 컴포넌트 예제입니다.\nHello 컴포넌트는 항상 동일한 인사말을 반환합니다.`}
           />
         </div>
-        {/* 중급 예제 */}
-        <h3>4. props와 조건부 렌더링</h3>
         <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>4. props와 조건부 렌더링 (Props & Conditional Rendering)</Typography>
           <ExampleTab
             example={<Greeting name="홍길동" />}
             code={`function Greeting({ name }) {\n  return <h2>{name ? \`안녕하세요, \${name}님!\` : '이름을 입력하세요.'}<\/h2>;\n}`}
             desc={`props로 받은 값에 따라 다른 결과를 보여주는 조건부 렌더링 예제입니다.\nname이 있으면 인사말, 없으면 안내 메시지를 출력합니다.`}
           />
         </div>
-        {/* 고급 예제 */}
-        <h3>5. 상태와 이벤트 활용</h3>
         <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>5. 상태와 이벤트 활용 (State & Event)</Typography>
           <ExampleTab
             example={<CounterButtonsDemo />}
             code={`import { useState } from 'react';\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  return (\n    <div>\n      <button onClick={() => setCount(count - 1)}>-</button>\n      <span style={{margin: '0 1em'}}>{count}</span>\n      <button onClick={() => setCount(count + 1)}>+</button>\n    </div>\n  );\n}`}
             desc={`useState로 상태를 관리하고, 버튼 클릭 이벤트로 값을 증감시키는 카운터 예제입니다.\nReact의 상태 관리와 이벤트 처리의 기본을 보여줍니다.`}
           />
         </div>
-        {/* 실무 예제 */}
-        <h3>6. 리스트 필터링 & 동적 렌더링</h3>
         <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>6. 리스트 필터링 & 동적 렌더링 (List Filtering & Dynamic Rendering)</Typography>
           <ExampleTab
             example={<UserListDemo />}
-            code={`import { useState } from 'react';
-
-function UserList() {
-  const [filter, setFilter] = useState('');
-  const users = ['Alice', 'Bob', 'Charlie', 'David'];
-  const filtered = users.filter(u => u.toLowerCase().includes(filter.toLowerCase()));
-  return (
-    <div>
-      <input value={filter} onChange={e => setFilter(e.target.value)} placeholder="이름 검색" />
-      <ul>
-        {filtered.map(u => <li key={u}>{u}</li>)}
-      </ul>
-    </div>
-  );
-}`}
+            code={`import { useState } from 'react';\n\nfunction UserList() {\n  const [filter, setFilter] = useState('');\n  const users = ['Alice', 'Bob', 'Charlie', 'David'];\n  const filtered = users.filter(u => u.toLowerCase().includes(filter.toLowerCase()));\n  return (\n    <div>\n      <input value={filter} onChange={e => setFilter(e.target.value)} placeholder="이름 검색" />\n      <ul>\n        {filtered.map(u => <li key={u}>{u}</li>)}\n      </ul>\n    </div>\n  );\n}`}
             desc={`입력값에 따라 리스트를 실시간으로 필터링하는 예제입니다.\nuseState로 filter 상태를 관리하고, 배열의 filter 메서드를 활용합니다.`}
           />
         </div>
