@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Box, Typography, Paper, Button, CircularProgress, TextField } from '@mui/material';
+import { Box, Typography, Button, CircularProgress, TextField } from '@mui/material';
 import { atom, selector, atomFamily, selectorFamily, useRecoilState, useRecoilValue, RecoilRoot } from 'recoil';
 import ErrorBoundary from '../../components/ErrorBoundary';
 import { ExampleTab } from '../../components/ExampleTab';

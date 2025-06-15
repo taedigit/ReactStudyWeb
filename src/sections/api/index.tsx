@@ -1,60 +1,362 @@
-import React from 'react';
-import { Typography, Box, Paper, Button } from '@mui/material';
-import { atom, selector, useRecoilState, useRecoilValue } from 'recoil';
+import React, { useState } from 'react';
+import { Typography, Box, Button, CircularProgress, TextField } from '@mui/material';
+import { ExampleTab } from '../../components/ExampleTab';
 
-interface Example {
-  title: string;
-  description: string;
-  code: string;
-  explanation: string;
-  demo?: React.ReactNode;
-}
+const apiExampleBlockStyle = {
+  background: '#484f54',
+  padding: '1.5em 2em',
+  borderRadius: '8px',
+  border: '1px solid #eee',
+  marginTop: '1.2em',
+  marginBottom: '2em',
+  marginLeft: 0,
+  marginRight: 0,
+};
 
-// Recoil atoms and selectors
-const apiExampleCounterState = atom<number>({
-  key: 'apiExampleCounterState',
-  default: 0,
-});
+const descriptions = {
+  basicApi: `REST API를 사용한 기본적인 데이터 가져오기 예제입니다.
+- fetch API를 사용하여 서버로부터 데이터를 가져옵니다.
+- try-catch 구문으로 에러를 처리합니다.
+- async/await를 사용하여 비동기 처리를 합니다.`,
 
-const apiExampleDoubleCountState = selector<number>({
-  key: 'apiExampleDoubleCountState',
-  get: ({get}) => {
-    const count = get(apiExampleCounterState);
-    return count * 2;
-  },
-});
+  postRequest: `서버에 데이터를 전송하는 POST 요청 예제입니다.
+- method, headers, body를 설정하여 요청을 보냅니다.
+- Content-Type 헤더로 JSON 데이터 전송을 명시합니다.
+- 응답 데이터를 처리하고 에러를 핸들링합니다.`,
 
-const Counter: React.FC = () => {
-  const [count, setCount] = useRecoilState(apiExampleCounterState);
-  const doubleCount = useRecoilValue(apiExampleDoubleCountState);
+  authToken: `보안된 API 엔드포인트에 접근하기 위한 인증 토큰 사용 예제입니다.
+- Authorization 헤더에 Bearer 토큰을 포함시킵니다.
+- 인증이 필요한 API 요청을 처리합니다.
+- 토큰 관리와 보안을 고려합니다.`,
+
+  fileUpload: `FormData를 사용하여 파일을 업로드하는 예제입니다.
+- FormData 객체로 파일 데이터를 전송합니다.
+- 멀티파트 폼 데이터 형식을 자동으로 처리합니다.
+- 파일 업로드 진행 상태를 모니터링할 수 있습니다.`,
+
+  concurrentRequests: `Promise.all을 사용하여 여러 API 요청을 동시에 처리하는 예제입니다.
+- 여러 요청을 병렬로 처리하여 성능을 최적화합니다.
+- Promise.all로 모든 응답을 한번에 처리합니다.
+- 에러 처리와 타임아웃 설정이 중요합니다.`,
+
+  timeout: `AbortController를 사용하여 API 요청에 타임아웃을 설정하는 예제입니다.
+- 요청 시간 제한을 설정하여 무한 대기를 방지합니다.
+- AbortController로 요청을 수동으로 취소할 수 있습니다.
+- 네트워크 상태에 따른 예외 처리가 가능합니다.`,
+
+  putDelete: `PUT과 DELETE 메서드를 사용한 API 요청 예제입니다.
+- 데이터 수정과 삭제 작업을 처리합니다.
+- RESTful API의 기본 메서드를 활용합니다.
+- 응답 상태 코드에 따른 처리를 구현합니다.`
+};
+
+// 기본 API 호출 예제 컴포넌트
+const BasicApiDemo = () => {
+  const [data, setData] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchData = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch('https://jsonplaceholder.typicode.com/users/1');
+      const result = await response.json();
+      setData(result);
+    } catch (err) {
+      setError('데이터 가져오기 실패');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <Box sx={{ mt: 2 }}>
-      <Typography variant="body1">카운트: {count}</Typography>
-      <Typography variant="body1">2배 값: {doubleCount}</Typography>
-      <Button 
-        variant="contained" 
-        sx={{ mr: 1 }}
-        onClick={() => setCount((c: number) => c + 1)}
-      >
-        증가
+    <Box>
+      <Button variant="contained" onClick={fetchData} disabled={loading}>
+        데이터 가져오기
       </Button>
-      <Button 
-        variant="outlined"
-        onClick={() => setCount((c: number) => c - 1)}
-      >
-        감소
-      </Button>
+      {loading && <CircularProgress size={24} sx={{ ml: 2 }} />}
+      {error && <Typography color="error" sx={{ mt: 2 }}>{error}</Typography>}
+      {data && (
+        <pre style={{ background: '#f5f5f5', padding: '1em', borderRadius: '4px', marginTop: '1em' }}>
+          {JSON.stringify(data, null, 2)}
+        </pre>
+      )}
     </Box>
   );
 };
 
-const examples: Example[] = [
-  {
-    title: '기본 API 호출',
-    description: 'REST API를 사용한 기본적인 데이터 가져오기 예제입니다.',
-    code: `
-// GET 요청 예제
+// POST 요청 예제 컴포넌트
+const PostRequestDemo = () => {
+  const [title, setTitle] = useState('');
+  const [body, setBody] = useState('');
+  const [response, setResponse] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ title, body, userId: 1 }),
+      });
+      const result = await response.json();
+      setResponse(result);
+    } catch (err) {
+      setError('데이터 전송 실패');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Box>
+      <TextField
+        label="제목"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        fullWidth
+        margin="normal"
+      />
+      <TextField
+        label="내용"
+        value={body}
+        onChange={(e) => setBody(e.target.value)}
+        fullWidth
+        margin="normal"
+        multiline
+        rows={3}
+      />
+      <Button variant="contained" onClick={handleSubmit} disabled={loading} sx={{ mt: 2 }}>
+        전송
+      </Button>
+      {loading && <CircularProgress size={24} sx={{ ml: 2 }} />}
+      {error && <Typography color="error" sx={{ mt: 2 }}>{error}</Typography>}
+      {response && (
+        <pre style={{ background: '#f5f5f5', padding: '1em', borderRadius: '4px', marginTop: '1em' }}>
+          {JSON.stringify(response, null, 2)}
+        </pre>
+      )}
+    </Box>
+  );
+};
+
+// 파일 업로드 예제 컴포넌트
+const FileUploadDemo = () => {
+  const [file, setFile] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setFile(file);
+      // 이미지 미리보기 생성
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  return (
+    <Box>
+      <input
+        accept="image/*"
+        style={{ display: 'none' }}
+        id="file-upload"
+        type="file"
+        onChange={handleFileChange}
+      />
+      <label htmlFor="file-upload">
+        <Button variant="contained" component="span">
+          파일 선택
+        </Button>
+      </label>
+      {file && <Typography sx={{ mt: 2 }}>선택된 파일: {file.name}</Typography>}
+      {preview && (
+        <Box sx={{ mt: 2 }}>
+          <img src={preview} alt="Preview" style={{ maxWidth: '100%', maxHeight: '200px' }} />
+        </Box>
+      )}
+    </Box>
+  );
+};
+
+// 동시 요청 처리 예제 컴포넌트
+const ConcurrentRequestsDemo = () => {
+  const [data, setData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchMultipleData = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const urls = [
+        'https://jsonplaceholder.typicode.com/posts/1',
+        'https://jsonplaceholder.typicode.com/posts/2',
+        'https://jsonplaceholder.typicode.com/posts/3'
+      ];
+      const promises = urls.map(url => fetch(url).then(res => res.json()));
+      const results = await Promise.all(promises);
+      setData(results);
+    } catch (err) {
+      setError('동시 요청 처리 실패');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Box>
+      <Button variant="contained" onClick={fetchMultipleData} disabled={loading}>
+        여러 데이터 가져오기
+      </Button>
+      {loading && <CircularProgress size={24} sx={{ ml: 2 }} />}
+      {error && <Typography color="error" sx={{ mt: 2 }}>{error}</Typography>}
+      {data.length > 0 && (
+        <pre style={{ background: '#f5f5f5', padding: '1em', borderRadius: '4px', marginTop: '1em' }}>
+          {JSON.stringify(data, null, 2)}
+        </pre>
+      )}
+    </Box>
+  );
+};
+
+// 타임아웃 설정 예제 컴포넌트
+const TimeoutDemo = () => {
+  const [data, setData] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchWithTimeout = async () => {
+    setLoading(true);
+    setError(null);
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+    try {
+      const response = await fetch('https://jsonplaceholder.typicode.com/posts/1', {
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+      const result = await response.json();
+      setData(result);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.name === 'AbortError' ? '요청 시간 초과' : '요청 실패');
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Box>
+      <Button variant="contained" onClick={fetchWithTimeout} disabled={loading}>
+        5초 타임아웃으로 요청
+      </Button>
+      {loading && <CircularProgress size={24} sx={{ ml: 2 }} />}
+      {error && <Typography color="error" sx={{ mt: 2 }}>{error}</Typography>}
+      {data && (
+        <pre style={{ background: '#f5f5f5', padding: '1em', borderRadius: '4px', marginTop: '1em' }}>
+          {JSON.stringify(data, null, 2)}
+        </pre>
+      )}
+    </Box>
+  );
+};
+
+// PUT/DELETE 요청 예제 컴포넌트
+const PutDeleteDemo = () => {
+  const [postId, setPostId] = useState('1');
+  const [title, setTitle] = useState('');
+  const [response, setResponse] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const updatePost = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ title, body: 'body', userId: 1 }),
+      });
+      const result = await response.json();
+      setResponse(result);
+    } catch (err) {
+      setError('업데이트 실패');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deletePost = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        setResponse({ message: '삭제 성공' });
+      } else {
+        throw new Error('삭제 실패');
+      }
+    } catch (err) {
+      setError('삭제 실패');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Box>
+      <TextField
+        label="게시물 ID"
+        value={postId}
+        onChange={(e) => setPostId(e.target.value)}
+        type="number"
+        margin="normal"
+        sx={{ mr: 2 }}
+      />
+      <TextField
+        label="새 제목"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        margin="normal"
+      />
+      <Box sx={{ mt: 2 }}>
+        <Button variant="contained" onClick={updatePost} disabled={loading} sx={{ mr: 2 }}>
+          수정
+        </Button>
+        <Button variant="outlined" color="error" onClick={deletePost} disabled={loading}>
+          삭제
+        </Button>
+      </Box>
+      {loading && <CircularProgress size={24} sx={{ ml: 2 }} />}
+      {error && <Typography color="error" sx={{ mt: 2 }}>{error}</Typography>}
+      {response && (
+        <pre style={{ background: '#f5f5f5', padding: '1em', borderRadius: '4px', marginTop: '1em' }}>
+          {JSON.stringify(response, null, 2)}
+        </pre>
+      )}
+    </Box>
+  );
+};
+
+const basicApiCode = `// GET 요청 예제
 const fetchData = async () => {
   try {
     const response = await fetch('https://api.example.com/data');
@@ -63,14 +365,9 @@ const fetchData = async () => {
   } catch (error) {
     console.error('데이터 가져오기 실패:', error);
   }
-}`,
-    explanation: '위 예제는 기본적인 fetch API를 사용하여 서버로부터 데이터를 가져오는 방법을 보여줍니다. try-catch 구문을 사용하여 에러 처리도 포함되어 있습니다.'
-  },
-  {
-    title: 'POST 요청 보내기',
-    description: '서버에 데이터를 전송하는 POST 요청 예제입니다.',
-    code: `
-// POST 요청 예제
+}`;
+
+const postRequestCode = `// POST 요청 예제
 const sendData = async (data) => {
   try {
     const response = await fetch('https://api.example.com/create', {
@@ -85,14 +382,9 @@ const sendData = async (data) => {
   } catch (error) {
     console.error('데이터 전송 실패:', error);
   }
-}`,
-    explanation: 'POST 요청을 보낼 때는 method, headers, body를 설정해야 합니다. Content-Type 헤더는 JSON 데이터를 전송한다는 것을 서버에 알려줍니다.'
-  },
-  {
-    title: '인증 토큰 사용하기',
-    description: '보안된 API 엔드포인트에 접근하기 위한 인증 토큰 사용 예제입니다.',
-    code: `
-// 인증 토큰을 사용한 요청 예제
+}`;
+
+const authTokenCode = `// 인증 토큰을 사용한 요청 예제
 const fetchProtectedData = async (token) => {
   try {
     const response = await fetch('https://api.example.com/protected', {
@@ -105,14 +397,9 @@ const fetchProtectedData = async (token) => {
   } catch (error) {
     console.error('보호된 데이터 가져오기 실패:', error);
   }
-}`,
-    explanation: '많은 API는 보안을 위해 인증 토큰을 요구합니다. Authorization 헤더에 Bearer 토큰을 포함시켜 인증된 요청을 보낼 수 있습니다.'
-  },
-  {
-    title: '파일 업로드하기',
-    description: 'FormData를 사용하여 파일을 업로드하는 예제입니다.',
-    code: `
-// 파일 업로드 예제
+}`;
+
+const fileUploadCode = `// 파일 업로드 예제
 const uploadFile = async (file) => {
   try {
     const formData = new FormData();
@@ -127,14 +414,9 @@ const uploadFile = async (file) => {
   } catch (error) {
     console.error('파일 업로드 실패:', error);
   }
-}`,
-    explanation: 'FormData 객체를 사용하면 파일을 쉽게 업로드할 수 있습니다. Content-Type 헤더를 설정하지 않아도 브라우저가 자동으로 처리합니다.'
-  },
-  {
-    title: '동시 요청 처리하기',
-    description: 'Promise.all을 사용하여 여러 API 요청을 동시에 처리하는 예제입니다.',
-    code: `
-// 동시 요청 처리 예제
+}`;
+
+const concurrentRequestsCode = `// 동시 요청 처리 예제
 const fetchMultipleData = async (urls) => {
   try {
     const promises = urls.map(url => 
@@ -146,14 +428,9 @@ const fetchMultipleData = async (urls) => {
   } catch (error) {
     console.error('동시 요청 처리 실패:', error);
   }
-}`,
-    explanation: 'Promise.all을 사용하면 여러 API 요청을 병렬로 처리할 수 있어 전체 응답 시간을 줄일 수 있습니다. 단, 하나의 요청이라도 실패하면 전체가 실패합니다.'
-  },
-  {
-    title: '요청 타임아웃 설정하기',
-    description: 'AbortController를 사용하여 API 요청에 타임아웃을 설정하는 예제입니다.',
-    code: `
-// 타임아웃 설정 예제
+}`;
+
+const timeoutCode = `// 타임아웃 설정 예제
 const fetchWithTimeout = async (url, timeout = 5000) => {
   try {
     const controller = new AbortController();
@@ -172,14 +449,9 @@ const fetchWithTimeout = async (url, timeout = 5000) => {
     }
     throw error;
   }
-}`,
-    explanation: 'AbortController를 사용하면 요청에 타임아웃을 설정할 수 있습니다. 지정된 시간 내에 응답이 오지 않으면 요청이 자동으로 중단됩니다.'
-  },
-  {
-    title: 'PUT/DELETE 요청 예제',
-    description: 'PUT과 DELETE 메서드를 사용한 API 요청 예제입니다.',
-    code: `
-// PUT 요청 예제
+}`;
+
+const putDeleteCode = `// PUT 요청 예제
 const updateData = async (id, data) => {
   try {
     const response = await fetch(\`https://api.example.com/items/\${id}\`, {
@@ -205,472 +477,74 @@ const deleteData = async (id) => {
   } catch (error) {
     console.error('데이터 삭제 실패:', error);
   }
-}`,
-    explanation: 'PUT 요청은 리소스를 수정할 때, DELETE 요청은 리소스를 삭제할 때 사용됩니다. PUT 요청은 POST와 비슷하게 body를 포함할 수 있습니다.'
-  },
-  {
-    title: '상세 에러 처리',
-    description: '다양한 HTTP 상태 코드와 에러 상황에 대한 처리 예제입니다.',
-    code: `
-// 상세 에러 처리 예제
-const fetchWithErrorHandling = async (url) => {
-  try {
-    const response = await fetch(url);
-    
-    if (!response.ok) {
-      switch (response.status) {
-        case 400:
-          throw new Error('잘못된 요청입니다.');
-        case 401:
-          throw new Error('인증이 필요합니다.');
-        case 403:
-          throw new Error('접근 권한이 없습니다.');
-        case 404:
-          throw new Error('리소스를 찾을 수 없습니다.');
-        case 500:
-          throw new Error('서버 내부 오류가 발생했습니다.');
-        default:
-          throw new Error('알 수 없는 오류가 발생했습니다.');
-      }
-    }
-
-    return await response.json();
-  } catch (error) {
-    if (error instanceof TypeError) {
-      console.error('네트워크 오류:', error);
-    } else {
-      console.error('API 오류:', error.message);
-    }
-    throw error;
-  }
-}`,
-    explanation: '상태 코드별로 적절한 에러 메시지를 제공하고, 네트워크 오류와 API 오류를 구분하여 처리합니다.'
-  },
-  {
-    title: 'Recoil 기본 사용법',
-    description: 'Recoil을 사용한 상태 관리 기본 예제입니다.',
-    code: `
-// 상태 정의
-const counterState = atom({
-  key: 'counterState',
-  default: 0,
-});
-
-// 파생 상태 정의
-const doubleCountState = selector({
-  key: 'doubleCountState',
-  get: ({get}) => {
-    const count = get(counterState);
-    return count * 2;
-  },
-});
-
-// 컴포넌트에서 사용
-const Counter = () => {
-  const [count, setCount] = useRecoilState(counterState);
-  const doubleCount = useRecoilValue(doubleCountState);
-
-  return (
-    <div>
-      <p>카운트: {count}</p>
-      <p>2배 값: {doubleCount}</p>
-      <button onClick={() => setCount(c => c + 1)}>증가</button>
-      <button onClick={() => setCount(c => c - 1)}>감소</button>
-    </div>
-  );
-};`,
-    explanation: 'Recoil의 기본적인 사용법을 보여줍니다. atom으로 상태를 정의하고, selector로 파생 상태를 만들며, useRecoilState와 useRecoilValue로 상태를 사용합니다.',
-    demo: <Counter />
-  },
-  {
-    title: 'Recoil 비동기 셀렉터',
-    description: 'Recoil의 비동기 셀렉터를 사용한 데이터 페칭 예제입니다.',
-    code: `
-// 비동기 셀렉터 정의
-const userDataState = selector({
-  key: 'userDataState',
-  get: async () => {
-    const response = await fetch('https://api.example.com/user');
-    return response.json();
-  },
-});
-
-// 컴포넌트에서 사용
-const UserProfile = () => {
-  const userData = useRecoilValue(userDataState);
-  
-  return (
-    <div>
-      <h2>{userData.name}</h2>
-      <p>{userData.email}</p>
-    </div>
-  );
-};`,
-    explanation: 'Recoil의 selector를 사용하여 비동기 데이터를 처리하는 방법을 보여줍니다. Suspense와 함께 사용하면 로딩 상태를 자동으로 처리할 수 있습니다.'
-  },
-  {
-    title: 'Recoil 패밀리',
-    description: 'Recoil의 atomFamily와 selectorFamily를 사용한 예제입니다.',
-    code: `
-// atom 패밀리 정의
-const todoState = atomFamily({
-  key: 'todoState',
-  default: (id: number) => ({
-    id,
-    text: '',
-    completed: false,
-  }),
-});
-
-// selector 패밀리 정의
-const todoStatsState = selectorFamily({
-  key: 'todoStatsState',
-  get: (id: number) => ({get}) => {
-    const todo = get(todoState(id));
-    return {
-      ...todo,
-      uppercase: todo.text.toUpperCase(),
-    };
-  },
-});
-
-// 컴포넌트에서 사용
-const TodoItem = ({id}: {id: number}) => {
-  const [todo, setTodo] = useRecoilState(todoState(id));
-  const stats = useRecoilValue(todoStatsState(id));
-
-  return (
-    <div>
-      <input
-        value={todo.text}
-        onChange={e => setTodo({...todo, text: e.target.value})}
-      />
-      <p>대문자: {stats.uppercase}</p>
-    </div>
-  );
-};`,
-    explanation: 'atomFamily와 selectorFamily를 사용하면 동적으로 상태를 생성하고 관리할 수 있습니다. ID나 다른 매개변수를 기반으로 여러 상태를 효율적으로 관리할 수 있습니다.'
-  },
-  {
-    title: '업로드 진행률 모니터링',
-    description: 'XMLHttpRequest를 사용하여 파일 업로드 진행률을 모니터링하는 예제입니다.',
-    code: `
-// 진행률 모니터링 예제
-const uploadWithProgress = (file, onProgress) => {
-  return new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest();
-    
-    xhr.upload.addEventListener('progress', (event) => {
-      if (event.lengthComputable) {
-        const progress = (event.loaded / event.total) * 100;
-        onProgress(progress);
-      }
-    });
-
-    xhr.addEventListener('load', () => {
-      if (xhr.status === 200) {
-        resolve(JSON.parse(xhr.response));
-      } else {
-        reject(new Error('업로드 실패'));
-      }
-    });
-
-    xhr.addEventListener('error', () => {
-      reject(new Error('네트워크 오류'));
-    });
-
-    const formData = new FormData();
-    formData.append('file', file);
-
-    xhr.open('POST', 'https://api.example.com/upload');
-    xhr.send(formData);
-  });
-}`,
-    explanation: 'XMLHttpRequest의 progress 이벤트를 사용하여 파일 업로드의 진행 상황을 실시간으로 모니터링할 수 있습니다.'
-  },
-  {
-    title: '캐시 처리',
-    description: '브라우저 캐시와 메모리 캐시를 활용한 API 요청 최적화 예제입니다.',
-    code: `
-// 캐시 처리 예제
-const cache = new Map();
-
-const fetchWithCache = async (url, options = {}) => {
-  const cacheKey = \`\${url}-\${JSON.stringify(options)}\`;
-  
-  // 메모리 캐시 확인
-  if (cache.has(cacheKey)) {
-    const { data, timestamp } = cache.get(cacheKey);
-    const cacheAge = Date.now() - timestamp;
-    
-    // 캐시 유효 시간 (5분)
-    if (cacheAge < 5 * 60 * 1000) {
-      return data;
-    }
-    cache.delete(cacheKey);
-  }
-
-  // 새로운 요청
-  const response = await fetch(url, {
-    ...options,
-    headers: {
-      ...options.headers,
-      'Cache-Control': 'max-age=300' // 브라우저 캐시 5분
-    }
-  });
-  
-  const data = await response.json();
-  
-  // 메모리 캐시 저장
-  cache.set(cacheKey, {
-    data,
-    timestamp: Date.now()
-  });
-  
-  return data;
-}`,
-    explanation: '메모리 캐시와 HTTP 캐시를 함께 사용하여 중복 요청을 방지하고 성능을 최적화할 수 있습니다.'
-  },
-  {
-    title: '재시도 로직',
-    description: '일시적인 오류 발생 시 자동으로 재시도하는 예제입니다.',
-    code: `
-// 재시도 로직 예제
-const fetchWithRetry = async (
-  url,
-  options = {},
-  maxRetries = 3,
-  delayMs = 1000
-) => {
-  let lastError;
-  
-  for (let attempt = 0; attempt < maxRetries; attempt++) {
-    try {
-      const response = await fetch(url, options);
-      if (!response.ok) throw new Error(\`HTTP error! status: \${response.status}\`);
-      return await response.json();
-    } catch (error) {
-      lastError = error;
-      console.warn(\`시도 \${attempt + 1}/\${maxRetries} 실패:, \${error.message}\`);
-      
-      if (attempt < maxRetries - 1) {
-        // 지수 백오프: 재시도마다 대기 시간 증가
-        const waitTime = delayMs * Math.pow(2, attempt);
-        await new Promise(resolve => setTimeout(resolve, waitTime));
-      }
-    }
-  }
-  
-  throw new Error(\`\${maxRetries}번의 시도 후 실패: \${lastError.message}\`);
-}`,
-    explanation: '네트워크 오류나 일시적인 서버 오류 발생 시 지수 백오프 방식으로 자동 재시도합니다.'
-  },
-  {
-    title: '웹소켓 연결',
-    description: 'WebSocket을 사용한 실시간 데이터 통신 예제입니다.',
-    code: `
-// 웹소켓 연결 예제
-class WebSocketClient {
-  constructor(url) {
-    this.url = url;
-    this.ws = null;
-    this.reconnectAttempts = 0;
-    this.maxReconnectAttempts = 5;
-  }
-
-  connect() {
-    this.ws = new WebSocket(this.url);
-
-    this.ws.onopen = () => {
-      console.log('웹소켓 연결됨');
-      this.reconnectAttempts = 0;
-    };
-
-    this.ws.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      console.log('메시지 수신:', data);
-    };
-
-    this.ws.onclose = () => {
-      console.log('웹소켓 연결 끊김');
-      this.reconnect();
-    };
-
-    this.ws.onerror = (error) => {
-      console.error('웹소켓 에러:', error);
-    };
-  }
-
-  reconnect() {
-    if (this.reconnectAttempts < this.maxReconnectAttempts) {
-      this.reconnectAttempts++;
-      const delay = Math.min(1000 * Math.pow(2, this.reconnectAttempts), 10000);
-      
-      console.log(\`\${delay}ms 후 재연결 시도 (\${this.reconnectAttempts}/\${this.maxReconnectAttempts})\`);
-      
-      setTimeout(() => this.connect(), delay);
-    }
-  }
-
-  send(data) {
-    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
-      this.ws.send(JSON.stringify(data));
-    } else {
-      console.error('웹소켓이 연결되어 있지 않습니다.');
-    }
-  }
-
-  close() {
-    if (this.ws) {
-      this.ws.close();
-    }
-  }
-}`,
-    explanation: 'WebSocket을 사용하여 서버와 실시간 양방향 통신을 구현합니다. 연결 끊김 시 자동 재연결 로직도 포함되어 있습니다.'
-  },
-  {
-    title: 'Recoil 기본 사용법',
-    description: 'Recoil을 사용한 상태 관리 기본 예제입니다.',
-    code: `
-// 상태 정의
-const counterState = atom({
-  key: 'counterState',
-  default: 0,
-});
-
-// 파생 상태 정의
-const doubleCountState = selector({
-  key: 'doubleCountState',
-  get: ({get}) => {
-    const count = get(counterState);
-    return count * 2;
-  },
-});
-
-// 컴포넌트에서 사용
-const Counter = () => {
-  const [count, setCount] = useRecoilState(counterState);
-  const doubleCount = useRecoilValue(doubleCountState);
-
-  return (
-    <div>
-      <p>카운트: {count}</p>
-      <p>2배 값: {doubleCount}</p>
-      <button onClick={() => setCount(c => c + 1)}>증가</button>
-      <button onClick={() => setCount(c => c - 1)}>감소</button>
-    </div>
-  );
-};`,
-    explanation: 'Recoil의 기본적인 사용법을 보여줍니다. atom으로 상태를 정의하고, selector로 파생 상태를 만들며, useRecoilState와 useRecoilValue로 상태를 사용합니다.',
-    demo: <Counter />
-  },
-  {
-    title: 'Recoil 비동기 셀렉터',
-    description: 'Recoil의 비동기 셀렉터를 사용한 데이터 페칭 예제입니다.',
-    code: `
-// 비동기 셀렉터 정의
-const userDataState = selector({
-  key: 'userDataState',
-  get: async () => {
-    const response = await fetch('https://api.example.com/user');
-    return response.json();
-  },
-});
-
-// 컴포넌트에서 사용
-const UserProfile = () => {
-  const userData = useRecoilValue(userDataState);
-  
-  return (
-    <div>
-      <h2>{userData.name}</h2>
-      <p>{userData.email}</p>
-    </div>
-  );
-};`,
-    explanation: 'Recoil의 selector를 사용하여 비동기 데이터를 처리하는 방법을 보여줍니다. Suspense와 함께 사용하면 로딩 상태를 자동으로 처리할 수 있습니다.'
-  },
-  {
-    title: 'Recoil 패밀리',
-    description: 'Recoil의 atomFamily와 selectorFamily를 사용한 예제입니다.',
-    code: `
-// atom 패밀리 정의
-const todoState = atomFamily({
-  key: 'todoState',
-  default: (id: number) => ({
-    id,
-    text: '',
-    completed: false,
-  }),
-});
-
-// selector 패밀리 정의
-const todoStatsState = selectorFamily({
-  key: 'todoStatsState',
-  get: (id: number) => ({get}) => {
-    const todo = get(todoState(id));
-    return {
-      ...todo,
-      uppercase: todo.text.toUpperCase(),
-    };
-  },
-});
-
-// 컴포넌트에서 사용
-const TodoItem = ({id}: {id: number}) => {
-  const [todo, setTodo] = useRecoilState(todoState(id));
-  const stats = useRecoilValue(todoStatsState(id));
-
-  return (
-    <div>
-      <input
-        value={todo.text}
-        onChange={e => setTodo({...todo, text: e.target.value})}
-      />
-      <p>대문자: {stats.uppercase}</p>
-    </div>
-  );
-};`,
-    explanation: 'atomFamily와 selectorFamily를 사용하면 동적으로 상태를 생성하고 관리할 수 있습니다. ID나 다른 매개변수를 기반으로 여러 상태를 효율적으로 관리할 수 있습니다.'
-  }
-];
+}`;
 
 const ApiExamples: React.FC = () => {
   return (
-    <Box sx={{ p: 3 }}>
-      <Typography variant="h4" gutterBottom>
-        API 사용 예제
-      </Typography>
-      {examples.map((example, index) => (
-        <Paper key={index} sx={{ p: 3, mb: 3 }}>
-          <Typography variant="h5" gutterBottom>
-            {example.title}
-          </Typography>
-          <Typography variant="body1" paragraph>
-            {example.description}
-          </Typography>
-          <Box
-            component="pre"
-            sx={{
-              bgcolor: 'grey.100',
-              p: 2,
-              borderRadius: 1,
-              overflow: 'auto'
-            }}
-          >
-            <code>{example.code}</code>
-          </Box>
-          <Typography variant="body2" sx={{ mt: 2, mb: example.demo ? 2 : 0 }}>
-            {example.explanation}
-          </Typography>
-          {example.demo && (
-            <Box sx={{ mt: 2, p: 2, bgcolor: 'grey.50', borderRadius: 1 }}>
-              {example.demo}
-            </Box>
-          )}
-        </Paper>
-      ))}
-    </Box>
+    <div>
+      <div style={apiExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>1. 기본 API 호출</Typography>
+        <ExampleTab
+          example={<BasicApiDemo />}
+          code={basicApiCode}
+          desc={descriptions.basicApi}
+        />
+      </div>
+
+      <div style={apiExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>2. POST 요청 보내기</Typography>
+        <ExampleTab
+          example={<PostRequestDemo />}
+          code={postRequestCode}
+          desc={descriptions.postRequest}
+        />
+      </div>
+
+      <div style={apiExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>3. 인증 토큰 사용하기</Typography>
+        <ExampleTab
+          example={null}
+          code={authTokenCode}
+          desc={descriptions.authToken}
+        />
+      </div>
+
+      <div style={apiExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>4. 파일 업로드하기</Typography>
+        <ExampleTab
+          example={<FileUploadDemo />}
+          code={fileUploadCode}
+          desc={descriptions.fileUpload}
+        />
+      </div>
+
+      <div style={apiExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>5. 동시 요청 처리하기</Typography>
+        <ExampleTab
+          example={<ConcurrentRequestsDemo />}
+          code={concurrentRequestsCode}
+          desc={descriptions.concurrentRequests}
+        />
+      </div>
+
+      <div style={apiExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>6. 요청 타임아웃 설정하기</Typography>
+        <ExampleTab
+          example={<TimeoutDemo />}
+          code={timeoutCode}
+          desc={descriptions.timeout}
+        />
+      </div>
+
+      <div style={apiExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>7. PUT/DELETE 요청 예제</Typography>
+        <ExampleTab
+          example={<PutDeleteDemo />}
+          code={putDeleteCode}
+          desc={descriptions.putDelete}
+        />
+      </div>
+    </div>
   );
 };
 

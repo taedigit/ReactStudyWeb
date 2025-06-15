@@ -96,7 +96,7 @@ const ConditionalFetchingDemo = () => {
 // 데이터 변경과 재검증 예제
 const MutationDemo = () => {
   const { mutate } = useSWRConfig();
-  const { data, error } = useSWR('/api/user', fetcher);
+  const { data } = useSWR('/api/user', fetcher);
 
   const updateUser = async () => {
     try {
@@ -265,7 +265,7 @@ export const SWRExample = () => {
           example={<MutationDemo />}
           code={`const MutationDemo = () => {
   const { mutate } = useSWRConfig();
-  const { data, error } = useSWR('/api/user', fetcher);
+  const { data } = useSWR('/api/user', fetcher);
 
   const updateUser = async () => {
     try {
