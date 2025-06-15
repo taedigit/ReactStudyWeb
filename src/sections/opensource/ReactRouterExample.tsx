@@ -7,11 +7,29 @@ import { Typography, Button } from '@mui/material';
 const Home = () => <div>홈 페이지</div>;
 const About = () => <div>소개 페이지</div>;
 const Contact = () => <div>연락처 페이지</div>;
-const Electronics = () => <div>전자제품 페이지</div>;
-const Clothing = () => <div>의류 페이지</div>;
+const Electronics = () => (
+  <div style={{ color: '#fff' }}>
+    <h3 style={{ margin: '0 0 1rem 0' }}>전자제품 카테고리</h3>
+    <ul style={{ margin: 0, paddingLeft: '1.5rem' }}>
+      <li>스마트폰</li>
+      <li>노트북</li>
+      <li>태블릿</li>
+    </ul>
+  </div>
+);
+const Clothing = () => (
+  <div style={{ color: '#fff' }}>
+    <h3 style={{ margin: '0 0 1rem 0' }}>의류 카테고리</h3>
+    <ul style={{ margin: 0, paddingLeft: '1.5rem' }}>
+      <li>티셔츠</li>
+      <li>바지</li>
+      <li>자켓</li>
+    </ul>
+  </div>
+);
 const Products = () => (
-  <div>
-    <h2>제품 목록</h2>
+  <div style={{ padding: '1rem', background: '#2a2d2e', borderRadius: '4px' }}>
+    <h2 style={{ color: '#fff', marginTop: 0 }}>제품 목록</h2>
     <nav style={{ marginBottom: '1rem', display: 'flex', gap: '1rem' }}>
       <Button
         component={Link}
@@ -32,7 +50,9 @@ const Products = () => (
         의류
       </Button>
     </nav>
-    <Outlet />
+    <div style={{ background: '#1e2122', padding: '1rem', borderRadius: '4px' }}>
+      <Outlet />
+    </div>
   </div>
 );
 
@@ -234,6 +254,17 @@ const ReactRouterExample: React.FC = () => {
           <ExampleTab
             example={
               <div>
+                <nav style={{ marginBottom: '1rem' }}>
+                  <Button
+                    component={Link}
+                    to="/nested"
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                  >
+                    제품 목록 보기
+                  </Button>
+                </nav>
                 <Routes>
                   <Route path="/nested" element={<Products />}>
                     <Route path="electronics" element={<Electronics />} />
