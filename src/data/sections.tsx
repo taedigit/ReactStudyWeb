@@ -57,6 +57,7 @@ import ApiExamples from '../sections/api';
 import RecoilExample from '../sections/opensource/RecoilExample';
 import SWRExample from '../sections/api/SWRExample';
 import { ReactHookFormExample } from '../sections/opensource/ReactHookFormExample';
+import FormikExample from '../sections/opensource/FormikExample';
 
 
 const nvmInstallScript = `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
@@ -2079,14 +2080,33 @@ const StyledButton = styled.button\`
   },
   opensource: {
     id: 'opensource',
-    title: 'React Hook Form',
-    description: '효율적이고 유연한 폼 관리를 위한 React Hook Form 라이브러리를 소개합니다.',
+    title: 'Form 라이브러리',
+    description: '리액트 생태계의 유용한 오픈소스 라이브러리들을 소개합니다.',
     category: 'opensource',
-    icon: '📝',
-    prev: 'vdom',
+    icon: '📚',
+    prev: 'swr',
     next: null,
     content: (
       <div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>Formik 소개</Typography>
+          <p style={{ marginBottom: '1em' }}>
+            Formik은 React에서 폼을 쉽고 직관적으로 관리할 수 있게 해주는 라이브러리입니다.
+            폼 상태 관리, 유효성 검사, 에러 처리 등을 간단하게 처리할 수 있습니다.
+          </p>
+          <div style={{ marginBottom: '2em' }}>
+            <h4>주요 특징</h4>
+            <ul style={{ listStyle: 'none', padding: 0 }}>
+              <li>✨ 직관적인 API</li>
+              <li>📝 간편한 폼 상태 관리</li>
+              <li>🔧 유연한 유효성 검사</li>
+              <li>💪 타입스크립트 지원</li>
+              <li>🎨 다양한 UI 컴포넌트와 호환</li>
+            </ul>
+          </div>
+          <FormikExample />
+        </div>
+
         <div style={stateExampleBlockStyle}>
           <Typography variant="h6" sx={{ mb: 2 }}>React Hook Form 소개</Typography>
           <p style={{ marginBottom: '1em' }}>
@@ -2102,7 +2122,7 @@ const StyledButton = styled.button\`
               <li>💪 타입스크립트 지원</li>
               <li>🎨 UI 라이브러리 통합 용이</li>
             </ul>
-          </div>
+        </div>
         </div>
         <div style={stateExampleBlockStyle}>
           <Typography variant="h6" sx={{ mb: 2 }}>기본 사용 예제</Typography>
@@ -2138,7 +2158,7 @@ export function ReactHookFormExample() {
             {errors.email.message as string}
           </p>
         )}
-      </div>
+        </div>
       <div style={{ marginBottom: 16 }}>
         <input 
           type="password"
@@ -2162,7 +2182,7 @@ export function ReactHookFormExample() {
             {errors.password.message as string}
           </p>
         )}
-      </div>
+        </div>
       <button 
         type="submit"
         style={{
@@ -2188,7 +2208,7 @@ export function ReactHookFormExample() {
 - 폼 제출 처리"
           />
         </div>
-      </div>
+        </div>
     ),
   },
   // ... existing code ...
@@ -2353,10 +2373,10 @@ function MuiConfirmDialogDemo() {
 function InputChangeDemo() {
   const [value, setValue] = React.useState('');
   return (
-    <div>
+      <div>
       <Input value={value} onChange={e => setValue(e.target.value)} placeholder="입력하세요" style={{ width: 200, marginRight: 8 }} />
       <p>입력값: {value}</p>
-    </div>
+        </div>
   );
 }
 function FormSubmitDemo() {
@@ -2377,7 +2397,7 @@ function CustomEventDemo() {
   return (
     <div onClick={() => alert('부모 div 클릭!')} style={{ padding: 16, background: '#333' }}>
       <Button type="primary" onClick={e => { e.stopPropagation(); alert('버튼만 클릭!'); }}>버튼</Button>
-    </div>
+        </div>
   );
 }
 function EventDelegationDemo() {
@@ -2392,7 +2412,7 @@ function EventDelegationDemo() {
       <Button type="primary">버튼1</Button>
       <Button type="primary">버튼2</Button>
       <Button type="primary">버튼3</Button>
-    </div>
+        </div>
   );
 }
 
@@ -2404,9 +2424,9 @@ function JSXExpressionDemo() {
 function JSXConditionalDemo() {
   const isLoggedIn = true;
   return (
-    <div>
+      <div>
       {isLoggedIn ? <span>환영합니다!</span> : <span>로그인 해주세요.</span>}
-    </div>
+      </div>
   );
 }
 function JSXListDemo() {
