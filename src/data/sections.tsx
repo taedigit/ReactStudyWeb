@@ -52,6 +52,7 @@ import { UseCallbackExample } from '../sections/hooks/UseCallbackExample';
 import { FixedSizeList as List } from 'react-window';
 import styled from 'styled-components';
 import ReactRouterExample from '../sections/opensource/ReactRouterExample';
+import StyledComponentsExample from '../sections/opensource/StyledComponentsExample';
 
 
 const nvmInstallScript = `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
@@ -1492,7 +1493,7 @@ export const sections: Record<SectionId, Section> = {
     icon: '💅',
     prev: 'reactrouter',
     next: 'recoil',
-    content: <div>styled-components 예제 준비 중...</div>,
+    content: <StyledComponentsExample />,
   },
   recoil: {
     id: 'recoil',
