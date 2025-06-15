@@ -55,6 +55,7 @@ import ReactRouterExample from '../sections/opensource/ReactRouterExample';
 import StyledComponentsExample from '../sections/opensource/StyledComponentsExample';
 import ApiExamples from '../sections/api';
 import RecoilExample from '../sections/opensource/RecoilExample';
+import SWRExample from '../sections/api/SWRExample';
 
 
 const nvmInstallScript = `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
@@ -2107,6 +2108,16 @@ const StyledButton = styled.button\`
     content: <ApiExamples />,
     prev: 'useContext',
     next: 'recoil'
+  },
+  'swr': {
+    id: 'swr',
+    title: 'SWR',
+    description: 'SWR은 React Hooks를 위한 데이터 페칭 라이브러리입니다. 캐시된 데이터를 먼저 반환한 후 백그라운드에서 데이터를 재검증하는 방식으로 동작합니다.',
+    content: <SWRExample />,
+    category: 'Api',
+    icon: '🔄',
+    prev: 'tanstackquery',
+    next: 'reactquery',
   },
 };
   

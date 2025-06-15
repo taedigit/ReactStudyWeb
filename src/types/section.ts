@@ -34,7 +34,8 @@ export type SectionId =
   | 'customhooks'
   | 'conditionalRendering'
   | 'stylingBasics'
-  | 'api';
+  | 'api'
+  | 'swr';
 
 export interface Section {
   id: SectionId;
