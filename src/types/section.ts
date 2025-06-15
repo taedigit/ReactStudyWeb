@@ -35,7 +35,8 @@ export type SectionId =
   | 'conditionalRendering'
   | 'stylingBasics'
   | 'api'
-  | 'swr';
+  | 'swr'
+  | 'opensource';
 
 export interface Section {
   id: SectionId;

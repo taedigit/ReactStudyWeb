@@ -56,6 +56,7 @@ import StyledComponentsExample from '../sections/opensource/StyledComponentsExam
 import ApiExamples from '../sections/api';
 import RecoilExample from '../sections/opensource/RecoilExample';
 import SWRExample from '../sections/api/SWRExample';
+import { ReactHookFormExample } from '../sections/opensource/ReactHookFormExample';
 
 
 const nvmInstallScript = `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
@@ -613,56 +614,13 @@ function Toggle({ label, initial }: { label: string; initial: boolean }) {
 export const sections: Record<SectionId, Section> = {
     intro: {
     id: 'intro',
-    title: 'Introduction',
-    description: 'React 튜토리얼에 오신 것을 환영합니다!',
+    title: '소개',
+    description: '리액트 학습 사이트에 오신 것을 환영합니다.',
     category: 'getting_started',
-    icon: '📖',
+    icon: '👋',
     prev: null,
-    next: 'editors',
-    content: (
-      <div>
-        <h2>React란?</h2>
-        <p><strong>React</strong>는 Facebook(현 Meta)에서 개발한 <b>UI 라이브러리</b>로, 전 세계적으로 가장 널리 사용되는 프론트엔드 기술 중 하나입니다.</p>
-        <h3>React의 장점과 중요성</h3>
-        <ul
-          style={{
-            marginBottom: '2em',
-            background: '#484f54',
-            padding: '1.5em 2em',
-            borderRadius: '8px',
-            border: '1px solid #eee',
-            marginTop: '1.2em',
-            marginLeft: 0,
-            marginRight: 0,
-            listStylePosition: 'inside',
-          }}
-        >
-          <li style={{ marginBottom: '0.7em' }}><b>컴포넌트 기반</b>: UI를 재사용 가능한 작은 단위(컴포넌트)로 나눠 개발과 유지보수가 쉽습니다.</li>
-          <li style={{ marginBottom: '0.7em' }}><b>빠른 렌더링</b>: 가상 DOM(Virtual DOM)으로 실제 DOM 변경을 최소화해 성능이 뛰어납니다.</li>
-          <li style={{ marginBottom: '0.7em' }}><b>방대한 생태계</b>: 다양한 라이브러리, 툴, 커뮤니티가 활발하게 지원됩니다.</li>
-          <li style={{ marginBottom: '0.7em' }}><b>단방향 데이터 흐름</b>: 데이터 흐름이 예측 가능해 대규모 애플리케이션 관리가 용이합니다.</li>
-          <li style={{ marginBottom: '0.7em' }}><b>모바일/웹 동시 지원</b>: React Native를 통해 모바일 앱도 동일한 방식으로 개발할 수 있습니다.</li>
-        </ul>
-        <h3>왜 React를 배워야 할까요?</h3>
-        <ul
-          style={{
-            marginBottom: '2em',
-            background: '#484f54',
-            padding: '1.5em 2em',
-            borderRadius: '8px',
-            border: '1px solid #eee',
-            marginTop: '1.2em',
-            marginLeft: 0,
-            marginRight: 0,
-            listStylePosition: 'inside',
-          }}
-        >
-          <li style={{ marginBottom: '0.7em' }}>대기업부터 스타트업까지 다양한 기업에서 표준처럼 사용</li>
-          <li style={{ marginBottom: '0.7em' }}>취업, 협업, 실무에서 높은 활용도</li>
-          <li style={{ marginBottom: '0.7em' }}>최신 프론트엔드 트렌드와 기술을 빠르게 습득 가능</li>
-        </ul>
-      </div>
-    ),
+    next: 'setup',
+    content: setupContent,
   },
   editors: {
     id: 'editors',
@@ -2109,16 +2067,98 @@ const StyledButton = styled.button\`
     prev: 'useContext',
     next: 'recoil'
   },
-  'swr': {
+  swr: {
     id: 'swr',
     title: 'SWR',
-    description: 'SWR은 React Hooks를 위한 데이터 페칭 라이브러리입니다. 캐시된 데이터를 먼저 반환한 후 백그라운드에서 데이터를 재검증하는 방식으로 동작합니다.',
-    content: <SWRExample />,
-    category: 'Api',
+    description: 'Vercel의 데이터 페칭 라이브러리',
+    category: 'example',
     icon: '🔄',
-    prev: 'tanstackquery',
-    next: 'reactquery',
+    prev: 'api',
+    next: null,
+    content: <SWRExample />,
   },
+  opensource: {
+    id: 'opensource',
+    title: 'React Hook Form',
+    description: '효율적이고 유연한 폼 관리를 위한 React Hook Form 라이브러리를 소개합니다.',
+    category: 'opensource',
+    icon: '📝',
+    prev: 'vdom',
+    next: null,
+    content: (
+      <div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>React Hook Form 소개</Typography>
+          <p style={{ marginBottom: '1em' }}>
+            React Hook Form은 React에서 폼을 쉽고 효율적으로 관리할 수 있게 해주는 라이브러리입니다.
+            불필요한 리렌더링을 최소화하고, 타입스크립트를 완벽하게 지원하며, 다른 UI 라이브러리와의 통합도 쉽습니다.
+          </p>
+          <div style={{ marginBottom: '2em' }}>
+            <h4>주요 특징</h4>
+            <ul style={{ listStyle: 'none', padding: 0 }}>
+              <li>✨ 높은 성능 (불필요한 리렌더링 최소화)</li>
+              <li>📝 간단한 폼 유효성 검사</li>
+              <li>🔧 유연한 API</li>
+              <li>💪 타입스크립트 지원</li>
+              <li>🎨 UI 라이브러리 통합 용이</li>
+            </ul>
+          </div>
+        </div>
+        <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>기본 사용 예제</Typography>
+          <ExampleTab
+            example={<ReactHookFormExample />}
+            code="import { useForm } from 'react-hook-form';
+
+function ReactHookFormExample() {
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const onSubmit = (data) => console.log(data);
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div>
+        <input 
+          {...register('email', { 
+            required: '이메일을 입력해주세요',
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}$/i,
+              message: '올바른 이메일 주소를 입력해주세요'
+            }
+          })}
+          placeholder='이메일'
+        />
+        {errors.email && <p>{errors.email.message}</p>}
+      </div>
+      <div>
+        <input 
+          type='password'
+          {...register('password', { 
+            required: '비밀번호를 입력해주세요',
+            minLength: {
+              value: 6,
+              message: '비밀번호는 최소 6자 이상이어야 합니다'
+            }
+          })}
+          placeholder='비밀번호'
+        />
+        {errors.password && <p>{errors.password.message}</p>}
+      </div>
+      <button type='submit'>제출</button>
+    </form>
+  );
+}"
+            desc="React Hook Form의 기본적인 사용법을 보여주는 예제입니다.
+- useForm 훅으로 폼 상태 관리
+- register 함수로 입력 필드 등록
+- 유효성 검사 규칙 설정
+- 에러 메시지 표시
+- 폼 제출 처리"
+          />
+        </div>
+      </div>
+    ),
+  },
+  // ... existing code ...
 };
   
 
