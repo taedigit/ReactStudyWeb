@@ -1267,8 +1267,8 @@ export const sections: Record<SectionId, Section> = {
       <div>
         <h3>Material-UI (MUI) 주요 컨트롤별 예제</h3>
         {/* 버튼 */}
-        <h4 style={{ marginTop: 32 }}>Button (버튼)</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>3. Button (버튼)</Typography>
           <ExampleTab
             example={<MuiButton variant="contained" color="primary">Primary</MuiButton>}
             code={`import Button from '@mui/material/Button';\n\nfunction Demo() {\n  return <Button variant=\"contained\" color=\"primary\">Primary</Button>;\n}`}
@@ -1296,8 +1296,8 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* 입력폼 */}
-        <h4 style={{ marginTop: 32 }}>TextField (입력)</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>2. TextField (입력)</Typography>
           <ExampleTab
             example={<MuiTextField label="기본 입력" variant="outlined" size="small" />}
             code={`import TextField from '@mui/material/TextField';\n\nfunction Demo() {\n  return <TextField label=\"기본 입력\" variant=\"outlined\" size=\"small\" />;\n}`}
@@ -1315,8 +1315,8 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* 셀렉트 */}
-        <h4 style={{ marginTop: 32 }}>Select (셀렉트)</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>3. Select (셀렉트)</Typography>
           <ExampleTab
             example={
               <MuiFormControl size="small" variant="outlined">
@@ -1332,8 +1332,8 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* 체크박스/스위치 */}
-        <h4 style={{ marginTop: 32 }}>Checkbox & Switch</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>4. Checkbox & Switch</Typography>
           <ExampleTab
             example={<MuiCheckbox defaultChecked color="primary" />}
             code={`import Checkbox from '@mui/material/Checkbox';\n\nfunction Demo() {\n  return <Checkbox defaultChecked color=\"primary\" />;\n}`}
@@ -1346,8 +1346,8 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* 날짜 선택 */}
-        <h4 style={{ marginTop: 32 }}>DatePicker (날짜 선택)</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>5. DatePicker (날짜 선택)</Typography>
           <ExampleTab
             example={<MuiTextField type="date" label="날짜" InputLabelProps={{ shrink: true }} size="small" />}
             code={`import TextField from '@mui/material/TextField';\n\nfunction Demo() {\n  return <TextField type=\"date\" label=\"날짜\" InputLabelProps={{ shrink: true }} size=\"small\" />;\n}`}
@@ -1355,8 +1355,8 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* 다이얼로그 */}
-        <h4 style={{ marginTop: 32 }}>Dialog (다이얼로그)</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>6. Dialog (다이얼로그)</Typography>
           <ExampleTab
             example={<MuiDialogDemo />}
             code={`import Dialog from '@mui/material/Dialog';\nimport Button from '@mui/material/Button';\nimport DialogTitle from '@mui/material/DialogTitle';\nimport DialogActions from '@mui/material/DialogActions';\nimport React, { useState } from 'react';\n\nfunction Demo() {\n  const [open, setOpen] = useState(false);\n  return (<><Button onClick={() => setOpen(true)}>다이얼로그 열기</Button><Dialog open={open} onClose={() => setOpen(false)}><DialogTitle>다이얼로그 내용</DialogTitle><DialogActions><Button onClick={() => setOpen(false)}>닫기</Button></DialogActions></Dialog></>);\n}`}
@@ -1364,8 +1364,8 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* 테이블 */}
-        <h4 style={{ marginTop: 32 }}>Table (테이블)</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>7. Table (테이블)</Typography>
           <ExampleTab
             example={<MuiTableDemo />}
             code={`import Table from '@mui/material/Table';\nimport TableBody from '@mui/material/TableBody';\nimport TableCell from '@mui/material/TableCell';\nimport TableContainer from '@mui/material/TableContainer';\nimport TableHead from '@mui/material/TableHead';\nimport TableRow from '@mui/material/TableRow';\nimport Paper from '@mui/material/Paper';\n\nconst rows = [\n  { name: '홍길동', age: 28 },\n  { name: '김철수', age: 34 },\n];\n\nfunction Demo() {\n  return (<TableContainer component={Paper}><Table><TableHead><TableRow><TableCell>이름</TableCell><TableCell>나이</TableCell></TableRow></TableHead><TableBody>{rows.map((row, i) => (<TableRow key={i}><TableCell>{row.name}</TableCell><TableCell>{row.age}</TableCell></TableRow>))}</TableBody></Table></TableContainer>);\n}`}
@@ -1373,8 +1373,8 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* 스낵바 */}
-        <h4 style={{ marginTop: 32 }}>Snackbar (스낵바)</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>8. Snackbar (스낵바)</Typography>
           <ExampleTab
             example={<MuiSnackbarDemo />}
             code={`import Snackbar from '@mui/material/Snackbar';\nimport Button from '@mui/material/Button';\nimport React, { useState } from 'react';\n\nfunction Demo() {\n  const [open, setOpen] = useState(false);\n  return (<><Button onClick={() => setOpen(true)}>스낵바 열기</Button><Snackbar open={open} autoHideDuration={2000} onClose={() => setOpen(false)} message=\"저장되었습니다!\" /></>);\n}`}
@@ -1382,8 +1382,8 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* Tabs */}
-        <h4 style={{ marginTop: 32 }}>Tabs</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>9. Tabs</Typography>
           <ExampleTab
             example={<MuiTabsDemo />}
             code={`import Tabs from '@mui/material/Tabs';\nimport Tab from '@mui/material/Tab';\nimport React from 'react';\n\nfunction Demo() {\n  const [value, setValue] = React.useState(0);\n  return (<Tabs value={value} onChange={(_, v) => setValue(v)}><Tab label=\"Tab1\" /><Tab label=\"Tab2\" /></Tabs>);\n}`}
@@ -1391,8 +1391,8 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* Menu (Dropdown) */}
-        <h4 style={{ marginTop: 32 }}>Menu (Dropdown)</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>10. Menu (Dropdown)</Typography>
           <ExampleTab
             example={<MuiMenuDemo />}
             code={`import Menu from '@mui/material/Menu';\nimport MenuItem from '@mui/material/MenuItem';\nimport Button from '@mui/material/Button';\nimport React, { useState } from 'react';\n\nfunction Demo() {\n  const [anchorEl, setAnchorEl] = useState(null);\n  const open = Boolean(anchorEl);\n  return (<><Button onClick={e => setAnchorEl(e.currentTarget)}>메뉴 열기</Button><Menu anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)}><MenuItem onClick={() => setAnchorEl(null)}>메뉴1</MenuItem><MenuItem onClick={() => setAnchorEl(null)}>메뉴2</MenuItem></Menu></>);\n}`}
@@ -1400,8 +1400,8 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* Pagination */}
-        <h4 style={{ marginTop: 32 }}>Pagination</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>11. Pagination</Typography>
           <ExampleTab
             example={<Pagination defaultCurrent={10} total={1} />}
             code={`import Pagination from '@mui/material/Pagination';\n\nfunction Demo() {\n  return <Pagination count={10} page={1} />;\n}`}
@@ -1409,8 +1409,8 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* Progress */}
-        <h4 style={{ marginTop: 32 }}>Progress</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>12. Progress</Typography>
           <ExampleTab
             example={<MuiLinearProgress variant="determinate" value={60} />}
             code={`import LinearProgress from '@mui/material/LinearProgress';\n\nfunction Demo() {\n  return <LinearProgress variant=\"determinate\" value={60} />;\n}`}
@@ -1418,8 +1418,8 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* Avatar */}
-        <h4 style={{ marginTop: 32 }}>Avatar</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>13. Avatar</Typography>
           <ExampleTab
             example={<MuiAvatar>A</MuiAvatar>}
             code={`import Avatar from '@mui/material/Avatar';\n\nfunction Demo() {\n  return <Avatar>A</Avatar>;\n}`}
@@ -1427,8 +1427,8 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* Badge */}
-        <h4 style={{ marginTop: 32 }}>Badge</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>14. Badge</Typography>
           <ExampleTab
             example={<MuiBadge badgeContent={5} color="primary"><MuiAvatar>B</MuiAvatar></MuiBadge>}
             code={`import Badge from '@mui/material/Badge';\nimport Avatar from '@mui/material/Avatar';\n\nfunction Demo() {\n  return <Badge badgeContent={5} color=\"primary\"><Avatar>B</Avatar></Badge>;\n}`}
@@ -1436,8 +1436,8 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* Chip (Tag) */}
-        <h4 style={{ marginTop: 32 }}>Chip (Tag)</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>15. Chip (Tag)</Typography>
           <ExampleTab
             example={<MuiChip label="Tag" color="primary" />}
             code={`import Chip from '@mui/material/Chip';\n\nfunction Demo() {\n  return <Chip label=\"Tag\" color=\"primary\" />;\n}`}
@@ -1445,8 +1445,8 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* Accordion */}
-        <h4 style={{ marginTop: 32 }}>Accordion</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>16. Accordion</Typography>
           <ExampleTab
             example={<MuiAccordionDemo />}
             code={`import Accordion from '@mui/material/Accordion';\nimport AccordionSummary from '@mui/material/AccordionSummary';\nimport AccordionDetails from '@mui/material/AccordionDetails';\nimport Typography from '@mui/material/Typography';\nimport ExpandMoreIcon from '@mui/icons-material/ExpandMore';\n\nfunction Demo() {\n  return (<Accordion><AccordionSummary expandIcon={<ExpandMoreIcon />}><Typography>패널 제목</Typography></AccordionSummary><AccordionDetails><Typography>패널 내용</Typography></AccordionDetails></Accordion>);\n}`}
@@ -1454,8 +1454,8 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* Tooltip */}
-        <h4 style={{ marginTop: 32 }}>Tooltip</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>17. Tooltip</Typography>
           <ExampleTab
             example={<MuiTooltip title="툴팁 내용"><span>툴팁</span></MuiTooltip>}
             code={`import Tooltip from '@mui/material/Tooltip';\n\nfunction Demo() {\n  return <Tooltip title=\"툴팁 내용\"><span>툴팁</span></Tooltip>;\n}`}
@@ -1463,8 +1463,8 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* Dialog (확인 다이얼로그) */}
-        <h4 style={{ marginTop: 32 }}>Dialog (확인 다이얼로그)</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>18. Dialog (확인 다이얼로그)</Typography>
           <ExampleTab
             example={<MuiConfirmDialogDemo />}
             code={`import Dialog from '@mui/material/Dialog';\nimport DialogTitle from '@mui/material/DialogTitle';\nimport DialogActions from '@mui/material/DialogActions';\nimport Button from '@mui/material/Button';\nimport React, { useState } from 'react';\n\nfunction Demo() {\n  const [open, setOpen] = useState(false);\n  return (<><Button onClick={() => setOpen(true)}>확인</Button><Dialog open={open} onClose={() => setOpen(false)}><DialogTitle>정말 삭제할까요?</DialogTitle><DialogActions><Button onClick={() => setOpen(false)}>아니오</Button><Button onClick={() => setOpen(false)} color=\"primary\">네</Button></DialogActions></Dialog></>);\n}`}
