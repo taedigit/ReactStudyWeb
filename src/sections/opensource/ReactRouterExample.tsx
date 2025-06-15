@@ -1,7 +1,7 @@
 import React from 'react';
 import { ExampleTab } from '../../components/ExampleTab';
 import { BrowserRouter, Routes, Route, Link, Outlet, useParams, useNavigate, Navigate, useLocation } from 'react-router-dom';
-import { Typography } from '@mui/material';
+import { Typography, Button } from '@mui/material';
 
 // 예제용 컴포넌트들
 const Home = () => <div>홈 페이지</div>;
@@ -12,9 +12,25 @@ const Clothing = () => <div>의류 페이지</div>;
 const Products = () => (
   <div>
     <h2>제품 목록</h2>
-    <nav style={{ marginBottom: '1rem' }}>
-      <Link to="electronics" style={{ marginRight: '1rem' }}>전자제품</Link>
-      <Link to="clothing">의류</Link>
+    <nav style={{ marginBottom: '1rem', display: 'flex', gap: '1rem' }}>
+      <Button
+        component={Link}
+        to="electronics"
+        variant="contained"
+        color="primary"
+        size="small"
+      >
+        전자제품
+      </Button>
+      <Button
+        component={Link}
+        to="clothing"
+        variant="contained"
+        color="primary"
+        size="small"
+      >
+        의류
+      </Button>
     </nav>
     <Outlet />
   </div>
@@ -26,7 +42,14 @@ const ProductDetail = () => {
   return (
     <div>
       <h2>제품 상세 정보 (ID: {id})</h2>
-      <button onClick={() => navigate(-1)}>뒤로 가기</button>
+      <Button
+        variant="outlined"
+        color="primary"
+        size="small"
+        onClick={() => navigate(-1)}
+      >
+        뒤로 가기
+      </Button>
     </div>
   );
 };
@@ -164,10 +187,34 @@ const ReactRouterExample: React.FC = () => {
           <ExampleTab
             example={
               <div>
-                <nav style={{ marginBottom: '1rem' }}>
-                  <Link to="/basic" style={{ marginRight: '1rem' }}>홈</Link>
-                  <Link to="/basic/about" style={{ marginRight: '1rem' }}>소개</Link>
-                  <Link to="/basic/contact">연락처</Link>
+                <nav style={{ marginBottom: '1rem', display: 'flex', gap: '1rem' }}>
+                  <Button
+                    component={Link}
+                    to="/basic"
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                  >
+                    홈
+                  </Button>
+                  <Button
+                    component={Link}
+                    to="/basic/about"
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                  >
+                    소개
+                  </Button>
+                  <Button
+                    component={Link}
+                    to="/basic/contact"
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                  >
+                    연락처
+                  </Button>
                 </nav>
 
                 <Routes>
@@ -206,7 +253,15 @@ const ReactRouterExample: React.FC = () => {
             example={
               <div>
                 <nav style={{ marginBottom: '1rem' }}>
-                  <Link to="/params/123">제품 123 보기</Link>
+                  <Button
+                    component={Link}
+                    to="/params/123"
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                  >
+                    제품 123 보기
+                  </Button>
                 </nav>
                 <Routes>
                   <Route path="/params/:id" element={<ProductDetail />} />
@@ -224,7 +279,15 @@ const ReactRouterExample: React.FC = () => {
             example={
               <div>
                 <nav style={{ marginBottom: '1rem' }}>
-                  <Link to="/protected/dashboard">대시보드로 이동</Link>
+                  <Button
+                    component={Link}
+                    to="/protected/dashboard"
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                  >
+                    대시보드로 이동
+                  </Button>
                 </nav>
                 <Routes>
                   <Route

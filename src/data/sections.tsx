@@ -1047,8 +1047,8 @@ export const sections: Record<SectionId, Section> = {
       <div>
         <h3>Ant Design (antd) 주요 컨트롤별 예제</h3>
         {/* 버튼 */}
-        <h4 style={{ marginTop: 32 }}>Button (버튼)</h4>
          <div style={stateExampleBlockStyle}>
+         <Typography variant="h6" sx={{ mb: 2 }}>1. Button (버튼)</Typography>
           <ExampleTab
             example={<Button type="primary">Primary</Button>}
             code={`import { Button } from 'antd';\n\nfunction Demo() {\n  return <Button type=\"primary\">Primary</Button>;\n}`}
@@ -1076,8 +1076,8 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* 입력폼 */}
-        <h4 style={{ marginTop: 32 }}>Input (입력)</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>2. Input (입력)</Typography>
           <ExampleTab
             example={<Input placeholder="기본 입력" style={{ width: 180 }} />}
             code={`import { Input } from 'antd';\n\nfunction Demo() {\n  return <Input placeholder=\"기본 입력\" />;\n}`}
@@ -1095,8 +1095,8 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* 셀렉트 */}
-        <h4 style={{ marginTop: 32 }}>Select (셀렉트)</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>3. Select (셀렉트)</Typography>
           <ExampleTab
             example={<AntdSelect defaultValue="Apple" style={{ width: 120 }}><AntdSelect.Option value="Apple">Apple</AntdSelect.Option><AntdSelect.Option value="Banana">Banana</AntdSelect.Option></AntdSelect>}
             code={`import { Select } from 'antd';\n\nfunction Demo() {\n  return (<Select defaultValue=\"Apple\"><Select.Option value=\"Apple\">Apple</Select.Option><Select.Option value=\"Banana\">Banana</Select.Option></Select>);\n}`}
@@ -1104,8 +1104,9 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* 체크박스/스위치 */}
-        <h4 style={{ marginTop: 32 }}>Checkbox & Switch</h4>
+        
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>4. Checkbox & Switch</Typography>
           <ExampleTab
             example={<Checkbox>체크박스</Checkbox>}
             code={`import { Checkbox } from 'antd';\n\nfunction Demo() {\n  return <Checkbox>체크박스</Checkbox>;\n}`}
@@ -1118,8 +1119,9 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* 날짜 선택 */}
-        <h4 style={{ marginTop: 32 }}>DatePicker (날짜 선택)</h4>
+        
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>5. DatePicker (날짜 선택)</Typography>
           <ExampleTab
             example={<DatePicker />}
             code={`import { DatePicker } from 'antd';\n\nfunction Demo() {\n  return <DatePicker />;\n}`}
@@ -1127,8 +1129,8 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* 모달 */}
-        <h4 style={{ marginTop: 32 }}>Modal (모달)</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>6. Modal (모달)</Typography>
           <ExampleTab
             example={<AntdModalDemo />}
             code={`import { Modal, Button } from 'antd';\nimport React, { useState } from 'react';\n\nfunction Demo() {\n  const [open, setOpen] = useState(false);\n  return (<><Button onClick={() => setOpen(true)}>모달 열기</Button><AntdModal open={open} onCancel={() => setOpen(false)} onOk={() => setOpen(false)}>모달 내용입니다.</AntdModal></>);\n}`}
@@ -1136,8 +1138,9 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* 테이블 */}
-        <h4 style={{ marginTop: 32 }}>Table (테이블)</h4>
+        
         <div style={stateExampleBlockStyle}>
+          <Typography variant="h6" sx={{ mb: 2 }}>7. Table (테이블)</Typography>
           <ExampleTab
             example={<AntdTableDemo />}
             code={`import { Table } from 'antd';\n\nconst columns = [\n  { title: '이름', dataIndex: 'name', sorter: (a: any, b: any) => a.name.localeCompare(b.name) },\n  { title: '나이', dataIndex: 'age', filters: [ { text: '20대', value: 2 }, { text: '30대', value: 3 } ], onFilter: (value: any, record: any) => String(record.age).startsWith(value) },\n];\nconst data = [\n  { key: 1, name: '홍길동', age: 28 },\n  { key: 2, name: '김철수', age: 34 },\n];\n\nfunction Demo() {\n  return <Table columns={columns} dataSource={data} />;\n}`}
@@ -1145,8 +1148,8 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* 알림 */}
-        <h4 style={{ marginTop: 32 }}>Notification & Message</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>8. Dialog (다이얼로그)</Typography>
           <ExampleTab
             example={<AntdNotificationDemo />}
             code={`import { notification } from 'antd';\n\nfunction openNotification() {\n  notification.success({\n    message: '알림',\n    description: '저장이 완료되었습니다.',\n  });\n}`}
@@ -1159,8 +1162,8 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* Tabs */}
-        <h4 style={{ marginTop: 32 }}>Tabs</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>9. Tabs</Typography>
           <ExampleTab
             example={<Tabs defaultActiveKey="1"><Tabs.TabPane tab="Tab1" key="1">내용1</Tabs.TabPane><Tabs.TabPane tab="Tab2" key="2">내용2</Tabs.TabPane></Tabs>}
             code={`import { Tabs } from 'antd';\n\nfunction Demo() {\n  return (<Tabs defaultActiveKey=\"1\"><Tabs.TabPane tab=\"Tab1\" key=\"1\">내용1</Tabs.TabPane><Tabs.TabPane tab=\"Tab2\" key=\"2\">내용2</Tabs.TabPane></Tabs>);\n}`}
@@ -1168,8 +1171,8 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* Dropdown */}
-        <h4 style={{ marginTop: 32 }}>Dropdown</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>10. Dropdown</Typography>
           <ExampleTab
             example={<AntdDropdownDemo />}
             code={`import { Dropdown, Menu, Button } from 'antd';\n\nconst menu = (<Menu><Menu.Item key=\"1\">메뉴1</Menu.Item><Menu.Item key=\"2\">메뉴2</Menu.Item></Menu>);\n\nfunction Demo() {\n  return (<Dropdown overlay={menu}><Button>메뉴</Button></Dropdown>);\n}`}
@@ -1177,8 +1180,9 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* Pagination */}
-        <h4 style={{ marginTop: 32 }}>Pagination</h4>
+        
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>11. Pagination</Typography>
           <ExampleTab
             example={<Pagination defaultCurrent={1} total={50} />}
             code={`import { Pagination } from 'antd';\n\nfunction Demo() {\n  return <Pagination defaultCurrent={1} total={50} />;\n}`}
@@ -1186,8 +1190,8 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* Progress */}
-        <h4 style={{ marginTop: 32 }}>Progress</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>12. Progress</Typography>
           <ExampleTab
             example={<Progress percent={60} />}
             code={`import { Progress } from 'antd';\n\nfunction Demo() {\n  return <Progress percent={60} />;\n}`}
@@ -1195,8 +1199,8 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* Avatar */}
-        <h4 style={{ marginTop: 32 }}>Avatar</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>13. Avatar</Typography>
           <ExampleTab
             example={<Avatar>A</Avatar>}
             code={`import { Avatar } from 'antd';\n\nfunction Demo() {\n  return <Avatar>A</Avatar>;\n}`}
@@ -1204,8 +1208,8 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* Badge */}
-        <h4 style={{ marginTop: 32 }}>Badge</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>14. Badge</Typography>
           <ExampleTab
             example={<Badge count={5}><Avatar>B</Avatar></Badge>}
             code={`import { Badge, Avatar } from 'antd';\n\nfunction Demo() {\n  return <Badge count={5}><Avatar>B</Avatar></Badge>;\n}`}
@@ -1213,8 +1217,8 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* Tag */}
-        <h4 style={{ marginTop: 32 }}>Tag</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>15. Tag</Typography>
           <ExampleTab
             example={<Tag color="blue">Tag</Tag>}
             code={`import { Tag } from 'antd';\n\nfunction Demo() {\n  return <Tag color=\"blue\">Tag</Tag>;\n}`}
@@ -1222,8 +1226,8 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* Collapse */}
-        <h4 style={{ marginTop: 32 }}>Collapse</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>16. Collapse</Typography>
           <ExampleTab
             example={<MuiAccordionDemo />}
             code={`import Accordion from '@mui/material/Accordion';\nimport AccordionSummary from '@mui/material/AccordionSummary';\nimport AccordionDetails from '@mui/material/AccordionDetails';\nimport Typography from '@mui/material/Typography';\nimport ExpandMoreIcon from '@mui/icons-material/ExpandMore';\n\nfunction Demo() {\n  return (<Accordion><AccordionSummary expandIcon={<ExpandMoreIcon />}><Typography>패널 제목</Typography></AccordionSummary><AccordionDetails><Typography>패널 내용</Typography></AccordionDetails></Accordion>);\n}`}
@@ -1231,8 +1235,8 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* Tooltip */}
-        <h4 style={{ marginTop: 32 }}>Tooltip</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>17. Tooltip</Typography>
           <ExampleTab
             example={<MuiTooltip title="툴팁 내용"><span>툴팁</span></MuiTooltip>}
             code={`import Tooltip from '@mui/material/Tooltip';\n\nfunction Demo() {\n  return <Tooltip title=\"툴팁 내용\"><span>툴팁</span></Tooltip>;\n}`}
@@ -1240,8 +1244,8 @@ export const sections: Record<SectionId, Section> = {
           />
         </div>
         {/* Popconfirm */}
-        <h4 style={{ marginTop: 32 }}>Popconfirm</h4>
         <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>18. Popconfirm</Typography>
           <ExampleTab
             example={<AntdPopconfirmDemo />}
             code={`import { Popconfirm, Button } from 'antd';\n\nfunction Demo() {\n  return (<Popconfirm title=\"정말 삭제할까요?\"><Button>삭제</Button></Popconfirm>);\n}`}
