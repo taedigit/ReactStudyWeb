@@ -53,6 +53,8 @@ import { FixedSizeList as List } from 'react-window';
 import styled from 'styled-components';
 import ReactRouterExample from '../sections/opensource/ReactRouterExample';
 import StyledComponentsExample from '../sections/opensource/StyledComponentsExample';
+import ApiExamples from '../sections/api';
+import RecoilExample from '../sections/opensource/RecoilExample';
 
 
 const nvmInstallScript = `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
@@ -1046,7 +1048,7 @@ export const sections: Record<SectionId, Section> = {
     next: 'mui',
     content: (
       <div>
-        <h3>Ant Design (antd) 주요 컨트롤별 예제</h3>
+
         {/* 버튼 */}
          <div style={stateExampleBlockStyle}>
          <Typography variant="h6" sx={{ mb: 2 }}>1. Button (버튼)</Typography>
@@ -1266,7 +1268,7 @@ export const sections: Record<SectionId, Section> = {
     next: 'reactrouter',
     content: (
       <div>
-        <h3>Material-UI (MUI) 주요 컨트롤별 예제</h3>
+        
         {/* 버튼 */}
         <div style={stateExampleBlockStyle}>
         <Typography variant="h6" sx={{ mb: 2 }}>3. Button (버튼)</Typography>
@@ -1498,12 +1500,12 @@ export const sections: Record<SectionId, Section> = {
   recoil: {
     id: 'recoil',
     title: 'Recoil',
-    description: 'Recoil로 전역 상태 관리 예제',
+    description: 'Recoil을 사용한 상태 관리 예제',
     category: 'opensource',
     icon: '🧬',
-    prev: 'styledcomponents',
-    next: 'restapi',
-    content: <div>Recoil 예제 준비 중...</div>,
+    content: <RecoilExample />,
+    prev: 'api',
+    next: 'reactquery'
   },
   restapi: {
     id: 'restapi',
@@ -2095,6 +2097,16 @@ const StyledButton = styled.button\`
         </div>
       </div>
     ),
+  },
+  api: {
+    id: 'api',
+    title: 'API 예제',
+    description: 'REST API 호출과 Recoil을 사용한 상태 관리 예제들',
+    category: 'Api',
+    icon: '🌐',
+    content: <ApiExamples />,
+    prev: 'useContext',
+    next: 'recoil'
   },
 };
   

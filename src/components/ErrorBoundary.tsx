@@ -1,61 +1,52 @@
 import React from 'react';
+import { Box, Typography, Button } from '@mui/material';
 
-interface ErrorBoundaryState {
+interface Props {
+  children: React.ReactNode;
+}
+
+interface State {
   hasError: boolean;
   error: Error | null;
 }
 
-interface ErrorBoundaryProps {
-  children: React.ReactNode;
-}
-
-export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  state: ErrorBoundaryState = {
-    hasError: false,
-    error: null
-  };
-
-  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
-    return {
-      hasError: true,
-      error
-    };
+class ErrorBoundary extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = { hasError: false, error: null };
   }
 
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
-    console.log('Error caught:', error, errorInfo);
+  static getDerivedStateFromError(error: Error): State {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error('ErrorBoundary caught an error:', error, errorInfo);
   }
 
   render() {
     if (this.state.hasError) {
       return (
-        <div style={{
-          padding: '20px',
-          background: '#232323',
-          borderRadius: '8px',
-          color: '#eaeaea',
-          border: '1px solid #ff4444'
-        }}>
-          <h3>Something went wrong 😢</h3>
-          <p>{this.state.error?.message}</p>
-          <button
-            onClick={() => this.setState({ hasError: false, error: null })}
-            style={{
-              padding: '8px 16px',
-              background: '#444',
-              border: 'none',
-              borderRadius: '4px',
-              color: '#eaeaea',
-              marginTop: '10px',
-              cursor: 'pointer'
-            }}
+        <Box sx={{ p: 3, textAlign: 'center' }}>
+          <Typography variant="h5" color="error" gutterBottom>
+            Something went wrong
+          </Typography>
+          <Typography variant="body1" color="text.secondary" paragraph>
+            {this.state.error?.message}
+          </Typography>
+          <Button 
+            variant="contained" 
+            color="primary"
+            onClick={() => window.location.reload()}
           >
-            Try again
-          </button>
-        </div>
+            Reload Page
+          </Button>
+        </Box>
       );
     }
 
     return this.props.children;
   }
-} 
+}
+
+export default ErrorBoundary; 

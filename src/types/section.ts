@@ -33,7 +33,8 @@ export type SectionId =
   | 'tanstackquery'
   | 'customhooks'
   | 'conditionalRendering'
-  | 'stylingBasics';
+  | 'stylingBasics'
+  | 'api';
 
 export interface Section {
   id: SectionId;
