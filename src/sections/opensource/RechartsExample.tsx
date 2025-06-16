@@ -12,6 +12,7 @@ import {
   Treemap,
   FunnelChart, Funnel, LabelList, Sankey
 } from 'recharts';
+import { MLBStandings2025Chart } from './MLBStandings2025Chart';
 
 const data = [
   { name: 'Page A', uv: 4000, pv: 2400, amt: 2400 },
@@ -124,6 +125,107 @@ const sankeyData = {
 // Gauge(게이지) 차트용 데이터 (RadialBarChart 활용)
 const gaugeData = [
   { name: '진행률', value: 68, fill: '#8884d8' },
+];
+
+// 커스텀 Bar 렌더러 예제
+const customBarData = [
+  { name: 'A', value: 12 },
+  { name: 'B', value: 18 },
+  { name: 'C', value: 8 },
+  { name: 'D', value: 15 },
+];
+const renderCustomBar = (props: any) => {
+  const { x, y, width, height, value } = props;
+  return (
+    <g>
+      <rect x={x} y={y} width={width} height={height} fill="#ffb300" rx={6} />
+      <text x={x + width / 2} y={y - 8} fill="#ffb300" textAnchor="middle" fontSize={22}>
+        ★
+      </text>
+      <text x={x + width / 2} y={y + height / 2} fill="#232323" textAnchor="middle" fontSize={14} dy={4} fontWeight="bold">
+        {value}
+      </text>
+    </g>
+  );
+};
+
+// 실전 데이터 예제 (월별 매출)
+const salesData = [
+  { month: '1월', sales: 1200 },
+  { month: '2월', sales: 2100 },
+  { month: '3월', sales: 800 },
+  { month: '4월', sales: 1600 },
+  { month: '5월', sales: 900 },
+  { month: '6월', sales: 1700 },
+  { month: '7월', sales: 2500 },
+  { month: '8월', sales: 2200 },
+  { month: '9월', sales: 1800 },
+  { month: '10월', sales: 2100 },
+  { month: '11월', sales: 2300 },
+  { month: '12월', sales: 2700 },
+];
+
+// MLB 2024 AL 동부지구 순위 샘플 데이터
+const alEastStandings = [
+  { team: '뉴욕 양키스', wins: 55, losses: 36, pct: 0.604, gb: 0 },
+  { team: '볼티모어 오리올스', wins: 54, losses: 36, pct: 0.600, gb: 0.5 },
+  { team: '보스턴 레드삭스', wins: 49, losses: 41, pct: 0.544, gb: 5.5 },
+  { team: '토론토 블루제이스', wins: 41, losses: 49, pct: 0.456, gb: 13.5 },
+  { team: '탬파베이 레이스', wins: 40, losses: 50, pct: 0.444, gb: 14.5 },
+];
+// AL 중부지구
+const alCentralStandings = [
+  { team: '클리블랜드 가디언스', wins: 53, losses: 35, pct: 0.602, gb: 0 },
+  { team: '미네소타 트윈스', wins: 48, losses: 40, pct: 0.545, gb: 5 },
+  { team: '캔자스시티 로열스', wins: 45, losses: 44, pct: 0.506, gb: 8.5 },
+  { team: '디트로이트 타이거스', wins: 41, losses: 48, pct: 0.461, gb: 12.5 },
+  { team: '시카고 화이트삭스', wins: 26, losses: 63, pct: 0.292, gb: 27.5 },
+];
+// AL 서부지구
+const alWestStandings = [
+  { team: '시애틀 매리너스', wins: 49, losses: 42, pct: 0.538, gb: 0 },
+  { team: '휴스턴 애스트로스', wins: 46, losses: 44, pct: 0.511, gb: 2.5 },
+  { team: '텍사스 레인저스', wins: 44, losses: 46, pct: 0.489, gb: 4.5 },
+  { team: 'LA 에인절스', wins: 37, losses: 53, pct: 0.411, gb: 11.5 },
+  { team: '오클랜드 애슬레틱스', wins: 34, losses: 57, pct: 0.374, gb: 15 },
+];
+// NL 동부지구
+const nlEastStandings = [
+  { team: '필라델피아 필리스', wins: 58, losses: 32, pct: 0.644, gb: 0 },
+  { team: '애틀랜타 브레이브스', wins: 49, losses: 39, pct: 0.557, gb: 8 },
+  { team: '뉴욕 메츠', wins: 44, losses: 44, pct: 0.500, gb: 13 },
+  { team: '워싱턴 내셔널스', wins: 41, losses: 48, pct: 0.461, gb: 16.5 },
+  { team: '마이애미 말린스', wins: 32, losses: 58, pct: 0.356, gb: 26 },
+];
+// NL 중부지구
+const nlCentralStandings = [
+  { team: '밀워키 브루어스', wins: 52, losses: 38, pct: 0.578, gb: 0 },
+  { team: '세인트루이스 카디널스', wins: 47, losses: 42, pct: 0.528, gb: 4.5 },
+  { team: '시카고 컵스', wins: 44, losses: 47, pct: 0.484, gb: 8.5 },
+  { team: '신시내티 레즈', wins: 42, losses: 48, pct: 0.467, gb: 10 },
+  { team: '피츠버그 파이리츠', wins: 41, losses: 49, pct: 0.456, gb: 11 },
+];
+// NL 서부지구
+const nlWestStandings = [
+  { team: 'LA 다저스', wins: 55, losses: 37, pct: 0.598, gb: 0 },
+  { team: '샌디에이고 파드리스', wins: 49, losses: 43, pct: 0.533, gb: 6 },
+  { team: '애리조나 다이아몬드백스', wins: 45, losses: 46, pct: 0.495, gb: 9.5 },
+  { team: '샌프란시스코 자이언츠', wins: 44, losses: 47, pct: 0.484, gb: 10.5 },
+  { team: '콜로라도 로키스', wins: 32, losses: 60, pct: 0.348, gb: 23 },
+];
+
+// MLB 팀 순위 차트 공통 옵션
+const mlbBarChartCommon = {
+  layout: 'vertical',
+  margin: { left: 40, right: 20, top: 20, bottom: 20 },
+  barSize: 24,
+};
+
+// 선수 순위 링크
+const playerStatsLinks = [
+  { label: 'MLB 공식 타자 순위', url: 'https://www.mlb.com/stats/' },
+  { label: 'ESPN MLB Player Stats', url: 'https://www.espn.com/mlb/stats' },
+  { label: 'Baseball Reference', url: 'https://www.baseball-reference.com/leagues/majors/2024-batting-leaders.shtml' },
 ];
 
 const stateExampleBlockStyle = {
@@ -414,6 +516,247 @@ const RechartsExample: React.FC = () => (
         }
         code={`import { RadialBarChart, RadialBar, Legend, Tooltip, ResponsiveContainer } from 'recharts';\n\nconst data = [ ... ];\n\n<ResponsiveContainer width="100%" height={220}>\n  <RadialBarChart\n    cx="50%" cy="100%" innerRadius="90%" outerRadius="100%"\n    startAngle={180} endAngle={0} data={data}>\n    <RadialBar dataKey="value" />\n    <Legend iconSize={10} layout="vertical" verticalAlign="middle" align="right" />\n    <Tooltip />\n  </RadialBarChart>\n</ResponsiveContainer>`}
         desc={`Gauge(게이지) 차트는 속도계, 점수, 진행률 등 단일 값을 원형 게이지로 표현합니다.\n대시보드의 KPI, 점수, 퍼센트 등 단일 지표 강조에 적합하며, 시각적 임팩트가 큽니다.\nRadialBarChart를 활용해 쉽게 구현할 수 있습니다.\n단, 여러 값을 동시에 비교하는 용도에는 적합하지 않습니다.`}
+      />
+    </div>
+    {/* 커스텀 BarChart 예제 */}
+    <div style={stateExampleBlockStyle}>
+      <Typography variant="h6" sx={{ mb: 2 }}>13. Custom BarChart (커스텀 렌더링)</Typography>
+      <ExampleTab
+        example={
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={customBarData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="value" fill="#ffb300" shape={renderCustomBar} />
+            </BarChart>
+          </ResponsiveContainer>
+        }
+        code={`const renderCustomBar = (props) => {
+  const { x, y, width, height, value } = props;
+  return (
+    <g>
+      <rect x={x} y={y} width={width} height={height} fill="#ffb300" rx={6} />
+      <text x={x + width / 2} y={y - 8} fill="#ffb300" textAnchor="middle" fontSize={22}>★</text>
+      <text x={x + width / 2} y={y + height / 2} fill="#232323" textAnchor="middle" fontSize={14} dy={4} fontWeight="bold">{value}</text>
+    </g>
+  );
+};
+
+<BarChart data={data}>
+  ...
+  <Bar dataKey="value" fill="#ffb300" shape={renderCustomBar} />
+</BarChart>`}
+        desc={`BarChart의 shape 속성을 활용해 각 Bar를 커스텀 SVG(별, 이모지 등)와 색상, 텍스트로 자유롭게 꾸밀 수 있습니다.\n실무에서는 브랜드 아이콘, 강조 효과, 특수한 시각화 등 다양한 커스텀 차트에 활용됩니다.\n툴팁, 애니메이션, 조건부 스타일 등도 함께 적용할 수 있습니다.`}
+      />
+    </div>
+    {/* 실전 데이터 LineChart 예제 */}
+    <div style={stateExampleBlockStyle}>
+      <Typography variant="h6" sx={{ mb: 2 }}>14. 실전 데이터 LineChart (월별 매출)</Typography>
+      <ExampleTab
+        example={
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={salesData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="month" />
+              <YAxis />
+              <Tooltip formatter={v => v.toLocaleString() + '만원'} />
+              <Legend />
+              <Line type="monotone" dataKey="sales" stroke="#1976d2" strokeWidth={3} dot={{ r: 6, fill: '#fff', stroke: '#1976d2', strokeWidth: 2 }} />
+            </LineChart>
+          </ResponsiveContainer>
+        }
+        code={`const salesData = [
+  { month: '1월', sales: 1200 },
+  ...
+];
+
+<LineChart data={salesData}>
+  <CartesianGrid strokeDasharray="3 3" />
+  <XAxis dataKey="month" />
+  <YAxis />
+  <Tooltip formatter={v => v.toLocaleString() + '만원'} />
+  <Legend />
+  <Line type="monotone" dataKey="sales" stroke="#1976d2" strokeWidth={3} dot={{ r: 6, fill: '#fff', stroke: '#1976d2', strokeWidth: 2 }} />
+</LineChart>`}
+        desc={`실제 비즈니스에서 자주 쓰는 월별 매출 데이터를 LineChart로 시각화한 예제입니다.\n실제 API 응답 데이터, DB 쿼리 결과 등과 연동해 실시간 대시보드, 경영 리포트 등에 활용할 수 있습니다.\n툴팁, 포맷터, 강조 스타일 등 실전에서 필요한 다양한 옵션을 적용할 수 있습니다.`}
+      />
+    </div>
+    {/* MLB AL 동부지구 순위 예제 */}
+    <div style={stateExampleBlockStyle}>
+      <Typography variant="h6" sx={{ mb: 2 }}>15. MLB AL 동부지구 팀 순위 (2024)</Typography>
+      <ExampleTab
+        example={
+          <ResponsiveContainer width="100%" height={320}>
+            <BarChart data={alEastStandings} layout="vertical" margin={mlbBarChartCommon.margin} barSize={mlbBarChartCommon.barSize}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis type="number" domain={[0, 60]} />
+              <YAxis dataKey="team" type="category" width={120} />
+              <Tooltip formatter={v => v + '승'} />
+              <Bar dataKey="wins" fill="#1976d2" name="승리" />
+              <Bar dataKey="losses" fill="#bdbdbd" name="패배" />
+            </BarChart>
+          </ResponsiveContainer>
+        }
+        code={`const alEastStandings = [ ... ];
+<BarChart data={alEastStandings} layout="vertical">
+  <CartesianGrid strokeDasharray="3 3" />
+  <XAxis type="number" />
+  <YAxis dataKey="team" type="category" />
+  <Tooltip />
+  <Bar dataKey="wins" fill="#1976d2" name="승리" />
+  <Bar dataKey="losses" fill="#bdbdbd" name="패배" />
+</BarChart>`}
+        desc={`2024년 MLB 아메리칸리그(AL) 동부지구 팀 순위를 BarChart로 시각화한 예제입니다.\n승/패, 승률, 게임차 등 주요 지표를 한눈에 비교할 수 있습니다.\n실제 MLB 공식 데이터를 기반으로 하며, 실시간 데이터 연동도 가능합니다.`}
+      />
+    </div>
+    {/* MLB AL 중부지구 순위 예제 */}
+    <div style={stateExampleBlockStyle}>
+      <Typography variant="h6" sx={{ mb: 2 }}>16. MLB AL 중부지구 팀 순위 (2024)</Typography>
+      <ExampleTab
+        example={
+          <ResponsiveContainer width="100%" height={320}>
+            <BarChart data={alCentralStandings} layout="vertical" margin={mlbBarChartCommon.margin} barSize={mlbBarChartCommon.barSize}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis type="number" domain={[0, 60]} />
+              <YAxis dataKey="team" type="category" width={120} />
+              <Tooltip formatter={v => v + '승'} />
+              <Bar dataKey="wins" fill="#1976d2" name="승리" />
+              <Bar dataKey="losses" fill="#bdbdbd" name="패배" />
+            </BarChart>
+          </ResponsiveContainer>
+        }
+        code={`const alCentralStandings = [ ... ];
+<BarChart data={alCentralStandings} layout="vertical">
+  ...
+</BarChart>`}
+        desc={`2024년 MLB AL 중부지구 팀 순위입니다.\n지구별 경쟁 구도, 승/패, 게임차를 직관적으로 비교할 수 있습니다.`}
+      />
+    </div>
+    {/* MLB AL 서부지구 순위 예제 */}
+    <div style={stateExampleBlockStyle}>
+      <Typography variant="h6" sx={{ mb: 2 }}>17. MLB AL 서부지구 팀 순위 (2024)</Typography>
+      <ExampleTab
+        example={
+          <ResponsiveContainer width="100%" height={320}>
+            <BarChart data={alWestStandings} layout="vertical" margin={mlbBarChartCommon.margin} barSize={mlbBarChartCommon.barSize}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis type="number" domain={[0, 60]} />
+              <YAxis dataKey="team" type="category" width={120} />
+              <Tooltip formatter={v => v + '승'} />
+              <Bar dataKey="wins" fill="#1976d2" name="승리" />
+              <Bar dataKey="losses" fill="#bdbdbd" name="패배" />
+            </BarChart>
+          </ResponsiveContainer>
+        }
+        code={`const alWestStandings = [ ... ];
+<BarChart data={alWestStandings} layout="vertical">
+  ...
+</BarChart>`}
+        desc={`2024년 MLB AL 서부지구 팀 순위입니다.\n지구별 경쟁 구도, 승/패, 게임차를 직관적으로 비교할 수 있습니다.`}
+      />
+    </div>
+    {/* MLB NL 동부지구 순위 예제 */}
+    <div style={stateExampleBlockStyle}>
+      <Typography variant="h6" sx={{ mb: 2 }}>18. MLB NL 동부지구 팀 순위 (2024)</Typography>
+      <ExampleTab
+        example={
+          <ResponsiveContainer width="100%" height={320}>
+            <BarChart data={nlEastStandings} layout="vertical" margin={mlbBarChartCommon.margin} barSize={mlbBarChartCommon.barSize}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis type="number" domain={[0, 65]} />
+              <YAxis dataKey="team" type="category" width={120} />
+              <Tooltip formatter={v => v + '승'} />
+              <Bar dataKey="wins" fill="#388e3c" name="승리" />
+              <Bar dataKey="losses" fill="#bdbdbd" name="패배" />
+            </BarChart>
+          </ResponsiveContainer>
+        }
+        code={`const nlEastStandings = [ ... ];
+<BarChart data={nlEastStandings} layout="vertical">
+  ...
+</BarChart>`}
+        desc={`2024년 MLB 내셔널리그(NL) 동부지구 팀 순위입니다.\n지구별 경쟁 구도, 승/패, 게임차를 직관적으로 비교할 수 있습니다.`}
+      />
+    </div>
+    {/* MLB NL 중부지구 순위 예제 */}
+    <div style={stateExampleBlockStyle}>
+      <Typography variant="h6" sx={{ mb: 2 }}>19. MLB NL 중부지구 팀 순위 (2024)</Typography>
+      <ExampleTab
+        example={
+          <ResponsiveContainer width="100%" height={320}>
+            <BarChart data={nlCentralStandings} layout="vertical" margin={mlbBarChartCommon.margin} barSize={mlbBarChartCommon.barSize}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis type="number" domain={[0, 60]} />
+              <YAxis dataKey="team" type="category" width={120} />
+              <Tooltip formatter={v => v + '승'} />
+              <Bar dataKey="wins" fill="#388e3c" name="승리" />
+              <Bar dataKey="losses" fill="#bdbdbd" name="패배" />
+            </BarChart>
+          </ResponsiveContainer>
+        }
+        code={`const nlCentralStandings = [ ... ];
+<BarChart data={nlCentralStandings} layout="vertical">
+  ...
+</BarChart>`}
+        desc={`2024년 MLB NL 중부지구 팀 순위입니다.\n지구별 경쟁 구도, 승/패, 게임차를 직관적으로 비교할 수 있습니다.`}
+      />
+    </div>
+    {/* MLB NL 서부지구 순위 예제 */}
+    <div style={stateExampleBlockStyle}>
+      <Typography variant="h6" sx={{ mb: 2 }}>20. MLB NL 서부지구 팀 순위 (2024)</Typography>
+      <ExampleTab
+        example={
+          <ResponsiveContainer width="100%" height={320}>
+            <BarChart data={nlWestStandings} layout="vertical" margin={mlbBarChartCommon.margin} barSize={mlbBarChartCommon.barSize}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis type="number" domain={[0, 60]} />
+              <YAxis dataKey="team" type="category" width={120} />
+              <Tooltip formatter={v => v + '승'} />
+              <Bar dataKey="wins" fill="#388e3c" name="승리" />
+              <Bar dataKey="losses" fill="#bdbdbd" name="패배" />
+            </BarChart>
+          </ResponsiveContainer>
+        }
+        code={`const nlWestStandings = [ ... ];
+<BarChart data={nlWestStandings} layout="vertical">
+  ...
+</BarChart>`}
+        desc={`2024년 MLB NL 서부지구 팀 순위입니다.\n지구별 경쟁 구도, 승/패, 게임차를 직관적으로 비교할 수 있습니다.`}
+      />
+    </div>
+    {/* MLB 선수 순위 안내 */}
+    <div style={stateExampleBlockStyle}>
+      <Typography variant="h6" sx={{ mb: 2 }}>21. MLB 선수 순위/기록 (외부 링크)</Typography>
+      <ExampleTab
+        example={
+          <ul style={{ fontSize: 18, lineHeight: 2 }}>
+            {playerStatsLinks.map(link => (
+              <li key={link.url}>
+                <a href={link.url} target="_blank" rel="noopener noreferrer" style={{ color: '#1976d2', textDecoration: 'underline' }}>{link.label}</a>
+              </li>
+            ))}
+          </ul>
+        }
+        code={`// 선수 순위/기록은 공식 MLB, ESPN, Baseball Reference 등에서 확인하세요.
+const playerStatsLinks = [
+  { label: 'MLB 공식 타자 순위', url: 'https://www.mlb.com/stats/' },
+  { label: 'ESPN MLB Player Stats', url: 'https://www.espn.com/mlb/stats' },
+  { label: 'Baseball Reference', url: 'https://www.baseball-reference.com/leagues/majors/2024-batting-leaders.shtml' },
+];`}
+        desc={`MLB 선수별 타율, 홈런, 타점, 투수 기록 등은 아래 공식 통계 사이트에서 실시간으로 확인할 수 있습니다.\n- MLB 공식: https://www.mlb.com/stats/\n- ESPN: https://www.espn.com/mlb/stats\n- Baseball Reference: https://www.baseball-reference.com/leagues/majors/2024-batting-leaders.shtml\n차트로 직접 시각화하려면 API 연동 또는 CSV 데이터 활용이 필요합니다.`}
+      />
+    </div>
+    {/* MLB 2025년 팀 순위 (REST API, 실시간) 예제 */}
+    <div style={stateExampleBlockStyle}>
+      <Typography variant="h6" sx={{ mb: 2 }}>22. MLB 2025년 팀 순위 (REST API, 실시간)</Typography>
+      <ExampleTab
+        example={<MLBStandings2025Chart />}
+        code={`import { MLBStandings2025Chart } from './MLBStandings2025Chart';
+
+<MLBStandings2025Chart />`}
+        desc={`MLB 2025년 팀 순위를 REST API(statsapi.mlb.com)로 실시간 불러와 지구별 탭으로 시각화합니다.\nAL/NL, 동/중/서부 등 원하는 지구별로 팀 순위를 바로 확인할 수 있습니다.\n실제 MLB 공식 데이터를 활용하며, 실시간 대시보드, 스포츠 분석 등에 바로 적용 가능합니다.`}
       />
     </div>
   </div>
