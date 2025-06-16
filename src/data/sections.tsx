@@ -66,6 +66,7 @@ import { ZustandExample } from '../sections/opensource/ZustandExample';
 import { JotaiExample } from '../sections/opensource/JotaiExample';
 import ReduxExample from '../sections/opensource/ReduxExample';
 import EmotionExample from '../sections/opensource/EmotionExample';
+import TailwindExample from '../sections/opensource/TailwindExample';
 
 
 
@@ -1500,8 +1501,18 @@ export const sections: Record<SectionId, Section> = {
     category: 'opensource',
     icon: '🎨',
     prev: 'styledcomponents',
-    next: 'recoil',
+    next: 'tailwind',
     content: <EmotionExample />,
+  },
+  tailwind: {
+    id: 'tailwind',
+    title: 'Tailwind CSS',
+    description: 'Tailwind CSS 유틸리티 기반 실전 스타일링 예제 18선',
+    category: 'opensource',
+    icon: '🌬️',
+    prev: 'emotion',
+    next: 'recoil',
+    content: <TailwindExample />,
   },
   recoil: {
     id: 'recoil',
@@ -1510,8 +1521,8 @@ export const sections: Record<SectionId, Section> = {
     category: 'opensource',
     icon: '🧬',
     content: <RecoilExample />,
-    prev: 'emotion',
-    next: 'zustand'
+    prev: 'tailwind',
+    next: 'zustand',
   },
   zustand: {
     id: 'zustand',

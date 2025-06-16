@@ -42,6 +42,7 @@ export type SectionId =
   | 'jotai'
   | 'redux'
   | 'emotion'
+  | 'tailwind'
 
 
 export interface Section {
