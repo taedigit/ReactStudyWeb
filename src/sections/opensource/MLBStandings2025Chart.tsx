@@ -49,8 +49,19 @@ export function MLBStandings2025Chart() {
   // 각 지구별 데이터 필터링
   const getDivisionData = (divKey: string) => {
     const [league, division] = divKey.split(' ');
-    return data.filter(d => d.division && d.division.includes(division) && d.league.startsWith(league === 'AL' ? 'American' : 'National'));
+    return data.filter(
+      d =>
+        d.division &&
+        d.league &&
+        typeof d.division === 'string' &&
+        typeof d.league === 'string' &&
+        d.division.includes(division) &&
+        d.league.startsWith(league === 'AL' ? 'American' : 'National')
+    );
   };
+
+  const divisionData = getDivisionData(divisionNames[tab].key);
+  const lastUpdated = data.length > 0 ? new Date().toLocaleString() : null;
 
   return (
     <div style={{ background: '#484f54', padding: 24, borderRadius: 8, marginBottom: 32 }}>
@@ -61,17 +72,32 @@ export function MLBStandings2025Chart() {
         ))}
       </Tabs>
       <Box>
-        <ResponsiveContainer width="100%" height={320}>
-          <BarChart data={getDivisionData(divisionNames[tab].key)} layout="vertical" margin={{ left: 40, right: 20, top: 20, bottom: 20 }} barSize={24}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type="number" />
-            <YAxis dataKey="team" type="category" width={120} />
-            <Tooltip formatter={v => v + '승'} />
-            <Bar dataKey="wins" fill="#1976d2" name="승리" />
-            <Bar dataKey="losses" fill="#bdbdbd" name="패배" />
-          </BarChart>
-        </ResponsiveContainer>
+        {divisionData.length === 0 ? (
+          <Alert severity="info" sx={{ mt: 4, mb: 4 }}>
+            해당 지구의 데이터를 불러올 수 없습니다.<br />
+            MLB API의 데이터가 아직 업데이트되지 않았거나, 일시적으로 제공되지 않을 수 있습니다.
+          </Alert>
+        ) : (
+          <>
+            <ResponsiveContainer width="100%" height={320}>
+              <BarChart data={divisionData} layout="vertical" margin={{ left: 40, right: 20, top: 20, bottom: 20 }} barSize={24}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis type="number" />
+                <YAxis dataKey="team" type="category" width={120} />
+                <Tooltip formatter={v => v + '승'} />
+                <Bar dataKey="wins" fill="#1976d2" name="승리" />
+                <Bar dataKey="losses" fill="#bdbdbd" name="패배" />
+              </BarChart>
+            </ResponsiveContainer>
+            <Box sx={{ mt: 2, color: '#bbb', fontSize: 14 }}>
+              팀 수: {divisionData.length}개
+              {lastUpdated && <span style={{ marginLeft: 16 }}>최종 업데이트: {lastUpdated}</span>}
+            </Box>
+          </>
+        )}
       </Box>
     </div>
   );
-} 
+}
+
+export default MLBStandings2025Chart; 
