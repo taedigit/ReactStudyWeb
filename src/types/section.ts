@@ -21,7 +21,6 @@ export type SectionId =
   | 'events'
   | 'lifecycle'
   | 'practicalExamples'
-  | 'restapi'
   | 'antdesign'
   | 'mui'
   | 'reactrouter'

@@ -991,7 +991,7 @@ export const sections: Record<SectionId, Section> = {
     category: 'example',
     icon: '💡',
     prev: 'lifecycle',
-    next: 'restapi',
+    next: null,
     content: <div>실전 예제 준비 중...</div>,
   },
 
@@ -1465,23 +1465,14 @@ export const sections: Record<SectionId, Section> = {
     prev: 'api',
     next: 'reactquery'
   },
-  restapi: {
-    id: 'restapi',
-    title: 'REST API',
-    description: 'REST API의 기본 개념과 사용법',
-    category: 'Api',
-    icon: '🌐',
-    prev: 'recoil',
-    next: 'fetchapi',
-    content: <div>REST API 예제 준비 중...</div>,
-  },
+ 
   fetchapi: {
     id: 'fetchapi',
     title: 'Fetch API',
     description: '브라우저 내장 Fetch API를 사용한 데이터 요청',
     category: 'Api',
     icon: '📡',
-    prev: 'restapi',
+    prev: null,
     next: 'axios',
     content: <FetchAPI />
   },
@@ -1516,17 +1507,7 @@ export const sections: Record<SectionId, Section> = {
     next: null,
     content: <TanStackQueryExample />
   },
-  /*restapi: {
-    id: 'restapi',
-    title: 'REST API',
-    description: 'REST API의 기본 개념과 사용법',
-    category: 'Api',
-    icon: '🌐',
-    prev: 'axios',
-    next: null,
-    content: <div>REST API 예제 준비 중...</div>
-  },*/
-
+ 
   jsx: {
     id: 'jsx',
     title: 'JSX',
