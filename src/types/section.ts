@@ -49,6 +49,7 @@ export type SectionId =
   | 'radixui'
   | 'yup'
   | 'zod'
+  | 'jest'
 
 
 export interface Section {

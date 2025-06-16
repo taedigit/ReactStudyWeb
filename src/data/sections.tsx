@@ -73,6 +73,7 @@ import { ReactHookFormExample } from '../sections/opensource/ReactHookFormExampl
 import { FormikBasicExample, FormikValidationExample, FormikAdvancedExample } from '../sections/opensource/FormikExample';
 import { YupExample } from '../sections/opensource/YupExample';
 import { ZodExample } from '../sections/opensource/ZodExample';
+import { JestExample } from '../sections/opensource/JestExample';
 
 
 
@@ -2208,7 +2209,7 @@ const StyledButton = styled.button\`
     category: 'opensource',
     icon: '🧩',
     prev: 'yup',
-    next: null,
+    next: 'jest',
     content: <ZodExample />,
   },
   yup: {
@@ -2220,6 +2221,16 @@ const StyledButton = styled.button\`
     prev: 'zustand',
     next: 'zod',
     content: <YupExample />,
+  },
+  jest: {
+    id: 'jest',
+    title: 'Jest',
+    description: 'Jest 단위 테스트 예제',
+    category: 'opensource',
+    icon: '🧪',
+    prev: 'zod',
+    next: null,
+    content: <JestExample />,
   },
 };
   
