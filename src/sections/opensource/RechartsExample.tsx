@@ -9,7 +9,8 @@ import {
   RadialBarChart, RadialBar,
   ComposedChart,
   ScatterChart, Scatter,
-  Treemap
+  Treemap,
+  FunnelChart, Funnel, LabelList, Sankey
 } from 'recharts';
 
 const data = [
@@ -92,6 +93,37 @@ const treemapData = [
   { name: 'B2', size: 800 },
   { name: 'C1', size: 1500 },
   { name: 'C2', size: 1000 },
+];
+
+// FunnelChart용 데이터
+const funnelData = [
+  { value: 300, name: '방문' },
+  { value: 200, name: '회원가입' },
+  { value: 120, name: '장바구니' },
+  { value: 80, name: '구매' },
+];
+
+// SankeyChart용 데이터
+const sankeyData = {
+  nodes: [
+    { name: 'A' },
+    { name: 'B' },
+    { name: 'C' },
+    { name: 'D' },
+    { name: 'E' },
+  ],
+  links: [
+    { source: 0, target: 1, value: 10 },
+    { source: 1, target: 2, value: 15 },
+    { source: 0, target: 3, value: 5 },
+    { source: 3, target: 4, value: 10 },
+    { source: 2, target: 4, value: 5 },
+  ],
+};
+
+// Gauge(게이지) 차트용 데이터 (RadialBarChart 활용)
+const gaugeData = [
+  { name: '진행률', value: 68, fill: '#8884d8' },
 ];
 
 const stateExampleBlockStyle = {
@@ -314,6 +346,74 @@ const RechartsExample: React.FC = () => (
 디렉터리 용량, 예산 분포 등 전체 대비 각 항목의 비중을 직관적으로 파악할 때 유용합니다.
 계층 구조(부서-팀-개인 등)나 그룹별 비중을 한눈에 보여주고 싶을 때 적합합니다.
 단, 항목이 너무 많거나 값 차이가 작으면 작은 사각형이 잘 보이지 않을 수 있습니다.`}
+      />
+    </div>
+    {/* FunnelChart 예제 */}
+    <div style={stateExampleBlockStyle}>
+      <Typography variant="h6" sx={{ mb: 2 }}>10. FunnelChart (퍼널 차트)</Typography>
+      <ExampleTab
+        example={
+          <ResponsiveContainer width="100%" height={300}>
+            <FunnelChart>
+              <Tooltip />
+              <Funnel dataKey="value" data={funnelData} isAnimationActive>
+                <LabelList position="right" fill="#fff" stroke="none" dataKey="name" />
+              </Funnel>
+            </FunnelChart>
+          </ResponsiveContainer>
+        }
+        code={`import { FunnelChart, Funnel, LabelList, Tooltip, ResponsiveContainer } from 'recharts';\n\nconst data = [ ... ];\n\n<ResponsiveContainer width="100%" height={300}>\n  <FunnelChart>\n    <Tooltip />\n    <Funnel dataKey="value" data={data} isAnimationActive>\n      <LabelList position="right" fill="#fff" stroke="none" dataKey="name" />\n    </Funnel>\n  </FunnelChart>\n</ResponsiveContainer>`}
+        desc={`FunnelChart(퍼널 차트)는 단계별 이탈률, 전환율을 시각화할 때 사용합니다.\n마케팅 퍼널, 회원가입, 구매 전환 등 단계별 분석에 적합하며, 각 단계의 크기 차이로 이탈 구간을 한눈에 파악할 수 있습니다.\n단계가 많아지면 해석이 어려울 수 있고, 각 단계의 명확한 정의가 중요합니다.`}
+      />
+    </div>
+    {/* SankeyChart 예제 */}
+    <div style={stateExampleBlockStyle}>
+      <Typography variant="h6" sx={{ mb: 2 }}>11. SankeyChart (생키 차트)</Typography>
+      <ExampleTab
+        example={
+          <ResponsiveContainer width="100%" height={300}>
+            <Sankey
+              data={sankeyData}
+              nodePadding={30}
+              margin={{ left: 50, right: 50, top: 20, bottom: 20 }}
+              linkCurvature={0.5}
+              node={{ stroke: '#333', strokeWidth: 1 }}
+              link={{ stroke: '#8884d8', strokeWidth: 2 }}
+            />
+          </ResponsiveContainer>
+        }
+        code={`import { Sankey, ResponsiveContainer } from 'recharts';\n\nconst data = { nodes: [...], links: [...] };\n\n<ResponsiveContainer width="100%" height={300}>\n  <Sankey\n    data={data}\n    nodePadding={30}\n    margin={{ left: 50, right: 50, top: 20, bottom: 20 }}\n    linkCurvature={0.5}\n    node={{ stroke: '#333', strokeWidth: 1 }}\n    link={{ stroke: '#8884d8', strokeWidth: 2 }}\n  />\n</ResponsiveContainer>`}
+        desc={`SankeyChart(생키 차트)는 흐름(Flow)과 분기, 합류를 시각화하는 차트입니다.\n에너지 흐름, 사용자 이동 경로, 자원 분배 등 복잡한 흐름 분석에 적합합니다.\n노드와 링크의 두께로 흐름의 크기를 직관적으로 표현할 수 있습니다.\n구조가 복잡할수록 해석이 어려울 수 있으니, 주요 흐름 위주로 시각화하는 것이 좋습니다.`}
+      />
+    </div>
+    {/* Gauge(게이지) 차트 예제 (RadialBarChart 활용) */}
+    <div style={stateExampleBlockStyle}>
+      <Typography variant="h6" sx={{ mb: 2 }}>12. Gauge (게이지 차트)</Typography>
+      <ExampleTab
+        example={
+          <ResponsiveContainer width="100%" height={220}>
+            <RadialBarChart
+              cx="50%"
+              cy="100%"
+              innerRadius="90%"
+              outerRadius="100%"
+              startAngle={180}
+              endAngle={0}
+              data={gaugeData}
+            >
+              <RadialBar dataKey="value" />
+              <Legend
+                iconSize={10}
+                layout="vertical"
+                verticalAlign="middle"
+                align="right"
+              />
+              <Tooltip />
+            </RadialBarChart>
+          </ResponsiveContainer>
+        }
+        code={`import { RadialBarChart, RadialBar, Legend, Tooltip, ResponsiveContainer } from 'recharts';\n\nconst data = [ ... ];\n\n<ResponsiveContainer width="100%" height={220}>\n  <RadialBarChart\n    cx="50%" cy="100%" innerRadius="90%" outerRadius="100%"\n    startAngle={180} endAngle={0} data={data}>\n    <RadialBar dataKey="value" />\n    <Legend iconSize={10} layout="vertical" verticalAlign="middle" align="right" />\n    <Tooltip />\n  </RadialBarChart>\n</ResponsiveContainer>`}
+        desc={`Gauge(게이지) 차트는 속도계, 점수, 진행률 등 단일 값을 원형 게이지로 표현합니다.\n대시보드의 KPI, 점수, 퍼센트 등 단일 지표 강조에 적합하며, 시각적 임팩트가 큽니다.\nRadialBarChart를 활용해 쉽게 구현할 수 있습니다.\n단, 여러 값을 동시에 비교하는 용도에는 적합하지 않습니다.`}
       />
     </div>
   </div>
