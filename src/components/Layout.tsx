@@ -35,8 +35,8 @@ export const Layout = ({ children, currentSection, onSectionChange }: LayoutProp
       title: 'API 연동',
       sections: Object.values(sections).filter((section: Section) => section.category === 'Api')
     },
-    opensource: {
-      title: '오픈소스 라이브러리',
+    library: {
+      title: '라이브러리',
       sections: Object.values(sections).filter((section: Section) => section.category === 'opensource')
     }
   };

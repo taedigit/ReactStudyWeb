@@ -56,9 +56,6 @@ import StyledComponentsExample from '../sections/opensource/StyledComponentsExam
 import ApiExamples from '../sections/api';
 import RecoilExample from '../sections/opensource/RecoilExample';
 import SWRExample from '../sections/api/SWRExample';
-import { ReactHookFormExample } from '../sections/opensource/ReactHookFormExample';
-import FormikExample from '../sections/opensource/FormikExample';
-import RechartsExample from '../sections/opensource/RechartsExample';
 
 
 const nvmInstallScript = `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
@@ -1323,7 +1320,7 @@ export const sections: Record<SectionId, Section> = {
         <Typography variant="h6" sx={{ mb: 2 }}>6. Dialog (다이얼로그)</Typography>
           <ExampleTab
             example={<MuiDialogDemo />}
-            code={`import Dialog from '@mui/material/Dialog';\nimport Button from '@mui/material/Button';\nimport DialogTitle from '@mui/material/DialogTitle';\nimport DialogActions from '@mui/material/DialogActions';\nimport React, { useState } from 'react';\n\nfunction Demo() {\n  const [open, setOpen] = useState(false);\n  return (<><Button onClick={() => setOpen(true)}>다이얼로그 열기</Button><Dialog open={open} onClose={() => setOpen(false)}><DialogTitle>다이얼로그 내용</DialogTitle><DialogActions><Button onClick={() => setOpen(false)}>닫기</Button></DialogActions></Dialog></>);\n}`}
+            code={`import Dialog from '@mui/material/Dialog';\nimport Button from '@mui/material/Button';\nimport DialogTitle from '@mui/material/DialogTitle';\nimport DialogActions from '@mui/material/DialogActions';\nimport React, { useState } from 'react';\n\nfunction Demo() {\n  const [open, setOpen] = useState(false);\n  return (<><Button onClick={() => setOpen(true)}>다이얼로그 열기</Button><MuiDialog open={open} onClose={() => setOpen(false)}><MuiDialogTitle>다이얼로그 내용</MuiDialogTitle><MuiDialogActions><Button onClick={() => setOpen(false)}>닫기</Button></MuiDialogActions></MuiDialog></>);\n}`}
             desc="Dialog"
           />
         </div>
@@ -2079,54 +2076,6 @@ const StyledButton = styled.button\`
     next: null,
     content: <SWRExample />,
   },
-  opensource: {
-    id: 'opensource',
-    title: '오픈소스 라이브러리',
-    description: '리액트 생태계의 유용한 오픈소스 라이브러리들을 소개합니다.',
-    category: 'opensource',
-    icon: '📦',
-    prev: 'api',
-    next: null,
-    examples: [
-      {
-        id: 'reactrouter',
-        title: 'React Router',
-        description: '리액트 라우팅 라이브러리',
-        code: <ReactRouterExample />,
-      },
-      {
-        id: 'styledcomponents',
-        title: 'Styled Components',
-        description: 'CSS-in-JS 스타일링 라이브러리',
-        code: <StyledComponentsExample />,
-      },
-      {
-        id: 'recoil',
-        title: 'Recoil',
-        description: '리액트 전역 상태 관리 라이브러리',
-        code: <RecoilExample />,
-      },
-      {
-        id: 'reacthookform',
-        title: 'React Hook Form',
-        description: '폼 상태 관리 라이브러리',
-        code: <ReactHookFormExample />,
-      },
-      {
-        id: 'formik',
-        title: 'Formik',
-        description: '또 다른 폼 상태 관리 라이브러리',
-        code: <FormikExample />,
-      },
-      {
-        id: 'recharts',
-        title: 'Recharts',
-        description: 'React 차트 라이브러리',
-        code: <RechartsExample />,
-      },
-    ],
-  },
-  // ... existing code ...
 };
   
 

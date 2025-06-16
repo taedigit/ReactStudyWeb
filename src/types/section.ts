@@ -36,7 +36,7 @@ export type SectionId =
   | 'stylingBasics'
   | 'api'
   | 'swr'
-  | 'opensource';
+
 
 export interface Section {
   id: SectionId;
