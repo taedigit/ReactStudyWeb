@@ -51,6 +51,7 @@ export type SectionId =
   | 'zod'
   | 'jest'
   | 'reacttestinglibrary'
+  | 'cypress'
 
 
 export interface Section {

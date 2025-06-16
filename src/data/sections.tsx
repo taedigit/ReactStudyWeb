@@ -75,6 +75,7 @@ import { YupExample } from '../sections/opensource/YupExample';
 import { ZodExample } from '../sections/opensource/ZodExample';
 import { JestExample } from '../sections/opensource/JestExample';
 import { ReactTestingLibraryExample } from '../sections/opensource/ReactTestingLibraryExample';
+import { CypressExample } from '../sections/opensource/CypressExample';
 
 
 
@@ -2240,8 +2241,18 @@ const StyledButton = styled.button\`
     category: 'opensource',
     icon: '🧪',
     prev: 'jest',
-    next: null,
+    next: 'cypress',
     content: <ReactTestingLibraryExample />,
+  },
+  cypress: {
+    id: 'cypress',
+    title: 'Cypress',
+    description: 'Cypress E2E 테스트 예제',
+    category: 'opensource',
+    icon: '🧪',
+    prev: 'reacttestinglibrary',
+    next: null,
+    content: <CypressExample />,
   },
 };
   

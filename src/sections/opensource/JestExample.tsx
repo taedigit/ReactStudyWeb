@@ -1,4 +1,3 @@
-import React from 'react';
 import { ExampleTab } from '../../components/ExampleTab';
 
 const stateExampleBlockStyle = {
