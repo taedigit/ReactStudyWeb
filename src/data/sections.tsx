@@ -68,6 +68,7 @@ import ReduxExample from '../sections/opensource/ReduxExample';
 import EmotionExample from '../sections/opensource/EmotionExample';
 import TailwindExample from '../sections/opensource/TailwindExample';
 import SassExample from '../sections/opensource/SassExample';
+import RadixUIExample from '../sections/opensource/RadixUIExample';
 
 
 
@@ -2156,6 +2157,16 @@ const StyledButton = styled.button\`
     prev: 'tailwind',
     next: null,
     content: <SassExample />,
+  },
+  radixui: {
+    id: 'radixui',
+    title: 'Radix UI',
+    description: 'Radix UI 실전 예제와 활용법',
+    category: 'opensource',
+    icon: 'widgets',
+    prev: 'sass',
+    next: null,
+    content: <RadixUIExample />,
   },
 };
   
