@@ -64,6 +64,7 @@ import { VictoryExample } from '../sections/opensource/VictoryExample';
 import { ChartjsExample } from '../sections/opensource/ChartjsExample';
 import { ZustandExample } from '../sections/opensource/ZustandExample';
 import { JotaiExample } from '../sections/opensource/JotaiExample';
+import ReduxExample from '../sections/opensource/ReduxExample';
 
 
 
@@ -2112,6 +2113,16 @@ const StyledButton = styled.button\`
     prev: 'api',
     next: null,
     content: <SWRExample />,
+  },
+  redux: {
+    id: 'redux',
+    title: 'Redux (리덕스)',
+    description: '가장 널리 쓰이는 전역 상태 관리 라이브러리. Redux Toolkit 기반 실전 예제와 실무 팁 제공.',
+    category: 'opensource',
+    icon: '🟥',
+    prev: 'jotai',
+    next: 'zustand',
+    content: <ReduxExample />,
   },
 };
   
