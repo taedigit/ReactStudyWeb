@@ -63,6 +63,7 @@ import { Collapse } from 'antd';
 import { VictoryExample } from '../sections/opensource/VictoryExample';
 import { ChartjsExample } from '../sections/opensource/ChartjsExample';
 import { ZustandExample } from '../sections/opensource/ZustandExample';
+import { JotaiExample } from '../sections/opensource/JotaiExample';
 
 
 
@@ -1507,8 +1508,18 @@ export const sections: Record<SectionId, Section> = {
     category: 'opensource',
     icon: '🐻',
     prev: 'recoil',
-    next: 'reactquery',
+    next: 'jotai',
     content: <ZustandExample />,
+  },
+  jotai: {
+    id: 'jotai',
+    title: 'Jotai',
+    description: 'Jotai 상태 관리 예제',
+    category: 'opensource',
+    icon: '🧪',
+    prev: 'zustand',
+    next: 'reactquery',
+    content: <JotaiExample />,
   },
  
   fetchapi: {
@@ -1538,7 +1549,7 @@ export const sections: Record<SectionId, Section> = {
     description: 'React Query로 서버 상태 관리 예제',
     category: 'Api',
     icon: '🔗',
-    prev: 'zustand',
+    prev: 'jotai',
     next: 'tanstackquery',
     content: <ReactQueryExample />,
   },

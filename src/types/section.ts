@@ -39,6 +39,7 @@ export type SectionId =
   | 'victory'
   | 'chartjs'
   | 'zustand'
+  | 'jotai'
 
 
 export interface Section {
