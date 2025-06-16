@@ -69,6 +69,7 @@ import EmotionExample from '../sections/opensource/EmotionExample';
 import TailwindExample from '../sections/opensource/TailwindExample';
 import SassExample from '../sections/opensource/SassExample';
 import RadixUIExample from '../sections/opensource/RadixUIExample';
+import { ReactHookFormExample } from '../sections/opensource/ReactHookFormExample';
 
 
 
@@ -1523,7 +1524,7 @@ export const sections: Record<SectionId, Section> = {
     category: 'opensource',
     icon: '🧬',
     content: <RecoilExample />,
-    prev: 'tailwind',
+    prev: 'reacthookform',
     next: 'zustand',
   },
   zustand: {
@@ -1543,8 +1544,18 @@ export const sections: Record<SectionId, Section> = {
     category: 'opensource',
     icon: '🧪',
     prev: 'zustand',
-    next: 'reactquery',
+    next: 'reacthookform',
     content: <JotaiExample />,
+  },
+  reacthookform: {
+    id: 'reacthookform',
+    title: 'React Hook Form',
+    description: 'React Hook Form을 활용한 폼 예제',
+    category: 'opensource',
+    icon: '📝',
+    prev: 'jotai',
+    next: 'recoil',
+    content: <ReactHookFormExample />,
   },
  
   fetchapi: {

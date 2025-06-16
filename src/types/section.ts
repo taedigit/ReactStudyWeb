@@ -40,6 +40,7 @@ export type SectionId =
   | 'chartjs'
   | 'zustand'
   | 'jotai'
+  | 'reacthookform'
   | 'redux'
   | 'emotion'
   | 'tailwind'
