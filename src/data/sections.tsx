@@ -70,6 +70,7 @@ import TailwindExample from '../sections/opensource/TailwindExample';
 import SassExample from '../sections/opensource/SassExample';
 import RadixUIExample from '../sections/opensource/RadixUIExample';
 import { ReactHookFormExample } from '../sections/opensource/ReactHookFormExample';
+import { FormikBasicExample, FormikValidationExample, FormikAdvancedExample } from '../sections/opensource/FormikExample';
 
 
 
@@ -1523,9 +1524,9 @@ export const sections: Record<SectionId, Section> = {
     description: 'Recoil을 사용한 상태 관리 예제',
     category: 'opensource',
     icon: '🧬',
-    content: <RecoilExample />,
-    prev: 'reacthookform',
+    prev: 'formik',
     next: 'zustand',
+    content: <RecoilExample />,
   },
   zustand: {
     id: 'zustand',
@@ -1554,8 +1555,27 @@ export const sections: Record<SectionId, Section> = {
     category: 'opensource',
     icon: '📝',
     prev: 'jotai',
-    next: 'recoil',
+    next: 'formik',
     content: <ReactHookFormExample />,
+  },
+  formik: {
+    id: 'formik',
+    title: 'Formik',
+    description: 'Formik을 활용한 폼 예제',
+    category: 'opensource',
+    icon: '📝',
+    prev: 'reacthookform',
+    next: 'recoil',
+    content: (
+      <div>
+        <h2>Formik Basic</h2>
+        <FormikBasicExample />
+        <h2>Formik Validation</h2>
+        <FormikValidationExample />
+        <h2>Formik Advanced</h2>
+        <FormikAdvancedExample />
+      </div>
+    ),
   },
  
   fetchapi: {

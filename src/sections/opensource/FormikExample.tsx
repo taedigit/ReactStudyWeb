@@ -12,7 +12,7 @@ interface FormValues {
 }
 
 // Basic Formik Example
-const BasicFormikExample = () => {
+export const FormikBasicExample = () => {
   return (
     <Formik<FormValues>
       initialValues={{ email: '', password: '' }}
@@ -73,7 +73,7 @@ const BasicFormikExample = () => {
 };
 
 // Validation Example
-const ValidationFormikExample = () => {
+export const FormikValidationExample = () => {
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .email('올바른 이메일 주소를 입력해주세요')
@@ -153,7 +153,7 @@ const ValidationFormikExample = () => {
 };
 
 // Advanced Example
-const AdvancedFormikExample = () => {
+export const FormikAdvancedExample = () => {
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .email('올바른 이메일 주소를 입력해주세요')
@@ -273,7 +273,7 @@ const FormikExample: React.FC = () => {
     <div>
       <h3>Basic Example</h3>
       <ExampleTab
-        example={<BasicFormikExample />}
+        example={<FormikBasicExample />}
         code={`import { Formik, Form, Field } from 'formik';
 
 const BasicFormikExample = () => {
@@ -339,7 +339,7 @@ const BasicFormikExample = () => {
 
       <h3>Validation Example</h3>
       <ExampleTab
-        example={<ValidationFormikExample />}
+        example={<FormikValidationExample />}
         code={`import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
@@ -425,7 +425,7 @@ const ValidationFormikExample = () => {
 
       <h3>Advanced Example</h3>
       <ExampleTab
-        example={<AdvancedFormikExample />}
+        example={<FormikAdvancedExample />}
         code={`import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 

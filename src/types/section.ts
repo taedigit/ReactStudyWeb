@@ -41,6 +41,7 @@ export type SectionId =
   | 'zustand'
   | 'jotai'
   | 'reacthookform'
+  | 'formik'
   | 'redux'
   | 'emotion'
   | 'tailwind'
