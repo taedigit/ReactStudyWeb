@@ -65,6 +65,7 @@ import { ChartjsExample } from '../sections/opensource/ChartjsExample';
 import { ZustandExample } from '../sections/opensource/ZustandExample';
 import { JotaiExample } from '../sections/opensource/JotaiExample';
 import ReduxExample from '../sections/opensource/ReduxExample';
+import EmotionExample from '../sections/opensource/EmotionExample';
 
 
 
@@ -1489,8 +1490,18 @@ export const sections: Record<SectionId, Section> = {
     category: 'opensource',
     icon: '💅',
     prev: 'reactrouter',
-    next: 'recoil',
+    next: 'emotion',
     content: <StyledComponentsExample />,
+  },
+  emotion: {
+    id: 'emotion',
+    title: 'Emotion',
+    description: 'Emotion(@emotion/react, @emotion/styled) 기반 실전 스타일링 예제 18선',
+    category: 'opensource',
+    icon: '🎨',
+    prev: 'styledcomponents',
+    next: 'recoil',
+    content: <EmotionExample />,
   },
   recoil: {
     id: 'recoil',
@@ -1499,7 +1510,7 @@ export const sections: Record<SectionId, Section> = {
     category: 'opensource',
     icon: '🧬',
     content: <RecoilExample />,
-    prev: 'styledcomponents',
+    prev: 'emotion',
     next: 'zustand'
   },
   zustand: {

@@ -41,6 +41,7 @@ export type SectionId =
   | 'zustand'
   | 'jotai'
   | 'redux'
+  | 'emotion'
 
 
 export interface Section {
