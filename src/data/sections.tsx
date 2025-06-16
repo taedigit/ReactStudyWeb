@@ -61,6 +61,7 @@ import MuiTabs from '@mui/material/Tabs';
 import MuiTab from '@mui/material/Tab';
 import { Collapse } from 'antd';
 import { VictoryExample } from '../sections/opensource/VictoryExample';
+import { ChartjsExample } from '../sections/opensource/ChartjsExample';
 
 
 
@@ -1455,8 +1456,18 @@ export const sections: Record<SectionId, Section> = {
     category: 'opensource',
     icon: '🏆',
     prev: 'recharts',
-    next: 'reactrouter',
+    next: 'chartjs',
     content: <VictoryExample />,
+  },
+  chartjs: {
+    id: 'chartjs',
+    title: 'Chart.js',
+    description: 'Chart.js + react-chartjs-2 차트 예제',
+    category: 'opensource',
+    icon: '📈',
+    prev: 'victory',
+    next: 'reactrouter',
+    content: <ChartjsExample />,
   },
   reactrouter: {
     id: 'reactrouter',
@@ -1464,7 +1475,7 @@ export const sections: Record<SectionId, Section> = {
     description: 'react-router로 라우팅 구현 예제',
     category: 'opensource',
     icon: '🛣️',
-    prev: 'victory',
+    prev: 'chartjs',
     next: 'styledcomponents',
     content: <ReactRouterExample />,
   },
