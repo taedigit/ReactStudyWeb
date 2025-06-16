@@ -74,6 +74,7 @@ import { FormikBasicExample, FormikValidationExample, FormikAdvancedExample } fr
 import { YupExample } from '../sections/opensource/YupExample';
 import { ZodExample } from '../sections/opensource/ZodExample';
 import { JestExample } from '../sections/opensource/JestExample';
+import { ReactTestingLibraryExample } from '../sections/opensource/ReactTestingLibraryExample';
 
 
 
@@ -2229,8 +2230,18 @@ const StyledButton = styled.button\`
     category: 'opensource',
     icon: '🧪',
     prev: 'zod',
-    next: null,
+    next: 'reacttestinglibrary',
     content: <JestExample />,
+  },
+  reacttestinglibrary: {
+    id: 'reacttestinglibrary',
+    title: 'React Testing Library',
+    description: 'React Testing Library 주요 사용법 예제',
+    category: 'opensource',
+    icon: '🧪',
+    prev: 'jest',
+    next: null,
+    content: <ReactTestingLibraryExample />,
   },
 };
   

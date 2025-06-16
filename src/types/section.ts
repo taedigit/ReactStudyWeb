@@ -50,6 +50,7 @@ export type SectionId =
   | 'yup'
   | 'zod'
   | 'jest'
+  | 'reacttestinglibrary'
 
 
 export interface Section {
