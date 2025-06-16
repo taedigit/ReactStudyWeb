@@ -71,6 +71,8 @@ import SassExample from '../sections/opensource/SassExample';
 import RadixUIExample from '../sections/opensource/RadixUIExample';
 import { ReactHookFormExample } from '../sections/opensource/ReactHookFormExample';
 import { FormikBasicExample, FormikValidationExample, FormikAdvancedExample } from '../sections/opensource/FormikExample';
+import { YupExample } from '../sections/opensource/YupExample';
+import { ZodExample } from '../sections/opensource/ZodExample';
 
 
 
@@ -2198,6 +2200,26 @@ const StyledButton = styled.button\`
     prev: 'sass',
     next: null,
     content: <RadixUIExample />,
+  },
+  zod: {
+    id: 'zod',
+    title: 'Zod',
+    description: 'Zod를 활용한 스키마/검증 예제',
+    category: 'opensource',
+    icon: '🧩',
+    prev: 'yup',
+    next: null,
+    content: <ZodExample />,
+  },
+  yup: {
+    id: 'yup',
+    title: 'Yup',
+    description: 'Yup을 활용한 스키마/검증 예제',
+    category: 'opensource',
+    icon: '✅',
+    prev: 'zustand',
+    next: 'zod',
+    content: <YupExample />,
   },
 };
   

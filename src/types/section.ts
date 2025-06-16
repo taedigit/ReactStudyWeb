@@ -47,6 +47,8 @@ export type SectionId =
   | 'tailwind'
   | 'sass'
   | 'radixui'
+  | 'yup'
+  | 'zod'
 
 
 export interface Section {
