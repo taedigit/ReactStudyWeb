@@ -83,7 +83,7 @@ const stateExampleBlockStyle = {
 
 export const VictoryExample: React.FC = () => {
   return (
-    <div style={{ maxWidth: 900, margin: '0 auto', padding: 24 }}>
+    <div>
       <div style={stateExampleBlockStyle}>
         <Typography variant="h4" gutterBottom>Victory 주요 차트 예제</Typography>
         <Typography variant="body1" gutterBottom>

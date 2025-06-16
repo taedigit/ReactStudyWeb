@@ -63,7 +63,7 @@ const salesData = {
 
 export const ChartjsExample: React.FC = () => {
   return (
-    <div style={{ maxWidth: 900, margin: '0 auto', padding: 24 }}>
+    <div>
       <div style={stateExampleBlockStyle}>
         <Typography variant="h4" gutterBottom>Chart.js + react-chartjs-2 주요 차트 예제</Typography>
         <Typography variant="body1" gutterBottom>
