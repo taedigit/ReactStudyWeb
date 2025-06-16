@@ -626,13 +626,33 @@ const NoteEditor = ({
 
 
 
+const stateExampleBlockStyle = {
+  background: '#484f54',
+  padding: '1.5em 2em',
+  borderRadius: '8px',
+  border: '1px solid #eee',
+  marginTop: '1.2em',
+  marginBottom: '2em',
+  marginLeft: 0,
+  marginRight: 0,
+};
+
 export const RecoilExample = () => {
   return (
-    <Box>
-      <Typography variant="h4" gutterBottom>
-        Recoil 예제
-      </Typography>
-
+    <Box >
+      <Box sx={stateExampleBlockStyle}>
+        <Typography variant="h4" gutterBottom>Recoil 주요 예제</Typography>
+        <Typography variant="body1" gutterBottom>
+          Recoil은 <b>Facebook에서 개발한 React 상태 관리 라이브러리</b>로, <b>atom/selector 기반의 선언적 상태 관리</b>와 <b>비동기 파생 상태</b>를 쉽게 구현할 수 있습니다.<br/>
+          <ul style={{margin: '1em 0 0 1.2em', color: '#b2dfdb', fontSize: 16}}>
+            <li>atom/selector로 <b>상태 분리와 파생값</b>을 직관적으로 관리</li>
+            <li>비동기/동기 selector, atomFamily 등 <b>실전 기능</b> 내장</li>
+            <li>Provider 기반, React Suspense와 완벽 연동</li>
+            <li>Redux 대비 러닝커브 낮고, Jotai/Zustand 대비 파생 상태/비동기 처리에 강점</li>
+          </ul>
+          <span style={{color:'#ffd600'}}>실무에서 자주 쓰는 패턴, 실전 팁, 베스트 프랙티스도 함께 소개합니다.</span>
+        </Typography>
+      </Box>
       {[
         {
           desc: '기본적인 Atom 사용 예제입니다. 카운터를 통해 상태 관리의 기본을 보여줍니다.',
@@ -712,12 +732,13 @@ const noteState = atomFamily<Note, number>({
 });`,
         },
       ].map((example, index) => (
-        <ExampleTab
-          key={index}
-          example={example.example}
-          code={example.code}
-          desc={example.desc}
-        />
+        <Box key={index} sx={stateExampleBlockStyle}>
+          <ExampleTab
+            example={example.example}
+            code={example.code}
+            desc={example.desc}
+          />
+        </Box>
       ))}
     </Box>
   );
