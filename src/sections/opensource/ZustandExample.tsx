@@ -128,7 +128,7 @@ const TodoDemo = () => {
 
 export const ZustandExample: React.FC = () => {
   return (
-    <div style={{ maxWidth: 900, margin: '0 auto', padding: 24 }}>
+    <div>
       <div style={stateExampleBlockStyle}>
         <Typography variant="h4" gutterBottom>Zustand 주요 예제</Typography>
         <Typography variant="body1" gutterBottom>

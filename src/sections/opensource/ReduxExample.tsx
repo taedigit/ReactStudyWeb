@@ -137,7 +137,7 @@ const demoStore = configureStore({
 export const ReduxExample: React.FC = () => {
   return (
     <Provider store={demoStore}>
-      <div style={{ maxWidth: 900, margin: '0 auto', padding: 24 }}>
+      <div>
         <div style={stateExampleBlockStyle}>
           <Typography variant="h4" gutterBottom>Redux 주요 예제</Typography>
           <Typography variant="body1" gutterBottom>
