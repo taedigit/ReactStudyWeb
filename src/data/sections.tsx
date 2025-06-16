@@ -62,6 +62,7 @@ import MuiTab from '@mui/material/Tab';
 import { Collapse } from 'antd';
 import { VictoryExample } from '../sections/opensource/VictoryExample';
 import { ChartjsExample } from '../sections/opensource/ChartjsExample';
+import { ZustandExample } from '../sections/opensource/ZustandExample';
 
 
 
@@ -1496,8 +1497,18 @@ export const sections: Record<SectionId, Section> = {
     category: 'opensource',
     icon: '🧬',
     content: <RecoilExample />,
-    prev: 'api',
-    next: 'reactquery'
+    prev: 'styledcomponents',
+    next: 'zustand'
+  },
+  zustand: {
+    id: 'zustand',
+    title: 'Zustand',
+    description: 'Zustand 상태 관리 예제',
+    category: 'opensource',
+    icon: '🐻',
+    prev: 'recoil',
+    next: 'reactquery',
+    content: <ZustandExample />,
   },
  
   fetchapi: {
@@ -1527,7 +1538,7 @@ export const sections: Record<SectionId, Section> = {
     description: 'React Query로 서버 상태 관리 예제',
     category: 'Api',
     icon: '🔗',
-    prev: 'axios',
+    prev: 'zustand',
     next: 'tanstackquery',
     content: <ReactQueryExample />,
   },
