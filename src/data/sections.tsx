@@ -67,6 +67,7 @@ import { JotaiExample } from '../sections/opensource/JotaiExample';
 import ReduxExample from '../sections/opensource/ReduxExample';
 import EmotionExample from '../sections/opensource/EmotionExample';
 import TailwindExample from '../sections/opensource/TailwindExample';
+import SassExample from '../sections/opensource/SassExample';
 
 
 
@@ -2145,6 +2146,16 @@ const StyledButton = styled.button\`
     prev: 'jotai',
     next: 'zustand',
     content: <ReduxExample />,
+  },
+  sass: {
+    id: 'sass',
+    title: 'Sass/SCSS',
+    description: 'Sass/SCSS 스타일링 실전 예제와 활용법',
+    category: 'opensource',
+    icon: 'palette',
+    prev: 'tailwind',
+    next: null,
+    content: <SassExample />,
   },
 };
   

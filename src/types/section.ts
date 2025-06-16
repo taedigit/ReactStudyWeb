@@ -43,6 +43,7 @@ export type SectionId =
   | 'redux'
   | 'emotion'
   | 'tailwind'
+  | 'sass'
 
 
 export interface Section {

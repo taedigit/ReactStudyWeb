@@ -1,0 +1,260 @@
+// Sass/SCSS 스타일 예제 모듈
+
+.sassButton {
+  background: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+  &:hover { background: #1565c0; }
+}
+
+.sassInput {
+  padding: 8px;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  font-size: 16px;
+  &:focus { border-color: #1976d2; outline: none; }
+}
+
+.sassCheckbox {
+  accent-color: #1976d2;
+  width: 20px;
+  height: 20px;
+}
+
+.sassSwitchWrap {
+  display: inline-flex;
+  align-items: center;
+}
+.sassSwitch {
+  width: 40px;
+  height: 20px;
+  appearance: none;
+  background: #ccc;
+  border-radius: 20px;
+  position: relative;
+  outline: none;
+  transition: background 0.2s;
+  &:checked { background: #1976d2; }
+  &::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    width: 16px;
+    height: 16px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.2s;
+    transform: translateX(0);
+  }
+  &:checked::before {
+    transform: translateX(20px);
+  }
+}
+
+.sassSelect {
+  padding: 8px;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.sassDialogBg {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.sassDialogBox {
+  background: white;
+  padding: 2em;
+  border-radius: 8px;
+  min-width: 300px;
+}
+
+.sassSnackbar {
+  position: fixed;
+  left: 50%;
+  bottom: 40px;
+  transform: translateX(-50%);
+  background: #1976d2;
+  color: white;
+  padding: 12px 32px;
+  border-radius: 24px;
+  font-weight: bold;
+  z-index: 1001;
+}
+
+.sassProgressBar {
+  width: 100%;
+  height: 12px;
+  background: #eee;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+.sassProgress {
+  height: 100%;
+  background: #1976d2;
+  transition: width 0.3s;
+}
+
+.sassAvatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #1976d2;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.sassBadgeWrap {
+  position: relative;
+  display: inline-block;
+}
+.sassBadgeDot {
+  position: absolute;
+  top: 0; right: 0;
+  width: 16px; height: 16px;
+  background: #ff1744;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.sassChip {
+  display: inline-block;
+  background: #1976d2;
+  color: white;
+  border-radius: 12px;
+  padding: 4px 14px;
+  font-size: 15px;
+  font-weight: 500;
+  margin-right: 8px;
+}
+
+.sassTabsWrap {
+  display: flex;
+  border-bottom: 2px solid #1976d2;
+}
+.sassTabBtn {
+  background: none;
+  border: none;
+  color: #333;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 12px 24px;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+}
+.sassTabActive {
+  @extend .sassTabBtn;
+  color: #1976d2;
+  border-bottom: 3px solid #1976d2;
+}
+
+.sassDropdownWrap {
+  position: relative;
+  display: inline-block;
+}
+.sassDropdownMenu {
+  position: absolute;
+  top: 120%;
+  left: 0;
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 8px 0;
+  z-index: 20;
+}
+.sassDropdownItem {
+  padding: 8px 24px;
+  cursor: pointer;
+  &:hover { background: #f5f5f5; }
+}
+
+.sassMenuWrap {
+  display: flex;
+  gap: 8px;
+}
+.sassMenuItem {
+  background: #f5f5f5;
+  padding: 8px 18px;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  &:hover { background: #e3e3e3; }
+}
+
+.sassPaginationWrap {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.sassPageBtn {
+  background: #fff;
+  color: #1976d2;
+  border: 1px solid #1976d2;
+  border-radius: 4px;
+  padding: 6px 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.sassPageActive {
+  @extend .sassPageBtn;
+  background: #1976d2;
+  color: #fff;
+}
+
+.sassPopconfirmWrap {
+  display: inline-block;
+  position: relative;
+}
+.sassPopconfirmBox {
+  position: absolute;
+  top: 120%;
+  left: 0;
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 16px;
+  z-index: 20;
+}
+
+.sassLinearProgressBar {
+  width: 100%;
+  height: 10px;
+  background: #eee;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+.sassLinearProgress {
+  height: 100%;
+  background: #1976d2;
+  transition: width 0.3s;
+}
+
+.sassTag {
+  display: inline-block;
+  background: #1976d2;
+  color: white;
+  border-radius: 12px;
+  padding: 4px 14px;
+  font-size: 15px;
+  font-weight: 500;
+  margin-right: 8px;
+} 
