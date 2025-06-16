@@ -60,6 +60,7 @@ import MuiPagination from '@mui/material/Pagination';
 import MuiTabs from '@mui/material/Tabs';
 import MuiTab from '@mui/material/Tab';
 import { Collapse } from 'antd';
+import { VictoryExample } from '../sections/opensource/VictoryExample';
 
 
 
@@ -1444,8 +1445,18 @@ export const sections: Record<SectionId, Section> = {
     category: 'opensource',
     icon: '📊',
     prev: 'mui',
-    next: 'reactrouter',
+    next: 'victory',
     content: <RechartsExample />,
+  },
+  victory: {
+    id: 'victory',
+    title: 'Victory',
+    description: 'Victory 차트 라이브러리 예제',
+    category: 'opensource',
+    icon: '🏆',
+    prev: 'recharts',
+    next: 'reactrouter',
+    content: <VictoryExample />,
   },
   reactrouter: {
     id: 'reactrouter',
@@ -1453,7 +1464,7 @@ export const sections: Record<SectionId, Section> = {
     description: 'react-router로 라우팅 구현 예제',
     category: 'opensource',
     icon: '🛣️',
-    prev: 'recharts',
+    prev: 'victory',
     next: 'styledcomponents',
     content: <ReactRouterExample />,
   },

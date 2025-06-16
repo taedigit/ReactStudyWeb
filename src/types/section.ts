@@ -36,6 +36,7 @@ export type SectionId =
   | 'api'
   | 'swr'
   | 'recharts'
+  | 'victory'
 
 
 export interface Section {

@@ -47,6 +47,7 @@
     "tailwind-merge": "^3.3.0",
     "tailwindcss": "^4.1.8",
     "tailwindcss-animate": "^1.0.7",
+    "victory": "^37.3.6",
     "yup": "^1.6.1"
   },
   "devDependencies": {
