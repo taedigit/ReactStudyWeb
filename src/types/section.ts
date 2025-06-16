@@ -35,6 +35,7 @@ export type SectionId =
   | 'stylingBasics'
   | 'api'
   | 'swr'
+  | 'recharts'
 
 
 export interface Section {
