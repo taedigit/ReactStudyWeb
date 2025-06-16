@@ -23,7 +23,7 @@ export function MLBStandings2025Chart() {
     fetch(MLB_API_URL)
       .then(res => res.json())
       .then(json => {
-        // standings[0].teamRecords 배열에서 팀명, 승, 패, 승률, 지구, 리그 추출
+        console.log('MLB API raw:', json);
         const records = json.records.flatMap((rec: any) =>
           rec.teamRecords.map((team: any) => ({
             team: team.team.name,
@@ -51,12 +51,10 @@ export function MLBStandings2025Chart() {
     const [league, division] = divKey.split(' ');
     return data.filter(
       d =>
-        d.division &&
-        d.league &&
         typeof d.division === 'string' &&
         typeof d.league === 'string' &&
-        d.division.includes(division) &&
-        d.league.startsWith(league === 'AL' ? 'American' : 'National')
+        d.division.toLowerCase().includes(division.toLowerCase()) &&
+        d.league.toLowerCase().includes(league === 'AL' ? 'american' : 'national')
     );
   };
 
