@@ -58,6 +58,7 @@ import RecoilExample from '../sections/opensource/RecoilExample';
 import SWRExample from '../sections/api/SWRExample';
 import { ReactHookFormExample } from '../sections/opensource/ReactHookFormExample';
 import FormikExample from '../sections/opensource/FormikExample';
+import RechartsExample from '../sections/opensource/RechartsExample';
 
 
 const nvmInstallScript = `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
@@ -2080,136 +2081,50 @@ const StyledButton = styled.button\`
   },
   opensource: {
     id: 'opensource',
-    title: 'Form 라이브러리',
+    title: '오픈소스 라이브러리',
     description: '리액트 생태계의 유용한 오픈소스 라이브러리들을 소개합니다.',
     category: 'opensource',
-    icon: '📚',
-    prev: 'swr',
+    icon: '📦',
+    prev: 'api',
     next: null,
-    content: (
-      <div>
-        <div style={stateExampleBlockStyle}>
-          <Typography variant="h6" sx={{ mb: 2 }}>Formik 소개</Typography>
-          <p style={{ marginBottom: '1em' }}>
-            Formik은 React에서 폼을 쉽고 직관적으로 관리할 수 있게 해주는 라이브러리입니다.
-            폼 상태 관리, 유효성 검사, 에러 처리 등을 간단하게 처리할 수 있습니다.
-          </p>
-          <div style={{ marginBottom: '2em' }}>
-            <h4>주요 특징</h4>
-            <ul style={{ listStyle: 'none', padding: 0 }}>
-              <li>✨ 직관적인 API</li>
-              <li>📝 간편한 폼 상태 관리</li>
-              <li>🔧 유연한 유효성 검사</li>
-              <li>💪 타입스크립트 지원</li>
-              <li>🎨 다양한 UI 컴포넌트와 호환</li>
-            </ul>
-          </div>
-          <FormikExample />
-        </div>
-
-        <div style={stateExampleBlockStyle}>
-          <Typography variant="h6" sx={{ mb: 2 }}>React Hook Form 소개</Typography>
-          <p style={{ marginBottom: '1em' }}>
-            React Hook Form은 React에서 폼을 쉽고 효율적으로 관리할 수 있게 해주는 라이브러리입니다.
-            불필요한 리렌더링을 최소화하고, 타입스크립트를 완벽하게 지원하며, 다른 UI 라이브러리와의 통합도 쉽습니다.
-          </p>
-          <div style={{ marginBottom: '2em' }}>
-            <h4>주요 특징</h4>
-            <ul style={{ listStyle: 'none', padding: 0 }}>
-              <li>✨ 높은 성능 (불필요한 리렌더링 최소화)</li>
-              <li>📝 간단한 폼 유효성 검사</li>
-              <li>🔧 유연한 API</li>
-              <li>💪 타입스크립트 지원</li>
-              <li>🎨 UI 라이브러리 통합 용이</li>
-            </ul>
-        </div>
-        </div>
-        <div style={stateExampleBlockStyle}>
-          <Typography variant="h6" sx={{ mb: 2 }}>기본 사용 예제</Typography>
-          <ExampleTab
-            example={<ReactHookFormExample />}
-            code={`import { useForm } from 'react-hook-form';
-
-export function ReactHookFormExample() {
-  const { register, handleSubmit, formState: { errors } } = useForm();
-  const onSubmit = (data: any) => console.log(data);
-
-  return (
-    <form onSubmit={handleSubmit(onSubmit)} style={{ maxWidth: 300 }}>
-      <div style={{ marginBottom: 16 }}>
-        <input 
-          {...register("email", { 
-            required: "이메일을 입력해주세요",
-            pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: "올바른 이메일 주소를 입력해주세요"
-            }
-          })}
-          placeholder="이메일"
-          style={{
-            width: '100%',
-            padding: '8px',
-            border: '1px solid #ccc',
-            borderRadius: '4px'
-          }}
-        />
-        {errors.email && (
-          <p style={{ color: 'red', margin: '4px 0 0', fontSize: 14 }}>
-            {errors.email.message as string}
-          </p>
-        )}
-        </div>
-      <div style={{ marginBottom: 16 }}>
-        <input 
-          type="password"
-          {...register("password", { 
-            required: "비밀번호를 입력해주세요",
-            minLength: {
-              value: 6,
-              message: "비밀번호는 최소 6자 이상이어야 합니다"
-            }
-          })}
-          placeholder="비밀번호"
-          style={{
-            width: '100%',
-            padding: '8px',
-            border: '1px solid #ccc',
-            borderRadius: '4px'
-          }}
-        />
-        {errors.password && (
-          <p style={{ color: 'red', margin: '4px 0 0', fontSize: 14 }}>
-            {errors.password.message as string}
-          </p>
-        )}
-        </div>
-      <button 
-        type="submit"
-        style={{
-          width: '100%',
-          padding: '8px',
-          backgroundColor: '#0070f3',
-          color: 'white',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer'
-        }}
-      >
-        제출
-      </button>
-    </form>
-  );
-}`}
-            desc="React Hook Form의 기본적인 사용법을 보여주는 예제입니다.
-- useForm 훅으로 폼 상태 관리
-- register 함수로 입력 필드 등록
-- 유효성 검사 규칙 설정
-- 에러 메시지 표시
-- 폼 제출 처리"
-          />
-        </div>
-        </div>
-    ),
+    examples: [
+      {
+        id: 'reactrouter',
+        title: 'React Router',
+        description: '리액트 라우팅 라이브러리',
+        code: <ReactRouterExample />,
+      },
+      {
+        id: 'styledcomponents',
+        title: 'Styled Components',
+        description: 'CSS-in-JS 스타일링 라이브러리',
+        code: <StyledComponentsExample />,
+      },
+      {
+        id: 'recoil',
+        title: 'Recoil',
+        description: '리액트 전역 상태 관리 라이브러리',
+        code: <RecoilExample />,
+      },
+      {
+        id: 'reacthookform',
+        title: 'React Hook Form',
+        description: '폼 상태 관리 라이브러리',
+        code: <ReactHookFormExample />,
+      },
+      {
+        id: 'formik',
+        title: 'Formik',
+        description: '또 다른 폼 상태 관리 라이브러리',
+        code: <FormikExample />,
+      },
+      {
+        id: 'recharts',
+        title: 'Recharts',
+        description: 'React 차트 라이브러리',
+        code: <RechartsExample />,
+      },
+    ],
   },
   // ... existing code ...
 };

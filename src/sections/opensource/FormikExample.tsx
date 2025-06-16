@@ -1,14 +1,22 @@
-import { type FC } from 'react';
+import React from 'react';
 import { Formik, Form, Field } from 'formik';
+import type { FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import { ExampleTab } from '../../components/ExampleTab';
+
+interface FormValues {
+  email: string;
+  password: string;
+  rememberMe?: boolean;
+  plan?: string;
+}
 
 // Basic Formik Example
 const BasicFormikExample = () => {
   return (
-    <Formik
+    <Formik<FormValues>
       initialValues={{ email: '', password: '' }}
-      onSubmit={(values, { setSubmitting }) => {
+      onSubmit={(values: FormValues, { setSubmitting }: FormikHelpers<FormValues>) => {
         setTimeout(() => {
           alert(JSON.stringify(values, null, 2));
           setSubmitting(false);
@@ -49,11 +57,11 @@ const BasicFormikExample = () => {
             style={{
               width: '100%',
               padding: '8px',
-              backgroundColor: '#0070f3',
+              backgroundColor: isSubmitting ? '#ccc' : '#0070f3',
               color: 'white',
               border: 'none',
               borderRadius: '4px',
-              cursor: 'pointer'
+              cursor: isSubmitting ? 'not-allowed' : 'pointer'
             }}
           >
             제출
@@ -76,10 +84,10 @@ const ValidationFormikExample = () => {
   });
 
   return (
-    <Formik
+    <Formik<FormValues>
       initialValues={{ email: '', password: '' }}
       validationSchema={validationSchema}
-      onSubmit={(values, { setSubmitting }) => {
+      onSubmit={(values: FormValues, { setSubmitting }: FormikHelpers<FormValues>) => {
         setTimeout(() => {
           alert(JSON.stringify(values, null, 2));
           setSubmitting(false);
@@ -158,7 +166,7 @@ const AdvancedFormikExample = () => {
   });
 
   return (
-    <Formik
+    <Formik<FormValues>
       initialValues={{
         email: '',
         password: '',
@@ -166,7 +174,7 @@ const AdvancedFormikExample = () => {
         plan: ''
       }}
       validationSchema={validationSchema}
-      onSubmit={(values, { setSubmitting }) => {
+      onSubmit={(values: FormValues, { setSubmitting }: FormikHelpers<FormValues>) => {
         setTimeout(() => {
           alert(JSON.stringify(values, null, 2));
           setSubmitting(false);
@@ -260,7 +268,7 @@ const AdvancedFormikExample = () => {
   );
 };
 
-const FormikExample: FC = () => {
+const FormikExample: React.FC = () => {
   return (
     <div>
       <h3>Basic Example</h3>
