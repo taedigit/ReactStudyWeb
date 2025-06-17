@@ -1473,7 +1473,14 @@ export const sections: Record<SectionId, Section> = {
     icon: '🏆',
     prev: 'recharts',
     next: 'chartjs',
-    content: <VictoryExample />,
+    content: (
+      <div>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npm install victory`}
+        </MacCmd>
+        <VictoryExample />
+      </div>
+    ),
   },
   chartjs: {
     id: 'chartjs',
