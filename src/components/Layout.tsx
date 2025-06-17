@@ -96,15 +96,6 @@ export const Layout = ({ children, currentSection, onSectionChange }: LayoutProp
     localStorage.setItem(SIDEBAR_ORDER_KEY, JSON.stringify(newOrder));
   };
 
-  // 수정 시작
-  const handleEdit = (section: Section) => {
-    setEditing(section.id);
-    setEditValue({
-      title: sidebarMeta[section.id]?.title || section.title,
-      icon: sidebarMeta[section.id]?.icon || section.icon || ''
-    });
-  };
-
   // 수정 취소
   const handleCancel = () => {
     setEditing(null);
@@ -282,15 +273,6 @@ export const Layout = ({ children, currentSection, onSectionChange }: LayoutProp
                                       <Text fontSize="sm" isTruncated>{meta.title || section.title}</Text>
                                     </Link>
                                   )}
-                                  {/* {!isEditing && (
-                                    <button
-                                      style={{ background: 'none', border: 'none', marginLeft: 2, cursor: 'pointer', color: '#888', fontSize: 16, padding: 2 }}
-                                      onClick={e => { e.stopPropagation(); handleEdit(section); }}
-                                      title="이름/아이콘 수정"
-                                    >
-                                      ✏️
-                                    </button>
-                                  )} */}
                                 </Box>
                               )}
                             </Draggable>

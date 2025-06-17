@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Button, Typography, CircularProgress, Card, CardContent, Stack, TextField } from '@mui/material';
 import { ExampleTab } from '../../components/ExampleTab';
 import axios from 'axios';
-import { CodeBlock } from '../../components/CodeBlock';
+
 import { MacCmd } from '../../components/MacCmd';
 
 interface Post {
