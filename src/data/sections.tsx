@@ -2202,7 +2202,14 @@ const StyledButton = styled.button\`
     icon: 'widgets',
     prev: 'sass',
     next: null,
-    content: <RadixUIExample />,
+    content: (
+      <div>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npm install @radix-ui/react-avatar @radix-ui/react-badge @radix-ui/react-checkbox @radix-ui/react-collapsible @radix-ui/react-context-menu @radix-ui/react-dialog @radix-ui/react-dropdown-menu @radix-ui/react-label @radix-ui/react-popover @radix-ui/react-progress @radix-ui/react-radio-group @radix-ui/react-scroll-area @radix-ui/react-select @radix-ui/react-slider @radix-ui/react-switch @radix-ui/react-tabs @radix-ui/react-toast @radix-ui/react-toggle @radix-ui/react-toggle-group @radix-ui/react-tooltip`}
+        </MacCmd>
+        <RadixUIExample />
+      </div>
+    ),
   },
   zod: {
     id: 'zod',
@@ -2212,7 +2219,17 @@ const StyledButton = styled.button\`
     icon: '🧩',
     prev: 'yup',
     next: 'jest',
-    content: <ZodExample />,
+    content: (
+      <div>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npm install zod`}
+        </MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npx jest\nnpx vitest\nnpx react-scripts test`}
+        </MacCmd>
+        <ZodExample />
+      </div>
+    ),
   },
   yup: {
     id: 'yup',
@@ -2291,7 +2308,16 @@ const StyledButton = styled.button\`
       </div>
     ),
   },
-  
+  aggrid: {
+    id: 'aggrid',
+    title: 'AG Grid',
+    description: 'AG Grid 예제',
+    category: 'opensource',
+    icon: '🟩',
+    prev: null,
+    next: null,
+    content: <div>준비 중...</div>,
+  },
 };
   
 
