@@ -3,6 +3,7 @@ import { Formik, Form, Field } from 'formik';
 import type { FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import { ExampleTab } from '../../components/ExampleTab';
+import Typography from '@mui/material/Typography';
 
 interface FormValues {
   email: string;
@@ -10,6 +11,17 @@ interface FormValues {
   rememberMe?: boolean;
   plan?: string;
 }
+
+const stateExampleBlockStyle = {
+  background: '#484f54',
+  padding: '1.5em 2em',
+  borderRadius: '8px',
+  border: '1px solid #eee',
+  marginTop: '1.2em',
+  marginBottom: '2em',
+  marginLeft: 0,
+  marginRight: 0,
+};
 
 // Basic Formik Example
 export const FormikBasicExample = () => {
@@ -271,10 +283,11 @@ export const FormikAdvancedExample = () => {
 const FormikExample: React.FC = () => {
   return (
     <div>
-      <h3>Basic Example</h3>
-      <ExampleTab
-        example={<FormikBasicExample />}
-        code={`import { Formik, Form, Field } from 'formik';
+      <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>1. Basic Example</Typography>
+        <ExampleTab
+          example={<FormikBasicExample />}
+          code={`import { Formik, Form, Field } from 'formik';
 
 const BasicFormikExample = () => {
   return (
@@ -335,12 +348,13 @@ const BasicFormikExample = () => {
     </Formik>
   );
 };`}
-      />
-
-      <h3>Validation Example</h3>
-      <ExampleTab
-        example={<FormikValidationExample />}
-        code={`import { Formik, Form, Field } from 'formik';
+        />
+      </div>
+      <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>2. Validation Example</Typography>
+        <ExampleTab
+          example={<FormikValidationExample />}
+          code={`import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
 const ValidationFormikExample = () => {
@@ -421,12 +435,13 @@ const ValidationFormikExample = () => {
     </Formik>
   );
 };`}
-      />
-
-      <h3>Advanced Example</h3>
-      <ExampleTab
-        example={<FormikAdvancedExample />}
-        code={`import { Formik, Form, Field } from 'formik';
+        />
+      </div>
+      <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>3. Advanced Example</Typography>
+        <ExampleTab
+          example={<FormikAdvancedExample />}
+          code={`import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
 const AdvancedFormikExample = () => {
@@ -543,7 +558,8 @@ const AdvancedFormikExample = () => {
     </Formik>
   );
 };`}
-      />
+        />
+      </div>
     </div>
   );
 };

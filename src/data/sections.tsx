@@ -70,12 +70,13 @@ import TailwindExample from '../sections/opensource/TailwindExample';
 import SassExample from '../sections/opensource/SassExample';
 import RadixUIExample from '../sections/opensource/RadixUIExample';
 import { ReactHookFormExample } from '../sections/opensource/ReactHookFormExample';
-import { FormikBasicExample, FormikValidationExample, FormikAdvancedExample } from '../sections/opensource/FormikExample';
+//import { FormikBasicExample, FormikValidationExample, FormikAdvancedExample } from '../sections/opensource/FormikExample';
 import { YupExample } from '../sections/opensource/YupExample';
 import { ZodExample } from '../sections/opensource/ZodExample';
 import { JestExample } from '../sections/opensource/JestExample';
 import { ReactTestingLibraryExample } from '../sections/opensource/ReactTestingLibraryExample';
 import { CypressExample } from '../sections/opensource/CypressExample';
+import FormikExample from '../sections/opensource/FormikExample';
 
 
 
@@ -1573,12 +1574,10 @@ export const sections: Record<SectionId, Section> = {
     next: 'recoil',
     content: (
       <div>
-        <h2>Formik Basic</h2>
-        <FormikBasicExample />
-        <h2>Formik Validation</h2>
-        <FormikValidationExample />
-        <h2>Formik Advanced</h2>
-        <FormikAdvancedExample />
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npm install formik`}
+        </MacCmd>
+        <FormikExample />
       </div>
     ),
   },
