@@ -2222,7 +2222,17 @@ const StyledButton = styled.button\`
     icon: '✅',
     prev: 'zustand',
     next: 'zod',
-    content: <YupExample />,
+    content: (
+      <div>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npm install yup`}
+        </MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npx jest\nnpx vitest\nnpx react-scripts test`}
+        </MacCmd>
+        <YupExample />
+      </div>
+    ),
   },
   jest: {
     id: 'jest',
@@ -2234,6 +2244,9 @@ const StyledButton = styled.button\`
     next: 'reacttestinglibrary',
     content: (
       <div>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npm install jest`}
+        </MacCmd>
         <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
           {`npx jest\nnpx vitest\nnpx react-scripts test`}
         </MacCmd>
@@ -2251,6 +2264,9 @@ const StyledButton = styled.button\`
     next: 'cypress',
     content: (
       <div>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npm install @testing-library/react`}
+        </MacCmd>
         <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
           {`npx jest\nnpx vitest\nnpx react-scripts test`}
         </MacCmd>

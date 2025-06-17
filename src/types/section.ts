@@ -52,6 +52,7 @@ export type SectionId =
   | 'jest'
   | 'reacttestinglibrary'
   | 'cypress'
+  | 'aggrid'
 
 
 export interface Section {
