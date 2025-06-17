@@ -78,6 +78,7 @@ import { ReactTestingLibraryExample } from '../sections/opensource/ReactTestingL
 import { CypressExample } from '../sections/opensource/CypressExample';
 import FormikExample from '../sections/opensource/FormikExample';
 import RecoilExample from '../sections/opensource/RecoilExample';
+import AGGridExample from '../sections/opensource/AGGridExample';
 
 
 
@@ -2426,12 +2427,19 @@ const StyledButton = styled.button\`
   aggrid: {
     id: 'aggrid',
     title: 'AG Grid',
-    description: 'AG Grid 예제',
+    description: 'AG Grid 고성능 데이터 그리드 예제',
     category: 'opensource',
-    icon: '🟩',
-    prev: null,
+    icon: '🗂️',
+    prev: 'cypress',
     next: null,
-    content: <div>준비 중...</div>,
+    content: (
+      <div>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npm install ag-grid-react ag-grid-community`}
+        </MacCmd>
+        <AGGridExample />
+      </div>
+    ),
   },
 };
   
