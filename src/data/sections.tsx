@@ -2242,7 +2242,14 @@ const StyledButton = styled.button\`
     icon: '🧪',
     prev: 'jest',
     next: 'cypress',
-    content: <ReactTestingLibraryExample />,
+    content: (
+      <div>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npx jest\nnpx vitest\nnpx react-scripts test`}
+        </MacCmd>
+        <ReactTestingLibraryExample />
+      </div>
+    ),
   },
   cypress: {
     id: 'cypress',
@@ -2260,6 +2267,16 @@ const StyledButton = styled.button\`
         <CypressExample />
       </div>
     ),
+  },
+  aggrid: {
+    id: 'aggrid',
+    title: 'AG Grid',
+    description: 'AG Grid 예제',
+    category: 'opensource',
+    icon: '🟩',
+    prev: null,
+    next: null,
+    content: <div>준비 중...</div>,
   },
 };
   
