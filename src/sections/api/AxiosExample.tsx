@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Box, Button, Typography, CircularProgress, Card, CardContent, Stack, TextField } from '@mui/material';
 import { ExampleTab } from '../../components/ExampleTab';
 import axios from 'axios';
+import { CodeBlock } from '../../components/CodeBlock';
+import { MacCmd } from '../../components/MacCmd';
 
 interface Post {
   id: number;
@@ -443,6 +445,7 @@ const textFieldStyle = {
 const AxiosExample: React.FC = () => {
   return (
     <div>
+      <MacCmd desc={null}>npm install axios</MacCmd>
       <div style={stateExampleBlockStyle}>
         <Typography variant="h6" sx={{ mb: 2 }}>1. GET 요청</Typography>
         <ExampleTab

@@ -2,6 +2,7 @@ import React from 'react';
 import useSWR, { SWRConfig, useSWRConfig } from 'swr';
 import { Box, Typography, Button, CircularProgress, TextField } from '@mui/material';
 import { ExampleTab } from '../../components/ExampleTab';
+import { MacCmd } from '../../components/MacCmd';
 
 const swrExampleBlockStyle = {
   background: '#484f54',
@@ -192,6 +193,7 @@ const PaginationDemo = () => {
 export const SWRExample = () => {
   return (
     <Box>
+      <MacCmd desc={null}>npm install swr</MacCmd>
       <Typography variant="h4" gutterBottom sx={{ mb: 3 }}>
         SWR 예제
       </Typography>
