@@ -1522,29 +1522,19 @@ export const sections: Record<SectionId, Section> = {
     icon: '🌬️',
     prev: 'emotion',
     next: 'recoil',
-    content: <TailwindExample />,
+    content: (
+      <div>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npm install tailwindcss`}
+        </MacCmd>
+        <TailwindExample />
+      </div>
+    ),
   },
   recoil: {
     id: 'recoil',
     title: 'Recoil',
     description: 'Recoil을 사용한 상태 관리 예제',
-    category: 'opensource',
-    icon: '🧬',
-    prev: 'formik',
-    next: 'zustand',
-    content: (
-      <div>
-        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
-          {`npm install recoil`}
-        </MacCmd>
-        <RecoilExample />
-      </div>
-    ),
-  },
-  zustand: {
-    id: 'zustand',
-    title: 'Zustand',
-    description: 'Zustand 상태 관리 예제',
     category: 'opensource',
     icon: '🐻',
     prev: 'recoil',
