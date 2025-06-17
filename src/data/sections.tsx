@@ -1532,7 +1532,14 @@ export const sections: Record<SectionId, Section> = {
     icon: '🧬',
     prev: 'formik',
     next: 'zustand',
-    content: <RecoilExample />,
+    content: (
+      <div>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npm install recoil`}
+        </MacCmd>
+        <RecoilExample />
+      </div>
+    ),
   },
   zustand: {
     id: 'zustand',
