@@ -1562,7 +1562,14 @@ export const sections: Record<SectionId, Section> = {
     icon: '📝',
     prev: 'jotai',
     next: 'formik',
-    content: <ReactHookFormExample />,
+    content: (
+      <div>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npm install react-hook-form`}
+        </MacCmd>
+        <ReactHookFormExample />
+      </div>
+    ),
   },
   formik: {
     id: 'formik',

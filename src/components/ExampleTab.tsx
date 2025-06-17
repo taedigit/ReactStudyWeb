@@ -17,7 +17,7 @@ export function ExampleTab({ example, code, showCaret = false, desc }: ExampleTa
       content: <MacCmdExampleWrapper>{example}</MacCmdExampleWrapper>
     },
     {
-      label: 'Source',
+      label: 'Sources',
       content: <MacCmd showCaret={showCaret}>{code}</MacCmd>
     },
     {
