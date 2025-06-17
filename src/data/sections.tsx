@@ -1542,7 +1542,14 @@ export const sections: Record<SectionId, Section> = {
     icon: '🐻',
     prev: 'recoil',
     next: 'jotai',
-    content: <ZustandExample />,
+    content: (
+      <div>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npm install zustand`}
+        </MacCmd>
+        <ZustandExample />
+      </div>
+    ),
   },
   jotai: {
     id: 'jotai',
