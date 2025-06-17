@@ -1031,9 +1031,11 @@ export const sections: Record<SectionId, Section> = {
     next: 'mui',
     content: (
       <div>
-
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npm install antd @ant-design/icons`}
+        </MacCmd>
         {/* 버튼 */}
-         <div style={stateExampleBlockStyle}>
+        <div style={stateExampleBlockStyle}>
          <Typography variant="h6" sx={{ mb: 2 }}>1. Button (버튼)</Typography>
           <ExampleTab
             example={<Button type="primary">Primary</Button>}
