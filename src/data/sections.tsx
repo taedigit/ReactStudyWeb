@@ -1692,7 +1692,14 @@ npm start`}
     icon: '🔄',
     prev: 'reactquery',
     next: null,
-    content: <TanStackQueryExample />
+    content: (
+      <div>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npm install @tanstack/react-query`}
+        </MacCmd>
+        <TanStackQueryExample />
+      </div>
+    ),
   },
  
   jsx: {
