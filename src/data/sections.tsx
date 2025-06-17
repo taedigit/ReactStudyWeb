@@ -77,6 +77,7 @@ import { JestExample } from '../sections/opensource/JestExample';
 import { ReactTestingLibraryExample } from '../sections/opensource/ReactTestingLibraryExample';
 import { CypressExample } from '../sections/opensource/CypressExample';
 import FormikExample from '../sections/opensource/FormikExample';
+import RecoilExample from '../sections/opensource/RecoilExample';
 
 
 
@@ -1482,7 +1483,14 @@ export const sections: Record<SectionId, Section> = {
     icon: '📈',
     prev: 'victory',
     next: 'reactrouter',
-    content: <ChartjsExample />,
+    content: (
+      <div>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npm install chart.js react-chartjs-2`}
+        </MacCmd>
+        <ChartjsExample />
+      </div>
+    ),
   },
   reactrouter: {
     id: 'reactrouter',
@@ -1558,14 +1566,14 @@ export const sections: Record<SectionId, Section> = {
     description: 'Recoil을 사용한 상태 관리 예제',
     category: 'opensource',
     icon: '🐻',
-    prev: 'recoil',
+    prev: 'zustand',
     next: 'jotai',
     content: (
       <div>
         <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
-          {`npm install zustand`}
+          {`npm install recoil`}
         </MacCmd>
-        <ZustandExample />
+        <RecoilExample />
       </div>
     ),
   },
