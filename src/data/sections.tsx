@@ -2192,7 +2192,14 @@ const StyledButton = styled.button\`
     icon: 'palette',
     prev: 'tailwind',
     next: null,
-    content: <SassExample />,
+    content: (
+      <div>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npm install sass`}
+        </MacCmd>
+        <SassExample />
+      </div>
+    ),
   },
   radixui: {
     id: 'radixui',
