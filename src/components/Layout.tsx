@@ -282,7 +282,7 @@ export const Layout = ({ children, currentSection, onSectionChange }: LayoutProp
                                       <Text fontSize="sm" isTruncated>{meta.title || section.title}</Text>
                                     </Link>
                                   )}
-                                  {!isEditing && (
+                                  {/* {!isEditing && (
                                     <button
                                       style={{ background: 'none', border: 'none', marginLeft: 2, cursor: 'pointer', color: '#888', fontSize: 16, padding: 2 }}
                                       onClick={e => { e.stopPropagation(); handleEdit(section); }}
@@ -290,7 +290,7 @@ export const Layout = ({ children, currentSection, onSectionChange }: LayoutProp
                                     >
                                       ✏️
                                     </button>
-                                  )}
+                                  )} */}
                                 </Box>
                               )}
                             </Draggable>
