@@ -53,6 +53,7 @@ export type SectionId =
   | 'reacttestinglibrary'
   | 'cypress'
   | 'aggrid'
+  | 'reactdatagrid'
 
 
 export interface Section {

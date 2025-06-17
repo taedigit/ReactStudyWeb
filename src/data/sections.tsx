@@ -79,6 +79,7 @@ import { CypressExample } from '../sections/opensource/CypressExample';
 import FormikExample from '../sections/opensource/FormikExample';
 import RecoilExample from '../sections/opensource/RecoilExample';
 import AGGridExample from '../sections/opensource/AGGridExample';
+import ReactDataGridExample from '../sections/opensource/ReactDataGridExample';
 
 
 
@@ -2438,6 +2439,23 @@ const StyledButton = styled.button\`
           {`npm install ag-grid-react ag-grid-community`}
         </MacCmd>
         <AGGridExample />
+      </div>
+    ),
+  },
+  reactdatagrid: {
+    id: 'reactdatagrid',
+    title: 'React Data Grid',
+    description: 'react-data-grid 라이브러리 기본 예제',
+    category: 'opensource',
+    icon: '🗃️',
+    prev: 'aggrid',
+    next: null,
+    content: (
+      <div>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npm install react-data-grid`}
+        </MacCmd>
+        <ReactDataGridExample />
       </div>
     ),
   },
