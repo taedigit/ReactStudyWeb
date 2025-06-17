@@ -1512,7 +1512,14 @@ export const sections: Record<SectionId, Section> = {
     icon: '🎨',
     prev: 'styledcomponents',
     next: 'tailwind',
-    content: <EmotionExample />,
+    content: (
+      <div>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npm install @emotion/react @emotion/styled`}
+        </MacCmd>
+        <EmotionExample />
+      </div>
+    ),
   },
   tailwind: {
     id: 'tailwind',
