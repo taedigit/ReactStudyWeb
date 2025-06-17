@@ -2268,16 +2268,7 @@ const StyledButton = styled.button\`
       </div>
     ),
   },
-  aggrid: {
-    id: 'aggrid',
-    title: 'AG Grid',
-    description: 'AG Grid 예제',
-    category: 'opensource',
-    icon: '🟩',
-    prev: null,
-    next: null,
-    content: <div>준비 중...</div>,
-  },
+  
 };
   
 
