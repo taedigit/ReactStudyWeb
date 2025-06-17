@@ -1682,7 +1682,14 @@ npm start`}
     icon: '🔗',
     prev: 'jotai',
     next: 'tanstackquery',
-    content: <ReactQueryExample />,
+    content: (
+      <div>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npm install @tanstack/react-query`}
+        </MacCmd>
+        <ReactQueryExample />
+      </div>
+    ),
   },
   tanstackquery: {
     id: 'tanstackquery',
