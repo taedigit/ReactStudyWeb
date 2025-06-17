@@ -1463,7 +1463,20 @@ export const sections: Record<SectionId, Section> = {
     icon: '📊',
     prev: 'mui',
     next: 'victory',
-    content: <RechartsExample />,
+    content: (
+      <div>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npm install recharts`}
+        </MacCmd>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npm run dev
+yarn dev
+pnpm dev
+npm start`}
+        </MacCmd>
+        <RechartsExample />
+      </div>
+    ),
   },
   victory: {
     id: 'victory',
