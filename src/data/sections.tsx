@@ -79,7 +79,7 @@ import { CypressExample } from '../sections/opensource/CypressExample';
 import FormikExample from '../sections/opensource/FormikExample';
 import RecoilExample from '../sections/opensource/RecoilExample';
 import AGGridExample from '../sections/opensource/AGGridExample';
-import ReactDataGridExample from '../sections/opensource/ReactDataGridExample';
+
 
 
 
@@ -2455,7 +2455,7 @@ const StyledButton = styled.button\`
         <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
           {`npm install react-data-grid`}
         </MacCmd>
-        <ReactDataGridExample />
+        
       </div>
     ),
   },
