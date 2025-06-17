@@ -27,7 +27,7 @@ import styled from 'styled-components';
 import ReactRouterExample from '../sections/opensource/ReactRouterExample';
 import StyledComponentsExample from '../sections/opensource/StyledComponentsExample';
 import ApiExamples from '../sections/api';
-import RecoilExample from '../sections/opensource/RecoilExample';
+//import RecoilExample from '../sections/opensource/RecoilExample';
 import SWRExample from '../sections/api/SWRExample';
 import RechartsExample from '../sections/opensource/RechartsExample';
 import MuiButton from '@mui/material/Button';
@@ -1492,7 +1492,14 @@ export const sections: Record<SectionId, Section> = {
     icon: '🛣️',
     prev: 'chartjs',
     next: 'styledcomponents',
-    content: <ReactRouterExample />,
+    content: (
+      <div>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npm install react-router-dom`}
+        </MacCmd>
+        <ReactRouterExample />
+      </div>
+    ),
   },
   styledcomponents: {
     id: 'styledcomponents',
@@ -2219,6 +2226,23 @@ const StyledButton = styled.button\`
           {`npm install @reduxjs/toolkit react-redux`}
         </MacCmd>
         <ReduxExample />
+      </div>
+    ),
+  },
+  zustand: {
+    id: 'zustand',
+    title: 'Zustand',
+    description: 'Zustand를 사용한 상태 관리 예제',
+    category: 'opensource',
+    icon: '🦦',
+    prev: 'redux',
+    next: 'jotai',
+    content: (
+      <div>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npm install zustand`}
+        </MacCmd>
+        <ZustandExample />
       </div>
     ),
   },
