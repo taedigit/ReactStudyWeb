@@ -2232,7 +2232,14 @@ const StyledButton = styled.button\`
     icon: '🧪',
     prev: 'zod',
     next: 'reacttestinglibrary',
-    content: <JestExample />,
+    content: (
+      <div>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npx jest\nnpx vitest\nnpx react-scripts test`}
+        </MacCmd>
+        <JestExample />
+      </div>
+    ),
   },
   reacttestinglibrary: {
     id: 'reacttestinglibrary',
