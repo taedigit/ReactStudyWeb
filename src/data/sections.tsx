@@ -2252,7 +2252,14 @@ const StyledButton = styled.button\`
     icon: '🧪',
     prev: 'reacttestinglibrary',
     next: null,
-    content: <CypressExample />,
+    content: (
+      <div>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npx cypress open\nnpx cypress run`}
+        </MacCmd>
+        <CypressExample />
+      </div>
+    ),
   },
 };
   
