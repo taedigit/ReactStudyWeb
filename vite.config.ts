@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react-swc'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/ReactStudyWeb/',  // 이 줄 추가
+  base: '/ReactStudyWeb/', 
   plugins: [react()],
   server: {
     port: 3000,
