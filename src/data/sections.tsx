@@ -1552,7 +1552,14 @@ export const sections: Record<SectionId, Section> = {
     icon: '🧪',
     prev: 'zustand',
     next: 'reacthookform',
-    content: <JotaiExample />,
+    content: (
+      <div>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npm install jotai`}
+        </MacCmd>
+        <JotaiExample />
+      </div>
+    ),
   },
   reacthookform: {
     id: 'reacthookform',
