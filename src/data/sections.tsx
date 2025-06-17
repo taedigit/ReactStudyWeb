@@ -1502,7 +1502,14 @@ export const sections: Record<SectionId, Section> = {
     icon: '💅',
     prev: 'reactrouter',
     next: 'emotion',
-    content: <StyledComponentsExample />,
+    content: (
+      <div>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npm install styled-components`}
+        </MacCmd>
+        <StyledComponentsExample />
+      </div>
+    ),
   },
   emotion: {
     id: 'emotion',
