@@ -2182,7 +2182,14 @@ const StyledButton = styled.button\`
     icon: '🟥',
     prev: 'jotai',
     next: 'zustand',
-    content: <ReduxExample />,
+    content: (
+      <div>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npm install @reduxjs/toolkit react-redux`}
+        </MacCmd>
+        <ReduxExample />
+      </div>
+    ),
   },
   sass: {
     id: 'sass',
