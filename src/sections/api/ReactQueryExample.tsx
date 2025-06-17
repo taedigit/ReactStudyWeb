@@ -11,6 +11,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { ExampleTab } from '../../components/ExampleTab';
 import axios from 'axios';
 import React from 'react';
+import { MacCmd } from '../../components/MacCmd';
 
 interface Todo {
   id: number;
@@ -306,7 +307,7 @@ const handleAddTodo = () => {
         />
       </div>
       {/* 비교 도표 및 요약 */}
-      <div style={{ background: '#2a2d34', border: '1px solid #444', borderRadius: 12, padding: '2em 2em 1.5em 2em', marginTop: 40, marginBottom: 40, maxWidth: 1000, marginLeft: 'auto', marginRight: 'auto', boxShadow: '0 2px 16px 0 #0002' }}>
+      <div style={{ background: '#2a2d34', border: '1px solid #444', borderRadius: 12, padding: '2em 2em 1.5em 2em', marginTop: 40, marginBottom: 40, marginLeft: 'auto', marginRight: 'auto', boxShadow: '0 2px 16px 0 #0002' }}>
         <Typography variant="h6" sx={{ mt: 0, mb: 2, color: '#b5e853', fontWeight: 700 }}>React Query vs useState/useEffect 비교</Typography>
         <Box sx={{ overflowX: 'auto', mb: 3 }}>
           <table style={{ borderCollapse: 'collapse', minWidth: 600, background: '#232323', color: '#eaeaea', border: '1px solid #444', borderRadius: 8, width: '100%' }}>
@@ -346,27 +347,20 @@ const handleAddTodo = () => {
             </tbody>
           </table>
         </Box>
-        {/* 주요 코드 비교 도표 */}
+        {/* 주요 코드 비교 도표 → 3개 MacCmd 스타일 코드블록으로 분리 */}
         <Typography variant="subtitle1" sx={{ fontWeight: 600, color: '#b5e853', mb: 1, mt: 4 }}>주요 코드 비교</Typography>
-        <Box sx={{ overflowX: 'auto', mb: 3 }}>
-          <table style={{ borderCollapse: 'collapse', minWidth: 600, background: '#232323', color: '#eaeaea', border: '1px solid #444', borderRadius: 8, width: '100%' }}>
-            <thead>
-              <tr style={{ background: '#333' }}>
-                <th style={{ padding: '0.7em 1.2em', border: '1px solid #444', fontWeight: 600, width: 180 }}>구분</th>
-                <th style={{ padding: '0.7em 1.2em', border: '1px solid #444', fontWeight: 600, width: 400 }}>React Query</th>
-                <th style={{ padding: '0.7em 1.2em', border: '1px solid #444', fontWeight: 600, width: 400 }}>useState/useEffect</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style={{ padding: '0.7em 1.2em', border: '1px solid #444', verticalAlign: 'top' }}>데이터 패칭</td>
-                <td style={{ padding: '0.7em 1.2em', border: '1px solid #444', fontFamily: 'monospace', fontSize: '0.98em', background: '#23272f' }}>
+        <div style={{ display: 'flex', gap: 32, flexWrap: 'wrap', justifyContent: 'center', width: '100%' }}>
+          {/* 데이터 패칭 */}
+          <div>
+            <Typography variant="subtitle2" sx={{ color: '#b5e853', fontWeight: 700, mb: 1}}>데이터 패칭</Typography>
+            <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', justifyContent: 'center', width: '100%' }}>
+              <MacCmd showCaret={false} style={{ flex: 1, width: '100%', fontSize: '0.93em', maxWidth:'100%'}} desc="React Query">
 {`const { data, isLoading, isError } = useQuery({
   queryKey: ['todos'],
   queryFn: fetchTodos
 });`}
-                </td>
-                <td style={{ padding: '0.7em 1.2em', border: '1px solid #444', fontFamily: 'monospace', fontSize: '0.98em', background: '#23272f' }}>
+              </MacCmd>
+              <MacCmd showCaret={false} style={{ flex: 1, width: '100%', fontSize: '0.93em' }} desc="useState/useEffect">
 {`const [todos, setTodos] = useState([]);
 const [loading, setLoading] = useState(true);
 const [error, setError] = useState(null);
@@ -384,11 +378,14 @@ useEffect(() => {
       setLoading(false);
     });
 }, []);`}
-                </td>
-              </tr>
-              <tr>
-                <td style={{ padding: '0.7em 1.2em', border: '1px solid #444', verticalAlign: 'top' }}>데이터 추가</td>
-                <td style={{ padding: '0.7em 1.2em', border: '1px solid #444', fontFamily: 'monospace', fontSize: '0.98em', background: '#23272f' }}>
+              </MacCmd>
+            </div>
+          </div>
+          {/* 데이터 추가 */}
+          <div >
+            <Typography variant="subtitle2" sx={{ color: '#b5e853', fontWeight: 700, mb: 1 }}>데이터 추가</Typography>
+            <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', justifyContent: 'center' }}>
+              <MacCmd showCaret={false} style={{ flex: 1, fontSize: '0.93em' }} desc="React Query">
 {`const { mutate } = useMutation({
   mutationFn: addTodo,
   onSuccess: (newTodo) => {
@@ -397,8 +394,8 @@ useEffect(() => {
 });
 
 // 사용: mutate('새로운 Todo')`}
-                </td>
-                <td style={{ padding: '0.7em 1.2em', border: '1px solid #444', fontFamily: 'monospace', fontSize: '0.98em', background: '#23272f' }}>
+              </MacCmd>
+              <MacCmd showCaret={false} style={{ flex: 1, fontSize: '0.93em' }} desc="useState/useEffect">
 {`fetch('https://.../todos', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
@@ -406,22 +403,10 @@ useEffect(() => {
 })
   .then(res => res.json())
   .then(newTodo => setTodos(prev => [newTodo, ...prev]));`}
-                </td>
-              </tr>
-              <tr>
-                <td style={{ padding: '0.7em 1.2em', border: '1px solid #444', verticalAlign: 'top' }}>로딩/에러 처리</td>
-                <td style={{ padding: '0.7em 1.2em', border: '1px solid #444', fontFamily: 'monospace', fontSize: '0.98em', background: '#23272f' }}>
-{`if (isLoading) return <Loading />;
-if (isError) return <Error />;`}
-                </td>
-                <td style={{ padding: '0.7em 1.2em', border: '1px solid #444', fontFamily: 'monospace', fontSize: '0.98em', background: '#23272f' }}>
-{`if (loading) return <Loading />;
-if (error) return <Error />;`}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </Box>
+              </MacCmd>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
