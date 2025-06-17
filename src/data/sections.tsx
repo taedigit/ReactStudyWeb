@@ -1251,9 +1251,11 @@ export const sections: Record<SectionId, Section> = {
     next: 'recharts',
     content: (
       <div>
-
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npm install @mui/material @emotion/react @emotion/styled`}
+        </MacCmd>
         {/* 버튼 */}
-         <div style={stateExampleBlockStyle}>
+        <div style={stateExampleBlockStyle}>
          <Typography variant="h6" sx={{ mb: 2 }}>1. Button (버튼)</Typography>
           <ExampleTab
             example={<MuiButton variant="contained" color="primary">Primary</MuiButton>}
