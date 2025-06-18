@@ -16,6 +16,8 @@ const stateExampleBlockStyle = {
   marginRight: 0,
 };
 
+type KanbanColumns = { [key: string]: { id: string; text: string }[] };
+
 // 1. 기본 수직 리스트 정렬
 function BasicSortableList() {
   const [items, setItems] = useState(['🍎', '🍌', '🍊', '🍇', '🍉']);
@@ -264,7 +266,7 @@ function CardItem({ card }: { card: { id: string; title: string; desc: string } 
 
 // 7. 3단계 To Do(칸반) 보드 예제
 function KanbanBoardExample() {
-  const initial = {
+  const initial: KanbanColumns = {
     todo: [
       { id: '1', text: 'React 공부하기' },
       { id: '2', text: 'DnD 예제 만들기' },
@@ -275,55 +277,55 @@ function KanbanBoardExample() {
     done: [
       { id: '4', text: '운동하기' }]
   };
-  const [columns, setColumns] = useState(initial);
+  const [columns, setColumns] = useState<KanbanColumns>(initial);
   const sensors = useSensors(useSensor(PointerSensor));
-  function handleDragEnd(e) {
+  function handleDragEnd(e: any) {
     const { active, over } = e;
     if (!over) return;
-    let fromCol, toCol;
+    let fromCol: string | undefined, toCol: string | undefined;
     for (const key in columns) {
-      if (columns[key].find(item => item.id === active.id)) fromCol = key;
-      if (columns[key].find(item => item.id === over.id)) toCol = key;
+      if (columns[key].find((item: { id: string }) => item.id === active.id)) fromCol = key;
+      if (columns[key].find((item: { id: string }) => item.id === over.id)) toCol = key;
     }
     if (!fromCol || !toCol) return;
     if (fromCol === toCol && active.id === over.id) return;
     const fromList = [...columns[fromCol]];
     const toList = fromCol === toCol ? fromList : [...columns[toCol]];
-    const movingIdx = fromList.findIndex(i => i.id === active.id);
-    const overIdx = toList.findIndex(i => i.id === over.id);
+    const movingIdx = fromList.findIndex((i: { id: string }) => i.id === active.id);
+    const overIdx = toList.findIndex((i: { id: string }) => i.id === over.id);
     const [moving] = fromList.splice(movingIdx, 1);
     toList.splice(overIdx, 0, moving);
     setColumns(cols => ({
       ...cols,
-      [fromCol]: fromCol === toCol ? toList : fromList,
-      [toCol]: toList
+      [fromCol!]: fromCol === toCol ? toList : fromList,
+      [toCol!]: toList
     }));
   }
   return (
     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
       <div style={{ display: 'flex', gap: 32, justifyContent: 'center', margin: '1.5em 0' }}>
-        {Object.entries(columns).map(([col, items]) => (
+        {Object.entries(columns).map(([col, items]: [string, { id: string; text: string }[]]) => (
           <KanbanColumn key={col} col={col} items={items} />
         ))}
       </div>
     </DndContext>
   );
 }
-function KanbanColumn({ col, items }) {
+function KanbanColumn({ col, items }: { col: string; items: { id: string; text: string }[] }) {
   return (
     <div style={{ minWidth: 220, background: '#232323', borderRadius: 12, padding: 16, minHeight: 220 }}>
       <div style={{ color: '#b5e853', fontWeight: 700, fontSize: 18, marginBottom: 12, textAlign: 'center' }}>
         {col === 'todo' ? '할 일' : col === 'doing' ? '진행 중' : '완료'}
       </div>
-      <SortableContext items={items.map(i => i.id)} strategy={verticalListSortingStrategy}>
+      <SortableContext items={items.map((i: { id: string }) => i.id)} strategy={verticalListSortingStrategy}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          {items.map(item => <KanbanCard key={item.id} item={item} />)}
+          {items.map((item: { id: string; text: string }) => <KanbanCard key={item.id} item={item} />)}
         </div>
       </SortableContext>
     </div>
   );
 }
-function KanbanCard({ item }) {
+function KanbanCard({ item }: { item: { id: string; text: string } }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
   return (
     <div ref={setNodeRef} {...attributes} {...listeners} style={{
@@ -721,4 +723,4 @@ function KanbanCard({ item }) {
   </div>
 );
 
-export default DndKitExample; 
+export default DndKitExample;

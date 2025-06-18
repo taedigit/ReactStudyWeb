@@ -86,6 +86,23 @@ import { MaterialUIDataGridExample } from '../sections/opensource';
 import { FramerMotionExample } from '../sections/opensource';
 import { DayjsExample, DateFnsExample } from '../sections/opensource';
 import { DndKitExample } from '../sections/opensource';
+import { ServerDnDExample, DropRestrictionDnDExample, CustomPreviewDnDExample, KeyboardA11yDnDExample } from '../sections/practicalExamples';
+import { TrashDnDExample } from '../sections/practicalExamples';
+import { MultiSelectDnDExample } from '../sections/practicalExamples';
+import { MobileTouchDnDExample } from '../sections/practicalExamples';
+import { VirtualizedDnDExample } from '../sections/practicalExamples';
+import DynamicFormExample from '../sections/practicalExamples/DynamicFormExample';
+import FileUploadExample from '../sections/practicalExamples/FileUploadExample';
+import AsyncValidationFormExample from '../sections/practicalExamples/AsyncValidationFormExample';
+import ServerSideTableExample from '../sections/practicalExamples/ServerSideTableExample';
+import VirtualizedTableExample from '../sections/practicalExamples/VirtualizedTableExample';
+import RealtimeChartExample from '../sections/practicalExamples/RealtimeChartExample';
+import PageTransitionExample from '../sections/practicalExamples/PageTransitionExample';
+import SkeletonLoadingExample from '../sections/practicalExamples/SkeletonLoadingExample';
+import KeyboardFocusTrapExample from '../sections/practicalExamples/KeyboardFocusTrapExample';
+import I18nExample from '../sections/practicalExamples/I18nExample';
+import WebSocketSyncExample from '../sections/practicalExamples/WebSocketSyncExample';
+import AuthExample from '../sections/practicalExamples/AuthExample';
 
 
 
@@ -2539,6 +2556,206 @@ const StyledButton = styled.button\`
     prev: 'datefns',
     next: 'recoil',
     content: <DndKitExample />,
+  },
+  serverDnD: {
+    id: 'serverDnD',
+    title: '서버 연동 DnD',
+    description: '서버(REST API 등)와 연동되는 드래그앤드롭 실전 예제',
+    category: 'example',
+    icon: '🔗',
+    prev: 'dndkit',
+    next: 'dropRestrictionDnD',
+    content: <ServerDnDExample />,
+  },
+  dropRestrictionDnD: {
+    id: 'dropRestrictionDnD',
+    title: '드롭 제한 DnD',
+    description: '특정 영역/조건에서만 드롭이 허용되는 DnD 실전 예제',
+    category: 'example',
+    icon: '🚫',
+    prev: 'serverDnD',
+    next: 'customPreviewDnD',
+    content: <DropRestrictionDnDExample />,
+  },
+  customPreviewDnD: {
+    id: 'customPreviewDnD',
+    title: '커스텀 드래그 프리뷰 DnD',
+    description: '드래그 중 커스텀 미리보기 UI를 제공하는 DnD 실전 예제',
+    category: 'example',
+    icon: '👁️',
+    prev: 'dropRestrictionDnD',
+    next: 'keyboardA11yDnD',
+    content: <CustomPreviewDnDExample />,
+  },
+  keyboardA11yDnD: {
+    id: 'keyboardA11yDnD',
+    title: '키보드 접근성 DnD',
+    description: '키보드 내비게이션/스크린리더 등 접근성을 강화한 DnD 실전 예제',
+    category: 'example',
+    icon: '⌨️',
+    prev: 'customPreviewDnD',
+    next: 'trashDnD',
+    content: <KeyboardA11yDnDExample />,
+  },
+  trashDnD: {
+    id: 'trashDnD',
+    title: '휴지통/삭제 DnD',
+    description: '드래그로 휴지통/삭제 영역에 아이템을 옮기는 DnD 실전 예제',
+    category: 'example',
+    icon: '🗑️',
+    prev: 'keyboardA11yDnD',
+    next: 'multiSelectDnD',
+    content: <TrashDnDExample />,
+  },
+  multiSelectDnD: {
+    id: 'multiSelectDnD',
+    title: '다중 선택/다중 드래그 DnD',
+    description: '여러 아이템을 동시에 선택/드래그하는 DnD 실전 예제',
+    category: 'example',
+    icon: '🧩',
+    prev: 'trashDnD',
+    next: 'mobileTouchDnD',
+    content: <MultiSelectDnDExample />,
+  },
+  mobileTouchDnD: {
+    id: 'mobileTouchDnD',
+    title: '모바일/터치 지원 DnD',
+    description: '모바일/터치 환경에서 동작하는 DnD 실전 예제',
+    category: 'example',
+    icon: '📱',
+    prev: 'multiSelectDnD',
+    next: 'virtualizedDnD',
+    content: <MobileTouchDnDExample />,
+  },
+  virtualizedDnD: {
+    id: 'virtualizedDnD',
+    title: '자동 스크롤/가상화 DnD',
+    description: '자동 스크롤/가상화 리스트와 결합된 DnD 실전 예제',
+    category: 'example',
+    icon: '🖱️',
+    prev: 'mobileTouchDnD',
+    next: 'dynamicForm',
+    content: <VirtualizedDnDExample />,
+  },
+  dynamicForm: {
+    id: 'dynamicForm',
+    title: '동적 폼(필드 추가/삭제)',
+    description: '입력 필드를 동적으로 추가/삭제하는 폼 실전 예제',
+    category: 'example',
+    icon: '➕',
+    prev: 'virtualizedDnD',
+    next: 'fileUpload',
+    content: <DynamicFormExample />,
+  },
+  fileUpload: {
+    id: 'fileUpload',
+    title: '파일 업로드/미리보기',
+    description: '파일 업로드 및 미리보기를 제공하는 실전 예제',
+    category: 'example',
+    icon: '📤',
+    prev: 'dynamicForm',
+    next: 'asyncValidationForm',
+    content: <FileUploadExample />,
+  },
+  asyncValidationForm: {
+    id: 'asyncValidationForm',
+    title: '서버 검증/비동기 유효성',
+    description: '서버와 연동된 비동기 유효성 검증 폼 실전 예제',
+    category: 'example',
+    icon: '⏳',
+    prev: 'fileUpload',
+    next: 'serverSideTable',
+    content: <AsyncValidationFormExample />,
+  },
+  serverSideTable: {
+    id: 'serverSideTable',
+    title: '서버 사이드 테이블(페이징/정렬/필터)',
+    description: '서버와 연동된 테이블(페이징/정렬/필터) 실전 예제',
+    category: 'example',
+    icon: '🗄️',
+    prev: 'asyncValidationForm',
+    next: 'virtualizedTable',
+    content: <ServerSideTableExample />,
+  },
+  virtualizedTable: {
+    id: 'virtualizedTable',
+    title: '대용량/가상화 테이블',
+    description: '대용량 데이터/가상화 테이블 실전 예제',
+    category: 'example',
+    icon: '📊',
+    prev: 'serverSideTable',
+    next: 'realtimeChart',
+    content: <VirtualizedTableExample />, 
+  },
+  realtimeChart: {
+    id: 'realtimeChart',
+    title: '실시간 차트',
+    description: '실시간 데이터 차트 예제',
+    category: 'example',
+    icon: '📈',
+    prev: 'virtualizedTable',
+    next: 'pageTransition',
+    content: <RealtimeChartExample />,
+  },
+  pageTransition: {
+    id: 'pageTransition',
+    title: '페이지 전환 애니메이션',
+    description: '페이지 전환 시 애니메이션 효과 예제',
+    category: 'example',
+    icon: '🔄',
+    prev: 'realtimeChart',
+    next: 'skeletonLoading',
+    content: <PageTransitionExample />,
+  },
+  skeletonLoading: {
+    id: 'skeletonLoading',
+    title: 'Skeleton/로딩',
+    description: 'Skeleton UI 및 로딩 상태 예제',
+    category: 'example',
+    icon: '💀',
+    prev: 'pageTransition',
+    next: 'keyboardFocusTrap',
+    content: <SkeletonLoadingExample />,
+  },
+  keyboardFocusTrap: {
+    id: 'keyboardFocusTrap',
+    title: '키보드 포커스 트랩',
+    description: '키보드 포커스 트랩/접근성 예제',
+    category: 'example',
+    icon: '⌨️',
+    prev: 'skeletonLoading',
+    next: 'i18n',
+    content: <KeyboardFocusTrapExample />,
+  },
+  i18n: {
+    id: 'i18n',
+    title: 'i18n(다국어)',
+    description: '다국어(i18n) 지원 예제',
+    category: 'example',
+    icon: '🌐',
+    prev: 'keyboardFocusTrap',
+    next: 'webSocketSync',
+    content: <I18nExample />,
+  },
+  webSocketSync: {
+    id: 'webSocketSync',
+    title: 'WebSocket 동기화',
+    description: 'WebSocket을 활용한 실시간 동기화 예제',
+    category: 'example',
+    icon: '🔗',
+    prev: 'i18n',
+    next: 'auth',
+    content: <WebSocketSyncExample />,
+  },
+  auth: {
+    id: 'auth',
+    title: '인증/인가',
+    description: '인증/인가(로그인 등) 실전 예제',
+    category: 'example',
+    icon: '🔒',
+    prev: 'webSocketSync',
+    next: null,
+    content: <AuthExample />,
   },
 };
   
