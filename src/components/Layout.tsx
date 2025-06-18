@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Box, Flex, Stack, Text, Link, Container, Heading } from '@chakra-ui/react';
 import { sections } from '../data/sections';
+const allSections = sections;
 import type { Section, SectionId } from '../types/section';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import type { DropResult, DroppableProvided, DraggableProvided, DraggableStateSnapshot } from 'react-beautiful-dnd';
@@ -74,6 +75,12 @@ export const Layout = ({ children, currentSection, onSectionChange }: LayoutProp
   const [editing, setEditing] = useState<null | string>(null);
   const [editValue, setEditValue] = useState<{ title: string; icon: string }>({ title: '', icon: '' });
 
+  // 헤더 검색 상태
+  const [search, setSearch] = useState('');
+  const [searchResults, setSearchResults] = useState<Section[]>([]);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
   // 카테고리별 섹션을 순서대로 반환
   const getOrderedSections = (catKey: string) => {
     const order = sidebarOrder[catKey] || [];
@@ -139,6 +146,28 @@ export const Layout = ({ children, currentSection, onSectionChange }: LayoutProp
     // eslint-disable-next-line
   }, [Object.keys(categories).join(','), Object.values(categories).map(c=>c.sections.length).join(',')]);
 
+  useEffect(() => {
+    if (search.trim().length === 0) {
+      setSearchResults([]);
+      setShowDropdown(false);
+      return;
+    }
+    const q = search.trim().toLowerCase();
+    const results = Object.values(allSections).filter(
+      s => s.title.toLowerCase().includes(q) || s.description.toLowerCase().includes(q)
+    ).slice(0, 10);
+    setSearchResults(results);
+    setShowDropdown(results.length > 0);
+  }, [search]);
+
+  // 검색 결과 클릭 시 이동
+  const handleResultClick = (id: string) => {
+    setSearch('');
+    setShowDropdown(false);
+    onSectionChange(id as SectionId);
+    if (searchInputRef.current) searchInputRef.current.blur();
+  };
+
   return (
     <Box minH="100vh" width="90vw">
       <Box
@@ -154,6 +183,8 @@ export const Layout = ({ children, currentSection, onSectionChange }: LayoutProp
         px={6}
         display="flex"
         alignItems="center"
+        justifyContent="space-between"
+        style={{ position: 'fixed', width: '100vw', minWidth: 0, maxWidth: '100vw' }}
       >
         <Link
           href="#"
@@ -163,6 +194,67 @@ export const Layout = ({ children, currentSection, onSectionChange }: LayoutProp
         >
           <Heading size="md" color="brand.500">React Tutorial</Heading>
         </Link>
+        <div style={{ position: 'relative' }}>
+          <input
+            ref={searchInputRef}
+            type="text"
+            placeholder="Search..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            onFocus={() => { if (searchResults.length > 0) setShowDropdown(true); }}
+            onBlur={() => setTimeout(() => setShowDropdown(false), 150)}
+            style={{
+              padding: '7px 14px',
+              borderRadius: 6,
+              border: '1px solid #ddd',
+              fontSize: 15,
+              marginLeft: 16,
+              background: '#f7f7f7',
+              minWidth: 180
+            }}
+          />
+          {showDropdown && (
+            <div
+              style={{
+                position: 'absolute',
+                top: 44,
+                right: 0,
+                left: 0,
+                background: '#fff',
+                border: '1px solid #ddd',
+                borderRadius: 8,
+                boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
+                zIndex: 200,
+                maxHeight: 320,
+                overflowY: 'auto',
+                minWidth: 220
+              }}
+            >
+              {searchResults.map(s => (
+                <div
+                  key={s.id}
+                  onMouseDown={() => handleResultClick(s.id)}
+                  style={{
+                    padding: '10px 16px',
+                    cursor: 'pointer',
+                    borderBottom: '1px solid #f2f2f2',
+                    fontSize: 15,
+                    color: '#222',
+                    background: currentSection === s.id ? '#e8f0fe' : 'transparent',
+                    fontWeight: currentSection === s.id ? 600 : 400
+                  }}
+                >
+                  <span style={{ marginRight: 8 }}>{s.icon}</span>
+                  <span>{s.title}</span>
+                  <span style={{ color: '#888', fontSize: 13, marginLeft: 8 }}>{s.description}</span>
+                </div>
+              ))}
+              {searchResults.length === 0 && (
+                <div style={{ padding: '10px 16px', color: '#888', fontSize: 15 }}>No results</div>
+              )}
+            </div>
+          )}
+        </div>
       </Box>
       
       <Flex pt="60px" h="calc(100vh - 60px)" width="100vw">
@@ -296,6 +388,7 @@ export const Layout = ({ children, currentSection, onSectionChange }: LayoutProp
           py={8}
           px={6}
           bg="gray.50"
+          style={{ paddingTop: 60 }}
         >
           {children}
         </Container>
