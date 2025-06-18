@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { FixedSizeList as List } from 'react-window';
-import type { ListChildComponentProps } from 'react-window';
 import { Table, TableBody, TableCell, TableHead, TableRow, Paper, Typography } from '@mui/material';
 import { ExampleTab } from '../../components/ExampleTab';
 
@@ -28,7 +27,7 @@ const data = Array.from({ length: rowCount }, (_, i) => ({
   email: `user${i + 1}@example.com`,
 }));
 
-function VirtualizedRow({ index, style }: ListChildComponentProps) {
+function VirtualizedRow({ index, style }: { index: number; style: React.CSSProperties }) {
   const row = data[index];
   return (
     <TableRow style={style} key={row.id}>
@@ -39,33 +38,83 @@ function VirtualizedRow({ index, style }: ListChildComponentProps) {
   );
 }
 
-const example = (
-  <Paper sx={{ width: '100%', overflow: 'hidden', maxWidth: 700, margin: '0 auto' }}>
-    <Table stickyHeader size="small">
-      <TableHead>
-        <TableRow>
-          {columns.map(col => (
-            <TableCell key={col.dataKey}>{col.label}</TableCell>
-          ))}
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        <List
-          height={400}
-          itemCount={data.length}
-          itemSize={38}
-          width={700}
-        >
-          {VirtualizedRow}
-        </List>
-      </TableBody>
-    </Table>
-  </Paper>
-);
+const VirtualizedTableDemo: React.FC = () => {
+  const listRef = useRef<any>(null);
+  const [search, setSearch] = useState('');
+  const [goto, setGoto] = useState('');
+  const [filtered, setFiltered] = useState(data);
 
-const code = String.raw`import React from 'react';
+  React.useEffect(() => {
+    if (!search) {
+      setFiltered(data);
+    } else {
+      const lower = search.toLowerCase();
+      setFiltered(
+        data.filter(
+          row => row.name.toLowerCase().includes(lower) || row.email.toLowerCase().includes(lower)
+        )
+      );
+    }
+  }, [search]);
+
+  const handleGoto = () => {
+    const idx = Number(goto) - 1;
+    if (listRef.current && idx >= 0 && idx < filtered.length) {
+      listRef.current.scrollToItem(idx, 'center');
+    }
+  };
+
+  return (
+    <>
+      <div style={{ display: 'flex', gap: 16, marginBottom: 16, alignItems: 'center' }}>
+        <input
+          type="text"
+          placeholder="Search name or email"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          style={{ padding: 6, borderRadius: 4, border: '1px solid #bbb', minWidth: 180 }}
+        />
+        <input
+          type="number"
+          placeholder="Go to row #"
+          value={goto}
+          onChange={e => setGoto(e.target.value)}
+          style={{ padding: 6, borderRadius: 4, border: '1px solid #bbb', width: 100 }}
+        />
+        <button onClick={handleGoto} style={{ padding: '6px 16px', borderRadius: 4, border: 'none', background: '#1976d2', color: '#fff', cursor: 'pointer' }}>
+          Go
+        </button>
+      </div>
+      <Paper sx={{ width: '100%', overflow: 'hidden', maxWidth: 700, margin: '0 auto' }}>
+        <Table stickyHeader size="small">
+          <TableHead>
+            <TableRow>
+              {columns.map(col => (
+                <TableCell key={col.dataKey}>{col.label}</TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <List
+              ref={listRef}
+              height={400}
+              itemCount={filtered.length}
+              itemSize={38}
+              width={700}
+            >
+              {({ index, style }) => <VirtualizedRow index={index} style={style} />}
+            </List>
+          </TableBody>
+        </Table>
+      </Paper>
+    </>
+  );
+};
+
+const example = <VirtualizedTableDemo />;
+
+const code = String.raw`import React, { useRef, useState } from 'react';
 import { FixedSizeList as List } from 'react-window';
-import type { ListChildComponentProps } from 'react-window';
 import { Table, TableBody, TableCell, TableHead, TableRow, Paper } from '@mui/material';
 
 const rowCount = 10000;
@@ -80,7 +129,7 @@ const data = Array.from({ length: rowCount }, (_, i) => ({
   email: \`user\${i + 1}@example.com\`,
 }));
 
-function VirtualizedRow({ index, style }: ListChildComponentProps) {
+function VirtualizedRow({ index, style }: { index: number; style: React.CSSProperties }) {
   const row = data[index];
   return (
     <TableRow style={style} key={row.id}>
@@ -91,29 +140,76 @@ function VirtualizedRow({ index, style }: ListChildComponentProps) {
   );
 }
 
-export default function VirtualizedTableExample() {
+export default function VirtualizedTableDemo() {
+  const listRef = useRef(null);
+  const [search, setSearch] = useState('');
+  const [goto, setGoto] = useState('');
+  const [filtered, setFiltered] = useState(data);
+
+  React.useEffect(() => {
+    if (!search) {
+      setFiltered(data);
+    } else {
+      const lower = search.toLowerCase();
+      setFiltered(
+        data.filter(
+          row => row.name.toLowerCase().includes(lower) || row.email.toLowerCase().includes(lower)
+        )
+      );
+    }
+  }, [search]);
+
+  const handleGoto = () => {
+    const idx = Number(goto) - 1;
+    if (listRef.current && idx >= 0 && idx < filtered.length) {
+      listRef.current.scrollToItem(idx, 'center');
+    }
+  };
+
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden', maxWidth: 700, margin: '0 auto' }}>
-      <Table stickyHeader size="small">
-        <TableHead>
-          <TableRow>
-            {columns.map(col => (
-              <TableCell key={col.dataKey}>{col.label}</TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          <List
-            height={400}
-            itemCount={data.length}
-            itemSize={38}
-            width={700}
-          >
-            {VirtualizedRow}
-          </List>
-        </TableBody>
-      </Table>
-    </Paper>
+    <>
+      <div style={{ display: 'flex', gap: 16, marginBottom: 16, alignItems: 'center' }}>
+        <input
+          type="text"
+          placeholder="Search name or email"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          style={{ padding: 6, borderRadius: 4, border: '1px solid #bbb', minWidth: 180 }}
+        />
+        <input
+          type="number"
+          placeholder="Go to row #"
+          value={goto}
+          onChange={e => setGoto(e.target.value)}
+          style={{ padding: 6, borderRadius: 4, border: '1px solid #bbb', width: 100 }}
+        />
+        <button onClick={handleGoto} style={{ padding: '6px 16px', borderRadius: 4, border: 'none', background: '#1976d2', color: '#fff', cursor: 'pointer' }}>
+          Go
+        </button>
+      </div>
+      <Paper sx={{ width: '100%', overflow: 'hidden', maxWidth: 700, margin: '0 auto' }}>
+        <Table stickyHeader size="small">
+          <TableHead>
+            <TableRow>
+              {columns.map(col => (
+                <TableCell key={col.dataKey}>{col.label}</TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <List
+              ref={listRef}
+              height={400}
+              itemCount={filtered.length}
+              itemSize={38}
+              width={700}
+            >
+              {({ index, style }) => <VirtualizedRow index={index} style={style} />}
+            </List>
+          </TableBody>
+        </Table>
+      </Paper>
+    </>
   );
 }
 `;
