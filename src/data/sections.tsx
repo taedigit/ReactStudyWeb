@@ -80,6 +80,7 @@ import FormikExample from '../sections/opensource/FormikExample';
 import RecoilExample from '../sections/opensource/RecoilExample';
 import AGGridExample from '../sections/opensource/AGGridExample';
 import { ReactDataGridExample } from '../sections/opensource';
+import { ReactTableExample } from '../sections/opensource';
 
 
 
@@ -2457,6 +2458,23 @@ const StyledButton = styled.button\`
           {`npm install react-data-grid`}
         </MacCmd>
         <ReactDataGridExample />
+      </div>
+    ),
+  },
+  reacttable: {
+    id: 'reacttable',
+    title: 'React Table (TanStack Table)',
+    description: 'React Table(TanStack Table) 기본/고급 예제',
+    category: 'opensource',
+    icon: '📋',
+    prev: 'reactdatagrid',
+    next: null,
+    content: (
+      <div>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npm install @tanstack/react-table`}
+        </MacCmd>
+        <ReactTableExample />
       </div>
     ),
   },

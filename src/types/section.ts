@@ -54,6 +54,7 @@ export type SectionId =
   | 'cypress'
   | 'aggrid'
   | 'reactdatagrid'
+  | 'reacttable'
 
 
 export interface Section {
