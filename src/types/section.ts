@@ -57,6 +57,8 @@ export type SectionId =
   | 'reacttable'
   | 'materialuidatagrid'
   | 'framermotion'
+  | 'dayjs'
+  | 'datefns'
 
 
 export interface Section {

@@ -84,6 +84,7 @@ import { ReactTableExample } from '../sections/opensource';
 import { MaterialUIDataGridExample } from '../sections/opensource';
 //import { ReactBootstrapTableExample } from '../sections/opensource';
 import { FramerMotionExample } from '../sections/opensource';
+import { DayjsExample, DateFnsExample } from '../sections/opensource';
 
 
 
@@ -2505,8 +2506,28 @@ const StyledButton = styled.button\`
     category: 'opensource',
     icon: '🎞️',
     prev: 'materialuidatagrid',
-    next: 'recoil',
+    next: 'dayjs',
     content: <FramerMotionExample />,
+  },
+  dayjs: {
+    id: 'dayjs',
+    title: 'Day.js',
+    description: 'Day.js 날짜/시간 라이브러리 예제',
+    category: 'opensource',
+    icon: '📅',
+    prev: 'framermotion',
+    next: 'datefns',
+    content: <DayjsExample />,
+  },
+  datefns: {
+    id: 'datefns',
+    title: 'date-fns',
+    description: 'date-fns 날짜/시간 라이브러리 예제',
+    category: 'opensource',
+    icon: '📆',
+    prev: 'dayjs',
+    next: 'recoil',
+    content: <DateFnsExample />,
   },
 };
   
