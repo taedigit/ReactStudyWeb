@@ -262,6 +262,89 @@ function CardItem({ card }: { card: { id: string; title: string; desc: string } 
   );
 }
 
+// 7. 3단계 To Do(칸반) 보드 예제
+function KanbanBoardExample() {
+  const initial = {
+    todo: [
+      { id: '1', text: 'React 공부하기' },
+      { id: '2', text: 'DnD 예제 만들기' },
+    ],
+    doing: [
+      { id: '3', text: '점심 먹기' },
+    ],
+    done: [
+      { id: '4', text: '운동하기' }]
+  };
+  const [columns, setColumns] = useState(initial);
+  const sensors = useSensors(useSensor(PointerSensor));
+  function handleDragEnd(e) {
+    const { active, over } = e;
+    if (!over) return;
+    let fromCol, toCol;
+    for (const key in columns) {
+      if (columns[key].find(item => item.id === active.id)) fromCol = key;
+      if (columns[key].find(item => item.id === over.id)) toCol = key;
+    }
+    if (!fromCol || !toCol) return;
+    if (fromCol === toCol && active.id === over.id) return;
+    const fromList = [...columns[fromCol]];
+    const toList = fromCol === toCol ? fromList : [...columns[toCol]];
+    const movingIdx = fromList.findIndex(i => i.id === active.id);
+    const overIdx = toList.findIndex(i => i.id === over.id);
+    const [moving] = fromList.splice(movingIdx, 1);
+    toList.splice(overIdx, 0, moving);
+    setColumns(cols => ({
+      ...cols,
+      [fromCol]: fromCol === toCol ? toList : fromList,
+      [toCol]: toList
+    }));
+  }
+  return (
+    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+      <div style={{ display: 'flex', gap: 32, justifyContent: 'center', margin: '1.5em 0' }}>
+        {Object.entries(columns).map(([col, items]) => (
+          <KanbanColumn key={col} col={col} items={items} />
+        ))}
+      </div>
+    </DndContext>
+  );
+}
+function KanbanColumn({ col, items }) {
+  return (
+    <div style={{ minWidth: 220, background: '#232323', borderRadius: 12, padding: 16, minHeight: 220 }}>
+      <div style={{ color: '#b5e853', fontWeight: 700, fontSize: 18, marginBottom: 12, textAlign: 'center' }}>
+        {col === 'todo' ? '할 일' : col === 'doing' ? '진행 중' : '완료'}
+      </div>
+      <SortableContext items={items.map(i => i.id)} strategy={verticalListSortingStrategy}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          {items.map(item => <KanbanCard key={item.id} item={item} />)}
+        </div>
+      </SortableContext>
+    </div>
+  );
+}
+function KanbanCard({ item }) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
+  return (
+    <div ref={setNodeRef} {...attributes} {...listeners} style={{
+      transform: CSS.Transform.toString(transform),
+      transition,
+      background: isDragging ? '#fffbe6' : '#fff',
+      color: '#232323',
+      borderRadius: 8,
+      boxShadow: isDragging ? '0 4px 16px #b5e85355' : '0 2px 8px #23232322',
+      padding: '0.8em 1em',
+      border: '1px solid #eee',
+      fontWeight: 500,
+      fontSize: 16,
+      userSelect: 'none',
+      cursor: 'grab',
+    }}>
+      {item.text}
+    </div>
+  );
+}
+
 const DndKitExample = () => (
   <div>
     <div style={stateExampleBlockStyle}>
@@ -544,6 +627,95 @@ function CardItem({ card }: { card: { id: string; title: string; desc: string } 
   );
 }`}
         desc={`카드형 UI(예: 칸반보드, 작업 리스트 등)에서 카드 순서를 드래그로 변경할 수 있습니다.\n- 객체 배열을 사용해 실제 데이터와 연동\n- 카드별 스타일, 내용, 액션 버튼 등 확장 가능\n- 실전에서는 컬럼별 이동, 외부 데이터 연동 등도 쉽게 구현`}
+      />
+    </div>
+    <div style={stateExampleBlockStyle}>
+      <Typography variant="h6" sx={{ mb: 2 }}>7. 3단계 To Do(칸반) 보드</Typography>
+      <ExampleTab
+        example={<KanbanBoardExample />}
+        code={`// 3단계 To Do(칸반) 보드 전체 코드
+function KanbanBoardExample() {
+  const initial = {
+    todo: [
+      { id: '1', text: 'React 공부하기' },
+      { id: '2', text: 'DnD 예제 만들기' },
+    ],
+    doing: [
+      { id: '3', text: '점심 먹기' },
+    ],
+    done: [
+      { id: '4', text: '운동하기' }]
+  };
+  const [columns, setColumns] = useState(initial);
+  const sensors = useSensors(useSensor(PointerSensor));
+  function handleDragEnd(e) {
+    const { active, over } = e;
+    if (!over) return;
+    let fromCol, toCol;
+    for (const key in columns) {
+      if (columns[key].find(item => item.id === active.id)) fromCol = key;
+      if (columns[key].find(item => item.id === over.id)) toCol = key;
+    }
+    if (!fromCol || !toCol) return;
+    if (fromCol === toCol && active.id === over.id) return;
+    const fromList = [...columns[fromCol]];
+    const toList = fromCol === toCol ? fromList : [...columns[toCol]];
+    const movingIdx = fromList.findIndex(i => i.id === active.id);
+    const overIdx = toList.findIndex(i => i.id === over.id);
+    const [moving] = fromList.splice(movingIdx, 1);
+    toList.splice(overIdx, 0, moving);
+    setColumns(cols => ({
+      ...cols,
+      [fromCol]: fromCol === toCol ? toList : fromList,
+      [toCol]: toList
+    }));
+  }
+  return (
+    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+      <div style={{ display: 'flex', gap: 32, justifyContent: 'center', margin: '1.5em 0' }}>
+        {Object.entries(columns).map(([col, items]) => (
+          <KanbanColumn key={col} col={col} items={items} />
+        ))}
+      </div>
+    </DndContext>
+  );
+}
+function KanbanColumn({ col, items }) {
+  return (
+    <div style={{ minWidth: 220, background: '#232323', borderRadius: 12, padding: 16, minHeight: 220 }}>
+      <div style={{ color: '#b5e853', fontWeight: 700, fontSize: 18, marginBottom: 12, textAlign: 'center' }}>
+        {col === 'todo' ? '할 일' : col === 'doing' ? '진행 중' : '완료'}
+      </div>
+      <SortableContext items={items.map(i => i.id)} strategy={verticalListSortingStrategy}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          {items.map(item => <KanbanCard key={item.id} item={item} />)}
+        </div>
+      </SortableContext>
+    </div>
+  );
+}
+function KanbanCard({ item }) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
+  return (
+    <div ref={setNodeRef} {...attributes} {...listeners} style={{
+      transform: CSS.Transform.toString(transform),
+      transition,
+      background: isDragging ? '#fffbe6' : '#fff',
+      color: '#232323',
+      borderRadius: 8,
+      boxShadow: isDragging ? '0 4px 16px #b5e85355' : '0 2px 8px #23232322',
+      padding: '0.8em 1em',
+      border: '1px solid #eee',
+      fontWeight: 500,
+      fontSize: 16,
+      userSelect: 'none',
+      cursor: 'grab',
+    }}>
+      {item.text}
+    </div>
+  );
+}`}
+        desc={`3단계 To Do(칸반) 보드 예제입니다.\n- 컬럼(할 일/진행 중/완료) 간 카드 이동 지원\n- 컬럼별 상태 분리, 객체 배열로 데이터 관리\n- 실전 칸반보드, 프로젝트 관리, 업무 트래킹 등에 활용 가능\n- 컬럼 추가/삭제, 카드 편집, 외부 API 연동 등도 쉽게 확장 가능`}
       />
     </div>
   </div>
