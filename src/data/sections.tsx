@@ -82,6 +82,7 @@ import AGGridExample from '../sections/opensource/AGGridExample';
 import { ReactDataGridExample } from '../sections/opensource';
 import { ReactTableExample } from '../sections/opensource';
 import { MaterialUIDataGridExample } from '../sections/opensource';
+//import { ReactBootstrapTableExample } from '../sections/opensource';
 
 
 

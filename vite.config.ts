@@ -24,4 +24,12 @@ export default defineConfig({
       },
     },
   },
+  resolve: {
+    alias: {
+      events: 'events',
+    },
+  },
+  optimizeDeps: {
+    include: ['events'],
+  },
 })
