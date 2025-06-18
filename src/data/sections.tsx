@@ -79,6 +79,7 @@ import { CypressExample } from '../sections/opensource/CypressExample';
 import FormikExample from '../sections/opensource/FormikExample';
 import RecoilExample from '../sections/opensource/RecoilExample';
 import AGGridExample from '../sections/opensource/AGGridExample';
+import { ReactDataGridExample } from '../sections/opensource';
 
 
 
@@ -2455,7 +2456,7 @@ const StyledButton = styled.button\`
         <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
           {`npm install react-data-grid`}
         </MacCmd>
-        
+        <ReactDataGridExample />
       </div>
     ),
   },
@@ -2537,7 +2538,7 @@ function InputChangeDemo() {
       <div>
       <Input value={value} onChange={e => setValue(e.target.value)} placeholder="입력하세요" style={{ width: 200, marginRight: 8 }} />
       <p>입력값: {value}</p>
-        </div>
+      </div>
   );
 }
 function FormSubmitDemo() {
@@ -2558,7 +2559,7 @@ function CustomEventDemo() {
   return (
     <div onClick={() => alert('부모 div 클릭!')} style={{ padding: 16, background: '#333' }}>
       <Button type="primary" onClick={e => { e.stopPropagation(); alert('버튼만 클릭!'); }}>버튼</Button>
-        </div>
+      </div>
   );
 }
 function EventDelegationDemo() {
@@ -2573,7 +2574,7 @@ function EventDelegationDemo() {
       <Button type="primary">버튼1</Button>
       <Button type="primary">버튼2</Button>
       <Button type="primary">버튼3</Button>
-        </div>
+      </div>
   );
 }
 
@@ -2605,7 +2606,7 @@ function JSXListDemo() {
           {fruit}
         </span>
       ))}
-    </div>
+      </div>
   );
 }
 function JSXCompositionDemo() {
@@ -2613,10 +2614,10 @@ function JSXCompositionDemo() {
     return <h3>안녕하세요, {props.name}님!</h3>;
   }
   return (
-    <div>
+      <div>
       <Welcome name="홍길동" />
       <Welcome name="React" />
-    </div>
+      </div>
   );
 }
 
@@ -2627,16 +2628,16 @@ function VDomDirectDemo() {
     document.getElementById('direct-dom')!.textContent = 'Count: ' + count;
   }, [count]);
   return (
-    <div>
+      <div>
       <Button type="primary" onClick={() => setCount(c => c + 1)} style={{ marginRight: 32 }}>증가</Button>
       <span id="direct-dom">Count: 0</span>
-    </div>
+      </div>
   );
 }
 function VDomDiffDemo() {
   const [list, setList] = React.useState(['A', 'B', 'C']);
   return (
-    <div>
+      <div>
       <Button type="primary" onClick={() => setList(['A', 'C', 'B'])} style={{ marginBottom: 12 }}>순서 바꾸기</Button>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
         {list.map(item => (
@@ -2646,7 +2647,7 @@ function VDomDiffDemo() {
           </span>
         ))}
       </div>
-    </div>
+      </div>
   );
 }
 
@@ -2654,9 +2655,9 @@ function VDomDiffDemo() {
 function JSXAndDemo() {
   const hasMessage = true;
   return (
-    <div>
+      <div>
       {hasMessage && <span>새로운 메시지가 있습니다!</span>}
-    </div>
+      </div>
   );
 }
 function JSXNullDemo() {
@@ -2673,7 +2674,7 @@ function JSXNestedListDemo() {
     '사과': '🍎', '바나나': '🍌', '당근': '🥕', '오이': '🥒',
   };
   return (
-    <div>
+      <div>
       {categories.map(cat => (
         <div key={cat.name} style={{ marginBottom: 8 }}>
           <b>{cat.name}</b>
@@ -2684,10 +2685,10 @@ function JSXNestedListDemo() {
                 {item}
               </span>
             ))}
-          </div>
-        </div>
+      </div>
+      </div>
       ))}
-    </div>
+      </div>
   );
 }
 function JSXKeyWarningDemo() {
@@ -2700,7 +2701,7 @@ function JSXKeyWarningDemo() {
           {item}
         </span>
       ))}
-    </div>
+      </div>
   );
 }
 
@@ -2713,7 +2714,7 @@ function VDomMemoDemo() {
   const shuffle = () => setList(l => [l[2], l[0], l[1]]);
   const increment = (idx: number) => setList(l => l.map((v, i) => i === idx ? v + 1 : v));
   return (
-    <div>
+      <div>
       <Button type="primary" onClick={shuffle} style={{ marginRight: 12 }}>순서 바꾸기</Button>
       {list.map((v, i) => (
         <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
@@ -2724,7 +2725,7 @@ function VDomMemoDemo() {
       <div style={{ color: '#aaa', fontSize: 13, marginTop: 8 }}>
         값이 바뀐 항목만 콘솔에 '렌더:'가 출력됩니다.
       </div>
-    </div>
+      </div>
   );
 }
 
@@ -2756,10 +2757,10 @@ function VDomWindowDemo() {
             <div style={{ flex: 1 }}>{items[index].title}</div>
             <div style={{ width: 100, textAlign: 'center', color: '#8fd' }}>{items[index].author}</div>
             <div style={{ width: 120, textAlign: 'center', color: '#ccc' }}>{items[index].date}</div>
-          </div>
+      </div>
         )}
       </List>
-    </div>
+      </div>
   );
 }
 
