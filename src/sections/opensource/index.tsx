@@ -8,4 +8,5 @@ export { default as MaterialUIDataGridExample } from './MaterialUIDataGridExampl
 export { default as FramerMotionExample } from './FramerMotionExample';
 export { default as DayjsExample } from './DayjsExample';
 export { default as DateFnsExample } from './DateFnsExample';
+export { default as DndKitExample } from './DndKitExample';
 

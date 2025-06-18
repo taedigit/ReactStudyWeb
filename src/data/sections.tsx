@@ -85,6 +85,7 @@ import { MaterialUIDataGridExample } from '../sections/opensource';
 //import { ReactBootstrapTableExample } from '../sections/opensource';
 import { FramerMotionExample } from '../sections/opensource';
 import { DayjsExample, DateFnsExample } from '../sections/opensource';
+import { DndKitExample } from '../sections/opensource';
 
 
 
@@ -2528,6 +2529,16 @@ const StyledButton = styled.button\`
     prev: 'dayjs',
     next: 'recoil',
     content: <DateFnsExample />,
+  },
+  dndkit: {
+    id: 'dndkit',
+    title: 'dnd-kit (드래그앤드롭)',
+    description: 'dnd-kit을 활용한 다양한 드래그앤드롭 예제',
+    category: 'opensource',
+    icon: '🖱️',
+    prev: 'datefns',
+    next: 'recoil',
+    content: <DndKitExample />,
   },
 };
   
