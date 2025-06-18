@@ -178,25 +178,8 @@ const ServerDnDExample: React.FC = () => {
             </>
           }
           code={codeExample}
-          desc={
-            <div>
-              Kanban 스타일 보드에서 드래그로 카드 순서를 바꾸고, 변경사항을 서버에 저장/불러오는 실전 예제입니다.<br/>
-              - mock fetch(localStorage)로 서버 연동 시뮬레이션<br/>
-              - 낙관적 UI, 에러 처리, 동기화 패턴 반영
-              <div style={{marginTop:12, color:'#6a9955', fontSize:15}}>
-                이 예제는 mock fetch/localStorage, dnd-kit, 낙관적 UI, 에러 처리 등 실전 패턴을 모두 반영합니다.
-              </div>
-              <div style={{marginTop:18, background:'#f1f5fb', border:'1px solid #dbeafe', borderRadius:8, padding:'1em', color:'#2563eb', fontSize:15, fontFamily:'inherit'}}>
-                <b>실전 팁</b><br/>
-                실전 팁:<br/>
-                - 낙관적 UI, 에러 처리, 동기화 패턴 반영<br/>
-                - mock fetch/localStorage로 서버 연동 시뮬레이션<br/>
-                - 칸반 외에도 리스트/트리 등 다양한 구조에 응용 가능
-              </div>
-            </div>
-          }
-          labels={['실행 예제', '코드', '설명']}
-          codeStyle={{background:'#23272f', color:'#b5e853', borderRadius:8, fontSize:15}}
+          desc={`Kanban 스타일 보드에서 드래그로 카드 순서를 바꾸고, 변경사항을 서버에 저장/불러오는 실전 예제입니다.\n- mock fetch(localStorage)로 서버 연동 시뮬레이션\n- 낙관적 UI, 에러 처리, 동기화 패턴 반영\n\n[실전 팁]\n- 낙관적 UI, 에러 처리, 동기화 패턴 반영\n- mock fetch/localStorage로 서버 연동 시뮬레이션\n- 칸반 외에도 리스트/트리 등 다양한 구조에 응용 가능`}
+          labels={['Example', 'Sources', 'Description']}
         />
       </div>
     </div>
