@@ -81,6 +81,9 @@ export const Layout = ({ children, currentSection, onSectionChange }: LayoutProp
   const [showDropdown, setShowDropdown] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
+  // 사이드바 각 섹션의 ref 저장
+  const sidebarRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
   // 카테고리별 섹션을 순서대로 반환
   const getOrderedSections = (catKey: string) => {
     const order = sidebarOrder[catKey] || [];
@@ -160,11 +163,18 @@ export const Layout = ({ children, currentSection, onSectionChange }: LayoutProp
     setShowDropdown(results.length > 0);
   }, [search]);
 
-  // 검색 결과 클릭 시 이동
+  // 검색 결과 클릭 시 이동 + 사이드바 스크롤
   const handleResultClick = (id: string) => {
     setSearch('');
     setShowDropdown(false);
     onSectionChange(id as SectionId);
+    // 사이드바 해당 섹션으로 스크롤
+    setTimeout(() => {
+      const ref = sidebarRefs.current[id];
+      if (ref) {
+        ref.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      }
+    }, 100); // 섹션 변경 후 렌더링 대기
     if (searchInputRef.current) searchInputRef.current.blur();
   };
 
@@ -295,7 +305,7 @@ export const Layout = ({ children, currentSection, onSectionChange }: LayoutProp
                             <Draggable key={section.id} draggableId={section.id} index={idx}>
                               {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
                                 <Box
-                                  ref={provided.innerRef}
+                                  ref={el => { provided.innerRef(el); sidebarRefs.current[section.id] = el; }}
                                   {...provided.draggableProps}
                                   {...provided.dragHandleProps}
                                   display="flex"
