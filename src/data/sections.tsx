@@ -81,6 +81,7 @@ import RecoilExample from '../sections/opensource/RecoilExample';
 import AGGridExample from '../sections/opensource/AGGridExample';
 import { ReactDataGridExample } from '../sections/opensource';
 import { ReactTableExample } from '../sections/opensource';
+import { MaterialUIDataGridExample } from '../sections/opensource';
 
 
 
@@ -2478,6 +2479,23 @@ const StyledButton = styled.button\`
       </div>
     ),
   },
+  materialuidatagrid: {
+    id: 'materialuidatagrid',
+    title: 'Material-UI Data Grid',
+    description: 'Material-UI(MUI X) Data Grid 기본/고급 예제',
+    category: 'opensource',
+    icon: '🟦',
+    prev: 'reacttable',
+    next: null,
+    content: (
+      <div>
+        <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
+          {`npm install @mui/x-data-grid`}
+        </MacCmd>
+        <MaterialUIDataGridExample />
+      </div>
+    ),
+  },
 };
   
 
@@ -2775,10 +2793,10 @@ function VDomWindowDemo() {
             <div style={{ flex: 1 }}>{items[index].title}</div>
             <div style={{ width: 100, textAlign: 'center', color: '#8fd' }}>{items[index].author}</div>
             <div style={{ width: 120, textAlign: 'center', color: '#ccc' }}>{items[index].date}</div>
-      </div>
+          </div>
         )}
       </List>
-      </div>
+    </div>
   );
 }
 

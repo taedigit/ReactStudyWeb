@@ -55,6 +55,7 @@ export type SectionId =
   | 'aggrid'
   | 'reactdatagrid'
   | 'reacttable'
+  | 'materialuidatagrid'
 
 
 export interface Section {
