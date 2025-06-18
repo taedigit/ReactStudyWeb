@@ -56,6 +56,7 @@ export type SectionId =
   | 'reactdatagrid'
   | 'reacttable'
   | 'materialuidatagrid'
+  | 'framermotion'
 
 
 export interface Section {

@@ -83,6 +83,7 @@ import { ReactDataGridExample } from '../sections/opensource';
 import { ReactTableExample } from '../sections/opensource';
 import { MaterialUIDataGridExample } from '../sections/opensource';
 //import { ReactBootstrapTableExample } from '../sections/opensource';
+import { FramerMotionExample } from '../sections/opensource';
 
 
 
@@ -2487,7 +2488,7 @@ const StyledButton = styled.button\`
     category: 'opensource',
     icon: '🟦',
     prev: 'reacttable',
-    next: null,
+    next: 'framermotion',
     content: (
       <div>
         <MacCmd showCaret={false} style={{marginBottom: '1.2em'}} desc={null}>
@@ -2496,6 +2497,16 @@ const StyledButton = styled.button\`
         <MaterialUIDataGridExample />
       </div>
     ),
+  },
+  framermotion: {
+    id: 'framermotion',
+    title: 'Framer Motion',
+    description: 'Framer Motion의 기본/드래그/레이아웃/제스처/AnimatePresence 등 단계별 예제와 설명',
+    category: 'opensource',
+    icon: '🎞️',
+    prev: 'materialuidatagrid',
+    next: 'recoil',
+    content: <FramerMotionExample />,
   },
 };
   

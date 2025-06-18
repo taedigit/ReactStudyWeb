@@ -5,4 +5,5 @@
 export { default as ReactDataGridExample } from './ReactDataGridExample';
 export { default as ReactTableExample } from './ReactTableExample';
 export { default as MaterialUIDataGridExample } from './MaterialUIDataGridExample';
+export { default as FramerMotionExample } from './FramerMotionExample';
 
