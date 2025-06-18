@@ -103,6 +103,7 @@ import KeyboardFocusTrapExample from '../sections/practicalExamples/KeyboardFocu
 import I18nExample from '../sections/practicalExamples/I18nExample';
 import WebSocketSyncExample from '../sections/practicalExamples/WebSocketSyncExample';
 import AuthExample from '../sections/practicalExamples/AuthExample';
+import ServerDnDExample2 from '../sections/practicalExamples/ServerDnDExample2';
 
 
 
@@ -2564,8 +2565,18 @@ const StyledButton = styled.button\`
     category: 'example',
     icon: '🔗',
     prev: 'dndkit',
-    next: 'dropRestrictionDnD',
+    next: 'serverDnD2',
     content: <ServerDnDExample />,
+  },
+  serverDnD2: {
+    id: 'serverDnD2',
+    title: '서버 연동 DnD(REST/axios)',
+    description: 'REST API/axios 기반, Optimistic UI, 실전 UX 개선 등 고급 서버 연동 DnD 예제',
+    category: 'example',
+    icon: '🔗',
+    prev: 'serverDnD',
+    next: 'dropRestrictionDnD',
+    content: <ServerDnDExample2 />,
   },
   dropRestrictionDnD: {
     id: 'dropRestrictionDnD',
@@ -2573,7 +2584,7 @@ const StyledButton = styled.button\`
     description: '특정 영역/조건에서만 드롭이 허용되는 DnD 실전 예제',
     category: 'example',
     icon: '🚫',
-    prev: 'serverDnD',
+    prev: 'serverDnD2',
     next: 'customPreviewDnD',
     content: <DropRestrictionDnDExample />,
   },

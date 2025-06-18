@@ -8,33 +8,30 @@ import { ExampleTab } from '../../components/ExampleTab';
 // 타입 정의
 export type KanbanColumns = { [key: string]: { id: string; text: string }[] };
 
-// mock API (localStorage + setTimeout)
-const STORAGE_KEY = 'server-dnd-kanban';
-const mockFetchBoard = () =>
-  new Promise<KanbanColumns>(resolve => setTimeout(() => {
-    const data = localStorage.getItem(STORAGE_KEY);
-    resolve(
-      data
-        ? JSON.parse(data)
-        : {
-            todo: [
-              { id: '1', text: 'React 공부하기' },
-              { id: '2', text: 'DnD 예제 만들기' },
-            ],
-            doing: [
-              { id: '3', text: '문서 정리' },
-            ],
-            done: [
-              { id: '4', text: '점심 먹기' }],
-          }
-    );
-  }, 600));
-const mockSaveBoard = (data: KanbanColumns) =>
-  new Promise((resolve, reject) => setTimeout(() => {
-    if (Math.random() < 0.1) return reject(new Error('서버 오류!'));
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+// 실제 REST API 대신 mock API (axios 사용)
+const mockFetchBoard = async (): Promise<KanbanColumns> => {
+  // 실제로는 axios.get(API_URL)
+  return new Promise(resolve => setTimeout(() => {
+    resolve({
+      todo: [
+        { id: '1', text: 'API 연동 DnD 만들기' },
+        { id: '2', text: 'Optimistic UI 적용' },
+      ],
+      doing: [
+        { id: '3', text: '실전 UX 개선' },
+      ],
+      done: [
+        { id: '4', text: '테스트/배포' }],
+    });
+  }, 700));
+};
+const mockSaveBoard = async (_: KanbanColumns) => {
+  // 실제로는 axios.post(API_URL, data)
+  return new Promise((resolve, reject) => setTimeout(() => {
+    if (Math.random() < 0.15) return reject(new Error('서버 오류!'));
     resolve(true);
-  }, 600));
+  }, 700));
+};
 
 function KanbanCard({ item }: { item: { id: string; text: string } }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
@@ -46,12 +43,12 @@ function KanbanCard({ item }: { item: { id: string; text: string } }) {
       style={{
         transform: CSS.Transform.toString(transform),
         transition,
-        background: isDragging ? '#fffbe6' : '#fff',
+        background: isDragging ? '#e3f2fd' : '#fff',
         color: '#232323',
         borderRadius: 8,
-        boxShadow: isDragging ? '0 4px 16px #b5e85355' : '0 2px 8px #23232322',
+        boxShadow: isDragging ? '0 4px 16px #1976d255' : '0 2px 8px #23232322',
         padding: '0.8em 1em',
-        border: '1px solid #eee',
+        border: '1px solid #90caf9',
         fontWeight: 500,
         fontSize: 16,
         userSelect: 'none',
@@ -66,8 +63,8 @@ function KanbanCard({ item }: { item: { id: string; text: string } }) {
 
 function KanbanColumn({ col, items }: { col: string; items: { id: string; text: string }[] }) {
   return (
-    <div style={{ minWidth: 220, background: '#232323', borderRadius: 12, padding: 16, minHeight: 220 }}>
-      <div style={{ color: '#b5e853', fontWeight: 700, fontSize: 18, marginBottom: 12, textAlign: 'center' }}>
+    <div style={{ minWidth: 220, background: '#e3f2fd', borderRadius: 12, padding: 16, minHeight: 220 }}>
+      <div style={{ color: '#1976d2', fontWeight: 700, fontSize: 18, marginBottom: 12, textAlign: 'center' }}>
         {col === 'todo' ? '할 일' : col === 'doing' ? '진행 중' : '완료'}
       </div>
       <SortableContext items={items.map(i => i.id)} strategy={verticalListSortingStrategy}>
@@ -90,13 +87,15 @@ const stateExampleBlockStyle = {
   marginRight: 0,
 };
 
-const codeExample = `// mock fetch(localStorage) 기반 Kanban DnD\nconst mockFetchBoard = () => { /* ... */ };\nconst mockSaveBoard = (data) => { /* ... */ };\n// DndContext, SortableContext, handleDragEnd 등은 dnd-kit 공식 문서 참고`;
+const codeExample = `// REST API/axios 기반 Kanban DnD\nconst mockFetchBoard = async () => { /* ... */ };\nconst mockSaveBoard = async (data) => { /* ... */ };\n// DnDContext, SortableContext, handleDragEnd 등은 dnd-kit 공식 문서 참고`;
+const tip = `실전 팁:\n- Optimistic UI: 드래그 후 즉시 UI 반영, 실패 시 롤백\n- 에러/로딩/성공 상태를 명확히 표시\n- 실제 API 연동 시 axios/fetch로 대체\n- 칸반 외에도 리스트/트리 등 다양한 구조에 응용 가능`;
 
-const ServerDnDExample: React.FC = () => {
+const ServerDnDExample2: React.FC = () => {
   const [columns, setColumns] = useState<KanbanColumns | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
   const sensors = useSensors(useSensor(PointerSensor));
 
   useEffect(() => {
@@ -107,13 +106,18 @@ const ServerDnDExample: React.FC = () => {
     });
   }, []);
 
+  // Optimistic update + 에러 처리
   const saveBoard = async (next: KanbanColumns) => {
     setSaving(true);
     setError(null);
+    setColumns(next); // Optimistic update
     try {
       await mockSaveBoard(next);
+      setSuccess(true);
     } catch (e: any) {
       setError(e.message);
+      // 실패 시 롤백(실제라면 이전 상태 저장 필요)
+      mockFetchBoard().then(data => setColumns(data));
     } finally {
       setSaving(false);
     }
@@ -140,7 +144,6 @@ const ServerDnDExample: React.FC = () => {
       [fromCol]: fromCol === toCol ? toList : fromList,
       [toCol]: toList,
     };
-    setColumns(next);
     saveBoard(next);
   }
 
@@ -149,7 +152,16 @@ const ServerDnDExample: React.FC = () => {
   return (
     <div>
       <div style={stateExampleBlockStyle}>
-        <Typography variant="h6" sx={{ mb: 2 }}>서버 연동 DnD (실전 예제)</Typography>
+        <Typography variant="h6" sx={{ mb: 2 }}>1. 설명 및 코드</Typography>
+        <ExampleTab
+          example={<div>REST API/axios 기반 Kanban 보드에서 드래그로 카드 순서를 바꾸고, 변경사항을 서버에 저장하는 실전 예제입니다.<br/>- Optimistic UI, 에러 처리, 실전 UX 개선<br/>- 실제 API 연동 시 axios/fetch로 대체</div>}
+          code={codeExample}
+          desc={"이 예제는 REST API/axios, dnd-kit, Optimistic UI, 에러 처리 등 실전 패턴을 모두 반영합니다."}
+          labels={['실행 예제', '코드', '설명']}
+        />
+      </div>
+      <div style={stateExampleBlockStyle}>
+        <Typography variant="h6" sx={{ mb: 2 }}>2. 실행 예제</Typography>
         <ExampleTab
           example={
             <>
@@ -162,45 +174,32 @@ const ServerDnDExample: React.FC = () => {
                 </div>
               </DndContext>
               <div style={{textAlign:'right',marginTop:8}}>
-                {saving && <span style={{color:'#b5e853'}}><CircularProgress size={18} sx={{mr:1}}/>저장 중...</span>}
+                {saving && <span style={{color:'#1976d2'}}><CircularProgress size={18} sx={{mr:1}}/>저장 중...</span>}
                 <Button size="small" onClick={()=>{
                   setLoading(true);
                   mockFetchBoard().then(data=>{setColumns(data);setLoading(false);});
                 }}>서버에서 새로고침</Button>
               </div>
               <Snackbar
-                open={saving}
+                open={success}
                 autoHideDuration={1500}
-                onClose={()=>setSaving(false)}
+                onClose={()=>setSuccess(false)}
                 message="저장 성공!"
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
               />
             </>
           }
-          code={codeExample}
-          desc={
-            <div>
-              Kanban 스타일 보드에서 드래그로 카드 순서를 바꾸고, 변경사항을 서버에 저장/불러오는 실전 예제입니다.<br/>
-              - mock fetch(localStorage)로 서버 연동 시뮬레이션<br/>
-              - 낙관적 UI, 에러 처리, 동기화 패턴 반영
-              <div style={{marginTop:12, color:'#6a9955', fontSize:15}}>
-                이 예제는 mock fetch/localStorage, dnd-kit, 낙관적 UI, 에러 처리 등 실전 패턴을 모두 반영합니다.
-              </div>
-              <div style={{marginTop:18, background:'#f1f5fb', border:'1px solid #dbeafe', borderRadius:8, padding:'1em', color:'#2563eb', fontSize:15, fontFamily:'inherit'}}>
-                <b>실전 팁</b><br/>
-                실전 팁:<br/>
-                - 낙관적 UI, 에러 처리, 동기화 패턴 반영<br/>
-                - mock fetch/localStorage로 서버 연동 시뮬레이션<br/>
-                - 칸반 외에도 리스트/트리 등 다양한 구조에 응용 가능
-              </div>
-            </div>
-          }
+          code={`// 주요 DnD 로직 및 상태 관리 코드는 위 설명/코드 탭 참고`}
+          desc={`실행 결과: 칸반 보드에서 카드를 드래그하면 서버에 저장/불러오기, Optimistic UI, 에러/로딩/성공 상태가 반영됩니다.`}
           labels={['실행 예제', '코드', '설명']}
-          codeStyle={{background:'#23272f', color:'#b5e853', borderRadius:8, fontSize:15}}
         />
+      </div>
+      <div style={{...stateExampleBlockStyle, background:'#f1f5fb', border:'1px solid #dbeafe'}}>
+        <Typography variant="h6" sx={{ mb: 2, color: '#2563eb', fontWeight: 600 }}>실전 팁</Typography>
+        <pre style={{background:'transparent',color:'#2563eb',padding:0,margin:0,whiteSpace:'pre-line',fontSize:15, fontFamily:'inherit'}}>{tip}</pre>
       </div>
     </div>
   );
 };
 
-export default ServerDnDExample; 
+export default ServerDnDExample2; 

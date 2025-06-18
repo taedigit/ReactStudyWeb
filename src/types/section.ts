@@ -80,6 +80,7 @@ export type SectionId =
   | 'i18n'
   | 'webSocketSync'
   | 'auth'
+  | 'serverDnD2'
 
 
 export interface Section {

@@ -8,20 +8,22 @@ interface ExampleTabProps {
   code: string;
   showCaret?: boolean;
   desc?: string;
+  labels?: string[];
 }
 
-export function ExampleTab({ example, code, showCaret = false, desc }: ExampleTabProps) {
+export function ExampleTab({ example, code, showCaret = false, desc, labels }: ExampleTabProps) {
+  const tabLabels = labels || ['Example', 'Sources', 'Description'];
   const tabs = [
     {
-      label: 'Example',
+      label: tabLabels[0],
       content: <MacCmdExampleWrapper>{example}</MacCmdExampleWrapper>
     },
     {
-      label: 'Sources',
+      label: tabLabels[1],
       content: <MacCmd showCaret={showCaret}>{code}</MacCmd>
     },
     {
-      label: 'Description',
+      label: tabLabels[2],
       content: (
         <div style={{
           background: '#1e1e1e',
