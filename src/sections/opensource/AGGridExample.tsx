@@ -1,7 +1,5 @@
 import React, { useRef, useState } from 'react';
 import { Typography, Button, Stack } from '@mui/material';
-import 'ag-grid-community/styles/ag-grid.css';
-import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { AgGridReact } from 'ag-grid-react';
 import { ModuleRegistry, AllCommunityModule } from 'ag-grid-community';
 import { ExampleTab } from '../../components/ExampleTab';
@@ -41,7 +39,7 @@ const sortFilterColumnDefs = [
 
 // 3. 체크박스 선택 예제
 const checkboxColumnDefs = [
-  { headerName: '', checkboxSelection: true, width: 40 },
+  { headerName: '', width: 40 },
   { headerName: 'Make', field: 'make' as const },
   { headerName: 'Model', field: 'model' as const },
   { headerName: 'Price', field: 'price' as const },
@@ -122,14 +120,15 @@ const columnDefs = [
       <div style={stateExampleBlockStyle}>
         <Typography variant="h6" sx={{ mb: 2 }}>3. 체크박스 선택</Typography>
         <ExampleTab
-          example={<div className="ag-theme-alpine" style={{ height: 220, width: '100%' }}><AgGridReact rowData={rowData} columnDefs={checkboxColumnDefs} rowSelection="multiple" /></div>}
+          example={<div className="ag-theme-alpine" style={{ height: 220, width: '100%' }}><AgGridReact rowData={rowData} columnDefs={checkboxColumnDefs} gridOptions={{ rowSelection: { mode: 'multiRow', checkboxes: true } }} /></div>}
           code={`const checkboxColumnDefs = [
-  { headerName: '', checkboxSelection: true, width: 40 },
+  { headerName: '', width: 40 },
   { headerName: 'Make', field: 'make' },
   { headerName: 'Model', field: 'model' },
   { headerName: 'Price', field: 'price' },
 ];
-<AgGridReact rowData={rowData} columnDefs={checkboxColumnDefs} rowSelection="multiple" />;`}
+const gridOptions = { rowSelection: { mode: 'multiRow', checkboxes: true } };
+<AgGridReact rowData={rowData} columnDefs={checkboxColumnDefs} gridOptions={gridOptions} />;`}
           desc="행을 체크박스로 선택할 수 있습니다."
         />
       </div>
