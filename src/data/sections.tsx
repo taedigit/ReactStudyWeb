@@ -1045,7 +1045,20 @@ export const sections: Record<SectionId, Section> = {
     icon: '💡',
     prev: 'lifecycle',
     next: null,
-    content: <div>실전 예제 준비 중...</div>,
+    content: (
+      <div>
+        <ServerDnDExample />
+        <DropRestrictionDnDExample />
+        <CustomPreviewDnDExample />
+        <KeyboardA11yDnDExample />
+        <TrashDnDExample />
+        <MultiSelectDnDExample />
+        <MobileTouchDnDExample />
+        <VirtualizedDnDExample />
+        <VirtualizedAutoScrollDnDExample />
+        {/* 필요시 다른 practical 예제도 추가 가능 */}
+      </div>
+    ),
   },
 
   
