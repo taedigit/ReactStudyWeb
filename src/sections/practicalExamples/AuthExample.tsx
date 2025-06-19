@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Typography, Button, Box, Stack, MenuItem, Select, FormControl, InputLabel, Alert } from '@mui/material';
+import { Typography, Button, Stack, MenuItem, Select, FormControl, InputLabel, Alert } from '@mui/material';
 import { ExampleTab } from '../../components/ExampleTab';
 import { MacCmd } from '../../components/MacCmd';
 

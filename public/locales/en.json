@@ -1,0 +1,31 @@
+{
+  "greeting": "Hello",
+  "intro": "Welcome to the i18n example!",
+  "button": "Change to Korean",
+  "langLabel": "Language",
+  "info": "This is a multi-language demo.",
+  "menu.home": "Home",
+  "menu.profile": "Profile",
+  "menu.logout": "Logout",
+  "error.network": "Network error. Please try again.",
+  "notice.saved": "Your changes have been saved.",
+  "date.today": "Today",
+  "form": {
+    "submit": "Submit",
+    "reset": "Reset",
+    "required": "This field is required.",
+    "invalidEmail": "Invalid email address.",
+    "passwordMin": "Password must be at least 8 characters."
+  },
+  "system": {
+    "loading": "Loading...",
+    "timeout": "Request timed out.",
+    "forbidden": "You do not have permission.",
+    "notfound": "Page not found."
+  },
+  "date": {
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "tomorrow": "Tomorrow"
+  }
+} 

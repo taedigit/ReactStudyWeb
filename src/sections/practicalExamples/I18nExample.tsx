@@ -1,9 +1,11 @@
-import React from 'react';
-import { Typography, Button, Box } from '@mui/material';
+import React, { useState } from 'react';
+import { Typography, Box, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { MacCmd } from '../../components/MacCmd';
 import { ExampleTab } from '../../components/ExampleTab';
 import i18next from 'i18next';
 import { useTranslation, initReactI18next } from 'react-i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
+import HttpBackend from 'i18next-http-backend';
 
 const stateExampleBlockStyle = {
   background: '#484f54',
@@ -16,69 +18,85 @@ const stateExampleBlockStyle = {
   marginRight: 0,
 };
 
+if (!i18next.isInitialized) {
+  i18next
+    .use(initReactI18next)
+    .use(LanguageDetector)
+    .use(HttpBackend)
+    .init({
+      fallbackLng: 'en',
+      interpolation: { escapeValue: false },
+      detection: { order: ['querystring', 'localStorage', 'navigator'], caches: ['localStorage'] },
+      backend: {
+        loadPath: '/locales/{{lng}}.json',
+      },
+    });
+}
+
 const i18nExampleCode =
-  "import React from 'react';\n" +
-  "import i18next from 'i18next';\n" +
-  "import { useTranslation, initReactI18next } from 'react-i18next';\n" +
-  "\n" +
-  "i18next.use(initReactI18next).init({\n" +
-  "  resources: {\n" +
-  "    en: { translation: { greeting: 'Hello', button: 'Change to Korean' } },\n" +
-  "    ko: { translation: { greeting: '안녕하세요', button: '영어로 변경' } },\n" +
-  "  },\n" +
-  "  lng: 'en',\n" +
-  "  fallbackLng: 'en',\n" +
-  "  interpolation: { escapeValue: false },\n" +
-  "});\n" +
-  "\n" +
-  "const I18nDemo = () => {\n" +
-  "  const { t, i18n } = useTranslation();\n" +
-  "  const toggleLang = () => {\n" +
-  "    i18n.changeLanguage(i18n.language === 'en' ? 'ko' : 'en');\n" +
-  "  };\n" +
-  "  return (\n" +
-  "    <div>\n" +
-  "      <h3>{t('greeting')}</h3>\n" +
-  "      <button onClick={toggleLang}>{t('button')}</button>\n" +
-  "    </div>\n" +
-  "  );\n" +
-  "};\n" +
-  "export default I18nDemo;";
+`import i18next from 'i18next';
+import { useTranslation, initReactI18next } from 'react-i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
+import HttpBackend from 'i18next-http-backend';
+
+i18next.use(initReactI18next)
+  .use(LanguageDetector)
+  .use(HttpBackend)
+  .init({
+    fallbackLng: 'en',
+    interpolation: { escapeValue: false },
+    detection: { order: ['querystring', 'localStorage', 'navigator'], caches: ['localStorage'] },
+    backend: { loadPath: '/locales/{{lng}}.json' },
+  });
+
+// public/locales/ko.json, en.json, ja.json 파일 필요
+
+const I18nDemo = () => {
+  const { t, i18n } = useTranslation();
+  return (
+    <select value={i18n.language} onChange={e => i18n.changeLanguage(e.target.value)}>
+      <option value="en">English</option>
+      <option value="ko">한국어</option>
+      <option value="ja">日本語</option>
+    </select>
+    <h3>{t('greeting')}</h3>
+    <div>{t('intro')}</div>
+    <div>{t('info')}</div>
+  );
+};`;
 
 const i18nExampleDesc =
-  "react-i18next와 i18next를 활용한 다국어(i18n) 적용 예제입니다.\n" +
-  "- 언어 리소스 객체(resources)로 다국어 문자열을 관리합니다.\n" +
-  "- useTranslation 훅으로 번역(t)과 언어 전환(changeLanguage)을 사용할 수 있습니다.\n" +
-  "- 실제 서비스에서는 번역 파일(JSON) 분리, fallback, 언어 감지 등을 추가로 적용합니다.";
-
-i18next.use(initReactI18next).init({
-  resources: {
-    en: { translation: { greeting: 'Hello', button: 'Change to Korean' } },
-    ko: { translation: { greeting: '안녕하세요', button: '영어로 변경' } },
-  },
-  lng: 'en',
-  fallbackLng: 'en',
-  interpolation: { escapeValue: false },
-});
+  '실제 서비스처럼 언어 리소스를 public/locales/ko.json, en.json, ja.json 파일로 분리하고, i18next-http-backend로 동적으로 불러옵니다.\n- 브라우저 언어 자동 감지, Select로 언어 전환, 다양한 다국어 키 포함\n- 실제 서비스에서는 서버 연동, 동적 번역 등으로 확장합니다.';
 
 const I18nExample: React.FC = () => {
   const { t, i18n } = useTranslation();
-  const toggleLang = () => {
-    i18n.changeLanguage(i18n.language === 'en' ? 'ko' : 'en');
+  const [lang, setLang] = useState(i18n.language);
+  const handleLang = (e: any) => {
+    setLang(e.target.value);
+    i18n.changeLanguage(e.target.value);
   };
 
   const example = (
     <Box>
-      <Typography variant="h5" sx={{ mb: 2 }}>{t('greeting')}</Typography>
-      <Button variant="contained" onClick={toggleLang}>{t('button')}</Button>
+      <FormControl size="small" sx={{ mb: 2, minWidth: 120 }}>
+        <InputLabel>{t('langLabel') || '언어'}</InputLabel>
+        <Select value={lang} label={t('langLabel') || '언어'} onChange={handleLang}>
+          <MenuItem value="en">English</MenuItem>
+          <MenuItem value="ko">한국어</MenuItem>
+          <MenuItem value="ja">日本語</MenuItem>
+        </Select>
+      </FormControl>
+      <Typography variant="h5" sx={{ mb: 1 }}>{t('greeting')}</Typography>
+      <Typography sx={{ mb: 1 }}>{t('intro')}</Typography>
+      <Typography color="#b5e853">{t('info')}</Typography>
     </Box>
   );
 
   return (
     <>
-      <MacCmd>npm install react-i18next i18next</MacCmd>
+      <MacCmd>npm install react-i18next i18next i18next-browser-languagedetector i18next-http-backend</MacCmd>
       <div style={stateExampleBlockStyle}>
-        <Typography variant="h6" sx={{ mb: 2 }}>react-i18next 다국어(i18n) 예제</Typography>
+        <Typography variant="h6" sx={{ mb: 2 }}>다국어(i18n) 실전 예제 (JSON 분리/동적 로딩)</Typography>
         <ExampleTab
           example={example}
           code={i18nExampleCode}
