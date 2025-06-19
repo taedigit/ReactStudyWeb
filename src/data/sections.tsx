@@ -104,6 +104,7 @@ import I18nExample from '../sections/practicalExamples/I18nExample';
 import WebSocketSyncExample from '../sections/practicalExamples/WebSocketSyncExample';
 import AuthExample from '../sections/practicalExamples/AuthExample';
 import ServerDnDExample2 from '../sections/practicalExamples/ServerDnDExample2';
+import { VirtualizedAutoScrollDnDExample } from '../sections/practicalExamples';
 
 
 
@@ -2767,6 +2768,16 @@ const StyledButton = styled.button\`
     prev: 'webSocketSync',
     next: null,
     content: <AuthExample />,
+  },
+  virtualizedAutoScrollDnD: {
+    id: 'virtualizedAutoScrollDnD',
+    title: '가상화 + 자동 스크롤 DnD',
+    description: 'react-window와 dnd-kit을 결합한 대용량/자동 스크롤 DnD 예제',
+    category: 'example',
+    icon: '🖱️',
+    prev: 'virtualizedDnD',
+    next: 'dynamicForm',
+    content: <VirtualizedAutoScrollDnDExample />,
   },
 };
   

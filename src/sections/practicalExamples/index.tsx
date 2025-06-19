@@ -18,4 +18,5 @@ export { default as KeyboardFocusTrapExample } from './KeyboardFocusTrapExample'
 export { default as I18nExample } from './I18nExample';
 export { default as WebSocketSyncExample } from './WebSocketSyncExample';
 export { default as AuthExample } from './AuthExample';
-export { default as ServerDnDExample2 } from './ServerDnDExample2'; 
+export { default as ServerDnDExample2 } from './ServerDnDExample2';
+export { default as VirtualizedAutoScrollDnDExample } from './VirtualizedAutoScrollDnDExample'; 

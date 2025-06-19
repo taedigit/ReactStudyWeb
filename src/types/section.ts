@@ -81,6 +81,7 @@ export type SectionId =
   | 'webSocketSync'
   | 'auth'
   | 'serverDnD2'
+  | 'virtualizedAutoScrollDnD'
 
 
 export interface Section {
