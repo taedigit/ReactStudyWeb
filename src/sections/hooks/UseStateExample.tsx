@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Typography } from '@mui/material';
+import { Typography, Button, TextField, Stack } from '@mui/material';
 import { ExampleTab } from '../../components/ExampleTab';
 
 const stateExampleBlockStyle = {
@@ -26,9 +26,9 @@ const BasicCounterDemo: React.FC = () => {
   return (
     <div>
       <p>Count: {count}</p>
-      <button onClick={() => setCount(prev => prev + 1)}>
+      <Button onClick={() => setCount(prev => prev + 1)} variant="contained" sx={{ mt: 1 }}>
         Increment
-      </button>
+      </Button>
     </div>
   );
 };
@@ -38,13 +38,15 @@ const MultipleStatesDemo: React.FC = () => {
   const [lastName, setLastName] = useState('');
   const [age, setAge] = useState('');
   return (
-    <div>
-      <input value={firstName} onChange={e => setFirstName(e.target.value)} placeholder="First Name" />
-      <input value={lastName} onChange={e => setLastName(e.target.value)} placeholder="Last Name" />
-      <input value={age} onChange={e => setAge(e.target.value)} type="number" placeholder="Age" />
-      <p>Full Name: {firstName} {lastName}</p>
-      <p>Age: {age}</p>
-    </div>
+    <Stack spacing={2} direction="column" alignItems="flex-start">
+      <Stack direction="row" spacing={2}>
+        <TextField value={firstName} onChange={e => setFirstName(e.target.value)} label="First Name" variant="outlined" size="small" />
+        <TextField value={lastName} onChange={e => setLastName(e.target.value)} label="Last Name" variant="outlined" size="small" />
+        <TextField value={age} onChange={e => setAge(e.target.value)} type="number" label="Age" variant="outlined" size="small" />
+      </Stack>
+      <Typography variant="body2">Full Name: {firstName} {lastName}</Typography>
+      <Typography variant="body2">Age: {age}</Typography>
+    </Stack>
   );
 };
 
@@ -55,12 +57,14 @@ const ObjectStateDemo: React.FC = () => {
     setUser(prev => ({ ...prev, [name]: value }));
   };
   return (
-    <div>
-      <input name="name" value={user.name} onChange={handleChange} placeholder="Name" />
-      <input name="email" value={user.email} onChange={handleChange} placeholder="Email" />
-      <input name="age" value={user.age} onChange={handleChange} type="number" placeholder="Age" />
-      <p>User Data: {JSON.stringify(user, null, 2)}</p>
-    </div>
+    <Stack spacing={2} direction="column" alignItems="flex-start">
+      <Stack direction="row" spacing={2}>
+        <TextField name="name" value={user.name} onChange={handleChange} label="Name" variant="outlined" size="small" />
+        <TextField name="email" value={user.email} onChange={handleChange} label="Email" variant="outlined" size="small" />
+        <TextField name="age" value={user.age} onChange={handleChange} type="number" label="Age" variant="outlined" size="small" />
+      </Stack>
+      <Typography variant="body2">User Data: {JSON.stringify(user, null, 2)}</Typography>
+    </Stack>
   );
 };
 
@@ -77,20 +81,20 @@ const ArrayStateDemo: React.FC = () => {
     setItems(prev => prev.filter((_, i) => i !== index));
   };
   return (
-    <div>
-      <div>
-        <input value={newItem} onChange={e => setNewItem(e.target.value)} placeholder="New Item" />
-        <button onClick={addItem}>Add Item</button>
-      </div>
-      <ul>
+    <Stack spacing={2} direction="column" alignItems="flex-start">
+      <Stack direction="row" spacing={2}>
+        <TextField value={newItem} onChange={e => setNewItem(e.target.value)} label="New Item" variant="outlined" size="small" />
+        <Button onClick={addItem} variant="contained">Add Item</Button>
+      </Stack>
+      <ul style={{ paddingLeft: 20 }}>
         {items.map((item, index) => (
-          <li key={index}>
+          <li key={index} style={{ marginBottom: 4 }}>
             {item}
-            <button onClick={() => removeItem(index)}>Remove</button>
+            <Button onClick={() => removeItem(index)} size="small" color="error" variant="outlined" sx={{ ml: 1, minWidth: 32, p: 0.5 }}>Remove</Button>
           </li>
         ))}
       </ul>
-    </div>
+    </Stack>
   );
 };
 
@@ -114,20 +118,13 @@ const FormStateDemo: React.FC = () => {
     }
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <input name="username" value={formData.username} onChange={handleChange} placeholder="Username" />
-        {errors.username && <p>{errors.username}</p>}
-      </div>
-      <div>
-        <input name="password" type="password" value={formData.password} onChange={handleChange} placeholder="Password" />
-        {errors.password && <p>{errors.password}</p>}
-      </div>
-      <div>
-        <input name="confirmPassword" type="password" value={formData.confirmPassword} onChange={handleChange} placeholder="Confirm Password" />
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-      </div>
-      <button type="submit">Submit</button>
+    <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+      <Stack spacing={2} direction="column" alignItems="flex-start">
+        <TextField name="username" value={formData.username} onChange={handleChange} label="Username" variant="outlined" size="small" error={!!errors.username} helperText={errors.username} />
+        <TextField name="password" type="password" value={formData.password} onChange={handleChange} label="Password" variant="outlined" size="small" error={!!errors.password} helperText={errors.password} />
+        <TextField name="confirmPassword" type="password" value={formData.confirmPassword} onChange={handleChange} label="Confirm Password" variant="outlined" size="small" error={!!errors.confirmPassword} helperText={errors.confirmPassword} />
+        <Button type="submit" variant="contained">Submit</Button>
+      </Stack>
     </form>
   );
 };
