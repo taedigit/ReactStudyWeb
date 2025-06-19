@@ -1,0 +1,9 @@
+{
+  "submit": "제출",
+  "reset": "초기화",
+  "required": "필수 입력 항목입니다.",
+  "invalidEmail": "유효하지 않은 이메일 주소입니다.",
+  "passwordMin": "비밀번호는 최소 8자 이상이어야 합니다.",
+  "item": "{{count}}개 항목",
+  "item_plural": "{{count}}개 항목들"
+} 

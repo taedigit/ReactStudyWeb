@@ -1,0 +1,9 @@
+{
+  "submit": "提交",
+  "reset": "重置",
+  "required": "此字段为必填项。",
+  "invalidEmail": "无效的电子邮件地址。",
+  "passwordMin": "密码至少需要8个字符。",
+  "item": "{{count}} 个项目",
+  "item_plural": "{{count}} 个项目"
+} 

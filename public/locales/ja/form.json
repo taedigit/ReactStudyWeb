@@ -1,0 +1,9 @@
+{
+  "submit": "送信",
+  "reset": "リセット",
+  "required": "必須項目です。",
+  "invalidEmail": "無効なメールアドレスです。",
+  "passwordMin": "パスワードは8文字以上で入力してください。",
+  "item": "{{count}}件の項目",
+  "item_plural": "{{count}}件の項目"
+} 

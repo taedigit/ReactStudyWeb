@@ -1,0 +1,31 @@
+{
+  "greeting": "Hola",
+  "intro": "¡Bienvenido al ejemplo de i18n!",
+  "button": "Cambiar a inglés",
+  "langLabel": "Idioma",
+  "info": "Esta es una demostración multilingüe.",
+  "menu.home": "Inicio",
+  "menu.profile": "Perfil",
+  "menu.logout": "Cerrar sesión",
+  "error.network": "Error de red. Por favor, inténtelo de nuevo.",
+  "notice.saved": "Sus cambios han sido guardados.",
+  "date.today": "Hoy",
+  "form": {
+    "submit": "Enviar",
+    "reset": "Restablecer",
+    "required": "Este campo es obligatorio.",
+    "invalidEmail": "Dirección de correo electrónico no válida.",
+    "passwordMin": "La contraseña debe tener al menos 8 caracteres."
+  },
+  "system": {
+    "loading": "Cargando...",
+    "timeout": "La solicitud ha caducado.",
+    "forbidden": "No tienes permiso.",
+    "notfound": "Página no encontrada."
+  },
+  "date": {
+    "today": "Hoy",
+    "yesterday": "Ayer",
+    "tomorrow": "Mañana"
+  }
+} 

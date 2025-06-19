@@ -1,0 +1,6 @@
+{
+  "greeting": "Hello",
+  "intro": "Welcome to the i18n example!",
+  "langLabel": "Language",
+  "info": "This is a multi-language demo."
+} 
