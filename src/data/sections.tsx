@@ -667,7 +667,53 @@ export const sections: Record<SectionId, Section> = {
     icon: '👋',
     prev: null,
     next: 'setup',
-    content: setupContent,
+    content: (
+      <div style={{ width: '100%', margin: '0 auto', padding: '2.5em 1.5em', background: 'linear-gradient(135deg, #23272f 80%, #2d3748 100%)', borderRadius: 16, color: '#eaeaea', boxShadow: '0 4px 24px #0002' }}>
+        <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 12, color: '#8fd' }}>React란 무엇인가?</h1>
+        <p style={{ fontSize: 18, marginBottom: 24 }}><b>React</b>는 Facebook(현 Meta)이 2013년에 오픈소스로 공개한 <b>프론트엔드 UI 라이브러리</b>입니다. 복잡한 사용자 인터페이스를 쉽고 효율적으로 구축할 수 있도록 설계되었으며, 현재는 전 세계적으로 가장 인기 있는 웹 프레임워크 중 하나입니다.</p>
+        <div style={{ background: '#23272f', borderRadius: 12, padding: '1.2em 1.5em', marginBottom: 24, border: '1px solid #444' }}>
+          <h2 style={{ color: '#8fd', fontSize: 22, marginBottom: 8 }}>이 사이트에서 공부할 수 있는 주요 React 주제</h2>
+          <ul style={{ lineHeight: 2, fontSize: 17, margin: 0, paddingLeft: 0, listStyle: 'none' }}>
+            <li>💡 <b>React 기초</b>: JSX, 컴포넌트, Props/State, 이벤트, 조건부/리스트 렌더링, Virtual DOM 등</li>
+            <li>🧩 <b>Hooks</b>: useState, useEffect, useRef, useMemo, useCallback, useReducer, useContext, 커스텀 훅</li>
+            <li>🗂️ <b>상태 관리</b>: Redux, Recoil, Zustand, Jotai 등</li>
+            <li>🌐 <b>API/데이터</b>: Fetch, Axios, React Query, SWR 등</li>
+            <li>🎨 <b>UI/스타일링</b>: Ant Design, MUI, Styled-components, Emotion, Tailwind, Radix UI 등</li>
+            <li>📊 <b>차트/시각화</b>: Recharts, Victory, Chart.js 등</li>
+            <li>🧪 <b>테스트</b>: Jest, React Testing Library, Cypress 등</li>
+            <li>🚀 <b>실전 예제</b>: DnD, 폼, 파일 업로드, 실시간 차트, 대용량 테이블, 다국어(i18n), 인증 등</li>
+          </ul>
+          <p style={{color:'#8fd', marginTop: 12}}>각 주제별로 실습 예제와 설명이 준비되어 있습니다.<br/>메뉴에서 원하는 항목을 선택해 직접 체험해보세요!</p>
+        </div>
+        <h2 style={{ color: '#8fd', fontSize: 22, marginTop: 32, marginBottom: 8 }}>React의 핵심 개념과 특징</h2>
+        <ul style={{ lineHeight: 2, fontSize: 17, margin: 0, paddingLeft: 0, listStyle: 'none' }}>
+          <li>🧱 <b>컴포넌트 기반 구조</b>: UI를 독립적이고 재사용 가능한 작은 단위(컴포넌트)로 분리하여 개발</li>
+          <li>📝 <b>선언적 UI</b>: UI의 상태에 따라 "어떻게 보일지"를 선언적으로 기술, 복잡한 DOM 조작을 자동화</li>
+          <li>⚡ <b>Virtual DOM</b>: 실제 DOM 대신 메모리 상의 가상 DOM을 사용해 변경 사항을 효율적으로 계산(diff)하고, 필요한 부분만 실제 DOM에 반영</li>
+          <li>➡️ <b>단방향 데이터 흐름</b>: 데이터가 부모 → 자식 방향으로만 흐르며, 예측 가능한 상태 관리가 가능</li>
+          <li>🔤 <b>JSX</b>: JavaScript 코드 안에서 HTML과 유사한 문법으로 UI를 기술할 수 있는 확장 문법</li>
+        </ul>
+        <div style={{ margin: '2em 0', borderTop: '1px solid #444' }} />
+        <h2 style={{ color: '#8fd', fontSize: 22, marginBottom: 8 }}>React로 할 수 있는 것</h2>
+        <ul style={{ lineHeight: 2, fontSize: 17, margin: 0, paddingLeft: 0, listStyle: 'none' }}>
+          <li>🌐 SPA(Single Page Application) 개발</li>
+          <li>📊 대규모 웹 서비스, 대시보드, 관리자 페이지</li>
+          <li>📱 모바일 앱(React Native)</li>
+          <li>🖥️ 데스크탑 앱(Electron, Tauri 등과 결합)</li>
+          <li>📈 실시간 데이터 시각화, 대시보드, 챗봇, 게임 등 다양한 UI/UX 구현</li>
+        </ul>
+        <div style={{ margin: '2em 0', borderTop: '1px solid #444' }} />
+        <h2 style={{ color: '#8fd', fontSize: 22, marginBottom: 8 }}>React 공식 사이트 및 참고 자료</h2>
+        <ul style={{ lineHeight: 2, fontSize: 17, margin: 0, paddingLeft: 0, listStyle: 'none' }}>
+          <li>🔗 <a href="https://react.dev/" target="_blank" rel="noopener noreferrer" style={{ color: '#8fd', textDecoration: 'underline' }}>React 공식 홈페이지 (react.dev)</a></li>
+          <li>🔗 <a href="https://ko.react.dev/" target="_blank" rel="noopener noreferrer" style={{ color: '#8fd', textDecoration: 'underline' }}>React 공식 한글 문서</a></li>
+          <li>🔗 <a href="https://github.com/facebook/react" target="_blank" rel="noopener noreferrer" style={{ color: '#8fd', textDecoration: 'underline' }}>React GitHub 저장소</a></li>
+          <li>🔗 <a href="https://reactnative.dev/" target="_blank" rel="noopener noreferrer" style={{ color: '#8fd', textDecoration: 'underline' }}>React Native 공식 사이트</a></li>
+        </ul>
+        <div style={{ margin: '2em 0', borderTop: '1px solid #444' }} />
+        <p style={{color:'#8fd', fontWeight:'bold', fontSize: 18, textAlign: 'center'}}>이 사이트에서는 React의 기초부터 실전 예제, 다양한 라이브러리 활용법까지 단계별로 학습할 수 있습니다.<br/>아래 메뉴에서 원하는 주제를 선택해 시작해보세요!</p>
+      </div>
+    ),
   },
   editors: {
     id: 'editors',
