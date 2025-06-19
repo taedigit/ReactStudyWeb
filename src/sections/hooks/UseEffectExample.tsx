@@ -79,8 +79,8 @@ const AsyncEffectDemo: React.FC = () => {
       setIsLoading(true);
       setError(null);
       try {
-        const response = await fetch('https://api.example.com/data');
-        const json = await response.json();
+        // 실제 API 호출 대신 더미 데이터 사용
+        const json = { message: 'This is dummy data.' };
         if (isMounted) {
           setData(json);
         }
@@ -135,7 +135,7 @@ const dependenciesCode = `const DependenciesDemo: React.FC = () => {\n  const [n
 
 const cleanupCode = `const CleanupDemo: React.FC = () => {\n  const [isOnline, setIsOnline] = useState(true);\n\n  useEffect(() => {\n    const handleOnline = () => setIsOnline(true);\n    const handleOffline = () => setIsOnline(false);\n\n    window.addEventListener('online', handleOnline);\n    window.addEventListener('offline', handleOffline);\n\n    return () => {\n      window.removeEventListener('online', handleOnline);\n      window.removeEventListener('offline', handleOffline);\n    };\n  }, []);\n\n  return (\n    <div>\n      <p>Network Status: {isOnline ? 'Online' : 'Offline'}</p>\n    </div>\n  );\n};`;
 
-const asyncEffectCode = `const AsyncEffectDemo: React.FC = () => {\n  const [data, setData] = useState(null);\n  const [isLoading, setIsLoading] = useState(false);\n  const [error, setError] = useState(null);\n\n  useEffect(() => {\n    let isMounted = true;\n\n    const fetchData = async () => {\n      setIsLoading(true);\n      setError(null);\n      try {\n        const response = await fetch('https://api.example.com/data');\n        const json = await response.json();\n        if (isMounted) {\n          setData(json);\n        }\n      } catch (err) {\n        if (isMounted) {\n          setError('Failed to fetch data');\n        }\n      } finally {\n        if (isMounted) {\n          setIsLoading(false);\n        }\n      }\n    };\n\n    fetchData();\n\n    return () => {\n      isMounted = false;\n    };\n  }, []);\n\n  if (isLoading) return <p>Loading...</p>;\n  if (error) return <p>Error: {error}</p>;\n  if (!data) return null;\n\n  return <p>Data: {JSON.stringify(data)}</p>;\n};`;
+const asyncEffectCode = `const AsyncEffectDemo: React.FC = () => {\n  const [data, setData] = useState(null);\n  const [isLoading, setIsLoading] = useState(false);\n  const [error, setError] = useState(null);\n\n  useEffect(() => {\n    let isMounted = true;\n\n    const fetchData = async () => {\n      setIsLoading(true);\n      setError(null);\n      try {\n        // 실제 API 호출 대신 더미 데이터 사용\n        const json = { message: 'This is dummy data.' };\n        if (isMounted) {\n          setData(json);\n        }\n      } catch (err) {\n        if (isMounted) {\n          setError('Failed to fetch data');\n        }\n      } finally {\n        if (isMounted) {\n          setIsLoading(false);\n        }\n      }\n    };\n\n    fetchData();\n\n    return () => {\n      isMounted = false;\n    };\n  }, []);\n\n  if (isLoading) return <p>Loading...</p>;\n  if (error) return <p>Error: {error}</p>;\n  if (!data) return null;\n\n  return <p>Data: {JSON.stringify(data)}</p>;\n};`;
 
 const multipleEffectsCode = `const MultipleEffectsDemo: React.FC = () => {\n  const [count, setCount] = useState(0);\n  const [size, setSize] = useState({ width: window.innerWidth, height: window.innerHeight });\n\n  useEffect(() => {\n    document.title = \`Count: \${count}\`;\n  }, [count]);\n\n  useEffect(() => {\n    const handleResize = () => {\n      setSize({ width: window.innerWidth, height: window.innerHeight });\n    };\n\n    window.addEventListener('resize', handleResize);\n    return () => window.removeEventListener('resize', handleResize);\n  }, []);\n\n  return (\n    <div>\n      <p>Count: {count}</p>\n      <button onClick={() => setCount(prev => prev + 1)}>\n        Increment\n      </button>\n      <p>Window Size: {size.width} x {size.height}</p>\n    </div>\n  );\n};`;
 

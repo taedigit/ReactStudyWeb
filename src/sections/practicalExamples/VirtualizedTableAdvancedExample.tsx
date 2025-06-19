@@ -64,11 +64,9 @@ const tableAdvancedCode =
   "              <TableCell>상태</TableCell>\n" +
   "            </TableRow>\n" +
   "          </TableHead>\n" +
-  "          <TableBody>\n" +
-  "            <List height={340} itemCount={filtered.length} itemSize={38} width={700}>\n" +
-  "              {Row} \n" +
-  "            </List>\n" +
-  "          </TableBody>\n" +
+  "          <List height={340} itemCount={filtered.length} itemSize={38} width={700} outerElementType={TableBody}>\n" +
+  "            {Row as any} \n" +
+  "          </List>\n" +
   "        </Table>\n" +
   "      </TableContainer>\n" +
   "      <Dialog open={!!detail} onClose={() => setDetail(null)}>\n" +
@@ -135,11 +133,9 @@ const VirtualizedTableAdvancedExample: React.FC = () => {
               <TableCell>상태</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            <List height={340} itemCount={filtered.length} itemSize={38} width={700}>
-              {Row as any}
-            </List>
-          </TableBody>
+          <List height={340} itemCount={filtered.length} itemSize={38} width={700} outerElementType={TableBody}>
+            {Row as any}
+          </List>
         </Table>
       </TableContainer>
       <Dialog open={!!detail} onClose={() => setDetail(null)}>

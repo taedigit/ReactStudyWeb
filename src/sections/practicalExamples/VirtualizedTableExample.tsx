@@ -94,17 +94,16 @@ const VirtualizedTableDemo: React.FC = () => {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
-            <List
-              ref={listRef}
-              height={400}
-              itemCount={filtered.length}
-              itemSize={38}
-              width={700}
-            >
-              {({ index, style }) => <VirtualizedRow index={index} style={style} />}
-            </List>
-          </TableBody>
+          <List
+            ref={listRef}
+            height={400}
+            itemCount={filtered.length}
+            itemSize={38}
+            width={700}
+            outerElementType={TableBody}
+          >
+            {({ index, style }) => <VirtualizedRow index={index} style={style} />}
+          </List>
         </Table>
       </Paper>
     </>
@@ -196,17 +195,16 @@ export default function VirtualizedTableDemo() {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
-            <List
-              ref={listRef}
-              height={400}
-              itemCount={filtered.length}
-              itemSize={38}
-              width={700}
-            >
-              {({ index, style }) => <VirtualizedRow index={index} style={style} />}
-            </List>
-          </TableBody>
+          <List
+            ref={listRef}
+            height={400}
+            itemCount={filtered.length}
+            itemSize={38}
+            width={700}
+            outerElementType={TableBody}
+          >
+            {({ index, style }) => <VirtualizedRow index={index} style={style} />}
+          </List>
         </Table>
       </Paper>
     </>

@@ -200,13 +200,19 @@ export function MacCmd({ children, showCaret = true, style, desc, tabs }: { chil
                 </div>
               )}
               <code style={{ cursor: 'text', position: 'relative' }}>
-                {tokens.map((line, i) => (
-                  <div key={i} {...getLineProps({ line })}>
-                    {line.map((token, key) => (
-                      <span key={key} {...getTokenProps({ token })} />
-                    ))}
-                  </div>
-                ))}
+                {tokens.map((line, i) => {
+                  const { key: lineKey, ...restLineProps } = getLineProps({ line });
+                  if ('key' in restLineProps) delete restLineProps.key;
+                  return (
+                    <div key={i} {...restLineProps}>
+                      {line.map((token, key) => {
+                        const { key: tokenKey, ...restTokenProps } = getTokenProps({ token });
+                        if ('key' in restTokenProps) delete restTokenProps.key;
+                        return <span key={key} {...restTokenProps} />;
+                      })}
+                    </div>
+                  );
+                })}
                 {showCaret && (
                   <span style={{
                     display: 'inline-block',
