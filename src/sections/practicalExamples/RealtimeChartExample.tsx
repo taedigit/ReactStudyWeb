@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Typography, Box, Paper } from '@mui/material';
+import { Typography } from '@mui/material';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { ExampleTab } from '../../components/ExampleTab';
 
