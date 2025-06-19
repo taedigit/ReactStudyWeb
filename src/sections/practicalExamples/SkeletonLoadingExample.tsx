@@ -120,7 +120,9 @@ const SkeletonLoadingExample: React.FC = () => {
       {/* 3개씩 2줄 Skeleton 카드 */}
       <Box display="flex" flexWrap="wrap" justifyContent="center" mb={2}>
         {loading
-          ? Array.from({ length: 6 }).map(() => skeletonCard)
+          ? Array.from({ length: 6 }).map((_, idx) => (
+              React.cloneElement(skeletonCard, { key: idx })
+            ))
           : cardData.map(user => (
               <Card key={user.name} sx={{ maxWidth: 320, minWidth: 220, m: 1 }}>
                 <CardContent>
