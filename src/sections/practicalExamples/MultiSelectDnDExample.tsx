@@ -1,19 +1,19 @@
 import React, { useState, useCallback, useRef } from 'react';
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragOverlay } from '@dnd-kit/core';
-import { SortableContext, verticalListSortingStrategy, useSortable, arrayMove } from '@dnd-kit/sortable';
+import { SortableContext, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
 import { Typography, Button } from '@mui/material';
 import { ExampleTab } from '../../components/ExampleTab';
 
 const ITEM_HEIGHT = 44;
 const INITIAL_ITEMS = Array.from({ length: 12 }, (_, i) => ({ id: String(i + 1), text: `아이템 ${i + 1}` }));
 
-function MultiSortableItem({ id, text, selected, onClick, listeners, attributes, setNodeRef, isDragging, style }: any) {
+function MultiSortableItem({ text, selected, onClick, listeners, attributes, setNodeRef, isDragging, style }: any) {
   return (
     <div
       ref={setNodeRef}
       {...attributes}
       {...listeners}
-      onClick={onClick}
+      onClick={(e: React.MouseEvent) => onClick(e)}
       style={{
         ...style,
         background: selected ? (isDragging ? '#e53e3e' : '#1976d2') : (isDragging ? '#e53e3e' : '#fff'),
@@ -114,10 +114,9 @@ const MultiSelectDnDExample: React.FC = () => {
     } = useSortable({ id });
     return (
       <MultiSortableItem
-        id={id}
         text={text}
         selected={selectedIds.includes(id)}
-        onClick={e => handleSelect(id, e)}
+        onClick={(e: React.MouseEvent) => handleSelect(id, e)}
         listeners={listeners}
         attributes={attributes}
         setNodeRef={setNodeRef}
