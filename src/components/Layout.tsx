@@ -43,7 +43,10 @@ export const Layout = ({ children, currentSection, onSectionChange }: LayoutProp
     },
     example: {
       title: '실전 예제',
-      sections: Object.values(sections).filter((section: Section) => section.category === 'example')
+      sections: [
+        ...Object.values(sections).filter((section: Section) => section.id === 'virtualizedAutoScrollDnD'),
+        ...Object.values(sections).filter((section: Section) => section.category === 'example' && section.id !== 'virtualizedAutoScrollDnD')
+      ]
     },
     Api: {
       title: 'API 연동',
