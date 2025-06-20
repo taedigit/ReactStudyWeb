@@ -800,7 +800,7 @@ export const sections: Record<SectionId, Section> = {
     category: 'basics',
     icon: '📘',
     prev: 'setup',
-    next: 'bundlers',
+    next: 'typescriptadvanced',
     content: (
       <div style={{ padding: '2.5em 0', background: '#23272f', borderRadius: 20, color: '#eaeaea', boxShadow: '0 6px 32px #0003', maxWidth: 950, margin: '0 auto', fontFamily: 'Pretendard, Noto Sans KR, sans-serif' }}>
         <div style={{ fontSize: 38, fontWeight: 900, marginBottom: 32, color: '#8fd', letterSpacing: '-1px', textShadow: '0 2px 12px #0006' }}>TypeScript 실전 가이드</div>
@@ -976,6 +976,36 @@ export const sections: Record<SectionId, Section> = {
       </div>
     ),
   },
+  // ...typescript 섹션 끝난 직후에 추가...
+typescriptadvanced: {
+  id: 'typescriptadvanced',
+  title: 'TypeScript 실전/심화',
+  description: '대규모 프로젝트, API, 상태관리, 폼, 트러블슈팅 등 실전에서 바로 쓰는 타입스크립트 심화 가이드',
+  category: 'basics',
+  icon: '🧑‍💻',
+  prev: 'typescript',
+  next: 'bundlers',
+  content: (
+    <div style={{ padding: '2.5em 0', background: '#23272f', borderRadius: 20, color: '#eaeaea', boxShadow: '0 6px 32px #0003', maxWidth: 950, margin: '0 auto', fontFamily: 'Pretendard, Noto Sans KR, sans-serif' }}>
+      <div style={{ fontSize: 38, fontWeight: 900, marginBottom: 32, color: '#8fd', letterSpacing: '-1px', textShadow: '0 2px 12px #0006' }}>TypeScript 실전/심화 가이드</div>
+      {/* 1. 모노레포/대규모 프로젝트 구조 */}
+      <div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+        <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>1. 모노레포/대규모 프로젝트 구조</Typography>
+        <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>실제 기업/팀에서 사용하는 폴더 구조, 타입 공유 전략, tsconfig paths, 프로젝트 레퍼런스 활용법</Typography>
+        <ExampleTab
+          example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>packages/common-types, packages/app, packages/api 등</li><li>tsconfig.base.json, path alias, 프로젝트 레퍼런스</li></ul>}
+          code={`// packages/common-types/user.ts\nexport interface User { id: string; name: string; }\n\n// packages/app/tsconfig.json\n{\n  "extends": "../../tsconfig.base.json",\n  "compilerOptions": {\n    "baseUrl": ".",\n    "paths": { "@types/*": ["../common-types/*"] }\n  },\n  "references": [ { "path": "../common-types" } ]\n}`}
+          desc={`공통 타입 패키지 분리, path alias, 프로젝트 레퍼런스 활용으로 대규모 협업/유지보수 효율 극대화`}
+        />
+        <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>공통 타입</b>은 별도 패키지로 분리, <b>tsconfig paths</b>로 import 경로를 짧게 관리하세요.</span>
+        </div>
+      </div>
+      {/* ...이하 2~10번 카드(위 답변 참고) 동일하게 추가... */}
+    </div>
+  ),
+},
+// ...
   components: {
     id: 'components',
     title: 'Components',
@@ -1093,7 +1123,7 @@ export const sections: Record<SectionId, Section> = {
             code={`function ProfileCard({ name, age, job }) {\n  return (\n    <div>\n      <h3>{name}</h3>\n      <p>나이: {age}</p>\n      <p>직업: {job}</p>\n    </div>\n  );\n}`}
             desc={`이 예제는 React에서 \"props\"(속성)를 사용해 부모 컴포넌트가 자식 컴포넌트에 데이터를 전달하는 방법을 보여줍니다.\n- ProfileCard 컴포넌트는 name, age, job이라는 props를 받아 화면에 표시합니다.\n- props는 함수의 인자처럼, 컴포넌트에 원하는 값을 외부에서 주입할 수 있게 해줍니다.\n- 자식 컴포넌트는 props를 읽기만 할 수 있고, 직접 변경할 수 없습니다.\n- props를 활용하면 컴포넌트를 재사용하고, 다양한 데이터를 유연하게 전달할 수 있습니다.\n이처럼 props는 React 컴포넌트 간 데이터 흐름의 핵심 도구입니다.`}
           />
-        </div>
+          </div>
         <div style={stateExampleBlockStyle}>
           <Typography variant="h6" sx={{ mb: 2 }}>2. 커스텀 버튼 컴포넌트 (Custom Button)</Typography>
           <ExampleTab
@@ -1618,7 +1648,7 @@ export const sections: Record<SectionId, Section> = {
             code={`import FormControl from '@mui/material/FormControl';\nimport InputLabel from '@mui/material/InputLabel';\nimport Select from '@mui/material/Select';\nimport MenuItem from '@mui/material/MenuItem';\n\nfunction Demo() {\n  return (<FormControl size=\"small\" variant=\"outlined\">\n    <InputLabel>과일</InputLabel>\n    <Select label=\"과일\" defaultValue=\"apple\">\n      <MenuItem value=\"apple\">Apple</MenuItem>\n      <MenuItem value=\"banana\">Banana</MenuItem>\n    </Select>\n  </FormControl>);\n}`}
             desc="기본 Select"
           />
-        </div>
+          </div>
         {/* 체크박스/스위치 */}
         <div style={stateExampleBlockStyle}>
           <Typography variant="h6" sx={{ mb: 2 }}>4. Checkbox & Switch</Typography>
@@ -1641,7 +1671,7 @@ export const sections: Record<SectionId, Section> = {
             code={`import TextField from '@mui/material/TextField';\n\nfunction Demo() {\n  return <TextField type=\"date\" label=\"날짜\" InputLabelProps={{ shrink: true }} size=\"small\" />;\n}`}
             desc="DatePicker (MUI 기본)"
           />
-        </div>
+          </div>
         {/* 다이얼로그 */}
         <div style={stateExampleBlockStyle}>
           <Typography variant="h6" sx={{ mb: 2 }}>6. Dialog (다이얼로그)</Typography>
@@ -1659,7 +1689,7 @@ export const sections: Record<SectionId, Section> = {
             code={`import Table from '@mui/material/Table';\nimport TableBody from '@mui/material/TableBody';\nimport TableCell from '@mui/material/TableCell';\nimport TableContainer from '@mui/material/TableContainer';\nimport TableHead from '@mui/material/TableHead';\nimport TableRow from '@mui/material/TableRow';\nimport Paper from '@mui/material/Paper';\n\nconst rows = [\n  { name: '홍길동', age: 28 },\n  { name: '김철수', age: 34 },\n];\n\nfunction Demo() {\n  return (<TableContainer component={Paper}><Table><TableHead><TableRow><TableCell>이름</TableCell><TableCell>나이</TableCell></TableRow></TableHead><TableBody>{rows.map((row, i) => (<TableRow key={i}><TableCell>{row.name}</TableCell><TableCell>{row.age}</TableCell></TableRow>))}</TableBody></Table></TableContainer>);\n}`}
             desc="기본 Table"
           />
-        </div>
+          </div>
         {/* 스낵바 */}
         <div style={stateExampleBlockStyle}>
           <Typography variant="h6" sx={{ mb: 2 }}>8. Snackbar (스낵바)</Typography>
@@ -1677,7 +1707,7 @@ export const sections: Record<SectionId, Section> = {
             code={`import Tabs from '@mui/material/Tabs';\nimport Tab from '@mui/material/Tab';\nimport React from 'react';\n\nfunction Demo() {\n  const [value, setValue] = React.useState(0);\n  return (<Tabs value={value} onChange={(_, v) => setValue(v)}><Tab label=\"Tab1\" /><Tab label=\"Tab2\" /></Tabs>);\n}`}
             desc="Tabs"
           />
-        </div>
+          </div>
         {/* Menu (Dropdown) */}
         <div style={stateExampleBlockStyle}>
           <Typography variant="h6" sx={{ mb: 2 }}>10. Menu (Dropdown)</Typography>
@@ -1695,7 +1725,7 @@ export const sections: Record<SectionId, Section> = {
             code={`import Pagination from '@mui/material/Pagination';\n\nfunction Demo() {\n  return <Pagination count={10} page={1} />;\n}`}
             desc="Pagination"
           />
-        </div>
+          </div>
         {/* Progress */}
         <div style={stateExampleBlockStyle}>
           <Typography variant="h6" sx={{ mb: 2 }}>12. Progress</Typography>
@@ -2464,7 +2494,7 @@ function VDomWindowDemo() {
             })()}</div>`}
             desc={`복잡한 조건에는 switch-case를 활용할 수 있습니다.`}
           />
-        </div>
+          </div>
       </div>
     ),
   },
@@ -3044,6 +3074,7 @@ const StyledButton = styled.button\`
     next: null,
     content: <AuthExample />,
   },
+ 
 };
   
 
@@ -3060,7 +3091,7 @@ function AntdModalDemo() {
       <AntdModal open={open} onCancel={() => setOpen(false)} onOk={() => setOpen(false)}>
         <p>Ant Design Modal 예제입니다.</p>
       </AntdModal>
-    </div>
+          </div>
   );
 }
 function AntdTableDemo() {
@@ -3152,7 +3183,7 @@ function CustomEventDemo() {
   return (
     <div onClick={() => alert('부모 div 클릭!')} style={{ padding: 16, background: '#333' }}>
       <Button type="primary" onClick={e => { e.stopPropagation(); alert('버튼만 클릭!'); }}>버튼</Button>
-        </div>
+          </div>
   );
 }
 function EventDelegationDemo() {
@@ -3198,7 +3229,7 @@ function JSXListDemo() {
           {fruit}
         </span>
       ))}
-    </div>
+          </div>
   );
 }
 function JSXCompositionDemo() {
@@ -3209,7 +3240,7 @@ function JSXCompositionDemo() {
     <div>
       <Welcome name="홍길동" />
       <Welcome name="React" />
-    </div>
+        </div>
   );
 }
 
@@ -3223,7 +3254,7 @@ function VDomDirectDemo() {
     <div>
       <Button type="primary" onClick={() => setCount(c => c + 1)} style={{ marginRight: 32 }}>증가</Button>
       <span id="direct-dom">Count: 0</span>
-    </div>
+          </div>
   );
 }
 function VDomDiffDemo() {
@@ -3249,7 +3280,7 @@ function JSXAndDemo() {
   return (
     <div>
       {hasMessage && <span>새로운 메시지가 있습니다!</span>}
-    </div>
+        </div>
   );
 }
 function JSXNullDemo() {
@@ -3280,7 +3311,7 @@ function JSXNestedListDemo() {
           </div>
         </div>
       ))}
-    </div>
+          </div>
   );
 }
 function JSXKeyWarningDemo() {
@@ -3293,7 +3324,7 @@ function JSXKeyWarningDemo() {
           {item}
         </span>
       ))}
-    </div>
+        </div>
   );
 }
 

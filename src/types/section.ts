@@ -5,6 +5,7 @@ export type SectionId =
   | 'editors'
   | 'setup'
   | 'typescript'
+  | 'typescriptadvanced'
   | 'bundlers'
   | 'jsx'
   | 'vdom'
