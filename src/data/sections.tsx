@@ -1008,8 +1008,121 @@ export const sections: Record<SectionId, Section> = {
   <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
     <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>JSDoc</b>과 <b>Typedoc</b>으로 타입/코드 문서화 자동화!</span>
   </div>
+</div><div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>17. 타입스크립트 유틸리티 타입 실전</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>Partial, Pick, Omit, Record, ReturnType 등 내장 유틸리티 타입의 실전 활용법</Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>Partial: 일부만 선택적으로</li><li>Omit: 특정 속성 제외</li><li>Record: 객체 매핑</li></ul>}
+    code={`interface User { id: string; name: string; age: number; }
+type UserPartial = Partial<User>; // 모든 속성이 optional
+type UserWithoutAge = Omit<User, 'age'>; // age 제외
+type UserMap = Record<string, User>; // id → User 매핑
+type UserReturn = ReturnType<() => User>;`}
+    desc={`유틸리티 타입을 적극 활용하면, 반복되는 타입 선언을 줄이고 실전에서 타입 설계가 훨씬 쉬워집니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>Omit</b>, <b>Partial</b>, <b>Record</b> 등은 실전에서 매우 자주 사용!</span>
+  </div>
 </div>
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>18. 타입 단언/타입 좁히기 실전</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>as, 타입 가드, 타입 단언을 활용한 안전한 타입 변환/좁히기 실전</Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>as로 타입 단언</li><li>typeof, instanceof, 커스텀 타입가드</li></ul>}
+    code={`function printId(id: number | string) {
+  if (typeof id === 'string') {
+    console.log(id.toUpperCase());
+  } else {
+    console.log(id.toFixed(2));
+  }
+}
+function isUser(obj: any): obj is { id: string } {
+  return obj && typeof obj.id === 'string';
+}
+const user = {} as { id: string };`}
+    desc={`타입 단언(as), 타입 가드, 타입 좁히기를 적절히 활용하면 런타임 오류를 줄이고, 안전한 코드를 작성할 수 있습니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>as</b> 남용은 지양, 타입가드로 안전하게!</span>
+  </div>
+</div>
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>19. 타입 추론/자동 완성 실전</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>타입 추론, 자동 완성, IDE 지원을 활용한 생산성 향상</Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>타입 추론으로 변수/함수 타입 생략</li><li>IDE 자동 완성, 타입 힌트 활용</li></ul>}
+    code={`let x = 10; // number로 추론
+const user = { id: '1', name: '홍길동' }; // { id: string; name: string }
+function add(a: number, b: number) { return a + b; } // 반환값도 자동 추론
+// IDE에서 .(dot) 입력 시 자동 완성 지원`}
+    desc={`타입 추론과 자동 완성 기능을 적극 활용하면, 코드 작성 속도와 정확도가 크게 향상됩니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: 타입을 명시하지 않아도 추론이 잘 되는 경우는 생략!</span>
+  </div>
+</div>
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>20. 타입스크립트와 환경 변수/런타임 값</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>process.env, import.meta.env 등 환경 변수와 런타임 값의 타입 안전 활용</Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>환경 변수 타입 선언</li><li>런타임 값 타입 안전하게 사용</li></ul>}
+    code={`// vite 환경 변수 타입 선언
+interface ImportMetaEnv {
+  VITE_API_URL: string;
+}
+const apiUrl: string = import.meta.env.VITE_API_URL;
 
+// process.env 타입 선언 (Node.js)
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv {
+      NODE_ENV: 'development' | 'production' | 'test';
+      API_KEY: string;
+    }
+  }
+}`}
+    desc={`환경 변수도 타입 선언을 추가하면, 오타/누락/런타임 오류를 예방할 수 있습니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>env.d.ts</b>로 환경 변수 타입을 명확히!</span>
+  </div>
+</div>
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>21. 타입스크립트와 비동기/Promise/async-await</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>Promise, async 함수, 에러 핸들링의 타입 안전 실전</Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>Promise 반환 타입</li><li>async 함수, try-catch 에러 타입</li></ul>}
+    code={`async function fetchUser(id: string): Promise<User> {
+  const res = await fetch('/api/user/' + id);
+  if (!res.ok) throw new Error('API Error');
+  return res.json() as Promise<User>;
+}
+try {
+  const user = await fetchUser('1');
+} catch (e: unknown) {
+  if (e instanceof Error) console.error(e.message);
+}`}
+    desc={`비동기 함수, 에러 핸들링에도 타입을 명확히 지정하면, 예기치 못한 오류를 줄일 수 있습니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>unknown</b>으로 에러 타입 안전하게!</span>
+  </div>
+</div>
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>22. 타입스크립트와 DOM/브라우저 API</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>querySelector, Event 등 브라우저 API를 타입 안전하게 사용하는 실전</Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>HTMLElement, Event 타입 선언</li><li>querySelector, addEventListener 타입 안전</li></ul>}
+    code={`const el = document.querySelector('#myBtn') as HTMLButtonElement;
+el.addEventListener('click', (e: MouseEvent) => {
+  console.log(e.currentTarget); // 타입 안전
+});`}
+    desc={`브라우저 API도 타입을 명확히 선언하면, 런타임 오류를 줄이고 안전한 코드를 작성할 수 있습니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>as HTMLButtonElement</b> 등으로 DOM 타입을 명확히!</span>
+  </div>
+</div>
       </div>
     ),
   },
