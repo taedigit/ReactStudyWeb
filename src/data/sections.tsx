@@ -973,6 +973,43 @@ export const sections: Record<SectionId, Section> = {
             <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>Discriminated Union</b> + <b>as const</b> 패턴은 복잡한 상태 관리에 매우 강력합니다.</span>
           </div>
         </div>
+        <div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>14. 타입스크립트와 ESLint/Prettier</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>코드 품질, 린트, 포맷팅을 위한 ESLint, Prettier와 타입스크립트의 연동 실전</Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>eslint-plugin-@typescript-eslint, prettier 연동</li><li>코드 자동 포맷, 타입 오류 린트</li></ul>}
+    code={`// .eslintrc.js 예시\nmodule.exports = {\n  parser: '@typescript-eslint/parser',\n  plugins: ['@typescript-eslint'],\n  extends: [\n    'plugin:@typescript-eslint/recommended',\n    'prettier'\n  ],\n};\n// .prettierrc 예시\n{\n  "singleQuote": true,\n  "semi": false\n}`}
+    desc={`ESLint와 Prettier를 함께 사용하면 코드 품질과 일관성을 자동으로 유지할 수 있습니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>eslint-plugin-@typescript-eslint</b>와 <b>prettier</b>를 함께 적용!</span>
+  </div>
+</div>
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>15. 타입스크립트와 모듈 시스템</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>import/export, CommonJS, ESM 등 다양한 모듈 시스템에서 타입스크립트 활용</Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>import/export, require/module.exports 차이</li><li>tsconfig module 옵션, ESM/Node.js 호환</li></ul>}
+    code={`// ESM 방식\nimport foo from './foo';\nexport function bar() {}\n// CommonJS 방식\nconst foo = require('./foo');\nmodule.exports = { bar };\n// tsconfig.json\n{\n  "compilerOptions": { "module": "ESNext" }\n}`}
+    desc={`모듈 시스템에 따라 import/export 방식과 tsconfig 설정이 달라지므로, 프로젝트 환경에 맞게 설정하세요.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>ESM</b>과 <b>CommonJS</b> 차이를 명확히 구분!</span>
+  </div>
+</div>
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>16. 타입스크립트와 주석/문서화</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>JSDoc, 타입 주석, 자동 문서화 도구(Typedoc 등)와 타입스크립트 실전</Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>JSDoc으로 함수/타입 설명</li><li>Typedoc 등으로 자동 문서화</li></ul>}
+    code={`/**\n * 두 수를 더합니다.\n * @param a 첫 번째 숫자\n * @param b 두 번째 숫자\n * @returns 합계\n */\nfunction sum(a: number, b: number): number {\n  return a + b;\n}\n// Typedoc 사용 예시\n// npx typedoc src/index.ts`}
+    desc={`JSDoc과 Typedoc 등으로 타입과 코드를 함께 문서화하면, 협업과 유지보수성이 크게 향상됩니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>JSDoc</b>과 <b>Typedoc</b>으로 타입/코드 문서화 자동화!</span>
+  </div>
+</div>
+
       </div>
     ),
   },
