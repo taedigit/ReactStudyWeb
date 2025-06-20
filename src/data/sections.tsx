@@ -1072,6 +1072,109 @@ typescriptadvanced: {
           <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>satisfies</b>, <b>const type parameter</b> 등 최신 문법을 적극 활용하세요.</span>
         </div>
       </div>
+
+      <div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>7. 타입스크립트 마이그레이션 전략 (JS → TS)</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>기존 자바스크립트 프로젝트를 타입스크립트로 점진적으로 마이그레이션하는 실전 전략</Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>js → ts/tsx 파일 확장자 변경</li><li>// @ts-nocheck, any 최소화, 점진적 타입 추가</li><li>strict 옵션 점진적 적용</li></ul>}
+    code={`// 점진적 마이그레이션 예시
+// 1. 파일 확장자 변경: .js → .ts/.tsx
+// 2. any 최소화, 타입 점진적 추가
+// 3. tsconfig strict 옵션 점진적 적용
+// 4. @ts-nocheck 임시 사용 후 제거
+// 5. 타입 선언 파일(d.ts)로 외부 JS 모듈 지원`}
+    desc={`대규모 프로젝트는 한 번에 마이그레이션하지 말고, 점진적으로 타입을 추가하며 안정적으로 전환하세요.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>strict</b> 옵션은 마지막에 적용, <b>any</b>는 반드시 TODO 주석과 함께 관리!</span>
+  </div>
+</div>
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>8. 타입스크립트와 서버사이드(SSR/Next.js/Express 등)</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>Next.js, Express, Node.js 등 서버사이드에서 타입스크립트 활용 실전</Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>Next.js API Route, getServerSideProps, getStaticProps 타입</li><li>Express 미들웨어, Request/Response 타입</li></ul>}
+    code={`// Next.js API Route 예시
+import type { NextApiRequest, NextApiResponse } from 'next';
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
+  res.status(200).json({ name: 'John Doe' });
+}
+// Express 예시
+import express, { Request, Response } from 'express';
+const app = express();
+app.get('/user', (req: Request, res: Response) => {
+  res.json({ id: req.query.id });
+});`}
+    desc={`SSR, API Route, 서버 미들웨어 등에서 타입을 명확히 지정하면 런타임 오류를 크게 줄일 수 있습니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>공통 API 타입</b>을 프론트/백엔드에서 공유하면 DX와 안정성이 크게 향상됩니다.</span>
+  </div>
+</div>
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>9. 외부 라이브러리/서드파티 타입 선언 및 호환성</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>DefinitelyTyped, d.ts 작성, 타입 호환성 문제 해결 실전</Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>@types/ 패키지 활용</li><li>커스텀 d.ts 작성, 타입 호환성 트러블슈팅</li></ul>}
+    code={`// 외부 라이브러리 타입 선언
+// 1. @types/ 패키지 설치: npm i -D @types/lodash
+// 2. 커스텀 d.ts 작성: declare module 'my-legacy-lib';
+// 3. 타입 호환성 문제 해결: 타입 단언, 타입 변환 등`}
+    desc={`외부 라이브러리 타입이 없거나 호환이 안 될 때는 직접 d.ts를 작성하거나, 타입 단언으로 임시 우회하세요.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>DefinitelyTyped</b>에 없는 라이브러리는 직접 d.ts 작성!</span>
+  </div>
+</div>
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>10. 고급 타입 패턴(맵드타입, 조건부타입, 템플릿 리터럴타입, Discriminated Union 등)</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>실전에서 자주 쓰는 고급 타입 패턴과 활용법</Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>맵드타입, 조건부타입, keyof, as const, Discriminated Union</li><li>상태머신, 런타임 검증 등 실전 활용</li></ul>}
+    code={`type Optional<T> = { [P in keyof T]?: T[P] };
+type IsString<T> = T extends string ? true : false;
+type User = { id: number; name: string };
+type UserKey = keyof User; // \"id\" | \"name\"
+type UserId = User[\"id\"]; // number
+type Shape =
+  | { kind: \"circle\"; radius: number }
+  | { kind: \"square\"; size: number };
+function getArea(shape: Shape): number {
+  switch (shape.kind) {
+    case \"circle\": return Math.PI * shape.radius ** 2;
+    case \"square\": return shape.size ** 2;
+  }
+}`}
+    desc={`대규모 타입 설계, 상태머신, 런타임 검증 등에서 고급 타입 패턴을 적극 활용하세요.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>Discriminated Union</b> + <b>as const</b> 패턴은 복잡한 상태 관리에 매우 강력!</span>
+  </div>
+</div>
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>11. 테스트 코드에서의 타입 활용 (Jest/RTL, Mock 타입화)</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>테스트 코드에서 타입을 적극 활용하여 버그를 사전에 방지하고, 타입 안전성을 높이는 실전 전략</Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>Jest, React Testing Library에서 타입 추론 활용</li><li>Mock 데이터, API 응답 타입화</li></ul>}
+    code={`// Jest 테스트에서 타입 활용 예시
+import { sum } from './sum';
+test('sum', () => {
+  const a: number = 1;
+  const b: number = 2;
+  const result = sum(a, b);
+  expect(result).toBe(3);
+});
+// Mock API 타입화
+interface User { id: string; name: string; }
+const mockUser: User = { id: '1', name: '홍길동' };`}
+    desc={`테스트 코드에도 타입을 명확히 지정하면, 리팩토링/협업 시 타입 오류를 빠르게 발견할 수 있습니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>테스트용 Mock 데이터</b>도 타입 선언과 함께 관리하면 유지보수성이 크게 향상됩니다.</span>
+  </div>
+</div>
+
     </div>
   ),
 },
@@ -1127,12 +1230,12 @@ typescriptadvanced: {
       <div>
         <div style={stateExampleBlockStyle}>
           <Typography variant="h6" sx={{ mb: 2 }}>1. 함수형 컴포넌트 (Function Component)</Typography>
-          <ExampleTab
+        <ExampleTab
             example={<Welcome name="React" />}
             code={`function Welcome(props) {\n  return <h1>Hello, {props.name}!</h1>;\n}`}
             desc={`함수형 컴포넌트는 가장 기본적인 React 컴포넌트 작성 방식입니다.\nprops를 받아서 JSX를 반환하며, 재사용성과 테스트가 용이합니다.`}
           />
-          </div>
+        </div>
         <div style={stateExampleBlockStyle}>
           <Typography variant="h6" sx={{ mb: 2 }}>2. JSX</Typography>
           <ExampleTab
@@ -1140,15 +1243,15 @@ typescriptadvanced: {
             code={`<Welcome name=\"React\" />`}
             desc={`JSX는 JavaScript에서 XML처럼 태그를 작성할 수 있게 해주는 문법입니다.\n컴포넌트를 HTML 태그처럼 사용할 수 있어 가독성이 높아집니다.`}
           />
-        </div>
+      </div>
         <div style={stateExampleBlockStyle}>
           <Typography variant="h6" sx={{ mb: 2 }}>3. 간단한 인사 컴포넌트 (Simple Greeting)</Typography>
-          <ExampleTab
+        <ExampleTab
             example={<div>안녕하세요!</div>}
             code={`function Hello() {\n  return <div>안녕하세요!<\/div>;\n}`}
             desc={`간단한 함수형 컴포넌트 예제입니다.\nHello 컴포넌트는 항상 동일한 인사말을 반환합니다.`}
           />
-          </div>
+        </div>
         <div style={stateExampleBlockStyle}>
           <Typography variant="h6" sx={{ mb: 2 }}>4. props와 조건부 렌더링 (Props & Conditional Rendering)</Typography>
           <ExampleTab
@@ -1156,15 +1259,15 @@ typescriptadvanced: {
             code={`function Greeting({ name }) {\n  return <h2>{name ? \`안녕하세요, \${name}님!\` : '이름을 입력하세요.'}<\/h2>;\n}`}
             desc={`props로 받은 값에 따라 다른 결과를 보여주는 조건부 렌더링 예제입니다.\nname이 있으면 인사말, 없으면 안내 메시지를 출력합니다.`}
           />
-        </div>
+      </div>
         <div style={stateExampleBlockStyle}>
           <Typography variant="h6" sx={{ mb: 2 }}>5. 상태와 이벤트 활용 (State & Event)</Typography>
-          <ExampleTab
+        <ExampleTab
             example={<CounterButtonsDemo />}
             code={`import { useState } from 'react';\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  return (\n    <div>\n      <button onClick={() => setCount(count - 1)}>-</button>\n      <span style={{margin: '0 1em'}}>{count}</span>\n      <button onClick={() => setCount(count + 1)}>+</button>\n    </div>\n  );\n}`}
             desc={`useState로 상태를 관리하고, 버튼 클릭 이벤트로 값을 증감시키는 카운터 예제입니다.\nReact의 상태 관리와 이벤트 처리의 기본을 보여줍니다.`}
           />
-          </div>
+        </div>
         <div style={stateExampleBlockStyle}>
           <Typography variant="h6" sx={{ mb: 2 }}>6. 리스트 필터링 & 동적 렌더링 (List Filtering & Dynamic Rendering)</Typography>
           <ExampleTab
@@ -1172,7 +1275,7 @@ typescriptadvanced: {
             code={`import { useState } from 'react';\n\nfunction UserList() {\n  const [filter, setFilter] = useState('');\n  const users = ['Alice', 'Bob', 'Charlie', 'David'];\n  const filtered = users.filter(u => u.toLowerCase().includes(filter.toLowerCase()));\n  return (\n    <div>\n      <input value={filter} onChange={e => setFilter(e.target.value)} placeholder="이름 검색" />\n      <ul>\n        {filtered.map(u => <li key={u}>{u}</li>)}\n      </ul>\n    </div>\n  );\n}`}
             desc={`입력값에 따라 리스트를 실시간으로 필터링하는 예제입니다.\nuseState로 filter 상태를 관리하고, 배열의 filter 메서드를 활용합니다.`}
           />
-        </div>
+      </div>
       </div>
     ),
   },
@@ -1188,12 +1291,12 @@ typescriptadvanced: {
       <div>
         <div style={stateExampleBlockStyle}>
           <Typography variant="h6" sx={{ mb: 2 }}>1. 기본 Props 전달 (Basic Props)</Typography>
-          <ExampleTab
+        <ExampleTab
             example={<ProfileCard name="홍길동" age={30} job="개발자" />}
             code={`function ProfileCard({ name, age, job }) {\n  return (\n    <div>\n      <h3>{name}</h3>\n      <p>나이: {age}</p>\n      <p>직업: {job}</p>\n    </div>\n  );\n}`}
             desc={`이 예제는 React에서 \"props\"(속성)를 사용해 부모 컴포넌트가 자식 컴포넌트에 데이터를 전달하는 방법을 보여줍니다.\n- ProfileCard 컴포넌트는 name, age, job이라는 props를 받아 화면에 표시합니다.\n- props는 함수의 인자처럼, 컴포넌트에 원하는 값을 외부에서 주입할 수 있게 해줍니다.\n- 자식 컴포넌트는 props를 읽기만 할 수 있고, 직접 변경할 수 없습니다.\n- props를 활용하면 컴포넌트를 재사용하고, 다양한 데이터를 유연하게 전달할 수 있습니다.\n이처럼 props는 React 컴포넌트 간 데이터 흐름의 핵심 도구입니다.`}
           />
-          </div>
+        </div>
         <div style={stateExampleBlockStyle}>
           <Typography variant="h6" sx={{ mb: 2 }}>2. 커스텀 버튼 컴포넌트 (Custom Button)</Typography>
           <ExampleTab
@@ -1201,10 +1304,10 @@ typescriptadvanced: {
             code={`function CustomButton({ color, label }) {\n  return <button style={{ background: color }}>{label}</button>;\n}`}
             desc={`이 예제는 props를 활용해 다양한 스타일의 버튼을 만드는 방법을 보여줍니다.\n- CustomButton 컴포넌트는 color와 label이라는 props를 받아, 각각 버튼의 배경색과 표시 텍스트를 결정합니다.\n- 부모 컴포넌트가 각 버튼에 원하는 색상과 라벨을 전달할 수 있습니다.\n- props를 사용하면 하나의 컴포넌트로 여러 종류의 버튼을 쉽게 만들 수 있습니다.\n이처럼 props는 컴포넌트의 재사용성과 확장성을 높여줍니다.`}
           />
-        </div>
+      </div>
         <div style={stateExampleBlockStyle}>
           <Typography variant="h6" sx={{ mb: 2 }}>3. 리스트 데이터 전달 (List Data)</Typography>
-          <ExampleTab
+        <ExampleTab
             example={<ItemList items={['사과', '바나나', '오렌지']} />}
             code={`function ItemList({ items }) {
   const icons = {
@@ -1244,10 +1347,10 @@ typescriptadvanced: {
             code={`function Toggle({ label, initial }) {\n  const [on, setOn] = React.useState(initial);\n  return <label><input type="checkbox" checked={on} onChange={() => setOn(!on)} />{label}</label>;\n}`}
             desc={`이 예제는 props로 초기값과 라벨을 받아 재사용 가능한 토글 스위치를 만드는 방법을 보여줍니다.\n- Toggle 컴포넌트는 label(라벨)과 initial(초기 상태) props를 받아, 체크박스와 텍스트를 렌더링합니다.\n- 부모 컴포넌트가 원하는 초기값과 라벨을 자유롭게 전달할 수 있습니다.\n- props를 활용하면 다양한 상황에 맞는 토글 스위치를 쉽게 만들 수 있습니다.\n이처럼 props는 컴포넌트의 동작과 표시를 유연하게 제어할 수 있게 해줍니다.`}
           />
-        </div>
       </div>
-    ),
-  },
+    </div>
+  ),
+},
   useState: {
     id: 'useState',
     title: 'useState',
