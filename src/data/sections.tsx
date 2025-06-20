@@ -668,7 +668,7 @@ export const sections: Record<SectionId, Section> = {
     prev: null,
     next: 'setup',
     content: (
-      <div style={{ width: '100%', margin: '0 auto', padding: '2.5em 1.5em', background: 'linear-gradient(135deg, #23272f 80%, #2d3748 100%)', borderRadius: 16, color: '#eaeaea', boxShadow: '0 4px 24px #0002' }}>
+      <div style={{ width: '100%', margin: '0 auto', padding: '2.5em 1.5em', background: '#23272f', borderRadius: 16, color: '#eaeaea', boxShadow: '0 4px 24px #0002' }}>
         <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 12, color: '#8fd' }}>React란 무엇인가?</h1>
         <p style={{ fontSize: 18, marginBottom: 24 }}><b>React</b>는 Facebook(현 Meta)이 2013년에 오픈소스로 공개한 <b>프론트엔드 UI 라이브러리</b>입니다. 복잡한 사용자 인터페이스를 쉽고 효율적으로 구축할 수 있도록 설계되었으며, 현재는 전 세계적으로 가장 인기 있는 웹 프레임워크 중 하나입니다.</p>
         <div style={{ background: '#23272f', borderRadius: 12, padding: '1.2em 1.5em', marginBottom: 24, border: '1px solid #444' }}>
@@ -802,10 +802,10 @@ export const sections: Record<SectionId, Section> = {
     prev: 'setup',
     next: 'bundlers',
     content: (
-      <div style={{ padding: '2.5em 0', background: 'linear-gradient(135deg, #222c3a 80%, #2d3748 100%)', borderRadius: 20, color: '#eaeaea', boxShadow: '0 6px 32px #0003', maxWidth: 950, margin: '0 auto', fontFamily: 'Pretendard, Noto Sans KR, sans-serif' }}>
+      <div style={{ padding: '2.5em 0', background: '#23272f', borderRadius: 20, color: '#eaeaea', boxShadow: '0 6px 32px #0003', maxWidth: 950, margin: '0 auto', fontFamily: 'Pretendard, Noto Sans KR, sans-serif' }}>
         <div style={{ fontSize: 38, fontWeight: 900, marginBottom: 32, color: '#8fd', letterSpacing: '-1px', textShadow: '0 2px 12px #0006' }}>TypeScript 실전 가이드</div>
         {/* 1. 기본 타입 */}
-        <div style={{ ...stateExampleBlockStyle, background: 'linear-gradient(120deg, #3a8dde 60%, #6ee7b7 100%)', color: '#fff', boxShadow: '0 2px 16px #3a8dde44', border: 'none', marginBottom: 40 }}>
+        <div style={{ ...stateExampleBlockStyle, background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', marginBottom: 40 }}>
           <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff', letterSpacing: '-0.5px' }}>1. 기본 타입 (Primitive Types)</Typography>
           <Typography sx={{ mb: 2, color: '#e0f7fa', fontSize: 17, fontWeight: 500 }}>number, string, boolean, null, undefined 등 자바스크립트의 모든 기본 타입을 타입스크립트에서 명시적으로 선언할 수 있습니다.</Typography>
           <ExampleTab
@@ -813,12 +813,12 @@ export const sections: Record<SectionId, Section> = {
             code={`let age: number = 30;\nlet name: string = "홍길동";\nlet isActive: boolean = true;\nlet n: null = null;\nlet u: undefined = undefined;`}
             desc={`실무에서는 API 응답, 폼 입력값 등에서 null/undefined를 명확히 구분하는 것이 중요합니다.`}
           />
-          <div style={{ background: 'rgba(255,255,255,0.13)', color: '#fffde4', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>undefined</b>는 "값이 할당되지 않음", <b>null</b>은 "명시적 비어있음"을 의미합니다. API 설계 시 구분해서 사용하세요.</span>
           </div>
         </div>
         {/* 2. 배열/튜플 */}
-        <div style={{ ...stateExampleBlockStyle, background: 'linear-gradient(120deg, #a78bfa 60%, #f472b6 100%)', color: '#fff', boxShadow: '0 2px 16px #a78bfa44', border: 'none', marginBottom: 40 }}>
+        <div style={{ ...stateExampleBlockStyle, background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', marginBottom: 40 }}>
           <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff', letterSpacing: '-0.5px' }}>2. 배열과 튜플</Typography>
           <Typography sx={{ mb: 2, color: '#fce7f3', fontSize: 17, fontWeight: 500 }}>배열은 요소 타입이 모두 같고, 튜플은 각 요소의 타입과 개수가 고정된 배열입니다.</Typography>
           <ExampleTab
@@ -826,64 +826,64 @@ export const sections: Record<SectionId, Section> = {
             code={`let numbers: number[] = [1, 2, 3];\nlet fruits: Array<string> = ["apple", "banana"];\nlet tuple: [string, number] = ["age", 30];`}
             desc={`실무에서 API 응답(예: ["id", 123]) 등에서 튜플을 활용하면 구조가 명확해집니다.`}
           />
-          <div style={{ background: 'rgba(255,255,255,0.13)', color: '#fffde4', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>튜플</b>은 <b>useState</b>의 반환값([state, setState]) 등에서 자주 사용됩니다.</span>
           </div>
         </div>
         {/* 3. any, unknown, never */}
-        <div style={{ ...stateExampleBlockStyle, background: 'linear-gradient(120deg, #fbbf24 60%, #f472b6 100%)', color: '#232323', boxShadow: '0 2px 16px #fbbf2444', border: 'none', marginBottom: 40 }}>
-          <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#232323', letterSpacing: '-0.5px' }}>3. any, unknown, never</Typography>
+        <div style={{ ...stateExampleBlockStyle, background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', marginBottom: 40 }}>
+          <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff', letterSpacing: '-0.5px' }}>3. any, unknown, never</Typography>
           <Typography sx={{ mb: 2, color: '#78350f', fontSize: 17, fontWeight: 500 }}>any는 타입 안전성을 포기, unknown은 타입 검사 필요, never는 절대 반환하지 않는 함수에 사용합니다.</Typography>
           <ExampleTab
             example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li><b>any</b>: 아무 타입이나 허용</li><li><b>unknown</b>: 타입 검사 필요</li><li><b>never</b>: 절대 반환하지 않음</li></ul>}
             code={`let anything: any = 123;\nanything = "문자열";\nlet value: unknown = "abc";\nif (typeof value === "string") {\n  console.log(value.toUpperCase());\n}\nfunction error(msg: string): never {\n  throw new Error(msg);\n}`}
             desc={`실무에서는 any 사용을 최대한 피하고, unknown은 런타임 타입 체크와 함께 사용하세요.`}
           />
-          <div style={{ background: 'rgba(255,255,255,0.13)', color: '#b45309', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontSize: 20 }}>⚠️</span> <span>주의: <b>any</b>를 남용하면 타입스크립트의 이점을 모두 잃게 됩니다. <b>unknown</b>을 선호하세요.</span>
           </div>
         </div>
         {/* 4. 객체 타입 */}
-        <div style={{ ...stateExampleBlockStyle, background: 'linear-gradient(120deg, #f472b6 60%, #fbbf24 100%)', color: '#232323', boxShadow: '0 2px 16px #f472b644', border: 'none', marginBottom: 40 }}>
-          <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#232323', letterSpacing: '-0.5px' }}>4. 객체 타입 (Object Types)</Typography>
+        <div style={{ ...stateExampleBlockStyle, background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', marginBottom: 40 }}>
+          <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff', letterSpacing: '-0.5px' }}>4. 객체 타입 (Object Types)</Typography>
           <Typography sx={{ mb: 2, color: '#be185d', fontSize: 17, fontWeight: 500 }}>객체 리터럴, 선택적/읽기전용 프로퍼티 등 다양한 객체 타입을 정의할 수 있습니다.</Typography>
           <ExampleTab
             example={<div style={{ fontSize: 17 }}>{`{ name: "홍길동", age: 20 }`}</div>}
             code={`let user: { name: string; age: number } = {\n  name: "홍길동",\n  age: 20,\n};\nlet user2: { name: string; age?: number } = { name: "철수" };\nlet user3: { readonly id: number; name: string } = { id: 1, name: "영희" };`}
             desc={`실무에서는 API 응답 타입, 폼 데이터 타입 등에서 객체 타입을 명확히 정의하는 것이 중요합니다.`}
           />
-          <div style={{ background: 'rgba(255,255,255,0.13)', color: '#be185d', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>readonly</b>는 불변 데이터(API 응답 등)에, <b>?</b>는 선택적 필드에 사용하세요.</span>
           </div>
         </div>
         {/* 5. 함수 타입 */}
-        <div style={{ ...stateExampleBlockStyle, background: 'linear-gradient(120deg, #6ee7b7 60%, #3b82f6 100%)', color: '#232323', boxShadow: '0 2px 16px #6ee7b744', border: 'none', marginBottom: 40 }}>
-          <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#232323', letterSpacing: '-0.5px' }}>5. 함수 타입 (Function Types)</Typography>
+        <div style={{ ...stateExampleBlockStyle, background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', marginBottom: 40 }}>
+          <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff', letterSpacing: '-0.5px' }}>5. 함수 타입 (Function Types)</Typography>
           <Typography sx={{ mb: 2, color: '#0e7490', fontSize: 17, fontWeight: 500 }}>함수의 매개변수, 반환값 타입을 명시할 수 있습니다.</Typography>
           <ExampleTab
             example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>함수 선언/화살표 함수/void</li></ul>}
             code={`function add(a: number, b: number): number {\n  return a + b;\n}\nconst greet = (name: string): string => \`Hello, \\${name}\`;\nfunction print(msg: string): void {\n  console.log(msg);\n}`}
             desc={`실무에서는 콜백, API 핸들러, 이벤트 핸들러 등에서 함수 타입을 명확히 지정하세요.`}
           />
-          <div style={{ background: 'rgba(255,255,255,0.13)', color: '#0e7490', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>void</b>는 반환값이 없는 함수, <b>함수 타입 별칭</b>은 콜백/이벤트 핸들러에 자주 사용됩니다.</span>
           </div>
         </div>
         {/* 6. 타입 별칭 & 인터페이스 */}
-        <div style={{ ...stateExampleBlockStyle, background: 'linear-gradient(120deg, #fbbf24 60%, #3b82f6 100%)', color: '#232323', boxShadow: '0 2px 16px #fbbf2444', border: 'none', marginBottom: 40 }}>
-          <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#232323', letterSpacing: '-0.5px' }}>6. 타입 별칭 & 인터페이스</Typography>
+        <div style={{ ...stateExampleBlockStyle, background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', marginBottom: 40 }}>
+          <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff', letterSpacing: '-0.5px' }}>6. 타입 별칭 & 인터페이스</Typography>
           <Typography sx={{ mb: 2, color: '#b45309', fontSize: 17, fontWeight: 500 }}>type은 타입 별칭, interface는 구조적 타입 정의에 사용합니다.</Typography>
           <ExampleTab
             example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>type User = {'{ name: string; age: number }'}</li><li>interface Product {'{ id: number; name: string; price: number; }'}</li></ul>}
             code={`type User = { name: string; age: number };\ninterface Product { id: number; name: string; price: number; }\ninterface Book extends Product { author: string; }`}
             desc={`실무에서는 API 응답, 폼 데이터, 상태 관리 등에서 타입 별칭과 인터페이스를 적절히 조합해 사용하세요.`}
           />
-          <div style={{ background: 'rgba(255,255,255,0.13)', color: '#b45309', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>interface</b>는 확장/구조화, <b>type</b>은 유니언/인터섹션 등 복합 타입에 강점이 있습니다.</span>
           </div>
         </div>
         {/* 7. 유니언 & 인터섹션 타입 */}
-        <div style={{ ...stateExampleBlockStyle, background: 'linear-gradient(120deg, #3b82f6 60%, #a78bfa 100%)', color: '#fff', boxShadow: '0 2px 16px #3b82f644', border: 'none', marginBottom: 40 }}>
+        <div style={{ ...stateExampleBlockStyle, background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', marginBottom: 40 }}>
           <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff', letterSpacing: '-0.5px' }}>7. 유니언 & 인터섹션 타입</Typography>
           <Typography sx={{ mb: 2, color: '#e0e7ff', fontSize: 17, fontWeight: 500 }}>유니언(|)은 여러 타입 중 하나, 인터섹션(&)은 여러 타입을 모두 만족하는 타입입니다.</Typography>
           <ExampleTab
@@ -891,38 +891,38 @@ export const sections: Record<SectionId, Section> = {
             code={`let value: string | number = "hello";\ntype Admin = { admin: true };\ntype Member = { member: true };\ntype AdminMember = Admin & Member;`}
             desc={`실무에서는 API 응답, 폼 상태, 상태머신 등에서 유니언/인터섹션 타입을 적극 활용하세요.`}
           />
-          <div style={{ background: 'rgba(255,255,255,0.13)', color: '#e0e7ff', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>Discriminated Union</b> 패턴은 상태머신, 폼 검증 등에서 매우 유용합니다.</span>
           </div>
         </div>
         {/* 8. 리터럴 타입 & enum */}
-        <div style={{ ...stateExampleBlockStyle, background: 'linear-gradient(120deg, #fbbf24 60%, #6ee7b7 100%)', color: '#232323', boxShadow: '0 2px 16px #fbbf2444', border: 'none', marginBottom: 40 }}>
-          <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#232323', letterSpacing: '-0.5px' }}>8. 리터럴 타입 & enum</Typography>
+        <div style={{ ...stateExampleBlockStyle, background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', marginBottom: 40 }}>
+          <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff', letterSpacing: '-0.5px' }}>8. 리터럴 타입 & enum</Typography>
           <Typography sx={{ mb: 2, color: '#b45309', fontSize: 17, fontWeight: 500 }}>리터럴 타입은 값 자체를 타입으로, enum은 상수 집합을 정의합니다.</Typography>
           <ExampleTab
             example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>direction: "left" | "right" | "up" | "down"</li><li>enum Color {'{ Red = 1, Green = 2, Blue = 4 }'}</li></ul>}
             code={`let direction: "left" | "right" | "up" | "down";\nenum Color { Red = 1, Green = 2, Blue = 4 }\nlet c: Color = Color.Green;`}
             desc={`실무에서는 API 응답 코드, 상태값 등에서 리터럴 타입과 enum을 적극 활용하세요.`}
           />
-          <div style={{ background: 'rgba(255,255,255,0.13)', color: '#b45309', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>enum</b> 대신 <b>as const</b> 객체+keyof 패턴도 많이 사용합니다.</span>
           </div>
         </div>
         {/* 9. 타입 추론 & 단언 */}
-        <div style={{ ...stateExampleBlockStyle, background: 'linear-gradient(120deg, #6ee7b7 60%, #a78bfa 100%)', color: '#232323', boxShadow: '0 2px 16px #6ee7b744', border: 'none', marginBottom: 40 }}>
-          <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#232323', letterSpacing: '-0.5px' }}>9. 타입 추론 & 타입 단언</Typography>
+        <div style={{ ...stateExampleBlockStyle, background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', marginBottom: 40 }}>
+          <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff', letterSpacing: '-0.5px' }}>9. 타입 추론 & 타입 단언</Typography>
           <Typography sx={{ mb: 2, color: '#0e7490', fontSize: 17, fontWeight: 500 }}>타입 추론은 변수 선언 시 타입을 자동으로 결정, 단언(as)은 개발자가 타입을 보장할 때 사용합니다.</Typography>
           <ExampleTab
             example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>let msg = "hello"; // string으로 추론</li><li>as 키워드로 단언</li></ul>}
             code={`let msg = "hello"; // string으로 추론\nlet el = document.querySelector("input") as HTMLInputElement;`}
             desc={`실무에서는 API 응답, DOM 조작 등에서 타입 단언(as)을 자주 사용합니다.`}
           />
-          <div style={{ background: 'rgba(255,255,255,0.13)', color: '#0e7490', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>타입 단언</b>은 정말 확실할 때만 사용하세요. 남용하면 런타임 오류 위험!</span>
           </div>
         </div>
         {/* 10. 제네릭 */}
-        <div style={{ ...stateExampleBlockStyle, background: 'linear-gradient(120deg, #a78bfa 60%, #3a8dde 100%)', color: '#fff', boxShadow: '0 2px 16px #a78bfa44', border: 'none', marginBottom: 40 }}>
+        <div style={{ ...stateExampleBlockStyle, background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', marginBottom: 40 }}>
           <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff', letterSpacing: '-0.5px' }}>10. 제네릭 (Generics)</Typography>
           <Typography sx={{ mb: 2, color: '#e0e7ff', fontSize: 17, fontWeight: 500 }}>제네릭은 타입을 파라미터화해 재사용성과 타입 안전성을 높입니다.</Typography>
           <ExampleTab
@@ -930,25 +930,25 @@ export const sections: Record<SectionId, Section> = {
             code={`function identity<T>(arg: T): T { return arg; }\nconst output = identity<number>(123);\ninterface Box<T> { value: T; }\nconst box: Box<string> = { value: "abc" };\ntype Nullable<T> = T | null;`}
             desc={`실무에서는 API 응답 타입, 상태관리 라이브러리, 폼 라이브러리 등에서 제네릭을 적극 활용합니다.`}
           />
-          <div style={{ background: 'rgba(255,255,255,0.13)', color: '#e0e7ff', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>제네릭</b>은 타입 재사용성과 확장성의 핵심입니다. <b>extends</b>로 제약을 줄 수도 있습니다.</span>
           </div>
         </div>
         {/* 11. 유틸리티 타입 */}
-        <div style={{ ...stateExampleBlockStyle, background: 'linear-gradient(120deg, #3a8dde 60%, #fbbf24 100%)', color: '#232323', boxShadow: '0 2px 16px #3a8dde44', border: 'none', marginBottom: 40 }}>
-          <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#232323', letterSpacing: '-0.5px' }}>11. 유틸리티 타입 (Utility Types)</Typography>
+        <div style={{ ...stateExampleBlockStyle, background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', marginBottom: 40 }}>
+          <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff', letterSpacing: '-0.5px' }}>11. 유틸리티 타입 (Utility Types)</Typography>
           <Typography sx={{ mb: 2, color: '#0e7490', fontSize: 17, fontWeight: 500 }}>유틸리티 타입은 기존 타입을 변형하거나 부분 집합을 만들 때 유용합니다.</Typography>
           <ExampleTab
             example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>Partial, Readonly, Pick, Omit, Record 등</li><li>실전: API 응답, 폼, 상태관리 등에서 활용</li></ul>}
             code={`type User = { name: string; age: number };\ntype PartialUser = Partial<User>;\ntype ReadonlyUser = Readonly<User>;\ntype NameOnly = Pick<User, "name">;\ntype UserWithoutAge = Omit<User, "age">;\ntype Scores = Record<"kor" | "eng" | "math", number>;\nconst scores: Scores = { kor: 90, eng: 80, math: 100 };`}
             desc={`실무에서는 API 응답 타입 가공, 폼 상태, 부분 업데이트 등에서 유틸리티 타입을 적극 활용합니다.`}
           />
-          <div style={{ background: 'rgba(255,255,255,0.13)', color: '#0e7490', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>Pick</b>, <b>Omit</b> 등은 대규모 타입 관리에 필수입니다.</span>
           </div>
         </div>
         {/* 12. 타입 가드 */}
-        <div style={{ ...stateExampleBlockStyle, background: 'linear-gradient(120deg, #f472b6 60%, #3a8dde 100%)', color: '#fff', boxShadow: '0 2px 16px #f472b644', border: 'none', marginBottom: 40 }}>
+        <div style={{ ...stateExampleBlockStyle, background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', marginBottom: 40 }}>
           <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff', letterSpacing: '-0.5px' }}>12. 타입 가드 (Type Guard)</Typography>
           <Typography sx={{ mb: 2, color: '#fce7f3', fontSize: 17, fontWeight: 500 }}>타입 가드는 런타임에 타입을 좁혀 안전하게 사용할 수 있게 합니다.</Typography>
           <ExampleTab
@@ -956,12 +956,12 @@ export const sections: Record<SectionId, Section> = {
             code={`function isString(x: unknown): x is string {\n  return typeof x === "string";\n}\nfunction printId(id: number | string) {\n  if (typeof id === "string") {\n    console.log(id.toUpperCase());\n  } else {\n    console.log(id.toFixed(2));\n  }\n}`}
             desc={`실무에서는 런타임 타입 체크, 폼 검증, API 응답 파싱 등에서 타입 가드를 적극 활용합니다.`}
           />
-          <div style={{ background: 'rgba(255,255,255,0.13)', color: '#fce7f3', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>is</b> 키워드로 커스텀 타입가드를 만들어 활용하세요.</span>
           </div>
         </div>
         {/* 13. 고급 타입 */}
-        <div style={{ ...stateExampleBlockStyle, background: 'linear-gradient(120deg, #232323 60%, #3a8dde 100%)', color: '#fff', boxShadow: '0 2px 16px #23232344', border: 'none', marginBottom: 40 }}>
+        <div style={{ ...stateExampleBlockStyle, background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', marginBottom: 40 }}>
           <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff', letterSpacing: '-0.5px' }}>13. 고급 타입</Typography>
           <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>맵드 타입, 조건부 타입, keyof, as const, Discriminated Union 등 실전에서 자주 쓰는 고급 타입 패턴입니다.</Typography>
           <ExampleTab
@@ -969,7 +969,7 @@ export const sections: Record<SectionId, Section> = {
             code={`type Optional<T> = { [P in keyof T]?: T[P] };\ntype IsString<T> = T extends string ? true : false;\ntype User = { id: number; name: string };\ntype UserKey = keyof User; // "id" | "name"\ntype UserId = User["id"]; // number\ntype T = string | null | undefined;\ntype NonNullT = NonNullable<T>; // string\ntype Shape =\n  | { kind: "circle"; radius: number }\n  | { kind: "square"; size: number };\nfunction getArea(shape: Shape): number {\n  switch (shape.kind) {\n    case "circle":\n      return Math.PI * shape.radius ** 2;\n    case "square":\n      return shape.size ** 2;\n  }\n}\nconst arr = [1, 2, 3] as const;\ntype ArrType = typeof arr; // [1, 2, 3]`}
             desc={`실무에서는 대규모 타입 설계, 상태머신, 런타임 검증 등에서 고급 타입 패턴을 적극 활용합니다.`}
           />
-          <div style={{ background: 'rgba(255,255,255,0.13)', color: '#8fd', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>Discriminated Union</b> + <b>as const</b> 패턴은 복잡한 상태 관리에 매우 강력합니다.</span>
           </div>
         </div>
@@ -1032,7 +1032,7 @@ export const sections: Record<SectionId, Section> = {
             code={`function Welcome(props) {\n  return <h1>Hello, {props.name}!</h1>;\n}`}
             desc={`함수형 컴포넌트는 가장 기본적인 React 컴포넌트 작성 방식입니다.\nprops를 받아서 JSX를 반환하며, 재사용성과 테스트가 용이합니다.`}
           />
-        </div>
+          </div>
         <div style={stateExampleBlockStyle}>
           <Typography variant="h6" sx={{ mb: 2 }}>2. JSX</Typography>
           <ExampleTab
@@ -1048,7 +1048,7 @@ export const sections: Record<SectionId, Section> = {
             code={`function Hello() {\n  return <div>안녕하세요!<\/div>;\n}`}
             desc={`간단한 함수형 컴포넌트 예제입니다.\nHello 컴포넌트는 항상 동일한 인사말을 반환합니다.`}
           />
-        </div>
+          </div>
         <div style={stateExampleBlockStyle}>
           <Typography variant="h6" sx={{ mb: 2 }}>4. props와 조건부 렌더링 (Props & Conditional Rendering)</Typography>
           <ExampleTab
@@ -1064,7 +1064,7 @@ export const sections: Record<SectionId, Section> = {
             code={`import { useState } from 'react';\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  return (\n    <div>\n      <button onClick={() => setCount(count - 1)}>-</button>\n      <span style={{margin: '0 1em'}}>{count}</span>\n      <button onClick={() => setCount(count + 1)}>+</button>\n    </div>\n  );\n}`}
             desc={`useState로 상태를 관리하고, 버튼 클릭 이벤트로 값을 증감시키는 카운터 예제입니다.\nReact의 상태 관리와 이벤트 처리의 기본을 보여줍니다.`}
           />
-        </div>
+          </div>
         <div style={stateExampleBlockStyle}>
           <Typography variant="h6" sx={{ mb: 2 }}>6. 리스트 필터링 & 동적 렌더링 (List Filtering & Dynamic Rendering)</Typography>
           <ExampleTab
@@ -2070,12 +2070,12 @@ npm start`}
 }`}
             desc={`배열의 map 메서드를 활용해 JSX에서 리스트를 동적으로 렌더링할 수 있습니다.\n- 각 항목에는 고유한 key 속성을 부여해야 합니다.`}
           />
-        </div>
+          </div>
         <div style={stateExampleBlockStyle}>
           <Typography variant="h6" sx={{ mb: 2 }}>5. JSX에서 props와 컴포넌트 합성 (Props & Composition)</Typography>
           <ExampleTab
             example={<JSXCompositionDemo />}
-            code={`function Welcome(props) {\n  return <h3>안녕하세요, {props.name}님!</h3>;\n}\nfunction JSXCompositionDemo() {\n  return (\n    <div>\n      <Welcome name=\"홍길동\" />\n      <Welcome name=\"React\" />\n    </div>\n  );\n}`}
+            code={`function Welcome(props: { name: string }) {\n  return <h3>안녕하세요, {props.name}님!</h3>;\n}\nfunction JSXCompositionDemo() {\n  return (\n    <div>\n      <Welcome name=\"홍길동\" />\n      <Welcome name=\"React\" />\n    </div>\n  );\n}`}
             desc={`JSX에서는 컴포넌트를 태그처럼 사용하고, props로 데이터를 전달할 수 있습니다.\n- 컴포넌트 합성, 재사용, 동적 렌더링의 핵심 패턴입니다.`}
           />
         </div>
@@ -2093,7 +2093,7 @@ npm start`}
 }`}
             desc={`JSX에서 &&(AND) 연산자를 사용하면 조건이 true일 때만 요소를 렌더링할 수 있습니다.\n- false일 경우 아무것도 렌더링되지 않습니다.`}
           />
-        </div>
+          </div>
         <div style={stateExampleBlockStyle}>
           <Typography variant="h6" sx={{ mb: 2 }}>7. 조건부로 null 반환 (Return null)</Typography>
           <ExampleTab
@@ -2138,7 +2138,7 @@ npm start`}
 }`}
             desc={`리스트 안에 또 다른 리스트를 중첩해 렌더링할 수 있습니다.\n- 각 map의 key 속성에 주의하세요.`}
           />
-        </div>
+          </div>
         <div style={stateExampleBlockStyle}>
           <Typography variant="h6" sx={{ mb: 2 }}>9. key 속성 주의 (Key Warning)</Typography>
           <ExampleTab
@@ -2153,7 +2153,7 @@ npm start`}
           {item}
         </span>
       ))}
-    </div>
+        </div>
   );
 }`}
             desc={`key는 리스트 항목의 고유성을 보장해야 합니다.\n- index를 key로 쓰면 항목 순서 변경 시 React가 제대로 감지하지 못할 수 있습니다.`}
@@ -2217,7 +2217,7 @@ ReactDOM.render(<h1>Hello</h1>, document.getElementById('root'));
             desc={`- 직접 DOM을 조작하면 React의 상태/렌더링 흐름과 어긋날 수 있음
 - Virtual DOM은 상태 변화 → 가상 트리 → diff → 실제 DOM 반영의 흐름을 자동화`}
           />
-        </div>
+          </div>
         <div style={stateExampleBlockStyle}>
           <Typography variant="h6" sx={{ mb: 2 }}>3. Virtual DOM diffing 실습</Typography>
           <ExampleTab
@@ -3180,8 +3180,7 @@ function JSXConditionalDemo() {
   const isLoggedIn = true;
   return (
       <div>
-      {isLoggedIn ? <span>환영합니다!</span> : <span>로그인 해주세요.</span>}
-      </div>
+      {isLoggedIn ? <span>환영합니다!</span> : <span>로그인 해주세요.</span>}\n    </div>
   );
 }
 function JSXListDemo() {
