@@ -1210,6 +1210,42 @@ const mockUser: User = { id: '1', name: '홍길동' };`}
     <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>any</b>는 반드시 TODO와 함께, 타입 추론 꼬이면 중간 변수로 분리!</span>
   </div>
 </div>
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>15. 타입스크립트와 모노레포/패키지 관리</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>pnpm, turborepo, 프로젝트 레퍼런스 등으로 대규모 모노레포에서 타입을 안전하게 관리하는 실전 전략</Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>pnpm workspace, turborepo, tsconfig projectReferences</li><li>공통 타입 패키지 분리, cross-package 타입 공유</li></ul>}
+    code={`// pnpm-workspace.yaml\npackages:\n  - 'packages/*'\n// tsconfig.json (projectReferences)\n{\n  "references": [ { "path": "../common-types" } ]\n}`}
+    desc={`모노레포에서는 공통 타입 패키지 분리, 프로젝트 레퍼런스, workspace 관리로 타입 일관성과 빌드 효율을 높이세요.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>pnpm</b> + <b>projectReferences</b> 조합이 대규모에 강력!</span>
+  </div>
+</div>
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>16. 타입스크립트와 프론트엔드 프레임워크 실전 차이점</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>React, Vue, Svelte 등 주요 프론트엔드 프레임워크에서 타입스크립트 적용 실전 차이점</Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>React: JSX, Props/State 타입, 제네릭 컴포넌트</li><li>Vue: SFC, defineProps, Volar</li><li>Svelte: d.ts, 타입 추론</li></ul>}
+    code={`// React 컴포넌트 타입\ninterface Props { name: string }\nfunction Hello({ name }: Props) { return <div>Hello, {name}</div>; }\n// Vue SFC\n<script lang="ts">\ndefineProps<{ name: string }>()\n<\/script>\n// Svelte\n<script lang="ts">\nexport let name: string;\n<\/script>`}
+    desc={`프레임워크별 타입 선언 방식, 도구, 추론 방식이 다르므로 공식 가이드와 실전 사례를 참고하세요.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>Volar</b>(Vue), <b>Svelte d.ts</b> 등 프레임워크별 타입 도구를 적극 활용!</span>
+  </div>
+</div>
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>17. 타입스크립트와 국제화(i18n) 실전 적용</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>타입 안전 다국어(i18n) 구현, 번역 키 자동완성, 실전 적용 사례</Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>i18next, react-i18next, 번역 키 타입 자동화</li><li>타입 안전 번역 함수</li></ul>}
+    code={`// 번역 키 타입 자동화\ntype TranslationKeys = 'home.title' | 'home.desc' | 'user.name';\nfunction t(key: TranslationKeys): string { ... }\n// i18next 사용 예시\nimport { useTranslation } from 'react-i18next';\nconst { t } = useTranslation();\nt('home.title');`}
+    desc={`번역 키를 타입으로 관리하면 오타/누락을 방지하고, 대규모 다국어 프로젝트에서 생산성을 높일 수 있습니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: 번역 키를 <b>타입</b>으로 관리하면 오타/누락 방지!</span>
+  </div>
+</div>
 
     </div>
   ),
