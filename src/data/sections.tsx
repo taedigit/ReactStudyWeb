@@ -976,7 +976,7 @@ export const sections: Record<SectionId, Section> = {
       </div>
     ),
   },
-  // ...typescript 섹션 끝난 직후에 추가...
+  
 typescriptadvanced: {
   id: 'typescriptadvanced',
   title: 'TypeScript 실전/심화',
@@ -988,20 +988,90 @@ typescriptadvanced: {
   content: (
     <div style={{ padding: '2.5em 0', background: '#23272f', borderRadius: 20, color: '#eaeaea', boxShadow: '0 6px 32px #0003', maxWidth: 950, margin: '0 auto', fontFamily: 'Pretendard, Noto Sans KR, sans-serif' }}>
       <div style={{ fontSize: 38, fontWeight: 900, marginBottom: 32, color: '#8fd', letterSpacing: '-1px', textShadow: '0 2px 12px #0006' }}>TypeScript 실전/심화 가이드</div>
-      {/* 1. 모노레포/대규모 프로젝트 구조 */}
+
+      {/* 1. 타입 안전한 API 통신 */}
       <div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
-        <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>1. 모노레포/대규모 프로젝트 구조</Typography>
-        <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>실제 기업/팀에서 사용하는 폴더 구조, 타입 공유 전략, tsconfig paths, 프로젝트 레퍼런스 활용법</Typography>
+        <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>1. 타입 안전한 API 통신</Typography>
+        <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>fetch/axios 등에서 타입을 안전하게 사용하는 실전 패턴과 런타임 타입 검증</Typography>
         <ExampleTab
-          example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>packages/common-types, packages/app, packages/api 등</li><li>tsconfig.base.json, path alias, 프로젝트 레퍼런스</li></ul>}
-          code={`// packages/common-types/user.ts\nexport interface User { id: string; name: string; }\n\n// packages/app/tsconfig.json\n{\n  "extends": "../../tsconfig.base.json",\n  "compilerOptions": {\n    "baseUrl": ".",\n    "paths": { "@types/*": ["../common-types/*"] }\n  },\n  "references": [ { "path": "../common-types" } ]\n}`}
-          desc={`공통 타입 패키지 분리, path alias, 프로젝트 레퍼런스 활용으로 대규모 협업/유지보수 효율 극대화`}
+          example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>API 응답 타입 선언</li><li>Zod/Yup 등으로 런타임 검증</li></ul>}
+          code={`import axios from 'axios';\nimport { z } from 'zod';\nconst UserSchema = z.object({ id: z.string(), name: z.string() });\nasync function fetchUser(id: string) {\n  const res = await axios.get('/api/user/' + id);\n  return UserSchema.parse(res.data); // 런타임 검증\n}`}
+          desc={`API 응답을 타입만 믿지 말고, 런타임 검증(zod 등)으로 안전성을 높이세요.`}
         />
         <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>공통 타입</b>은 별도 패키지로 분리, <b>tsconfig paths</b>로 import 경로를 짧게 관리하세요.</span>
+          <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>zod</b> 등으로 런타임 검증을 반드시 추가!</span>
         </div>
       </div>
-      {/* ...이하 2~10번 카드(위 답변 참고) 동일하게 추가... */}
+
+      {/* 2. 대규모 프로젝트 타입 설계 전략 */}
+      <div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+        <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>2. 대규모 프로젝트 타입 설계 전략</Typography>
+        <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>공통 타입 분리, 모듈화, tsconfig paths, 프로젝트 레퍼런스 등 실전 설계 전략</Typography>
+        <ExampleTab
+          example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>공통 타입 패키지 분리</li><li>tsconfig paths, 프로젝트 레퍼런스</li></ul>}
+          code={`// packages/common-types/user.ts\nexport interface User { id: string; name: string; }\n// tsconfig.json\n{\n  "compilerOptions": {\n    "baseUrl": ".",\n    "paths": { "@types/*": ["../common-types/*"] }\n  },\n  "references": [ { "path": "../common-types" } ]\n}`}
+          desc={`공통 타입을 별도 패키지로 분리하고, path alias로 관리하면 협업/유지보수성이 크게 향상됩니다.`}
+        />
+        <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>공통 타입</b>은 별도 패키지로 분리, <b>tsconfig paths</b>로 import 경로를 짧게!</span>
+        </div>
+      </div>
+
+      {/* 3. 타입스크립트와 상태관리 */}
+      <div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+        <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>3. 타입스크립트와 상태관리</Typography>
+        <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>Redux, Zustand, Jotai 등 상태관리 라이브러리와 타입스크립트 실전 활용</Typography>
+        <ExampleTab
+          example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>Redux Toolkit, Zustand, Jotai 등에서 타입 선언</li><li>상태 셀렉터, 액션, 미들웨어 타입화</li></ul>}
+          code={`// Redux Toolkit 예시\nimport { createSlice, PayloadAction } from '@reduxjs/toolkit';\ninterface CounterState { value: number }\nconst initialState: CounterState = { value: 0 };\nconst counterSlice = createSlice({\n  name: 'counter',\n  initialState,\n  reducers: {\n    increment(state) { state.value += 1; },\n    add(state, action: PayloadAction<number>) { state.value += action.payload; }\n  }\n});`}
+          desc={`상태관리 라이브러리의 모든 상태/액션/미들웨어에 타입을 명확히 지정하세요.`}
+        />
+        <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>Redux Toolkit</b>은 타입 추론이 매우 강력!</span>
+        </div>
+      </div>
+
+      {/* 4. 타입스크립트와 폼/유효성검사 */}
+      <div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+        <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>4. 타입스크립트와 폼/유효성검사</Typography>
+        <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>React Hook Form, Zod, Yup 등과 결합한 타입 안전 폼 구현</Typography>
+        <ExampleTab
+          example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>폼 입력값 타입 선언</li><li>zod/yup으로 폼 유효성검사</li></ul>}
+          code={`import { useForm } from 'react-hook-form';\nimport { zodResolver } from '@hookform/resolvers/zod';\nimport { z } from 'zod';\nconst schema = z.object({ email: z.string().email(), age: z.number().min(0) });\nfunction MyForm() {\n  const { register, handleSubmit } = useForm({ resolver: zodResolver(schema) });\n  return <form onSubmit={handleSubmit(data => console.log(data))}>...</form>;\n}`}
+          desc={`폼 입력값과 유효성검사 모두 타입으로 안전하게 관리하세요.`}
+        />
+        <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>zodResolver</b>로 타입과 유효성검사를 한 번에!</span>
+        </div>
+      </div>
+
+      {/* 5. 타입스크립트 트러블슈팅/디버깅 */}
+      <div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+        <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>5. 타입스크립트 트러블슈팅/디버깅</Typography>
+        <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>실무에서 자주 만나는 타입 에러, 추론 문제, 디버깅 노하우</Typography>
+        <ExampleTab
+          example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>as const, satisfies, 타입 단언</li><li>타입 추론 확인, 에러 메시지 해석</li></ul>}
+          code={`// 타입 추론 확인\nfunction printId(id: number | string) {\n  if (typeof id === 'string') {\n    console.log(id.toUpperCase());\n  } else {\n    console.log(id.toFixed(2));\n  }\n}\n// satisfies 활용\nconst user = { id: '1', name: '홍길동' } satisfies { id: string; name: string };`}
+          desc={`타입 추론이 원하는 대로 동작하지 않을 때는 as const, satisfies, 타입 단언 등을 적극 활용하세요.`}
+        />
+        <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>타입 추론</b>이 꼬이면, 중간 변수/타입 단언으로 명확히!</span>
+        </div>
+      </div>
+
+      {/* 6. 최신 TS 트렌드/미래 */}
+      <div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+        <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>6. 최신 TS 트렌드/미래</Typography>
+        <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>TypeScript 5.x의 주요 신기능, satisfies, const type parameter 등 최신 트렌드</Typography>
+        <ExampleTab
+          example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>satisfies, const type parameter, vercel/ts-pattern 등</li><li>타입 인퍼런스, 타입 안전성 강화</li></ul>}
+          code={`// satisfies 연산자 (TS 4.9+)\nconst user = { id: '1', name: '홍길동' } satisfies { id: string; name: string };\n// const type parameter (TS 5.0+)\nfunction fill<T, const N extends number>(arr: T, n: N): T[] { return Array(n).fill(arr); }\n// ts-pattern 활용 예시\nimport { match } from 'ts-pattern';\nconst result = match({ type: 'A', value: 1 })\n  .with({ type: 'A' }, x => x.value)\n  .otherwise(() => 0);`}
+          desc={`최신 TS 기능을 적극 도입하면, 타입 안전성과 생산성을 동시에 높일 수 있습니다.`}
+        />
+        <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>satisfies</b>, <b>const type parameter</b> 등 최신 문법을 적극 활용하세요.</span>
+        </div>
+      </div>
     </div>
   ),
 },
@@ -3229,7 +3299,7 @@ function JSXListDemo() {
           {fruit}
         </span>
       ))}
-          </div>
+    </div>
   );
 }
 function JSXCompositionDemo() {
