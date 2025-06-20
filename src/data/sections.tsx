@@ -1400,6 +1400,33 @@ const mockUser: User = { id: '1', name: '홍길동' };`}
     </div>
   ),
 },
+typescriptdeep: {
+  id: 'typescriptdeep',
+  title: 'TypeScript 타입 시스템 심화',
+  description: '타입스크립트의 타입 시스템을 깊이 있게 다루는 고급 심화 강의',
+  category: 'basics',
+  icon: '🧠',
+  prev: 'typescriptadvanced',
+  next: 'bundlers',
+  content: (
+    <div style={{ padding: '2.5em 0', background: '#23272f', borderRadius: 20, color: '#eaeaea', boxShadow: '0 6px 32px #0003', maxWidth: 950, margin: '0 auto', fontFamily: 'Pretendard, Noto Sans KR, sans-serif' }}>
+      <div style={{ fontSize: 38, fontWeight: 900, marginBottom: 32, color: '#8fd', letterSpacing: '-1px', textShadow: '0 2px 12px #0006' }}>TypeScript 타입 시스템 심화</div>
+      <div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+        <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>1. 타입 레벨 프로그래밍</Typography>
+        <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>타입스크립트의 타입 연산, 조건부 타입, infer, 재귀적 타입 등 고급 패턴</Typography>
+        <ExampleTab
+          example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>Mapped Types, Conditional Types, infer, Template Literal Types</li></ul>}
+          code={`type DeepReadonly<T> = { readonly [K in keyof T]: DeepReadonly<T[K]> };\ntype IsString<T> = T extends string ? true : false;\ntype Unpacked<T> = T extends (infer U)[] ? U : T;`}
+          desc={`타입스크립트의 타입 시스템은 매우 강력하며, 복잡한 타입 연산도 가능하다.`}
+        />
+        <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>타입 레벨 유틸리티</b>를 직접 만들어보면 타입 시스템 이해가 깊어진다!</span>
+        </div>
+      </div>
+      {/* 추가 고급 카드들은 추후 확장 가능 */}
+    </div>
+  ),
+},
 // ...
   components: {
     id: 'components',
