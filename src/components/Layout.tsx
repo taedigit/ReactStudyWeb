@@ -22,6 +22,19 @@ function getDefaultOrder(categories: any) {
   return order;
 }
 
+// Define types for search results
+type SearchResult =
+  | { type: 'section'; section: Section }
+  | {
+      type: 'example';
+      sectionId: string;
+      sectionIcon: string;
+      sectionTitle: string;
+      exampleId: string;
+      exampleTitle: string;
+      exampleDescription: string;
+    };
+
 export const Layout = ({ children, currentSection, onSectionChange }: LayoutProps) => {
   // categories 객체는 매 렌더마다 새로 만들어지므로, 원본 sections에서만 사용
   const categories: Record<string, { title: string; sections: Section[] }> = {
@@ -71,7 +84,7 @@ export const Layout = ({ children, currentSection, onSectionChange }: LayoutProp
 
   // 헤더 검색 상태
   const [search, setSearch] = useState('');
-  const [searchResults, setSearchResults] = useState<Section[]>([]);
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -135,9 +148,39 @@ export const Layout = ({ children, currentSection, onSectionChange }: LayoutProp
       return;
     }
     const q = search.trim().toLowerCase();
-    const results = Object.values(allSections).filter(
-      s => s.title.toLowerCase().includes(q) || s.description.toLowerCase().includes(q)
-    ).slice(0, 10);
+    // Section-level results
+    const sectionResults = Object.values(allSections).filter(
+      s => s.title.toLowerCase().includes(q) ||
+        s.description.toLowerCase().includes(q) ||
+        (s.tags && s.tags.some(tag => tag.toLowerCase().includes(q)))
+    );
+    // Example-level results
+    const exampleResults: any[] = [];
+    Object.values(allSections).forEach(section => {
+      if (section.examples && Array.isArray(section.examples)) {
+        section.examples.forEach(example => {
+          if (
+            (example.title && example.title.toLowerCase().includes(q)) ||
+            (example.description && example.description.toLowerCase().includes(q))
+          ) {
+            exampleResults.push({
+              type: 'example',
+              sectionId: section.id,
+              sectionIcon: section.icon,
+              sectionTitle: section.title,
+              exampleId: example.id,
+              exampleTitle: example.title,
+              exampleDescription: example.description
+            });
+          }
+        });
+      }
+    });
+    // Compose results: sections first, then examples
+    const results = [
+      ...sectionResults.map(s => ({ type: 'section', section: s })),
+      ...exampleResults
+    ].slice(0, 10);
     setSearchResults(results);
     setShowDropdown(results.length > 0);
   }, [search]);
@@ -147,15 +190,29 @@ export const Layout = ({ children, currentSection, onSectionChange }: LayoutProp
     setSearch('');
     setShowDropdown(false);
     onSectionChange(id as SectionId);
-    // 사이드바 해당 섹션으로 스크롤
+    // TODO: exampleId가 있으면 해당 예제로 스크롤/하이라이트
     setTimeout(() => {
       const ref = sidebarRefs.current[id];
       if (ref) {
         ref.scrollIntoView({ block: 'center', behavior: 'smooth' });
       }
-    }, 100); // 섹션 변경 후 렌더링 대기
+    }, 100);
     if (searchInputRef.current) searchInputRef.current.blur();
   };
+
+  useEffect(() => {
+    const handleTagSearch = (e: any) => {
+      if (typeof e.detail === 'string') {
+        setSearch(e.detail);
+        setShowDropdown(true);
+        setTimeout(() => {
+          if (searchInputRef.current) searchInputRef.current.focus();
+        }, 50);
+      }
+    };
+    window.addEventListener('sectionTagSearch', handleTagSearch);
+    return () => window.removeEventListener('sectionTagSearch', handleTagSearch);
+  }, []);
 
   return (
     <Box minH="100vh" width="90vw">
@@ -219,25 +276,52 @@ export const Layout = ({ children, currentSection, onSectionChange }: LayoutProp
                 minWidth: 220
               }}
             >
-              {searchResults.map(s => (
-                <div
-                  key={s.id}
-                  onMouseDown={() => handleResultClick(s.id)}
-                  style={{
-                    padding: '10px 16px',
-                    cursor: 'pointer',
-                    borderBottom: '1px solid #f2f2f2',
-                    fontSize: 15,
-                    color: '#222',
-                    background: currentSection === s.id ? '#e8f0fe' : 'transparent',
-                    fontWeight: currentSection === s.id ? 600 : 400
-                  }}
-                >
-                  <span style={{ marginRight: 8 }}>{s.icon}</span>
-                  <span>{s.title}</span>
-                  <span style={{ color: '#888', fontSize: 13, marginLeft: 8 }}>{s.description}</span>
-                </div>
-              ))}
+              {searchResults.map((item, idx) => {
+                if (item.type === 'section') {
+                  const s = item.section;
+                  return (
+                    <div
+                      key={idx}
+                      onMouseDown={() => handleResultClick(s.id)}
+                      style={{
+                        padding: '10px 16px',
+                        cursor: 'pointer',
+                        borderBottom: '1px solid #f2f2f2',
+                        fontSize: 15,
+                        color: '#222',
+                        background: currentSection === s.id ? '#e8f0fe' : 'transparent',
+                        fontWeight: currentSection === s.id ? 600 : 400
+                      }}
+                    >
+                      <span style={{ marginRight: 8 }}>{s.icon}</span>
+                      <span>{s.title}</span>
+                      <span style={{ color: '#888', fontSize: 13, marginLeft: 8 }}>{s.description}</span>
+                    </div>
+                  );
+                } else if (item.type === 'example') {
+                  return (
+                    <div
+                      key={idx}
+                      onMouseDown={() => handleResultClick(item.sectionId)}
+                      style={{
+                        padding: '10px 16px',
+                        cursor: 'pointer',
+                        borderBottom: '1px solid #f2f2f2',
+                        fontSize: 15,
+                        color: '#222',
+                        background: currentSection === item.sectionId ? '#e8f0fe' : 'transparent',
+                        fontWeight: currentSection === item.sectionId ? 600 : 400
+                      }}
+                    >
+                      <span style={{ marginRight: 8 }}>{item.sectionIcon}</span>
+                      <span style={{ fontWeight: 700 }}>{item.sectionTitle}</span>
+                      <span style={{ color: '#2563eb', fontWeight: 600, marginLeft: 8 }}>{item.exampleTitle}</span>
+                      <span style={{ color: '#888', fontSize: 13, marginLeft: 8 }}>{item.exampleDescription}</span>
+                    </div>
+                  );
+                }
+                return null;
+              })}
               {searchResults.length === 0 && (
                 <div style={{ padding: '10px 16px', color: '#888', fontSize: 15 }}>No results</div>
               )}

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Box, Heading, Text, Button, Stack } from '@chakra-ui/react'
+import { Box, Heading, Text, Button, Stack, Tag as CTag, TagLabel, HStack } from '@chakra-ui/react'
 import { Layout } from './components/Layout'
 import { sections } from './data/sections'
 import type { SectionId } from './types/section'
@@ -33,6 +33,12 @@ function App() {
 
   const currentSectionData = sections[currentSection];
 
+  // 태그 클릭 시 Layout의 검색창에 입력값을 전달하는 커스텀 이벤트
+  const handleTagClick = (tag: string) => {
+    const event = new CustomEvent('sectionTagSearch', { detail: tag });
+    window.dispatchEvent(event);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -48,6 +54,26 @@ function App() {
           <Box p={8}>
             {currentSectionData.content}
           </Box>
+
+          {/* 태그 바: 섹션에 tags가 있을 때만 표시 */}
+          {currentSectionData.tags && currentSectionData.tags.length > 0 && (
+            <Box px={8} py={3} borderTopWidth={1} bg="gray.50">
+              <HStack spacing={2} wrap="wrap">
+                {currentSectionData.tags.map(tag => (
+                  <CTag
+                    key={tag}
+                    size="md"
+                    variant="subtle"
+                    colorScheme="blue"
+                    cursor="pointer"
+                    onClick={() => handleTagClick(tag)}
+                  >
+                    <TagLabel>{`#${tag}`}</TagLabel>
+                  </CTag>
+                ))}
+              </HStack>
+            </Box>
+          )}
 
           <Box p={6} bg="gray.50" borderTopWidth={1}>
             <Stack direction="row" justify="space-between" gap={4}>

@@ -99,6 +99,7 @@ export interface Section {
     code: ReactNode;
     source?: string;
   }>;
+  tags?: string[];
   props?: ReactNode;
   state?: ReactNode;
   context?: ReactNode;
