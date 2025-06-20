@@ -785,13 +785,157 @@ export const sections: Record<SectionId, Section> = {
   },
   setup: {
     id: 'setup',
-    title: 'Setup',
-    description: 'React 개발 환경을 설정하는 방법을 알아봅니다.',
+    title: '설치',
+    description: 'React 개발 환경 설치 및 프로젝트 생성 방법',
     category: 'getting_started',
-    icon: '🛠️',
+    icon: '⚙️',
     prev: 'editors',
-    next: 'components',
+    next: 'typescript',
     content: setupContent,
+  },
+  typescript: {
+    id: 'typescript',
+    title: 'TypeScript 기초',
+    description: '타입스크립트의 기본 타입부터 고급 타입까지, 실전 예시와 함께 한 번에 익히기',
+    category: 'basics',
+    icon: '📘',
+    prev: 'setup',
+    next: 'bundlers',
+    content: (
+      <div style={{ color: '#eaeaea', background: '#23272f', borderRadius: 12, padding: '2em', margin: '2em 0' }}>
+        <h2>1. 기본 타입 (Primitive Types)</h2>
+        <h3>숫자 (number)</h3>
+        <pre><code>{`let age: number = 30;
+let price: number = 19.99;`}</code></pre>
+        <h3>문자열 (string)</h3>
+        <pre><code>{`let name: string = "홍길동";
+let greeting: string = \`Hello, \\${name}\`;`}</code></pre>
+        <h3>불리언 (boolean)</h3>
+        <pre><code>{`let isActive: boolean = true;`}</code></pre>
+        <h3>null, undefined</h3>
+        <pre><code>{`let n: null = null;
+let u: undefined = undefined;`}</code></pre>
+        <h2>2. 배열과 튜플</h2>
+        <h3>배열 (Array)</h3>
+        <pre><code>{`let numbers: number[] = [1, 2, 3];
+let fruits: Array<string> = ["apple", "banana"];`}</code></pre>
+        <h3>튜플 (Tuple)</h3>
+        <pre><code>{`let tuple: [string, number] = ["age", 30];`}</code></pre>
+        <h2>3. any, unknown, never</h2>
+        <h3>any</h3>
+        <pre><code>{`let anything: any = 123;
+anything = "문자열";`}</code></pre>
+        <h3>unknown</h3>
+        <pre><code>{`let value: unknown = "abc";
+if (typeof value === "string") {
+  console.log(value.toUpperCase());
+}`}</code></pre>
+        <h3>never</h3>
+        <pre><code>{`function error(msg: string): never {
+  throw new Error(msg);
+}`}</code></pre>
+        <h2>4. 객체 타입 (Object Types)</h2>
+        <h3>객체 리터럴</h3>
+        <pre><code>{`let user: { name: string; age: number } = {
+  name: "홍길동",
+  age: 20,
+};`}</code></pre>
+        <h3>선택적/읽기전용 프로퍼티</h3>
+        <pre><code>{`let user2: { name: string; age?: number } = { name: "철수" };
+let user3: { readonly id: number; name: string } = { id: 1, name: "영희" };`}</code></pre>
+        <h2>5. 함수 타입 (Function Types)</h2>
+        <h3>함수 선언/화살표 함수/void</h3>
+        <pre><code>{`function add(a: number, b: number): number {
+  return a + b;
+}
+const greet = (name: string): string => \`Hello, \\${name}\`;
+function print(msg: string): void {
+  console.log(msg);
+}`}</code></pre>
+        <h3>선택적/기본값/rest 파라미터</h3>
+        <pre><code>{`function log(message: string, user?: string) {
+  console.log(user ? \`[\${user}] \${message}\` : message);
+}
+function pow(x: number, y: number = 2): number {
+  return x ** y;
+}
+function sumAll(...nums: number[]): number {
+  return nums.reduce((a, b) => a + b, 0);
+}`}</code></pre>
+        <h2>6. 타입 별칭 & 인터페이스</h2>
+        <h3>타입 별칭(type) & 인터페이스(interface)</h3>
+        <pre><code>{`type User = { name: string; age: number };
+interface Product { id: number; name: string; price: number; }
+interface Book extends Product { author: string; }`}</code></pre>
+        <h3>함수 타입 인터페이스</h3>
+        <pre><code>{`interface Add { (a: number, b: number): number; }
+const add: Add = (a, b) => a + b;`}</code></pre>
+        <h2>7. 유니언 & 인터섹션 타입</h2>
+        <pre><code>{`let value: string | number = "hello";
+type Admin = { admin: true };
+type Member = { member: true };
+type AdminMember = Admin & Member;`}</code></pre>
+        <h2>8. 리터럴 타입 & enum</h2>
+        <pre><code>{`let direction: "left" | "right" | "up" | "down";
+enum Color { Red = 1, Green = 2, Blue = 4 }
+let c: Color = Color.Green;`}</code></pre>
+        <h2>9. 타입 추론 & 타입 단언</h2>
+        <pre><code>{`let msg = "hello"; // string으로 추론
+let el = document.querySelector("input") as HTMLInputElement;`}</code></pre>
+        <h2>10. 제네릭 (Generics)</h2>
+        <pre><code>{`function identity<T>(arg: T): T { return arg; }
+const output = identity<number>(123);
+interface Box<T> { value: T; }
+const box: Box<string> = { value: "abc" };
+type Nullable<T> = T | null;`}</code></pre>
+        <h2>11. 유틸리티 타입 (Utility Types)</h2>
+        <pre><code>{`type User = { name: string; age: number };
+type PartialUser = Partial<User>;
+type ReadonlyUser = Readonly<User>;
+type NameOnly = Pick<User, "name">;
+type UserWithoutAge = Omit<User, "age">;
+type Scores = Record<"kor" | "eng" | "math", number>;
+const scores: Scores = { kor: 90, eng: 80, math: 100 };`}</code></pre>
+        <h2>12. 타입 가드 (Type Guard)</h2>
+        <pre><code>{`function isString(x: unknown): x is string {
+  return typeof x === "string";
+}
+function printId(id: number | string) {
+  if (typeof id === "string") {
+    console.log(id.toUpperCase());
+  } else {
+    console.log(id.toFixed(2));
+  }
+}`}</code></pre>
+        <h2>13. 고급 타입</h2>
+        <h3>맵드 타입</h3>
+        <pre><code>{`type Optional<T> = { [P in keyof T]?: T[P] };`}</code></pre>
+        <h3>조건부 타입</h3>
+        <pre><code>{`type IsString<T> = T extends string ? true : false;`}</code></pre>
+        <h3>keyof, 인덱스드 액세스</h3>
+        <pre><code>{`type User = { id: number; name: string };
+type UserKey = keyof User; // "id" | "name"
+type UserId = User["id"]; // number`}</code></pre>
+        <h3>NonNullable</h3>
+        <pre><code>{`type T = string | null | undefined;
+type NonNullT = NonNullable<T>; // string`}</code></pre>
+        <h3>Discriminated Union</h3>
+        <pre><code>{`type Shape =
+  | { kind: "circle"; radius: number }
+  | { kind: "square"; size: number };
+function getArea(shape: Shape): number {
+  switch (shape.kind) {
+    case "circle":
+      return Math.PI * shape.radius ** 2;
+    case "square":
+      return shape.size ** 2;
+  }
+}`}</code></pre>
+        <h3>as const</h3>
+        <pre><code>{`const arr = [1, 2, 3] as const;
+type ArrType = typeof arr; // [1, 2, 3]`}</code></pre>
+      </div>
+    ),
   },
   components: {
     id: 'components',
@@ -2869,7 +3013,16 @@ const StyledButton = styled.button\`
 // --- Ant Design Demo Components ---
 function AntdModalDemo() {
   const [open, setOpen] = React.useState(false);
-  return <><Button onClick={() => setOpen(true)}>모달 열기</Button><AntdModal open={open} onCancel={() => setOpen(false)} onOk={() => setOpen(false)}>모달 내용입니다.</AntdModal></>;
+  return (
+    <div>
+      <Button type="primary" onClick={() => setOpen(true)}>
+        모달 열기
+      </Button>
+      <AntdModal open={open} onCancel={() => setOpen(false)} onOk={() => setOpen(false)}>
+        <p>Ant Design Modal 예제입니다.</p>
+      </AntdModal>
+    </div>
+  );
 }
 function AntdTableDemo() {
   const columns = [

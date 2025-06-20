@@ -4,6 +4,7 @@ export type SectionId =
   | 'intro' 
   | 'editors'
   | 'setup'
+  | 'typescript'
   | 'bundlers'
   | 'jsx'
   | 'vdom'
