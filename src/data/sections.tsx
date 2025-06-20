@@ -1174,6 +1174,42 @@ const mockUser: User = { id: '1', name: '홍길동' };`}
     <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>테스트용 Mock 데이터</b>도 타입 선언과 함께 관리하면 유지보수성이 크게 향상됩니다.</span>
   </div>
 </div>
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>12. 실전 GraphQL & 타입 자동화</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>GraphQL Codegen 등으로 API 타입을 자동 생성하고, 프론트/백엔드 타입을 동기화하는 실전 전략</Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>GraphQL Codegen으로 쿼리/응답 타입 자동화</li><li>API 타입 변경 시 자동 반영</li></ul>}
+    code={`# codegen.yml 예시\nschema: http://localhost:4000/graphql\ndocuments: src/**/*.graphql\ngenerates:\n  src/generated/graphql.tsx:\n    plugins:\n      - typescript\n      - typescript-operations\n      - typescript-react-apollo\n\n// 사용 예시\nimport { useGetUserQuery } from './generated/graphql';\nconst { data } = useGetUserQuery({ variables: { id: '1' } });`}
+    desc={`GraphQL Codegen을 활용하면 API 타입 변경이 프론트/백엔드에 자동 반영되어 타입 불일치 버그를 크게 줄일 수 있습니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>GraphQL Codegen</b>으로 쿼리/응답 타입을 자동화하세요.</span>
+  </div>
+</div>
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>13. 타입스크립트와 빌드/배포(최적화, tsc, tsup, swc 등)</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>tsc, tsup, swc 등 빌드 도구와 타입스크립트의 실전 활용 및 배포 최적화</Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>tsc --noEmit, tsup, swc, vite 등 빌드 도구</li><li>declaration 파일(d.ts) 생성, 빌드 최적화</li></ul>}
+    code={`// tsc 빌드 예시\n{\n  "compilerOptions": {\n    "declaration": true,\n    "outDir": "dist",\n    "module": "ESNext"\n  }\n}\n// tsup 사용 예시\n// npx tsup src/index.ts --dts\n// swc 사용 예시\n// npx swc src -d dist --copy-files`}
+    desc={`빌드 도구를 적절히 활용하면 타입 선언 파일(d.ts) 자동 생성, 빌드 속도/최적화, 배포 효율이 크게 향상됩니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>tsc --noEmit</b>으로 타입만 검사, <b>tsup/swc</b>로 빠른 빌드/배포 파이프라인 구축!</span>
+  </div>
+</div>
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>14. 실전 트러블슈팅 사례 모음</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>현업에서 자주 만나는 타입 꼬임, any 남용, 타입 추론 실패 등 실제 사례와 해결법</Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}><li>any 남용 → 타입 단언/정의로 해결</li><li>타입 추론 실패 → 중간 변수/명시적 타입 지정</li></ul>}
+    code={`// any 남용 사례\nfunction getData(): any { return fetch('/api').then(r => r.json()); }\n// 해결: 명확한 타입 선언\ninterface User { id: string; name: string; }\nfunction getUser(): Promise<User> { ... }\n\n// 타입 추론 실패 사례\nconst arr = []; arr.push(1); arr.push('a'); // (number | string)[]\n// 해결: const arr: number[] = [];`}
+    desc={`any 남용, 타입 추론 실패 등은 실무에서 매우 흔합니다. 명확한 타입 선언과 타입 단언, 중간 변수 활용 등으로 해결하세요.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>any</b>는 반드시 TODO와 함께, 타입 추론 꼬이면 중간 변수로 분리!</span>
+  </div>
+</div>
 
     </div>
   ),
