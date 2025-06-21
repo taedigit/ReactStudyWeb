@@ -1123,6 +1123,153 @@ el.addEventListener('click', (e: MouseEvent) => {
     <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>as HTMLButtonElement</b> 등으로 DOM 타입을 명확히!</span>
   </div>
 </div>
+{/* 23. Partial, Pick, Omit 등 유틸리티 타입 */}
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>23. Partial, Pick, Omit 등 유틸리티 타입</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+    타입스크립트 내장 유틸리티 타입(Partial, Pick, Omit, Readonly, Record 등)의 실전 활용법을 익힙니다.
+  </Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+      <li>Partial: 모든 속성을 optional로</li>
+      <li>Pick: 특정 속성만 선택</li>
+      <li>Omit: 특정 속성 제외</li>
+    </ul>}
+    code={`type User = { id: string; name: string; age: number };\ntype PartialUser = Partial<User>; // { id?: string; name?: string; age?: number }\ntype NameOnly = Pick<User, 'name'>; // { name: string }\ntype UserWithoutAge = Omit<User, 'age'>; // { id: string; name: string }`}
+    desc={`유틸리티 타입을 활용하면 반복되는 타입 선언을 줄이고, 실전에서 타입 설계가 훨씬 쉬워집니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>Omit</b>, <b>Partial</b>, <b>Pick</b> 등은 실전에서 매우 자주 사용!</span>
+  </div>
+</div>
+{/* 24. ReturnType, Parameters 등 함수 유틸리티 */}
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>24. ReturnType, Parameters 등 함수 유틸리티</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+    함수의 반환값, 파라미터 타입을 추출하는 ReturnType, Parameters, ConstructorParameters 등 함수 유틸리티 타입을 익힙니다.
+  </Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+      <li>ReturnType: 함수 반환 타입 추출</li>
+      <li>Parameters: 함수 파라미터 타입 추출</li>
+    </ul>}
+    code={`function getUser(id: string) { return { id, name: '홍길동' }; }\ntype UserReturn = ReturnType<typeof getUser>; // { id: string; name: string }\ntype UserParams = Parameters<typeof getUser>; // [id: string]`}
+    desc={`함수 유틸리티 타입을 활용하면, 함수 시그니처를 재사용하거나, 동적으로 타입을 추출할 수 있습니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>ReturnType</b>, <b>Parameters</b>로 함수 타입을 동적으로 추출!</span>
+  </div>
+</div>
+{/* 25. NonNullable, Exclude, Extract */}
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>25. NonNullable, Exclude, Extract</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+    유니언 타입에서 null/undefined를 제거(NonNullable), 특정 타입만 제외(Exclude), 특정 타입만 추출(Extract)하는 고급 유틸리티 타입을 익힙니다.
+  </Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+      <li>NonNullable: null/undefined 제거</li>
+      <li>Exclude: 특정 타입 제외</li>
+      <li>Extract: 특정 타입만 추출</li>
+    </ul>}
+    code={`type T = string | number | null | undefined;\ntype NotNull = NonNullable<T>; // string | number\ntype OnlyString = Extract<T, string>; // string\ntype NotString = Exclude<T, string>; // number | null | undefined`}
+    desc={`NonNullable, Exclude, Extract를 활용하면 유니언 타입을 세밀하게 제어할 수 있습니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>Exclude</b>, <b>Extract</b>로 유니언 타입을 세밀하게 제어!</span>
+  </div>
+</div>
+{/* 26. Readonly, Required, Record */}
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>26. Readonly, Required, Record</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+    객체의 모든 속성을 읽기전용(Readonly), 필수(Required)로 만들거나, Record로 객체 매핑 타입을 만드는 실전 패턴을 익힙니다.
+  </Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+      <li>Readonly: 모든 속성 읽기전용</li>
+      <li>Required: 모든 속성 필수</li>
+      <li>Record: 객체 매핑 타입</li>
+    </ul>}
+    code={`type User = { id: string; name?: string };\ntype ReadonlyUser = Readonly<User>; // 모든 속성 readonly\ntype RequiredUser = Required<User>; // 모든 속성 필수\ntype Score = Record<'kor' | 'eng', number>; // { kor: number; eng: number }`}
+    desc={`Readonly, Required, Record를 활용하면 객체 타입을 유연하게 변형할 수 있습니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>Record</b>로 객체 매핑 타입을 쉽게 생성!</span>
+  </div>
+</div>
+{/* 27. 타입 가드 실전(커스텀 is 함수) */}
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>27. 타입 가드 실전(커스텀 is 함수)</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+    커스텀 타입 가드(is 함수)를 직접 만들어 런타임에서 타입을 안전하게 판별하는 실전 패턴을 익힙니다.
+  </Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+      <li>is 키워드로 커스텀 타입가드</li>
+      <li>런타임 타입 체크</li>
+    </ul>}
+    code={`function isUser(obj: any): obj is { id: string } {\n  return obj && typeof obj.id === 'string';\n}\n\nconst data: unknown = { id: 'abc' };\nif (isUser(data)) {\n  // data는 { id: string } 타입으로 안전하게 사용 가능\n  console.log(data.id);\n}`}
+    desc={`커스텀 타입 가드를 활용하면, 런타임 타입 체크와 타입스크립트 타입 추론을 동시에 만족시킬 수 있습니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>is</b> 키워드로 커스텀 타입가드를 만들어 활용!</span>
+  </div>
+</div>
+{/* 28. Discriminated Union(태그드 유니언) */}
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>28. Discriminated Union(태그드 유니언)</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+    공통된 태그 필드를 가진 유니언 타입(Discriminated Union)으로 복잡한 상태/이벤트/응답 타입을 안전하게 설계하는 방법을 익힙니다.
+  </Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+      <li>kind/tag 필드로 분기</li>
+      <li>switch-case로 안전하게 처리</li>
+    </ul>}
+    code={`type Shape =\n  | { kind: 'circle'; radius: number }\n  | { kind: 'square'; size: number };\n\nfunction getArea(shape: Shape) {\n  switch (shape.kind) {\n    case 'circle': return Math.PI * shape.radius ** 2;\n    case 'square': return shape.size ** 2;\n  }\n}`}
+    desc={`Discriminated Union 패턴은 상태머신, 폼 검증, API 응답 등에서 매우 유용합니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>kind</b> 필드로 안전하게 분기!</span>
+  </div>
+</div>
+{/* 29. as const와 리터럴 타입 */}
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>29. as const와 리터럴 타입</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+    as const로 객체/배열을 리터럴 타입으로 고정하고, keyof/typeof와 조합해 자동완성/타입 안전성을 높이는 실전 패턴을 익힙니다.
+  </Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+      <li>as const로 리터럴 타입 고정</li>
+      <li>keyof/typeof와 조합</li>
+    </ul>}
+    code={`const COLORS = ['red', 'blue', 'green'] as const;\ntype Color = typeof COLORS[number]; // 'red' | 'blue' | 'green'\n\nconst STATUS = { ready: 0, loading: 1 } as const;\ntype StatusKey = keyof typeof STATUS; // 'ready' | 'loading'`}
+    desc={`as const와 keyof/typeof를 조합하면 자동완성과 타입 안전성을 모두 잡을 수 있습니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>as const</b> + <b>typeof</b> + <b>keyof</b> 조합!</span>
+  </div>
+</div>
+{/* 30. 타입 별칭 vs 인터페이스 실전 비교 */}
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>30. 타입 별칭 vs 인터페이스 실전 비교</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+    type과 interface의 차이, 확장/합성/유니언/인터섹션 등 실전에서 언제 어떤 것을 써야 하는지 비교합니다.
+  </Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+      <li>interface: 확장, 구조화에 강점</li>
+      <li>type: 유니언/인터섹션, 복합 타입에 강점</li>
+    </ul>}
+    code={`interface User { id: string; name: string }\ninterface Admin extends User { role: string }\n\ntype Status = 'ready' | 'loading';\ntype UserOrAdmin = User | Admin;`}
+    desc={`interface는 확장/구조화, type은 유니언/인터섹션 등 복합 타입에 강점이 있습니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>interface</b>는 확장, <b>type</b>은 복합 타입에!</span>
+  </div>
+</div>
       </div>
     ),
   },
