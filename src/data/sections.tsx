@@ -100,6 +100,7 @@ import I18nExample from '../sections/practicalExamples/I18nExample';
 import WebSocketSyncExample from '../sections/practicalExamples/WebSocketSyncExample';
 import AuthExample from '../sections/practicalExamples/AuthExample';
 import ServerDnDExample2 from '../sections/practicalExamples/ServerDnDExample2';
+import TodoProjectExample from '../sections/realproject/TodoProjectExample';
 
 
 
@@ -1571,8 +1572,8 @@ typescriptdeep: {
         </div>
       </div>
       {/* 추가 고급 카드들은 추후 확장 가능 */}
-            {/* 2. 타입 시스템의 한계와 우회법 */}
-            <div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+      {/* 2. 타입 시스템의 한계와 우회법 */}
+      <div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
         <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>2. 타입 시스템의 한계와 우회법</Typography>
         <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
           타입스크립트의 타입 시스템은 강력하지만, 재귀 깊이 제한, 분산 조건부 타입의 예기치 않은 동작 등 한계가 존재합니다. 실전에서 만나는 한계와 우회 패턴을 익혀봅니다.
@@ -1611,63 +1612,136 @@ typescriptdeep: {
 
 
       {/* 4. 템플릿 리터럴 타입 & 패턴 매칭 */}
-<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
-  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>4. 템플릿 리터럴 타입 & 패턴 매칭</Typography>
-  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
-    템플릿 리터럴 타입을 활용해 문자열 조작, 라우트/이벤트명/상태머신 등에서 타입 안전성을 높이고, infer와 조합해 패턴 매칭을 구현할 수 있습니다.
-  </Typography>
-  <ExampleTab
-    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
-      <li>이벤트명, 라우트, 상태머신 등에서 활용</li>
-      <li>infer와 조합한 패턴 매칭</li>
-    </ul>}
-    code={`type EventName = \`user:\${'login'|'logout'}\`;\n// 'user:login' | 'user:logout'\n\ntype ExtractId<T> = T extends \`user:\${infer Id}\` ? Id : never;\ntype Id = ExtractId<'user:123'>; // '123'`}
-    desc={`템플릿 리터럴 타입과 infer를 조합하면 문자열 패턴을 타입 수준에서 안전하게 처리할 수 있습니다.`}
-  />
-  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
-    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>as const</b>와 조합하면 라우트/이벤트명 자동완성에 유용!</span>
-  </div>
-</div>
+      <div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+        <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>4. 템플릿 리터럴 타입 & 패턴 매칭</Typography>
+        <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+          템플릿 리터럴 타입을 활용해 문자열 조작, 라우트/이벤트명/상태머신 등에서 타입 안전성을 높이고, infer와 조합해 패턴 매칭을 구현할 수 있습니다.
+        </Typography>
+        <ExampleTab
+          example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+            <li>이벤트명, 라우트, 상태머신 등에서 활용</li>
+            <li>infer와 조합한 패턴 매칭</li>
+          </ul>}
+          code={`type EventName = \`user:\${'login'|'logout'}\`;\n// 'user:login' | 'user:logout'\n\ntype ExtractId<T> = T extends \`user:\${infer Id}\` ? Id : never;\ntype Id = ExtractId<'user:123'>; // '123'`}
+          desc={`템플릿 리터럴 타입과 infer를 조합하면 문자열 패턴을 타입 수준에서 안전하게 처리할 수 있습니다.`}
+        />
+        <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>as const</b>와 조합하면 라우트/이벤트명 자동완성에 유용!</span>
+        </div>
+      </div>
 
-{/* 5. 타입 매핑/필터링/고급 유틸리티 직접 구현 */}
-<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
-  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>5. 타입 매핑/필터링/고급 유틸리티 직접 구현</Typography>
-  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
-    PickByValue, Extract, Exclude 등 내장 유틸리티를 직접 구현하거나, 특정 프로퍼티만 추출/변환하는 고급 타입 매핑 패턴을 익힙니다.
-  </Typography>
-  <ExampleTab
-    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
-      <li>PickByValue, FilterKeys 등 직접 구현</li>
-      <li>조건부로 프로퍼티 optional/readonly 변환</li>
-    </ul>}
-    code={`type PickByValue<T, V> = {\n  [K in keyof T as T[K] extends V ? K : never]: T[K]\n};\ntype OnlyString = PickByValue<{ a: string; b: number }, string>; // { a: string }\n\ntype Mutable<T> = { -readonly [K in keyof T]: T[K] };\ntype Optional<T> = { [K in keyof T]?: T[K] };`}
-    desc={`실전에서는 내장 유틸리티 타입을 커스터마이즈하거나, 직접 구현해야 할 때가 많습니다.`}
-  />
-  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
-    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>as</b> 키워드로 key 변환, 조건부 key 필터링 가능!</span>
-  </div>
-</div>
+      {/* 5. 타입 매핑/필터링/고급 유틸리티 직접 구현 */}
+      <div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+        <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>5. 타입 매핑/필터링/고급 유틸리티 직접 구현</Typography>
+        <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+          PickByValue, Extract, Exclude 등 내장 유틸리티를 직접 구현하거나, 특정 프로퍼티만 추출/변환하는 고급 타입 매핑 패턴을 익힙니다.
+        </Typography>
+        <ExampleTab
+          example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+            <li>PickByValue, FilterKeys 등 직접 구현</li>
+            <li>조건부로 프로퍼티 optional/readonly 변환</li>
+          </ul>}
+          code={`type PickByValue<T, V> = {\n  [K in keyof T as T[K] extends V ? K : never]: T[K]\n};\ntype OnlyString = PickByValue<{ a: string; b: number }, string>; // { a: string }\n\ntype Mutable<T> = { -readonly [K in keyof T]: T[K] };\ntype Optional<T> = { [K in keyof T]?: T[K] };`}
+          desc={`실전에서는 내장 유틸리티 타입을 커스터마이즈하거나, 직접 구현해야 할 때가 많습니다.`}
+        />
+        <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>as</b> 키워드로 key 변환, 조건부 key 필터링 가능!</span>
+        </div>
+      </div>
 
 
-{/* 6. Variadic Tuple Types & 재귀적 제네릭 */}
-<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
-  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>6. Variadic Tuple Types & 재귀적 제네릭</Typography>
-  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
-    Variadic Tuple Types(가변 길이 튜플), 재귀적 제네릭, 분산 조건부 타입의 실전 활용법을 익힙니다.
-  </Typography>
-  <ExampleTab
-    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
-      <li>가변 길이 튜플 타입</li>
-      <li>재귀적 제네릭</li>
-    </ul>}
-    code={`type Head<T extends any[]> = T extends [infer H, ...any[]] ? H : never;\ntype Tail<T extends any[]> = T extends [any, ...infer R] ? R : never;\n\ntype Flatten<T> = T extends [infer H, ...infer R]\n  ? H extends any[]\n    ? [...Flatten<H>, ...Flatten<R>]\n    : [H, ...Flatten<R>]\n  : [];\ntype Flat = Flatten<[1, [2, 3], [[4]], 5]>; // [1,2,3,4,5]`}
-    desc={`재귀적 제네릭과 가변 길이 튜플을 조합하면, 복잡한 배열/튜플 타입도 타입 수준에서 안전하게 처리할 수 있습니다.`}
-  />
-  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
-    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>Flatten</b> 등 재귀적 타입은 배열/튜플 변환에 필수!</span>
-  </div>
-</div>
+      {/* 6. Variadic Tuple Types & 재귀적 제네릭 */}
+      <div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+        <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>6. Variadic Tuple Types & 재귀적 제네릭</Typography>
+        <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+          Variadic Tuple Types(가변 길이 튜플), 재귀적 제네릭, 분산 조건부 타입의 실전 활용법을 익힙니다.
+        </Typography>
+        <ExampleTab
+          example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+            <li>가변 길이 튜플 타입</li>
+            <li>재귀적 제네릭</li>
+          </ul>}
+          code={`type Head<T extends any[]> = T extends [infer H, ...any[]] ? H : never;\ntype Tail<T extends any[]> = T extends [any, ...infer R] ? R : never;\n\ntype Flatten<T> = T extends [infer H, ...infer R]\n  ? H extends any[]\n    ? [...Flatten<H>, ...Flatten<R>]\n    : [H, ...Flatten<R>]\n  : [];\ntype Flat = Flatten<[1, [2, 3], [[4]], 5]>; // [1,2,3,4,5]`}
+          desc={`재귀적 제네릭과 가변 길이 튜플을 조합하면, 복잡한 배열/튜플 타입도 타입 수준에서 안전하게 처리할 수 있습니다.`}
+        />
+        <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>Flatten</b> 등 재귀적 타입은 배열/튜플 변환에 필수!</span>
+        </div>
+      </div>
 
+      {/* 7. Decorator & 리플렉션 활용 */}
+      <div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+        <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>7. Decorator & 리플렉션 활용</Typography>
+        <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+          Decorator(데코레이터)와 Reflect-metadata를 활용해 런타임에 타입 정보를 읽거나, 클래스 기반 DI/ORM 등에서 타입스크립트의 메타프로그래밍을 실전 적용하는 방법을 익힙니다.
+        </Typography>
+        <ExampleTab
+          example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+            <li>Reflect-metadata로 런타임 타입 정보 읽기</li>
+            <li>클래스 기반 DI/ORM에서 Decorator 활용</li>
+          </ul>}
+          code={`import 'reflect-metadata';\n\nfunction LogType(target: any, key: string) {\n  const type = Reflect.getMetadata('design:type', target, key);\n  console.log(\`\${key} type: \`, type.name);\n}\n\nclass User {\n  @LogType\n  name: string;\n  @LogType\n  age: number;\n}` }
+          desc={`Decorator와 Reflect-metadata를 조합하면 런타임에 타입 정보를 활용할 수 있습니다. NestJS, TypeORM 등에서 많이 사용됩니다.`}
+        />
+        <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>reflect-metadata</b>는 tsconfig에 experimentalDecorators, emitDecoratorMetadata 옵션 필요!</span>
+        </div>
+      </div>
+      {/* 8. JSX/React 타입 시스템 심화 */}
+      <div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+        <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>8. JSX/React 타입 시스템 심화</Typography>
+        <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+          JSX.Element, React.FC, PropsWithChildren, 제네릭 컴포넌트, as const+props 패턴 등 React에서 타입스크립트의 고급 타입 활용법을 익힙니다.
+        </Typography>
+        <ExampleTab
+          example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+            <li>PropsWithChildren, 제네릭 컴포넌트</li>
+            <li>as const + props 패턴</li>
+          </ul>}
+          code={`type ButtonProps = React.PropsWithChildren<{ color: string }>;\nfunction Button<T extends string>({ color, children }: ButtonProps & { as?: T }) {\n  return <button style={{ background: color }}>{children}</button>;\n}\n\nconst VARIANTS = ['primary', 'secondary'] as const;\ntype Variant = typeof VARIANTS[number];`}
+          desc={`React에서 타입스크립트의 고급 타입을 활용하면, 컴포넌트의 재사용성과 타입 안전성을 극대화할 수 있습니다.`}
+        />
+        <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>as const</b>와 <b>PropsWithChildren</b>을 적극 활용!</span>
+        </div>
+      </div>
+      {/* 9. 타입 시스템 한계 & 트러블슈팅 실전 */}
+      <div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+        <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>9. 타입 시스템 한계 & 트러블슈팅 실전</Typography>
+        <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+          타입 추론 꼬임, 재귀 깊이 초과, 분산 조건부 타입의 예기치 않은 동작 등 실전에서 마주치는 트러블슈팅 사례와 해결법을 익힙니다.
+        </Typography>
+        <ExampleTab
+          example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+            <li>타입 추론 꼬임, 재귀 깊이 초과</li>
+            <li>분산 조건부 타입 트러블슈팅</li>
+          </ul>}
+          code={`// 재귀 깊이 초과 우회\n// (타입이 너무 깊어지면 any로 대체)\ntype SafeDeep<T, N extends number = 10> = N extends 0 ? any : T extends object ? { [K in keyof T]: SafeDeep<T[K], Prev[N]> } : T;\ntype Prev = [never, 0,1,2,3,4,5,6,7,8,9,10];`}
+          desc={`타입스크립트의 타입 시스템 한계에 부딪혔을 때, 실전에서 우회하거나 디버깅하는 패턴을 익히면 대규모 프로젝트에서 큰 도움이 됩니다.`}
+        />
+        <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>as const</b>, <b>satisfies</b>, <b>중간 변수</b>로 타입 추론을 명확히!</span>
+        </div>
+      </div>
+      {/* 10. 타입 안전 API/스키마 설계 */}
+      <div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+        <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>10. 타입 안전 API/스키마 설계</Typography>
+        <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+          OpenAPI, zod, io-ts 등과 연계해 타입 안전한 API 스키마를 설계하고, 런타임 검증과 타입 추론을 동시에 만족시키는 실전 패턴을 익힙니다.
+        </Typography>
+        <ExampleTab
+          example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+            <li>zod, io-ts 등으로 런타임+타입 동기화</li>
+            <li>OpenAPI → 타입 자동 생성</li>
+          </ul>}
+          code={`import { z } from 'zod';\nconst UserSchema = z.object({ id: z.string(), age: z.number() });\ntype User = z.infer<typeof UserSchema>;\n\n// openapi-typescript 등으로 OpenAPI → 타입 자동 생성`}
+          desc={`런타임 검증과 타입 추론을 동시에 만족시키면, API/폼/상태관리 등에서 타입 안전성을 극대화할 수 있습니다.`}
+        />
+        <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>z.infer</b>로 런타임 스키마와 타입을 동기화!</span>
+        </div>
+      </div>
+      {/* 11. 모듈 시스템/ESM/CJS */}
 {/* 7. Decorator & 리플렉션 활용 */}
 <div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
   <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>7. Decorator & 리플렉션 활용</Typography>
@@ -4048,7 +4122,16 @@ const StyledButton = styled.button\`
     next: null,
     content: <AuthExample />,
   },
- 
+  todo: {
+    id: 'todo',
+    title: 'ToDo 앱 실전 프로젝트',
+    description: 'ToDo 앱을 처음부터 완성해가는 실전 프로젝트 강의',
+    category: 'realproject',
+    icon: '📝',
+    prev: null,
+    next: null,
+    content: <TodoProjectExample />,
+  }
 };
   
 

@@ -84,6 +84,7 @@ export type SectionId =
   | 'webSocketSync'
   | 'auth'
   | 'serverDnD2'
+  | 'todo'
 
 
 export interface Section {
