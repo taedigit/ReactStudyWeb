@@ -90,7 +90,7 @@ export interface Section {
   id: SectionId;
   title: string;
   description: string;
-  category: 'getting_started' | 'basics' | 'advanced' | 'hooks' | 'Api' | 'example' | 'opensource';
+  category: 'getting_started' | 'basics' | 'advanced' | 'hooks' | 'Api' | 'example' | 'opensource' | 'realproject';
   icon: string;
   prev: SectionId | null;
   next: SectionId | null;

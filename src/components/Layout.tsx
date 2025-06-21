@@ -65,6 +65,10 @@ export const Layout = ({ children, currentSection, onSectionChange }: LayoutProp
     library: {
       title: '라이브러리',
       sections: Object.values(sections).filter((section: Section) => section.category === 'opensource')
+    },
+    realproject: {
+      title: '실전 프로젝트',
+      sections: Object.values(sections).filter((section: Section) => section.category === 'realproject')
     }
   };
 
