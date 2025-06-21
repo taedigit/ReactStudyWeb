@@ -1424,6 +1424,43 @@ typescriptdeep: {
         </div>
       </div>
       {/* 추가 고급 카드들은 추후 확장 가능 */}
+            {/* 2. 타입 시스템의 한계와 우회법 */}
+            <div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+        <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>2. 타입 시스템의 한계와 우회법</Typography>
+        <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+          타입스크립트의 타입 시스템은 강력하지만, 재귀 깊이 제한, 분산 조건부 타입의 예기치 않은 동작 등 한계가 존재합니다. 실전에서 만나는 한계와 우회 패턴을 익혀봅니다.
+        </Typography>
+        <ExampleTab
+          example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+            <li>분산 조건부 타입 방지</li>
+            <li>재귀 깊이 제한 우회</li>
+          </ul>}
+          code={`// 분산 조건부 타입 방지\ntype NoDistribute<T> = [T] extends [string | number] ? true : false;\ntype Test = NoDistribute<string | number>; // true\n\n// 재귀 깊이 제한 우회\ntype DeepArray<T, N extends number, A extends any[] = []> =\n  A['length'] extends N ? T : DeepArray<T[], N, [any, ...A]>;`}
+          desc={`타입 시스템의 한계를 이해하고, 실전에서 우회하는 패턴을 익히면 복잡한 타입 설계에 큰 도움이 됩니다.`}
+        />
+        <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>분산 조건부 타입</b>은 [T] extends [U] 패턴으로 방지!</span>
+        </div>
+      </div>
+
+      {/* 3. 런타임 타입 검증과 타입스크립트 연계 */}
+      <div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+        <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>3. 런타임 타입 검증과 타입스크립트 연계</Typography>
+        <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+          zod, yup, io-ts 등 런타임 타입 검증 라이브러리와 타입스크립트의 타입 추론을 연계하여, 런타임과 컴파일타임 타입 안전성을 모두 확보하는 실전 패턴을 익힙니다.
+        </Typography>
+        <ExampleTab
+          example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+            <li>zod, yup, io-ts 등과 타입 추론 연계</li>
+            <li>런타임 검증 + 타입 안전</li>
+          </ul>}
+          code={`import { z } from "zod";\nconst UserSchema = z.object({ id: z.string(), age: z.number() });\ntype User = z.infer<typeof UserSchema>;\n// User: { id: string; age: number }`}
+          desc={`런타임 검증과 타입 추론을 연계하면, API 응답/폼 등에서 타입 안전성을 극대화할 수 있습니다.`}
+        />
+        <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>z.infer</b>로 런타임 스키마와 타입을 동기화!</span>
+        </div>
+      </div>
     </div>
   ),
 },
