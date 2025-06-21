@@ -1683,6 +1683,152 @@ typescriptdeep: {
     <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>satisfies</b>와 <b>const type parameter</b>는 앞으로의 타입스크립트 핵심 트렌드!</span>
   </div>
 </div>
+{/* 16. 타입스크립트와 프론트엔드 프레임워크 실전 차이점 */}
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>16. 타입스크립트와 프론트엔드 프레임워크 실전 차이점</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+    React, Vue, Svelte 등 주요 프레임워크에서 타입스크립트 적용 시의 실전 차이점과 공식 가이드, 도구 활용법을 익힙니다.
+  </Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+      <li>React: JSX, Props/State 타입, 제네릭 컴포넌트</li>
+      <li>Vue: SFC, defineProps, Volar</li>
+      <li>Svelte: d.ts, 타입 추론</li>
+    </ul>}
+    code={`// React 컴포넌트 타입\ninterface Props { name: string }\nfunction Hello({ name }: Props) { return <div>Hello, {name}</div>; }\n// Vue SFC\n<script lang=\"ts\">\ndefineProps<{ name: string }>()\n<\/script>\n// Svelte\n<script lang=\"ts\">\nexport let name: string;\n<\/script>`}
+    desc={`프레임워크별 타입 선언 방식, 도구, 추론 방식이 다르므로 공식 가이드와 실전 사례를 참고하세요.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>Volar</b>(Vue), <b>Svelte d.ts</b> 등 프레임워크별 타입 도구를 적극 활용!</span>
+  </div>
+</div>
+{/* 17. 타입스크립트 마이그레이션 전략 (JS → TS) */}
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>17. 타입스크립트 마이그레이션 전략 (JS → TS)</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+    기존 자바스크립트 프로젝트를 타입스크립트로 점진적으로 마이그레이션하는 실전 전략과 실무 팁을 익힙니다.
+  </Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+      <li>js → ts/tsx 파일 확장자 변경</li>
+      <li>// @ts-nocheck, any 최소화, 점진적 타입 추가</li>
+      <li>strict 옵션 점진적 적용</li>
+    </ul>}
+    code={`// 점진적 마이그레이션 예시\n// 1. 파일 확장자 변경: .js → .ts/.tsx\n// 2. any 최소화, 타입 점진적 추가\n// 3. tsconfig strict 옵션 점진적 적용\n// 4. @ts-nocheck 임시 사용 후 제거\n// 5. 타입 선언 파일(d.ts)로 외부 JS 모듈 지원`}
+    desc={`대규모 프로젝트는 한 번에 마이그레이션하지 말고, 점진적으로 타입을 추가하며 안정적으로 전환하세요.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>strict</b> 옵션은 마지막에 적용, <b>any</b>는 반드시 TODO 주석과 함께 관리!</span>
+  </div>
+</div>
+{/* 18. 외부 라이브러리/서드파티 타입 선언 및 호환성 */}
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>18. 외부 라이브러리/서드파티 타입 선언 및 호환성</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+    DefinitelyTyped, d.ts 작성, 타입 호환성 문제 해결 등 외부 라이브러리와의 타입 선언 및 호환성 실전 전략을 익힙니다.
+  </Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+      <li>@types/ 패키지 활용</li>
+      <li>커스텀 d.ts 작성, 타입 호환성 트러블슈팅</li>
+    </ul>}
+    code={`// 외부 라이브러리 타입 선언\n// 1. @types/ 패키지 설치: npm i -D @types/lodash\n// 2. 커스텀 d.ts 작성: declare module 'my-legacy-lib';\n// 3. 타입 호환성 문제 해결: 타입 단언, 타입 변환 등`}
+    desc={`외부 라이브러리 타입이 없거나 호환이 안 될 때는 직접 d.ts를 작성하거나, 타입 단언으로 임시 우회하세요.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>DefinitelyTyped</b>에 없는 라이브러리는 직접 d.ts 작성!</span>
+  </div>
+</div>
+{/* 19. 타입스크립트와 ESLint/Prettier 연동 */}
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>19. 타입스크립트와 ESLint/Prettier 연동</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+    타입스크립트 코드 품질을 높이기 위한 ESLint, Prettier 연동 및 실전 설정 팁을 익힙니다.
+  </Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+      <li>eslint-config-prettier, @typescript-eslint</li>
+      <li>실전 .eslintrc, .prettierrc 예시</li>
+    </ul>}
+    code={`// .eslintrc.js\nmodule.exports = {\n  extends: [\n    'plugin:@typescript-eslint/recommended',\n    'prettier'\n  ],\n};\n// .prettierrc\n{\n  \"singleQuote\": true,\n  \"semi\": false\n}`}
+    desc={`ESLint와 Prettier를 연동하면 코드 스타일과 품질을 자동으로 관리할 수 있습니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>eslint-config-prettier</b>로 충돌 방지!</span>
+  </div>
+</div>
+{/* 20. 타입스크립트와 대규모 상태관리(리덕스, 리코일 등) */}
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>20. 타입스크립트와 대규모 상태관리(리덕스, 리코일 등)</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+    Redux, Recoil, Zustand 등 대규모 상태관리 라이브러리와 타입스크립트의 실전 연동 패턴을 익힙니다.
+  </Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+      <li>Redux Toolkit, Recoil, Zustand 등에서 타입 선언</li>
+      <li>상태 셀렉터, 액션, 미들웨어 타입화</li>
+    </ul>}
+    code={`// Redux Toolkit 예시\nimport { createSlice, PayloadAction } from '@reduxjs/toolkit';\ninterface CounterState { value: number }\nconst initialState: CounterState = { value: 0 };\nconst counterSlice = createSlice({\n  name: 'counter',\n  initialState,\n  reducers: {\n    increment(state) { state.value += 1; },\n    add(state, action: PayloadAction<number>) { state.value += action.payload; }\n  }\n});`}
+    desc={`상태관리 라이브러리의 모든 상태/액션/미들웨어에 타입을 명확히 지정하세요.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>Redux Toolkit</b>은 타입 추론이 매우 강력!</span>
+  </div>
+</div>
+{/* 21. 타입스크립트와 폼/유효성검사(React Hook Form, Yup 등) */}
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>21. 타입스크립트와 폼/유효성검사(React Hook Form, Yup 등)</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+    React Hook Form, Yup, Zod 등과 연계한 타입 안전 폼/유효성검사 실전 패턴을 익힙니다.
+  </Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+      <li>폼 데이터 타입, 유효성검사 스키마 타입 동기화</li>
+      <li>zod, yup 등과 타입 추론 연계</li>
+    </ul>}
+    code={`import { useForm } from 'react-hook-form';\nimport { z } from 'zod';\nconst schema = z.object({ name: z.string(), age: z.number() });\ntype FormData = z.infer<typeof schema>;\nconst { register, handleSubmit } = useForm<FormData>();`}
+    desc={`폼 데이터와 유효성검사 스키마의 타입을 동기화하면, 폼 검증과 타입 안전성을 동시에 확보할 수 있습니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>z.infer</b>로 폼 타입과 스키마를 동기화!</span>
+  </div>
+</div>
+{/* 22. 타입스크립트와 DOM/브라우저 API */}
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>22. 타입스크립트와 DOM/브라우저 API</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+    querySelector, Event 등 브라우저 API를 타입 안전하게 사용하는 실전 패턴을 익힙니다.
+  </Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+      <li>HTMLElement, Event 타입 선언</li>
+      <li>querySelector, addEventListener 타입 안전</li>
+    </ul>}
+    code={`const el = document.querySelector('#myBtn') as HTMLButtonElement;\nel.addEventListener('click', (e: MouseEvent) => {\n  console.log(e.currentTarget); // 타입 안전\n});`}
+    desc={`브라우저 API도 타입을 명확히 선언하면, 런타임 오류를 줄이고 안전한 코드를 작성할 수 있습니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>as HTMLButtonElement</b> 등으로 DOM 타입을 명확히!</span>
+  </div>
+</div>
+{/* 23. 타입스크립트와 타입 가드/런타임 검증 */}
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>23. 타입스크립트와 타입 가드/런타임 검증</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+    커스텀 타입 가드, typeof, instanceof, 런타임 타입 검증 패턴을 익힙니다.
+  </Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+      <li>is 키워드로 커스텀 타입가드</li>
+      <li>typeof, instanceof 활용</li>
+    </ul>}
+    code={`function isString(x: unknown): x is string {\n  return typeof x === 'string';\n}\nfunction printId(id: number | string) {\n  if (typeof id === 'string') {\n    console.log(id.toUpperCase());\n  } else {\n    console.log(id.toFixed(2));\n  }\n}`}
+    desc={`런타임 타입 체크, 폼 검증, API 응답 파싱 등에서 타입 가드를 적극 활용하세요.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>is</b> 키워드로 커스텀 타입가드를 만들어 활용!</span>
+  </div>
+</div>
     </div>
   ),
 },
