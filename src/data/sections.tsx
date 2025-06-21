@@ -1461,6 +1461,228 @@ typescriptdeep: {
           <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>z.infer</b>로 런타임 스키마와 타입을 동기화!</span>
         </div>
       </div>
+
+
+      {/* 4. 템플릿 리터럴 타입 & 패턴 매칭 */}
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>4. 템플릿 리터럴 타입 & 패턴 매칭</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+    템플릿 리터럴 타입을 활용해 문자열 조작, 라우트/이벤트명/상태머신 등에서 타입 안전성을 높이고, infer와 조합해 패턴 매칭을 구현할 수 있습니다.
+  </Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+      <li>이벤트명, 라우트, 상태머신 등에서 활용</li>
+      <li>infer와 조합한 패턴 매칭</li>
+    </ul>}
+    code={`type EventName = \`user:\${'login'|'logout'}\`;\n// 'user:login' | 'user:logout'\n\ntype ExtractId<T> = T extends \`user:\${infer Id}\` ? Id : never;\ntype Id = ExtractId<'user:123'>; // '123'`}
+    desc={`템플릿 리터럴 타입과 infer를 조합하면 문자열 패턴을 타입 수준에서 안전하게 처리할 수 있습니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>as const</b>와 조합하면 라우트/이벤트명 자동완성에 유용!</span>
+  </div>
+</div>
+
+{/* 5. 타입 매핑/필터링/고급 유틸리티 직접 구현 */}
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>5. 타입 매핑/필터링/고급 유틸리티 직접 구현</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+    PickByValue, Extract, Exclude 등 내장 유틸리티를 직접 구현하거나, 특정 프로퍼티만 추출/변환하는 고급 타입 매핑 패턴을 익힙니다.
+  </Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+      <li>PickByValue, FilterKeys 등 직접 구현</li>
+      <li>조건부로 프로퍼티 optional/readonly 변환</li>
+    </ul>}
+    code={`type PickByValue<T, V> = {\n  [K in keyof T as T[K] extends V ? K : never]: T[K]\n};\ntype OnlyString = PickByValue<{ a: string; b: number }, string>; // { a: string }\n\ntype Mutable<T> = { -readonly [K in keyof T]: T[K] };\ntype Optional<T> = { [K in keyof T]?: T[K] };`}
+    desc={`실전에서는 내장 유틸리티 타입을 커스터마이즈하거나, 직접 구현해야 할 때가 많습니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>as</b> 키워드로 key 변환, 조건부 key 필터링 가능!</span>
+  </div>
+</div>
+
+
+{/* 6. Variadic Tuple Types & 재귀적 제네릭 */}
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>6. Variadic Tuple Types & 재귀적 제네릭</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+    Variadic Tuple Types(가변 길이 튜플), 재귀적 제네릭, 분산 조건부 타입의 실전 활용법을 익힙니다.
+  </Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+      <li>가변 길이 튜플 타입</li>
+      <li>재귀적 제네릭</li>
+    </ul>}
+    code={`type Head<T extends any[]> = T extends [infer H, ...any[]] ? H : never;\ntype Tail<T extends any[]> = T extends [any, ...infer R] ? R : never;\n\ntype Flatten<T> = T extends [infer H, ...infer R]\n  ? H extends any[]\n    ? [...Flatten<H>, ...Flatten<R>]\n    : [H, ...Flatten<R>]\n  : [];\ntype Flat = Flatten<[1, [2, 3], [[4]], 5]>; // [1,2,3,4,5]`}
+    desc={`재귀적 제네릭과 가변 길이 튜플을 조합하면, 복잡한 배열/튜플 타입도 타입 수준에서 안전하게 처리할 수 있습니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>Flatten</b> 등 재귀적 타입은 배열/튜플 변환에 필수!</span>
+  </div>
+</div>
+
+{/* 7. Decorator & 리플렉션 활용 */}
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>7. Decorator & 리플렉션 활용</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+    Decorator(데코레이터)와 Reflect-metadata를 활용해 런타임에 타입 정보를 읽거나, 클래스 기반 DI/ORM 등에서 타입스크립트의 메타프로그래밍을 실전 적용하는 방법을 익힙니다.
+  </Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+      <li>Reflect-metadata로 런타임 타입 정보 읽기</li>
+      <li>클래스 기반 DI/ORM에서 Decorator 활용</li>
+    </ul>}
+    code={`import 'reflect-metadata';\n\nfunction LogType(target: any, key: string) {\n  const type = Reflect.getMetadata('design:type', target, key);\n  console.log(\`\${key} type: \`, type.name);\n}\n\nclass User {\n  @LogType\n  name: string;\n  @LogType\n  age: number;\n}` }
+    desc={`Decorator와 Reflect-metadata를 조합하면 런타임에 타입 정보를 활용할 수 있습니다. NestJS, TypeORM 등에서 많이 사용됩니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>reflect-metadata</b>는 tsconfig에 experimentalDecorators, emitDecoratorMetadata 옵션 필요!</span>
+  </div>
+</div>
+{/* 8. JSX/React 타입 시스템 심화 */}
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>8. JSX/React 타입 시스템 심화</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+    JSX.Element, React.FC, PropsWithChildren, 제네릭 컴포넌트, as const+props 패턴 등 React에서 타입스크립트의 고급 타입 활용법을 익힙니다.
+  </Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+      <li>PropsWithChildren, 제네릭 컴포넌트</li>
+      <li>as const + props 패턴</li>
+    </ul>}
+    code={`type ButtonProps = React.PropsWithChildren<{ color: string }>;\nfunction Button<T extends string>({ color, children }: ButtonProps & { as?: T }) {\n  return <button style={{ background: color }}>{children}</button>;\n}\n\nconst VARIANTS = ['primary', 'secondary'] as const;\ntype Variant = typeof VARIANTS[number];`}
+    desc={`React에서 타입스크립트의 고급 타입을 활용하면, 컴포넌트의 재사용성과 타입 안전성을 극대화할 수 있습니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>as const</b>와 <b>PropsWithChildren</b>을 적극 활용!</span>
+  </div>
+</div>
+{/* 9. 타입 시스템 한계 & 트러블슈팅 실전 */}
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>9. 타입 시스템 한계 & 트러블슈팅 실전</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+    타입 추론 꼬임, 재귀 깊이 초과, 분산 조건부 타입의 예기치 않은 동작 등 실전에서 마주치는 트러블슈팅 사례와 해결법을 익힙니다.
+  </Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+      <li>타입 추론 꼬임, 재귀 깊이 초과</li>
+      <li>분산 조건부 타입 트러블슈팅</li>
+    </ul>}
+    code={`// 재귀 깊이 초과 우회\n// (타입이 너무 깊어지면 any로 대체)\ntype SafeDeep<T, N extends number = 10> = N extends 0 ? any : T extends object ? { [K in keyof T]: SafeDeep<T[K], Prev[N]> } : T;\ntype Prev = [never, 0,1,2,3,4,5,6,7,8,9,10];`}
+    desc={`타입스크립트의 타입 시스템 한계에 부딪혔을 때, 실전에서 우회하거나 디버깅하는 패턴을 익히면 대규모 프로젝트에서 큰 도움이 됩니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>as const</b>, <b>satisfies</b>, <b>중간 변수</b>로 타입 추론을 명확히!</span>
+  </div>
+</div>
+{/* 10. 타입 안전 API/스키마 설계 */}
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>10. 타입 안전 API/스키마 설계</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+    OpenAPI, zod, io-ts 등과 연계해 타입 안전한 API 스키마를 설계하고, 런타임 검증과 타입 추론을 동시에 만족시키는 실전 패턴을 익힙니다.
+  </Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+      <li>zod, io-ts 등으로 런타임+타입 동기화</li>
+      <li>OpenAPI → 타입 자동 생성</li>
+    </ul>}
+    code={`import { z } from 'zod';\nconst UserSchema = z.object({ id: z.string(), age: z.number() });\ntype User = z.infer<typeof UserSchema>;\n\n// openapi-typescript 등으로 OpenAPI → 타입 자동 생성`}
+    desc={`런타임 검증과 타입 추론을 동시에 만족시키면, API/폼/상태관리 등에서 타입 안전성을 극대화할 수 있습니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>z.infer</b>로 런타임 스키마와 타입을 동기화!</span>
+  </div>
+</div>
+{/* 11. 모듈 시스템/ESM/CJS */}
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>11. 모듈 시스템/ESM/CJS</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+    타입스크립트에서 ESM, CommonJS, import/export, require/module.exports 등 다양한 모듈 시스템을 안전하게 사용하는 방법과 tsconfig 설정 팁을 익힙니다.
+  </Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+      <li>import/export vs require/module.exports</li>
+      <li>tsconfig module 옵션</li>
+    </ul>}
+    code={`// ESM 방식\nimport foo from './foo';\nexport function bar() {}\n// CommonJS 방식\nconst foo = require('./foo');\nmodule.exports = { bar };\n// tsconfig.json\n{\n  \"compilerOptions\": { \"module\": \"ESNext\" }\n}`}
+    desc={`모듈 시스템에 따라 import/export 방식과 tsconfig 설정이 달라지므로, 프로젝트 환경에 맞게 설정하세요.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>ESM</b>과 <b>CommonJS</b> 차이를 명확히 구분!</span>
+  </div>
+</div>
+{/* 12. 대규모 프로젝트/모노레포 전략 */}
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>12. 대규모 프로젝트/모노레포 전략</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+    pnpm, turborepo, 프로젝트 레퍼런스 등으로 대규모 모노레포에서 타입을 안전하게 관리하는 실전 전략을 익힙니다.
+  </Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+      <li>pnpm workspace, turborepo, tsconfig projectReferences</li>
+      <li>공통 타입 패키지 분리, cross-package 타입 공유</li>
+    </ul>}
+    code={`// pnpm-workspace.yaml\npackages:\n  - 'packages/*'\n// tsconfig.json (projectReferences)\n{\n  \"references\": [ { \"path\": \"../common-types\" } ]\n}`}
+    desc={`모노레포에서는 공통 타입 패키지 분리, 프로젝트 레퍼런스, workspace 관리로 타입 일관성과 빌드 효율을 높이세요.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>pnpm</b> + <b>projectReferences</b> 조합이 대규모에 강력!</span>
+  </div>
+</div>
+{/* 13. 타입스크립트와 테스트(타입 안전 테스트 전략) */}
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>13. 타입스크립트와 테스트(타입 안전 테스트 전략)</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+    타입스크립트로 테스트 코드의 타입 안전성을 높이고, Jest, Vitest, React Testing Library 등과의 연계 전략을 익힙니다.
+  </Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+      <li>Jest, Vitest, React Testing Library와 타입 연계</li>
+      <li>테스트용 타입 가드, Mock 타입</li>
+    </ul>}
+    code={`// 타입 안전 Mock\ninterface User { id: string; name: string; }\nconst mockUser: User = { id: '1', name: '홍길동' };\n\ntest('User name', () => {\n  expect(mockUser.name).toBe('홍길동');\n});`}
+    desc={`테스트 코드도 타입 안전하게 작성하면, 리팩터링/협업 시 오류를 줄이고 생산성을 높일 수 있습니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>Mock 타입</b>도 인터페이스로 관리!</span>
+  </div>
+</div>
+{/* 14. 타입 안전 i18n(다국어) 전략 */}
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>14. 타입 안전 i18n(다국어) 전략</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+    번역 키 자동완성, 타입 안전 번역 함수, i18next/react-i18next 등과 연계한 타입 안전 다국어(i18n) 구현 전략을 익힙니다.
+  </Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+      <li>번역 키 타입 자동화</li>
+      <li>타입 안전 번역 함수</li>
+    </ul>}
+    code={`type TranslationKeys = 'home.title' | 'home.desc' | 'user.name';\nfunction t(key: TranslationKeys): string { /* ... */ }\n\nt('home.title');`}
+    desc={`번역 키를 타입으로 관리하면 오타/누락을 방지하고, 대규모 다국어 프로젝트에서 생산성을 높일 수 있습니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: 번역 키를 <b>타입</b>으로 관리하면 오타/누락 방지!</span>
+  </div>
+</div>
+{/* 15. 타입스크립트 최신 트렌드/미래 */}
+<div style={{ background: '#23272f', color: '#eaeaea', border: '1px solid #333', boxShadow: '0 2px 12px #0002', borderRadius: 12, marginBottom: 40, padding: '2em' }}>
+  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 800, fontSize: 26, color: '#fff' }}>15. 타입스크립트 최신 트렌드/미래</Typography>
+  <Typography sx={{ mb: 2, color: '#8fd', fontSize: 17, fontWeight: 500 }}>
+    satisfies, const type parameter, template literal type 개선 등 최신 타입스크립트 트렌드와 앞으로의 발전 방향을 소개합니다.
+  </Typography>
+  <ExampleTab
+    example={<ul style={{ fontSize: 17, marginBottom: 0 }}>
+      <li>satisfies 연산자</li>
+      <li>const type parameter</li>
+    </ul>}
+    code={`const user = { id: '1', name: '홍길동' } satisfies { id: string; name: string };\n\nfunction foo<const T extends string>(arg: T) { /* ... */ }`}
+    desc={`최신 타입스크립트 기능을 익히면, 더 안전하고 강력한 타입 설계가 가능합니다.`}
+  />
+  <div style={{ background: '#2d3748', color: '#ffe066', borderRadius: 8, padding: '0.8em 1.2em', marginTop: 18, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <span style={{ fontSize: 20 }}>💡</span> <span>실무 Tip: <b>satisfies</b>와 <b>const type parameter</b>는 앞으로의 타입스크립트 핵심 트렌드!</span>
+  </div>
+</div>
     </div>
   ),
 },
