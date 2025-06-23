@@ -15,7 +15,7 @@ export function MacCmdExampleWrapper({ children, agGrid }: { children: React.Rea
         display: 'flex',
         alignItems: 'center',
         height: '35px',
-        background: agGrid ? 'none' : '#f5f5f5',
+        background: agGrid ? 'none' : '#232323',
         padding: '0 12px',
         borderBottom: agGrid ? 'none' : '1px solid #e0e0e0',
         gap: '8px',
