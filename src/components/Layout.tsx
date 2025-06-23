@@ -3,6 +3,8 @@ import { Box, Flex, Stack, Text, Link, Container, Heading } from '@chakra-ui/rea
 import { sections } from '../data/sections';
 const allSections = sections;
 import type { Section, SectionId } from '../types/section';
+import { FaChevronDown, FaChevronRight } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -94,6 +96,21 @@ export const Layout = ({ children, currentSection, onSectionChange }: LayoutProp
 
   // 사이드바 각 섹션의 ref 저장
   const sidebarRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
+  // 카테고리별 펼침/접힘 상태
+  const [collapsedCategories, setCollapsedCategories] = useState<Record<string, boolean>>({});
+
+  // 카테고리별 아이콘 매핑
+  const categoryIcons: Record<string, React.ReactNode> = {
+    getting_started: <span role="img" aria-label="시작">🚀</span>,
+    basics: <span role="img" aria-label="기본">📚</span>,
+    hooks: <span role="img" aria-label="Hooks">🪝</span>,
+    advanced: <span role="img" aria-label="고급">🧠</span>,
+    example: <span role="img" aria-label="예제">🧩</span>,
+    Api: <span role="img" aria-label="API">🔗</span>,
+    library: <span role="img" aria-label="라이브러리">📦</span>,
+    realproject: <span role="img" aria-label="프로젝트">📝</span>,
+  };
 
   // 카테고리별 섹션을 순서대로 반환
   const getOrderedSections = (catKey: string) => {
@@ -358,84 +375,105 @@ export const Layout = ({ children, currentSection, onSectionChange }: LayoutProp
                   color="gray.500"
                   letterSpacing="wider"
                   mb={2}
+                  style={{ cursor: 'pointer', userSelect: 'none', display: 'flex', alignItems: 'center' }}
+                  onClick={() => setCollapsedCategories(prev => ({ ...prev, [key]: !prev[key] }))}
                 >
+                  <span style={{ marginRight: 8, fontSize: 18, display: 'flex', alignItems: 'center' }}>
+                    {categoryIcons[key]}
+                  </span>
+                  <span style={{ marginRight: 6, fontSize: 14, display: 'flex', alignItems: 'center' }}>
+                    {collapsedCategories[key] ? <FaChevronRight /> : <FaChevronDown />}
+                  </span>
                   {category.title}
                 </Text>
-                <Stack direction="column" gap={1}>
-                  {getOrderedSections(key).map((section: Section) => {
-                    const meta = sidebarMeta[section.id] || {};
-                    const isEditing = editing === section.id;
-                    return (
-                      <Box
-                        key={section.id}
-                        ref={el => { sidebarRefs.current[section.id] = el; }}
-                        display="flex"
-                        alignItems="center"
-                        px={0}
-                        py={0}
-                        style={{
-                          borderRadius: 6,
-                          background: currentSection === section.id ? '#e8f0fe' : 'transparent',
-                          marginBottom: 2
-                        }}
-                      >
-                        {isEditing ? (
-                          <>
-                            <input
-                              style={{ width: 32, fontSize: 20, marginRight: 6, border: '1px solid #ddd', borderRadius: 4, padding: '2px 4px' }}
-                              value={editValue.icon}
-                              onChange={e => setEditValue(v => ({ ...v, icon: e.target.value }))}
-                              onKeyDown={e => handleKeyDown(e, section.id)}
-                              maxLength={2}
-                              autoFocus
-                            />
-                            <input
-                              style={{ flex: 1, fontSize: 15, marginRight: 6, border: '1px solid #ddd', borderRadius: 4, padding: '2px 6px' }}
-                              value={editValue.title}
-                              onChange={e => setEditValue(v => ({ ...v, title: e.target.value }))}
-                              onKeyDown={e => handleKeyDown(e, section.id)}
-                              onBlur={() => handleSave(section.id)}
-                              maxLength={20}
-                            />
-                            <button
-                              style={{ background: '#2563eb', color: '#fff', border: 'none', borderRadius: 4, padding: '2px 8px', fontSize: 13, marginRight: 4, cursor: 'pointer' }}
-                              onClick={() => handleSave(section.id)}
-                              title="저장"
-                            >✔</button>
-                            <button
-                              style={{ background: '#eee', color: '#333', border: 'none', borderRadius: 4, padding: '2px 8px', fontSize: 13, cursor: 'pointer' }}
-                              onClick={handleCancel}
-                              title="취소"
-                            >✖</button>
-                          </>
-                        ) : (
-                          <Link
-                            px={6}
-                            py={2}
-                            display="flex"
-                            alignItems="center"
-                            color={currentSection === section.id ? 'brand.500' : 'gray.700'}
-                            bg={currentSection === section.id ? 'brand.50' : 'transparent'}
-                            borderLeftWidth="3px"
-                            borderLeftColor={currentSection === section.id ? 'brand.500' : 'transparent'}
-                            _hover={{
-                              bg: 'gray.50',
-                              textDecoration: 'none'
-                            }}
-                            onClick={e => {
-                              e.preventDefault();
-                              onSectionChange(section.id as SectionId);
-                            }}
-                            style={{ flex: 1, minWidth: 0 }}
-                          >
-                            <Text fontSize="xl" mr={3}>{meta.icon || section.icon}</Text>
-                            <Text fontSize="sm" isTruncated>{meta.title || section.title}</Text>
-                          </Link>
-                        )}
-                      </Box>
-                    );
-                  })}
-                </Stack>
+                <AnimatePresence initial={false}>
+                  {!collapsedCategories[key] && (
+                    <motion.div
+                      key={key}
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.25, ease: 'easeInOut' }}
+                      style={{ overflow: 'hidden' }}
+                    >
+                      <Stack direction="column" gap={1}>
+                        {getOrderedSections(key).map((section: Section) => {
+                          const meta = sidebarMeta[section.id] || {};
+                          const isEditing = editing === section.id;
+                          return (
+                            <Box
+                              key={section.id}
+                              ref={el => { sidebarRefs.current[section.id] = el; }}
+                              display="flex"
+                              alignItems="center"
+                              px={0}
+                              py={0}
+                              style={{
+                                borderRadius: 6,
+                                background: currentSection === section.id ? '#e8f0fe' : 'transparent',
+                                marginBottom: 2
+                              }}
+                            >
+                              {isEditing ? (
+                                <>
+                                  <input
+                                    style={{ width: 32, fontSize: 20, marginRight: 6, border: '1px solid #ddd', borderRadius: 4, padding: '2px 4px' }}
+                                    value={editValue.icon}
+                                    onChange={e => setEditValue(v => ({ ...v, icon: e.target.value }))}
+                                    onKeyDown={e => handleKeyDown(e, section.id)}
+                                    maxLength={2}
+                                    autoFocus
+                                  />
+                                  <input
+                                    style={{ flex: 1, fontSize: 15, marginRight: 6, border: '1px solid #ddd', borderRadius: 4, padding: '2px 6px' }}
+                                    value={editValue.title}
+                                    onChange={e => setEditValue(v => ({ ...v, title: e.target.value }))}
+                                    onKeyDown={e => handleKeyDown(e, section.id)}
+                                    onBlur={() => handleSave(section.id)}
+                                    maxLength={20}
+                                  />
+                                  <button
+                                    style={{ background: '#2563eb', color: '#fff', border: 'none', borderRadius: 4, padding: '2px 8px', fontSize: 13, marginRight: 4, cursor: 'pointer' }}
+                                    onClick={() => handleSave(section.id)}
+                                    title="저장"
+                                  >✔</button>
+                                  <button
+                                    style={{ background: '#eee', color: '#333', border: 'none', borderRadius: 4, padding: '2px 8px', fontSize: 13, cursor: 'pointer' }}
+                                    onClick={handleCancel}
+                                    title="취소"
+                                  >✖</button>
+                                </>
+                              ) : (
+                                <Link
+                                  px={6}
+                                  py={2}
+                                  display="flex"
+                                  alignItems="center"
+                                  color={currentSection === section.id ? 'brand.500' : 'gray.700'}
+                                  bg={currentSection === section.id ? 'brand.50' : 'transparent'}
+                                  borderLeftWidth="3px"
+                                  borderLeftColor={currentSection === section.id ? 'brand.500' : 'transparent'}
+                                  _hover={{
+                                    bg: 'gray.50',
+                                    textDecoration: 'none'
+                                  }}
+                                  onClick={e => {
+                                    e.preventDefault();
+                                    onSectionChange(section.id as SectionId);
+                                  }}
+                                  style={{ flex: 1, minWidth: 0 }}
+                                >
+                                  <Text fontSize="xl" mr={3}>{meta.icon || section.icon}</Text>
+                                  <Text fontSize="sm" isTruncated>{meta.title || section.title}</Text>
+                                </Link>
+                              )}
+                            </Box>
+                          );
+                        })}
+                      </Stack>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </Box>
             ))}
           </Stack>
