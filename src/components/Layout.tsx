@@ -331,12 +331,18 @@ export const Layout = ({ children, currentSection, onSectionChange }: LayoutProp
                         fontSize: 15,
                         color: '#222',
                         background: currentSection === item.sectionId ? '#e8f0fe' : 'transparent',
-                        fontWeight: currentSection === item.sectionId ? 600 : 400
+                        fontWeight: currentSection === item.sectionId ? 600 : 400,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 6
                       }}
                     >
+                      <span style={{ color: '#fff', background: '#2563eb', borderRadius: 4, fontSize: 12, padding: '2px 6px', marginRight: 8, fontWeight: 700, display: 'flex', alignItems: 'center' }}>
+                        <span role="img" aria-label="예제" style={{ marginRight: 3 }}>💡</span>예제
+                      </span>
                       <span style={{ marginRight: 8 }}>{item.sectionIcon}</span>
-                      <span style={{ fontWeight: 700 }}>{item.sectionTitle}</span>
-                      <span style={{ color: '#2563eb', fontWeight: 600, marginLeft: 8 }}>{item.exampleTitle}</span>
+                      <span style={{ fontWeight: 700, color: '#2563eb' }}>{item.sectionTitle}</span>
+                      <span style={{ color: '#eab308', fontWeight: 700, marginLeft: 8 }}>{item.exampleTitle}</span>
                       <span style={{ color: '#888', fontSize: 13, marginLeft: 8 }}>{item.exampleDescription}</span>
                     </div>
                   );
