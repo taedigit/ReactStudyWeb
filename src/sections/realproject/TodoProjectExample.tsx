@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import { useReducer, useState, useEffect } from 'react';
 import { Typography } from '@mui/material';
 import { ExampleTab } from '../../components/ExampleTab';
 
@@ -7,6 +7,7 @@ export type TodoItem = {
   id: number;
   text: string;
   completed: boolean;
+  dueDate?: string;
 };
 
 export type Filter = 'all' | 'completed' | 'active';
@@ -114,85 +115,266 @@ function MiniTestDemo() {
   return <div style={{ color: '#8fd', fontWeight: 600 }}>테스트 코드는 코드 탭을 참고하세요!</div>;
 }
 
-// 4. 완성된 TodoApp (동일)
-function TodoAppDemo() {
-  // TodoInput, TodoFilter, TodoList를 이 함수 내부에서 정의
-  function TodoInput({ onAdd }: { onAdd: (text: string) => void }) {
-    const [text, setText] = useState('');
-    return (
-      <form
-        onSubmit={e => {
-          e.preventDefault();
-          if (!text.trim()) return;
-          onAdd(text);
-          setText('');
-        }}
-        style={{ display: 'flex', gap: 8, marginBottom: 16 }}
-      >
-        <input
-          value={text}
-          onChange={e => setText(e.target.value)}
-          placeholder="할 일을 입력하세요"
-          style={{ flex: 1, padding: 8, borderRadius: 6, border: '1px solid #444', background: '#181c20', color: '#eaeaea' }}
-          autoFocus
-        />
-        <button type="submit" style={{ padding: '8px 18px', borderRadius: 6, background: '#8fd', color: '#23272f', fontWeight: 700, border: 'none' }}>추가</button>
-      </form>
-    );
-  }
-  function TodoList({ todos, onToggle, onDelete }: {
-    todos: TodoItem[];
-    onToggle: (id: number) => void;
-    onDelete: (id: number) => void;
-  }) {
-    if (todos.length === 0) return <div style={{ color: '#aaa', margin: '1em 0' }}>할 일이 없습니다.</div>;
-    return (
+function MiniEditDemo() {
+  const [todos, setTodos] = useState<TodoItem[]>([
+    { id: 1, text: '예시 할 일', completed: false }
+  ]);
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editText, setEditText] = useState('');
+  return (
+    <div style={{ background: '#23272f', borderRadius: 8, padding: 16, color: '#eaeaea', maxWidth: 340 }}>
       <ul style={{ listStyle: 'none', padding: 0 }}>
         {todos.map(todo => (
-          <li key={todo.id} style={{ display: 'flex', alignItems: 'center', padding: '8px 0', borderBottom: '1px solid #333' }}>
-            <input type="checkbox" checked={todo.completed} onChange={() => onToggle(todo.id)} style={{ marginRight: 12 }} />
-            <span style={{ flex: 1, textDecoration: todo.completed ? 'line-through' : undefined, color: todo.completed ? '#888' : '#fff' }}>{todo.text}</span>
-            <button onClick={() => onDelete(todo.id)} style={{ background: 'none', border: 'none', color: '#ff6b6b', fontWeight: 700, cursor: 'pointer' }}>삭제</button>
+          <li key={todo.id} style={{ display: 'flex', alignItems: 'center', padding: 4 }}>
+            {editingId === todo.id ? (
+              <>
+                <input
+                  value={editText}
+                  onChange={e => setEditText(e.target.value)}
+                  style={{ flex: 1, marginRight: 8, borderRadius: 6, border: '1px solid #444', background: '#181c20', color: '#eaeaea', padding: 6 }}
+                />
+                <button
+                  onClick={() => { setTodos(ts => ts.map(t => t.id === todo.id ? { ...t, text: editText } : t)); setEditingId(null); }}
+                  style={{ borderRadius: 6, background: '#8fd', color: '#23272f', fontWeight: 700, border: 'none', padding: '6px 10px', marginRight: 4 }}
+                >저장</button>
+                <button
+                  onClick={() => setEditingId(null)}
+                  style={{ borderRadius: 6, background: '#ff6b6b', color: '#fff', fontWeight: 700, border: 'none', padding: '6px 10px' }}
+                >취소</button>
+              </>
+            ) : (
+              <>
+                <span style={{ flex: 1 }}>{todo.text}</span>
+                <button
+                  onClick={() => { setEditingId(todo.id); setEditText(todo.text); }}
+                  style={{ borderRadius: 6, background: '#ffe066', color: '#23272f', fontWeight: 700, border: 'none', padding: '6px 10px', marginLeft: 8 }}
+                >수정</button>
+              </>
+            )}
           </li>
         ))}
       </ul>
-    );
-  }
-  function TodoFilter({ filter, onChange }: { filter: Filter; onChange: (f: Filter) => void }) {
-    return (
-      <div style={{ display: 'flex', gap: 8, margin: '1em 0' }}>
-        {(['all', 'active', 'completed'] as Filter[]).map(f => (
-          <button
-            key={f}
-            onClick={() => onChange(f)}
-            style={{
-              padding: '6px 16px',
-              borderRadius: 6,
-              border: 'none',
-              background: filter === f ? '#8fd' : '#23272f',
-              color: filter === f ? '#23272f' : '#eaeaea',
-              fontWeight: 700,
-              cursor: 'pointer',
-            }}
-          >
-            {f === 'all' ? '전체' : f === 'active' ? '미완료' : '완료'}
-          </button>
-        ))}
-      </div>
-    );
-  }
-  const [state, dispatch] = useReducer(reducer, { todos: [], filter: 'all' });
-  const filtered = state.todos.filter(todo =>
-    state.filter === 'all' ? true : state.filter === 'completed' ? todo.completed : !todo.completed
-  );
-  return (
-    <div style={{ background: '#23272f', borderRadius: 12, padding: 24, boxShadow: '0 2px 12px #0002', maxWidth: 480, margin: '0 auto' }}>
-      <TodoInput onAdd={text => dispatch({ type: 'ADD', text })} />
-      <TodoFilter filter={state.filter} onChange={f => dispatch({ type: 'SET_FILTER', filter: f })} />
-      <TodoList todos={filtered} onToggle={id => dispatch({ type: 'TOGGLE', id })} onDelete={id => dispatch({ type: 'DELETE', id })} />
     </div>
   );
 }
+
+const miniEditDemoCode = `function MiniEditDemo() {\n  const [todos, setTodos] = useState<TodoItem[]>([\n    { id: 1, text: '예시 할 일', completed: false }\n  ]);\n  const [editingId, setEditingId] = useState<number | null>(null);\n  const [editText, setEditText] = useState('');\n  return (\n    <div style={{ background: '#23272f', borderRadius: 8, padding: 16, color: '#eaeaea', maxWidth: 340 }}>\n      <ul style={{ listStyle: 'none', padding: 0 }}>\n        {todos.map(todo => (\n          <li key={todo.id} style={{ display: 'flex', alignItems: 'center', padding: 4 }}>\n            {editingId === todo.id ? (\n              <>\n                <input\n                  value={editText}\n                  onChange={e => setEditText(e.target.value)}\n                  style={{ flex: 1, marginRight: 8, borderRadius: 6, border: '1px solid #444', background: '#181c20', color: '#eaeaea', padding: 6 }}\n                />\n                <button\n                  onClick={() => { setTodos(ts => ts.map(t => t.id === todo.id ? { ...t, text: editText } : t)); setEditingId(null); }}\n                  style={{ borderRadius: 6, background: '#8fd', color: '#23272f', fontWeight: 700, border: 'none', padding: '6px 10px', marginRight: 4 }}\n                >저장</button>\n                <button\n                  onClick={() => setEditingId(null)}\n                  style={{ borderRadius: 6, background: '#ff6b6b', color: '#fff', fontWeight: 700, border: 'none', padding: '6px 10px' }}\n                >취소</button>\n              </>\n            ) : (\n              <>\n                <span style={{ flex: 1 }}>{todo.text}</span>\n                <button\n                  onClick={() => { setEditingId(todo.id); setEditText(todo.text); }}\n                  style={{ borderRadius: 6, background: '#ffe066', color: '#23272f', fontWeight: 700, border: 'none', padding: '6px 10px', marginLeft: 8 }}\n                >수정</button>\n              </>\n            )}\n          </li>\n        ))}\n      </ul>\n    </div>\n  );\n}`;
+
+function MiniDueDateDemo() {
+  const [text, setText] = useState('');
+  const [due, setDue] = useState('');
+  const [list, setList] = useState<{ text: string; due: string }[]>([]);
+  return (
+    <div style={{ background: '#23272f', borderRadius: 8, padding: 16, color: '#eaeaea', maxWidth: 340 }}>
+      <form
+        onSubmit={e => { e.preventDefault(); if (!text.trim()) return; setList(l => [{ text, due }, ...l]); setText(''); setDue(''); }}
+        style={{ display: 'flex', gap: 8, marginBottom: 8 }}
+      >
+        <input value={text} onChange={e => setText(e.target.value)} placeholder="할 일 입력" style={{ flex: 1, borderRadius: 6, border: '1px solid #444', background: '#181c20', color: '#eaeaea', padding: 6 }} />
+        <input type="date" value={due} onChange={e => setDue(e.target.value)} style={{ borderRadius: 6, border: '1px solid #444', background: '#181c20', color: '#eaeaea', padding: 6 }} />
+        <button type="submit" style={{ borderRadius: 6, background: '#8fd', color: '#23272f', fontWeight: 700, border: 'none', padding: '6px 14px' }}>추가</button>
+      </form>
+      <ul style={{ listStyle: 'none', padding: 0 }}>
+        {list.map((item, i) => (
+          <li key={i} style={{ padding: 4 }}>
+            {item.text}
+            {item.due && (
+              <span style={{ color: '#ffe066', marginLeft: 8 }}>
+                (마감: {item.due})
+              </span>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+const miniDueDateDemoCode = `function MiniDueDateDemo() {
+  const [text, setText] = useState('');
+  const [due, setDue] = useState('');
+  const [list, setList] = useState<{ text: string; due: string }[]>([]);
+  return (
+    <div style={{ background: '#23272f', borderRadius: 8, padding: 16, color: '#eaeaea', maxWidth: 340 }}>
+      <form
+        onSubmit={e => { e.preventDefault(); if (!text.trim()) return; setList(l => [{ text, due }, ...l]); setText(''); setDue(''); }}
+        style={{ display: 'flex', gap: 8, marginBottom: 8 }}
+      >
+        <input value={text} onChange={e => setText(e.target.value)} placeholder="할 일 입력" style={{ flex: 1, borderRadius: 6, border: '1px solid #444', background: '#181c20', color: '#eaeaea', padding: 6 }} />
+        <input type="date" value={due} onChange={e => setDue(e.target.value)} style={{ borderRadius: 6, border: '1px solid #444', background: '#181c20', color: '#eaeaea', padding: 6 }} />
+        <button type="submit" style={{ borderRadius: 6, background: '#8fd', color: '#23272f', fontWeight: 700, border: 'none', padding: '6px 14px' }}>추가</button>
+      </form>
+      <ul style={{ listStyle: 'none', padding: 0 }}>
+        {list.map((item, i) => (
+          <li key={i} style={{ padding: 4 }}>
+            {item.text}
+            {item.due && (
+              <span style={{ color: '#ffe066', marginLeft: 8 }}>
+                (마감: {item.due})
+              </span>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}`;
+
+function MiniApiDemo() {
+  const [todos, setTodos] = useState<TodoItem[]>([]);
+  const [loading, setLoading] = useState(false);
+  function fetchTodos() {
+    setLoading(true);
+    setTimeout(() => {
+      setTodos([
+        { id: 1, text: '서버에서 불러온 할 일', completed: false },
+        { id: 2, text: 'API 예제', completed: true }
+      ]);
+      setLoading(false);
+    }, 1000);
+  }
+  return (
+    <div style={{ background: '#23272f', borderRadius: 8, padding: 16, color: '#eaeaea', maxWidth: 340 }}>
+      <button onClick={fetchTodos} style={{ borderRadius: 6, background: '#8fd', color: '#23272f', fontWeight: 700, border: 'none', padding: '6px 14px', marginBottom: 8 }}>
+        서버에서 할 일 불러오기
+      </button>
+      {loading ? <div>로딩 중...</div> : (
+        <ul style={{ listStyle: 'none', padding: 0 }}>
+          {todos.map(todo => (
+            <li key={todo.id} style={{ padding: 4 }}>{todo.text}</li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+const miniApiDemoCode = `function MiniApiDemo() {
+  const [todos, setTodos] = useState<TodoItem[]>([]);
+  const [loading, setLoading] = useState(false);
+  function fetchTodos() {
+    setLoading(true);
+    setTimeout(() => {
+      setTodos([
+        { id: 1, text: '서버에서 불러온 할 일', completed: false },
+        { id: 2, text: 'API 예제', completed: true }
+      ]);
+      setLoading(false);
+    }, 1000);
+  }
+  return (
+    <div style={{ background: '#23272f', borderRadius: 8, padding: 16, color: '#eaeaea', maxWidth: 340 }}>
+      <button onClick={fetchTodos} style={{ borderRadius: 6, background: '#8fd', color: '#23272f', fontWeight: 700, border: 'none', padding: '6px 14px', marginBottom: 8 }}>
+        서버에서 할 일 불러오기
+      </button>
+      {loading ? <div>로딩 중...</div> : (
+        <ul style={{ listStyle: 'none', padding: 0 }}>
+          {todos.map(todo => (
+            <li key={todo.id} style={{ padding: 4 }}>{todo.text}</li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}`;
+
+// 1. REST API 커스텀 훅 예제
+function useTodosApiMock() {
+  const [todos, setTodos] = useState<TodoItem[]>([]);
+  const [loading, setLoading] = useState(false);
+  const fetchTodos = async () => {
+    setLoading(true);
+    setTimeout(() => {
+      setTodos([
+        { id: 1, text: '서버에서 불러온 할 일', completed: false, dueDate: '2024-07-01' },
+        { id: 2, text: 'API 예제', completed: true, dueDate: '2024-07-02' }
+      ]);
+      setLoading(false);
+    }, 1000);
+  };
+  const addTodo = async (text: string, dueDate?: string) => {
+    setTodos(todos => [{ id: Date.now(), text, completed: false, dueDate }, ...todos]);
+  };
+  const updateTodo = async (id: number, data: Partial<TodoItem>) => {
+    setTodos(todos => todos.map(t => t.id === id ? { ...t, ...data } : t));
+  };
+  const deleteTodo = async (id: number) => {
+    setTodos(todos => todos.filter(t => t.id !== id));
+  };
+  return { todos, loading, fetchTodos, addTodo, updateTodo, deleteTodo };
+}
+
+// 2. 통합 TodoApp (수정/삭제/마감일/완료/REST API)
+function RealTodoAppDemo() {
+  const { todos, loading, fetchTodos, addTodo, updateTodo, deleteTodo } = useTodosApiMock();
+  const [text, setText] = useState('');
+  const [due, setDue] = useState('');
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editText, setEditText] = useState('');
+  const [editDue, setEditDue] = useState('');
+  useEffect(() => { fetchTodos(); }, []);
+  return (
+    <div style={{ background: '#23272f', borderRadius: 12, padding: 24, maxWidth: 480, margin: '0 auto', color: '#eaeaea' }}>
+      <form
+        onSubmit={async e => {
+          e.preventDefault();
+          if (!text.trim()) return;
+          await addTodo(text, due);
+          setText('');
+          setDue('');
+        }}
+        style={{ display: 'flex', gap: 8, marginBottom: 16 }}
+      >
+        <input value={text} onChange={e => setText(e.target.value)} placeholder="할 일 입력" style={{ flex: 1 }} />
+        <input type="date" value={due} onChange={e => setDue(e.target.value)} />
+        <button type="submit">추가</button>
+      </form>
+      {loading ? <div>로딩 중...</div> : (
+        <ul style={{ listStyle: 'none', padding: 0 }}>
+          {todos.map(todo => (
+            <li key={todo.id} style={{ display: 'flex', alignItems: 'center', padding: 4 }}>
+              {editingId === todo.id ? (
+                <>
+                  <input value={editText} onChange={e => setEditText(e.target.value)} style={{ flex: 1 }} />
+                  <input type="date" value={editDue} onChange={e => setEditDue(e.target.value)} />
+                  <button onClick={async () => { await updateTodo(todo.id, { text: editText, dueDate: editDue }); setEditingId(null); }}>저장</button>
+                  <button onClick={() => setEditingId(null)}>취소</button>
+                </>
+              ) : (
+                <>
+                  <input type="checkbox" checked={todo.completed} onChange={async () => await updateTodo(todo.id, { completed: !todo.completed })} />
+                  <span style={{ flex: 1, textDecoration: todo.completed ? 'line-through' : undefined }}>{todo.text}</span>
+                  <span style={{ color: '#ffe066', marginLeft: 8 }}>{todo.dueDate && `(마감: ${todo.dueDate})`}</span>
+                  <button onClick={() => { setEditingId(todo.id); setEditText(todo.text); setEditDue(todo.dueDate || ''); }}>수정</button>
+                  <button onClick={async () => await deleteTodo(todo.id)} style={{ color: '#ff6b6b' }}>삭제</button>
+                </>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+const realTodoAppDemoCode = `function RealTodoAppDemo() { ... } // 위와 동일}`;
+const realTodoTestCode = `import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import RealTodoApp from '../RealTodoApp';
+
+test('할 일 추가/수정/삭제/마감일', async () => {
+  render(<RealTodoApp />);
+  fireEvent.change(screen.getByPlaceholderText('할 일 입력'), { target: { value: '공부하기' } });
+  fireEvent.click(screen.getByText('추가'));
+  await waitFor(() => expect(screen.getByText('공부하기')).toBeInTheDocument());
+
+  fireEvent.click(screen.getByText('수정'));
+  fireEvent.change(screen.getByDisplayValue('공부하기'), { target: { value: '운동하기' } });
+  fireEvent.click(screen.getByText('저장'));
+  await waitFor(() => expect(screen.getByText('운동하기')).toBeInTheDocument());
+
+  fireEvent.click(screen.getByText('삭제'));
+  await waitFor(() => expect(screen.queryByText('운동하기')).not.toBeInTheDocument());
+});`;
 
 export const TodoProjectExample = () => {
   return (
@@ -240,16 +422,35 @@ export const TodoProjectExample = () => {
 
       {/* 6. 완성 예제: 전체 TodoApp */}
       <ExampleTab
-        example={<TodoAppDemo />}
-        code={'// 전체 완성 코드 예시는 위 useReducer, TodoInput, TodoList, TodoFilter, TodoAppDemo를 참고하세요!'}
+        example={<RealTodoAppDemo />}
+        code={realTodoAppDemoCode}
         desc="실제 동작하는 ToDo 앱 전체 예제입니다. 입력, 필터, 토글, 삭제 등 모든 기능이 구현되어 있습니다."
       />
 
       {/* 7. 테스트/배포/실전 팁 */}
       <ExampleTab
         example={<MiniTestDemo />}
-        code={'import { render, screen, fireEvent } from "@testing-library/react";\nimport TodoApp from "../TodoApp";\n\ntest("할 일 추가", () => {\n  render(<TodoApp />);\n  fireEvent.change(screen.getByPlaceholderText("할 일을 입력하세요"), { target: { value: "공부하기" } });\n  fireEvent.click(screen.getByText("추가"));\n  expect(screen.getByText("공부하기")).toBeInTheDocument();\n});'}
+        code={realTodoTestCode}
         desc="실전에서 자주 마주치는 문제와 팁을 함께 익히세요."
+      />
+
+      {/* 8. 추가된 기능: 수정, 마감일, API 연동 */}
+      <ExampleTab
+        example={<MiniEditDemo />}
+        code={miniEditDemoCode}
+        desc="수정 기능을 추가하면, 할 일을 수정할 수 있습니다."
+      />
+
+      <ExampleTab
+        example={<MiniDueDateDemo />}
+        code={miniDueDateDemoCode}
+        desc="마감일을 추가하면, 할 일의 마감일을 설정할 수 있습니다."
+      />
+
+      <ExampleTab
+        example={<MiniApiDemo />}
+        code={miniApiDemoCode}
+        desc="서버와의 연동을 추가하면, 할 일을 서버에서 불러올 수 있습니다."
       />
     </div>
   );
