@@ -38,5 +38,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         </ChakraProvider>
       </QueryClientProvider>
     </RecoilRoot>
-  </React.StrictMode>,
+  </React.StrictMode>
 )
