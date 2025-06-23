@@ -6,7 +6,7 @@ export default defineConfig({
   //base: '/ReactStudyWeb/', 
   plugins: [react()],
   server: {
-    port: 3000,
+    port: 4050,
   },
   build: {
     rollupOptions: {
