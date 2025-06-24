@@ -59,6 +59,7 @@ const SelectorDemo = () => {
   );
 };
 
+
 // 4. 실전 Todo 예제
 const todosAtom = atom<{ id: number; text: string; done: boolean }[]>([]);
 const TodoDemo = () => {
